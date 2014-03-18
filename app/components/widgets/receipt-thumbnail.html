@@ -1,15 +1,23 @@
-<div>
-  <img>
+<img class="receipt-thumbnail-image">
+<div class="receipt-thumbnail-actions">
   <button type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>
   <button type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
-  <dl>
-    <dt>Date:</dt>
-    <dd>{{ receipt.date | date }}</dd>
-    <dt>Total:</dt>
-    <dd>{{ receipt.total | currency }}</dd>
-    <dt>Type:</dt>
-    <dd>{{ receipt.type }}</dd>
-    <dt>Category:</dt>
-    <dd>{{ receipt.category }}</dd>
-  </dl>
+</div>
+<div class="receipt-thumbnail-fields">
+  <div class="receipt-thumbnail-field">
+    <div class="receipt-thumbnail-label">Date:</div>
+    <div class="receipt-thumbnail-value">{{ receipt.date | date }}</div>
+  </div>
+  <div class="receipt-thumbnail-field">
+    <div class="receipt-thumbnail-label">Total:</div>
+    <div class="receipt-thumbnail-value">{{ receipt.total | currency }}</div>
+  </div>
+  <div class="receipt-thumbnail-field">
+    <div class="receipt-thumbnail-label">Type:</div>
+    <div class="receipt-thumbnail-value">{{ receipt.type }}</div>
+  </div>
+  <div class="receipt-thumbnail-field">
+    <div class="receipt-thumbnail-label">Category:</div>
+    <div class="receipt-thumbnail-value">{{ receipt.category }}</div>
+  </div>
 </div>

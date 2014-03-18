@@ -14,7 +14,12 @@ angular.module('epsonreceipts.widgets').directive('scanButton', function() {
           alert('Not yet implemented');
         },
         create: function() {
-          receiptStorage.create($scope, $scope.datastore, {});
+          receiptStorage.create($scope, $scope.datastore, {
+            date: new Date(),
+            total: 42.99,
+            type: 'Unknown',
+            category: 'None'
+          });
         }
       });
     }
