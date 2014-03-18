@@ -5,7 +5,7 @@ angular.module('epsonreceipts.widgets').directive('scanButton', function() {
   return {
     restrict: 'E',
     template: require('./scan-button.html'),
-    controller: function($scope) {
+    controller: function($scope, receiptStorage) {
       _.extend($scope, {
         scan: function() {
           alert('Not yet implemented');
@@ -14,7 +14,7 @@ angular.module('epsonreceipts.widgets').directive('scanButton', function() {
           alert('Not yet implemented');
         },
         create: function() {
-          alert('Not yet implemented');
+          receiptStorage.create($scope, $scope.datastore, {});
         }
       });
     }

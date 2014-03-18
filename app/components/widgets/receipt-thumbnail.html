@@ -1,0 +1,15 @@
+<div>
+  <img>
+  <button type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>
+  <button type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
+  <dl>
+    <dt>Date:</dt>
+    <dd>{{ receipt.date | date }}</dd>
+    <dt>Total:</dt>
+    <dd>{{ receipt.total | currency }}</dd>
+    <dt>Type:</dt>
+    <dd>{{ receipt.type }}</dd>
+    <dt>Category:</dt>
+    <dd>{{ receipt.category }}</dd>
+  </dl>
+</div>

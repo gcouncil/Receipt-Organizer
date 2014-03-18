@@ -9,5 +9,9 @@
 
     <scan-button></scan-button>
 
+    <div ng-controller="InboxController">
+      <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts.results"></receipt-thumbnail>
+    </div>
+
   </body>
 </html>

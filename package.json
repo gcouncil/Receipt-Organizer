@@ -17,7 +17,8 @@
     "grunt": "^0.4.4",
     "grunt-contrib-watch": "^0.6.0",
     "grunt-contrib-less": "^0.10.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "moment": "^2.5.1"
   },
   "browserify": {
     "transform": [
