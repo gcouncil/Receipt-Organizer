@@ -23,6 +23,14 @@ angular.module('epsonreceipts.storage').factory('receiptStorage', function() {
 
     create: function($scope, datastore, attributes) {
       new ReceiptManager(datastore).create(attributes);
+    },
+
+    update: function($scope, datastore, receiptId, attributes) {
+      new ReceiptManager(datastore).update(receiptId, attributes);
+    },
+
+    destroy: function($scope, datastore, receiptId) {
+      new ReceiptManager(datastore).destroy(receiptId);
     }
   };
 });

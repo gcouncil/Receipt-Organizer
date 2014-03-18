@@ -6,7 +6,17 @@ var ReceiptManager = function(datastore) {
 
 _.extend(ReceiptManager.prototype, {
   create: function(attributes) {
-    this._datastore._receipts.push(_.clone(attributes));
+    var receipt = _.extend({ id: _.uniqueId('receipt') }, attributes);
+    this._datastore._receipts.push(receipt);
+  },
+
+  update: function(receiptId, attributes) {
+    var receipt = _.find(this._datastore._receipts, { id: receiptId });
+    _.extend(receipt, attributes);
+  },
+
+  destroy: function(receiptId) {
+    _.remove(this._datastore._receipts, { id: receiptId });
   }
 });
 

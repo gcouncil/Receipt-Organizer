@@ -16,6 +16,11 @@ module.exports = function(grunt) {
         cwd: './bower_components/font-awesome/fonts',
         src: '*',
         dest: 'build/fonts'
+      }, {
+        expand: true,
+        cwd: './bower_components/bootstrap/fonts',
+        src: '*',
+        dest: 'build/fonts'
       }]
     }
   });

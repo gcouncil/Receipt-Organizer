@@ -6,8 +6,21 @@ angular.module('epsonreceipts.widgets').directive('receiptThumbnail', function()
     restrict: 'E',
     template: require('./receipt-thumbnail.html'),
     scope: {
-      receipt: '='
+      receipt: '=',
+      datastore: '='
+    },
+    controller: function($scope, receiptEditor, receiptStorage) {
+      $scope.edit = function() {
+        var modal = receiptEditor.open($scope.receipt);
+        modal.result.then(function(receipt) {
+          receiptStorage.update($scope, $scope.datastore, $scope.receipt.id, receipt);
+        });
+      };
+      $scope.destroy = function() {
+        receiptStorage.destroy($scope, $scope.datastore, $scope.receipt.id);
+      };
     }
+
   };
 });
 

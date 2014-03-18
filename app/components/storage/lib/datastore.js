@@ -1,5 +1,5 @@
 var Datastore = function() {
-  this._receipts = [{}];
+  this._receipts = [];
 };
 
 module.exports = Datastore;

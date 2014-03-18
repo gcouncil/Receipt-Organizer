@@ -1,6 +1,7 @@
 var angular = require('angular');
 var moment = require('moment');
 require('ui-bootstrap');
+require('ui-bootstrap-tpls');
 
 angular.module('epsonreceipts', ['ui.bootstrap', 'epsonreceipts.widgets', 'epsonreceipts.storage']);
 
