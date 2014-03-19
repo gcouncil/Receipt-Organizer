@@ -35,6 +35,12 @@ module.exports = function(grunt) {
       files: [
         { src: 'app/index.js', dest: 'build/index.js' }
       ]
+    },
+
+    test: {
+      files: [
+        { src: 'app/test.js', dest: 'build/test.js' }
+      ]
     }
   });
 
@@ -66,15 +72,42 @@ module.exports = function(grunt) {
     less: {
       files: ['app/**/*.less'],
       tasks: ['less']
+    },
+    test: {
+      files: ['app/**/*.js', 'app/**/*.html'],
+      tasks: ['browserify:test', 'karma:watch:run']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.config('connect', {
+    dev: {
+      options: {
+        port: 8000,
+        base: 'build'
+      }
+    },
     e2e: {
       options: {
         port: 9000,
         base: 'build'
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.config('karma', {
+    options: {
+      configFile: 'karma.conf.js',
+    },
+
+    run: {},
+
+    watch: {
+      options: {
+        browsers: ['PhantomJS'],
+        background: true,
+        singleRun: false
       }
     }
   });
@@ -89,7 +122,11 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', ['copy', 'browserify', 'less']);
+
+  grunt.registerTask('test', ['test:unit', 'test:e2e']);
+  grunt.registerTask('test:unit', ['browserify:test', 'karma:run']);
   grunt.registerTask('test:e2e', ['browserify:scripts', 'connect:e2e', 'protractor']);
 
   grunt.registerTask('default', ['build']);
+  grunt.registerTask('development', ['karma:watch:start', 'connect:dev', 'build', 'watch']);
 };
