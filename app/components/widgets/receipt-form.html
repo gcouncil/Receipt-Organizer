@@ -1,24 +1,125 @@
-<ng-form role="form">
+<ng-form class="form-horizontal">
   <div class="form-group">
-    <label>Date</label>
-    <input ng-model="receipt.date" datepicker-popup class="form-control">
-  </div>
-
-  <div class="form-group">
-    <label>Total</label>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input ng-model="receipt.total" class="form-control">
+    <label class="col-xs-3 control-label">Date</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.date" datepicker-popup class="form-control">
     </div>
   </div>
 
   <div class="form-group">
-    <label>Type</label>
-    <input ng-model="receipt.type" class="form-control">
+    <label class="col-xs-3 control-label">Vendor Name</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.vendor" class="form-control">
+    </div>
   </div>
 
   <div class="form-group">
-    <label>Category</label>
-    <input ng-model="receipt.category" class="form-control">
+    <label class="col-xs-3 control-label">Payment Type</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.paymentType" class="form-control">
+    </div>
   </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Category</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.category" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">City</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.city" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">State</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.state" class="form-control">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Tax</label>
+    <div class="col-xs-9">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input ng-model="receipt.tax" class="form-control">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Second Tax</label>
+    <div class="col-xs-9">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input ng-model="receipt.secondTax" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Total</label>
+    <div class="col-xs-9">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input ng-model="receipt.total" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Tip</label>
+    <div class="col-xs-9">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input ng-model="receipt.tip" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Tax Category</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.taxCategory" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Business Purpose</label>
+    <div class="col-xs-9">
+      <input ng-model="receipt.businessPurpose" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-xs-9 col-xs-offset-3">
+      <label>
+        <input type="checkbox" ng-model="receipt.reimbursable">
+        Reimbursable
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-xs-9 col-xs-offset-3">
+      <label>
+        <input type="checkbox" ng-model="receipt.billable">
+        Billable
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-xs-3 control-label">Comments</label>
+    <div class="col-xs-9">
+      <textarea ng-model="receipt.comments" class="form-control"></textarea>
+    </div>
+  </div>
+
 </ng-form>

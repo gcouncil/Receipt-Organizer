@@ -5,6 +5,8 @@ angular.module('epsonreceipts.widgets').factory('receiptEditor', function($modal
   return {
     open: function(receipt) {
       var modal = $modal.open({
+        backdrop: 'static',
+        windowClass: 'receipt-editor-window',
         template: require('./receipt-editor.html'),
         resolve: {
           receipt: function() { return _.clone(receipt); }

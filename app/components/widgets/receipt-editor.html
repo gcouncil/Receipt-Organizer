@@ -1,5 +1,8 @@
-<div class="modal-body">
-  <receipt-form receipt="receipt"></receipt-form>
+<div class="modal-body row">
+  <receipt-form ui-keypress="{ 'enter': 'ok()' }" receipt="receipt" class="col-xs-4"></receipt-form>
+  <div class="col-xs-8">
+    <h1>Receipt Goes Here</h1>
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="ok()">OK</button>
