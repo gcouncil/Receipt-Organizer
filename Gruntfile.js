@@ -66,7 +66,7 @@ module.exports = function(grunt) {
       tasks: ['copy:html']
     },
     scripts: {
-      files: ['app/**/*.js', 'app/**/*.html'],
+      files: ['app/**/*.js', 'app/**/*.html', '!app/**/*_test.js'],
       tasks: ['browserify']
     },
     less: {
