@@ -27,13 +27,14 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.config('browserify', {
+    options: {
+      debug: debug
+    },
+
     scripts: {
       files: [
         { src: 'app/index.js', dest: 'build/index.js' }
-      ],
-      options: {
-        debug: debug
-      }
+      ]
     }
   });
 
@@ -68,7 +69,27 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.config('connect', {
+    e2e: {
+      options: {
+        port: 9000,
+        base: 'build'
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.config('protractor', {
+    all: {
+      options: {
+        configFile: 'e2e.conf.js'
+      }
+    }
+  });
+
   grunt.registerTask('build', ['copy', 'browserify', 'less']);
+  grunt.registerTask('test:e2e', ['browserify:scripts', 'connect:e2e', 'protractor']);
 
   grunt.registerTask('default', ['build']);
 };

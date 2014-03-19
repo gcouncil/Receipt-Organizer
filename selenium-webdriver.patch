@@ -1,0 +1,25 @@
+From c0b1acdc7fc792b83c99173769602db3b6178fb1 Mon Sep 17 00:00:00 2001
+From: Hargobind Khalsa <hargobind@quickleft.com>
+Date: Wed, 19 Mar 2014 14:06:56 -0600
+Subject: [PATCH] Maintain this value when wrapping mocha global functions
+
+---
+ testing/index.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/testing/index.js b/testing/index.js
+index 39bea1c..a1196a5 100644
+--- a/testing/index.js
++++ b/testing/index.js
+@@ -120,7 +120,7 @@ function wrapped(globalFn) {
+   function asyncTestFn(fn) {
+     return function(done) {
+       this.timeout(0);
+-      flow.execute(fn).then(seal(done), done);
++      flow.execute(fn.bind(this)).then(seal(done), done);
+     };
+   }
+ }
+-- 
+1.9.0
+
