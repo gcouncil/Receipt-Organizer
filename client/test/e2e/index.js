@@ -8,8 +8,8 @@ function ReceiptPage() {
 
   this.manualEntryButton = $('scan-button').element(by.buttonText('Manual Entry'));
   this.receiptEditorForm = $('.modal-dialog receipt-form');
-  this.receipts = element.all(by.repeater('receipt in receipts.results'));
-  this.firstReceipt = element(by.repeater('receipt in receipts.results').row(0));
+  this.receipts = element.all(by.repeater('receipt in receipts'));
+  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
 }
 
 describe('Manual Entry', function() {

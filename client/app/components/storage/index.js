@@ -1,36 +1,56 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-var Datastore = require('./lib/datastore');
-var ReceiptManager = require('./lib/receipt-manager');
-var ReceiptQuery = require('./lib/receipt-query');
-
 angular.module('epsonreceipts.storage', []);
 
-angular.module('epsonreceipts.storage').factory('storage', function() {
-  return {
-    connect: function($scope) {
-      return new Datastore();
-    }
-  };
+
+angular.module('epsonreceipts.storage').factory('domain', function() {
+  return require('epson-receipts-domain');
 });
 
 angular.module('epsonreceipts.storage').factory('receiptStorage', function() {
+  var receipts = [];
+
+  var sequence = 0;
+  function notify() {
+    sequence++;
+  }
+
   return {
-    query: function($scope, datastore, options) {
-      return new ReceiptQuery(datastore, options);
+    query: function(options, callback) {
+      // Register callback
+      if (options.scope && callback) {
+        options.scope.$watch(
+          function() { return sequence; },
+          function() {
+            callback(receipts);
+          }
+        );
+      }
+
+      if (callback) {
+        callback(receipts);
+      }
     },
 
-    create: function($scope, datastore, attributes) {
-      new ReceiptManager(datastore).create(attributes);
+    fetch: function(options, callback) {
     },
 
-    update: function($scope, datastore, receiptId, attributes) {
-      new ReceiptManager(datastore).update(receiptId, attributes);
+    create: function(receipt) {
+      receipts.push(receipt.clone());
+      notify();
     },
 
-    destroy: function($scope, datastore, receiptId) {
-      new ReceiptManager(datastore).destroy(receiptId);
+    update: function(receipt) {
+      receipts = _.map(receipts, function(candidate) {
+        return candidate.id === receipt.id ? receipt : candidate;
+      });
+      notify();
+    },
+
+    destroy: function(receipt) {
+      _.remove(receipts, { id: receipt.id });
+      notify();
     }
   };
 });

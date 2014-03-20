@@ -9,13 +9,15 @@ angular.module('epsonreceipts.widgets').factory('receiptEditor', function($modal
         windowClass: 'receipt-editor-window',
         template: require('./receipt-editor.html'),
         resolve: {
-          receipt: function() { return _.clone(receipt); }
+          receipt: function() { return receipt.clone(); }
         },
         controller: function($scope, receipt) {
           $scope.receipt = receipt;
+
           $scope.ok = function() {
             $scope.$close($scope.receipt);
           };
+
           $scope.cancel = function() {
             $scope.$dismiss('cancel');
           };

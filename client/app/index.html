@@ -10,7 +10,7 @@
     <scan-button></scan-button>
 
     <div ng-controller="InboxController">
-      <receipt-thumbnail datastore="datastore" receipt="receipt" ng-repeat="receipt in receipts.results"></receipt-thumbnail>
+      <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts"></receipt-thumbnail>
     </div>
 
   </body>

@@ -13,11 +13,11 @@ angular.module('epsonreceipts.widgets').directive('receiptThumbnail', function()
       $scope.edit = function() {
         var modal = receiptEditor.open($scope.receipt);
         modal.result.then(function(receipt) {
-          receiptStorage.update($scope, $scope.datastore, $scope.receipt.id, receipt);
+          receiptStorage.update(receipt);
         });
       };
       $scope.destroy = function() {
-        receiptStorage.destroy($scope, $scope.datastore, $scope.receipt.id);
+        receiptStorage.destroy(receipt);
       };
     }
 

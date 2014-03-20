@@ -9,10 +9,8 @@ angular.module('epsonreceipts', ['ui.bootstrap', 'epsonreceipts.widgets', 'epson
 require('./components/widgets');
 require('./components/storage');
 
-angular.module('epsonreceipts').run(function($rootScope, storage) {
-  $rootScope.datastore = storage.connect($rootScope);
-});
-
 angular.module('epsonreceipts').controller('InboxController', function($scope, receiptStorage) {
-  $scope.receipts = receiptStorage.query($scope, $scope.datastore, {});
+  receiptStorage.query({ scope: $scope }, function(receipts) {
+    $scope.receipts = receipts;
+  });
 });
