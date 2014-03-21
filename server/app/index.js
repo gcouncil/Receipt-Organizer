@@ -1,5 +1,4 @@
 var express = require('express');
-var _ = require('lodash');
 var routes = require('./routes');
 
 function Application(config) {

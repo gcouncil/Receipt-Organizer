@@ -8,10 +8,8 @@ angular.module('epsonreceipts.widgets').directive('scanButton', function() {
     controller: function($scope, domain, receiptStorage, receiptEditor) {
       _.extend($scope, {
         scan: function() {
-          alert('Not yet implemented');
         },
         import: function() {
-          alert('Not yet implemented');
         },
         create: function() {
 

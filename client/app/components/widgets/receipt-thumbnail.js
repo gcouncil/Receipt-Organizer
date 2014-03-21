@@ -1,5 +1,4 @@
 var angular = require('angular');
-var _ = require('lodash');
 
 angular.module('epsonreceipts.widgets').directive('receiptThumbnail', function() {
   return {
@@ -17,7 +16,7 @@ angular.module('epsonreceipts.widgets').directive('receiptThumbnail', function()
         });
       };
       $scope.destroy = function() {
-        receiptStorage.destroy(receipt);
+        receiptStorage.destroy($scope.receipt);
       };
     }
 

@@ -16,7 +16,15 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.config('jshint', {
+    options: {
+      jshintrc: true
+    },
+    all: ['Gruntfile.js', 'app/**/*.js', 'test/**/*.js']
+  });
+
   grunt.registerTask('build', []);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('development', ['watch']);
 };

@@ -66,7 +66,7 @@ module.exports = function(grunt) {
       tasks: ['copy:html']
     },
     scripts: {
-      files: ['app/**/*.js', 'app/**/*.html', 'libs/**/*.js'],
+      files: ['app/**/*.js', 'app/**/*.html'],
       tasks: ['browserify:scripts']
     },
     less: {
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     },
     test: {
       files: ['app/**/*.js', 'app/**/*.html'],
-      tasks: ['browserify:test', 'karma:watch:run']
+      tasks: ['jshint', 'browserify:test', 'karma:watch:run']
     }
   });
 
@@ -96,10 +96,17 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['copy', 'browserify', 'less']);
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.config('jshint', {
+    options: {
+      jshintrc: true
+    },
+    all: ['Gruntfile.js', 'app/**/*.js']
+  });
 
-  grunt.registerTask('test', ['browserify:test', 'karma:run']);
+  grunt.registerTask('build', ['copy', 'browserify', 'less']);
+  grunt.registerTask('test', ['jshint', 'browserify:test', 'karma:run']);
+  grunt.registerTask('development', ['karma:watch:start', 'build', 'watch']);
 
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('development', ['karma:watch:start', 'build', 'watch']);
 };

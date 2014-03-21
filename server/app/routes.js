@@ -1,5 +1,3 @@
-var express = require('express');
-
 module.exports = function(app, handlers, config) {
 
   // REST
@@ -8,4 +6,4 @@ module.exports = function(app, handlers, config) {
     res.send('Hello, world!');
   });
 
-}
+};

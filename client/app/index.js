@@ -1,5 +1,5 @@
 var angular = require('angular');
-var moment = require('moment');
+
 require('ui-utils');
 require('ui-bootstrap');
 require('ui-bootstrap-tpls');

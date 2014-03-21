@@ -1,5 +1,4 @@
 var angular = require('angular');
-var _ = require('lodash');
 
 angular.module('epsonreceipts.widgets').factory('receiptEditor', function($modal) {
   return {

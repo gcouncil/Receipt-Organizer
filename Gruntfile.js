@@ -5,17 +5,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-hub');
   grunt.config('hub', {
-    build: {
-      src: ['*/Gruntfile.js'],
-      tasks: ['build']
-    },
-    test: {
-      src: ['*/Gruntfile.js'],
-      tasks: ['test']
-    },
-    development: {
-      src: ['*/Gruntfile.js'],
-      tasks: ['development']
+    all: {
+      src: ['*/Gruntfile.js']
     }
   });
 
@@ -46,9 +37,9 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['hub:build']);
-  grunt.registerTask('test', ['hub:test', 'connect:e2e', 'protractor']);
-  grunt.registerTask('development', ['connect:dev', 'hub:development']);
+  grunt.registerTask('build', ['hub:all:build']);
+  grunt.registerTask('test', ['hub:all:test', 'connect:e2e', 'protractor']);
+  grunt.registerTask('development', ['connect:dev', 'hub:all:development']);
 
-  grunt.registerTask('default', ['hub:build']);
+  grunt.registerTask('default', ['hub:all:build']);
 };
