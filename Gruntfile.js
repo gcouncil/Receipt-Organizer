@@ -12,6 +12,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.config('concurrent', {
+    options: {
+      logConcurrentOutput: true
+    },
     dev: ['nodemon:dev', 'hub:all:development']
   });
 
@@ -41,7 +44,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['hub:all:build']);
   grunt.registerTask('test', ['hub:all:test', 'protractor']);
-  grunt.registerTask('development', ['nodemon:dev', 'hub:all:development']);
+  grunt.registerTask('development', ['concurrent:dev']);
 
   grunt.registerTask('default', ['hub:all:build']);
 };

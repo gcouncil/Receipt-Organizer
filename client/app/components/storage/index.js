@@ -3,17 +3,23 @@ var _ = require('lodash');
 
 angular.module('epsonreceipts.storage', []);
 
-
 angular.module('epsonreceipts.storage').factory('domain', function() {
   return require('epson-receipts-domain');
 });
 
-angular.module('epsonreceipts.storage').factory('receiptStorage', function() {
+angular.module('epsonreceipts.storage').factory('receiptStorage', function(domain, $http, $q) {
   var receipts = [];
 
   var sequence = 0;
   function notify() {
     sequence++;
+  }
+
+  function evaluateQuery(options, callback) {
+    return $http.get('/api/receipts').then(function(result) {
+      var receipts = _.map(result.data, function(data) { return new domain.Receipt(data); });
+      return receipts;
+    });
   }
 
   return {
@@ -23,13 +29,13 @@ angular.module('epsonreceipts.storage').factory('receiptStorage', function() {
         options.scope.$watch(
           function() { return sequence; },
           function() {
-            callback(receipts);
+            evaluateQuery(options).then(callback);
           }
         );
-      }
-
-      if (callback) {
-        callback(receipts);
+      } else {
+        var result = evaluateQuery(options);
+        if (callback) { result.then(callback); }
+        return result;
       }
     },
 
@@ -37,8 +43,10 @@ angular.module('epsonreceipts.storage').factory('receiptStorage', function() {
     },
 
     create: function(receipt) {
-      receipts.push(receipt.clone());
-      notify();
+      // TODO: Handle error case
+      $http.post('/api/receipts', receipt).then(function(result) {
+        notify();
+      });
     },
 
     update: function(receipt) {

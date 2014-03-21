@@ -6,12 +6,14 @@
     <script src="/index.js"></script>
   </head>
   <body>
-
     <scan-button></scan-button>
 
     <div ng-controller="InboxController">
       <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts"></receipt-thumbnail>
     </div>
 
+    <div ng-controller="HttpBusyController">
+      <p ng-show="busy">Request In Progress</p>
+    </div>
   </body>
 </html>
