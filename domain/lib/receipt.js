@@ -3,7 +3,7 @@ var _ = require('lodash');
 function Receipt(attrs) {
   // Ensure some type of id
   this.reset(attrs);
-  this.id = this.id || _.uniqueId('receipt');
+  // this.id = this.id || _.uniqueId('receipt');
 }
 
 _.extend(Receipt.prototype, {

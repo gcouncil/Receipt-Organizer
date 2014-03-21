@@ -5,8 +5,16 @@ function Application(config) {
   this.config = config || {};
   this.config.env = this.config.env || process.env.NODE_ENV || 'development';
 
+  this.config = {
+    database: require('../config/database')
+  };
+
+  this.services = {
+    database: require('./services/database')(this.config.database)
+  };
+
   this.managers = {
-    receipts: require('./managers/receipts-manager')()
+    receipts: require('./managers/receipts-manager')(this.services.database)
   };
 
   this.handlers = {

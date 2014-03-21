@@ -8,7 +8,11 @@
     "lodash": "^2.4.1",
     "method-override": "^1.0.0",
     "body-parser": "^1.0.1",
-    "errorhandler": "^1.0.0"
+    "errorhandler": "^1.0.0",
+    "bookshelf": "^0.6.8",
+    "pg": "^2.11.1",
+    "knex": "^0.5.10",
+    "morph": "^0.2.0"
   },
   "devDependencies": {
     "grunt-mocha-test": "^0.10.0",
