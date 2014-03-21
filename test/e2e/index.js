@@ -1,4 +1,4 @@
-var helpers = require('./spec-helpers');
+var helpers = require('./test-helper');
 var expect = helpers.expect;
 
 function ReceiptPage() {

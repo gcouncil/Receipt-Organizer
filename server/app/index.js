@@ -6,7 +6,9 @@ function Application(config) {
   this.config = config || {};
   this.config.env = this.config.env || process.env.NODE_ENV || 'development';
 
-  this.handlers = {};
+  this.handlers = {
+    receipts: require('./handlers/receipts-handler')()
+  };
 
   var app = this.handler = express();
 
