@@ -10,20 +10,22 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.config('connect', {
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.config('concurrent', {
+    dev: ['nodemon:dev', 'hub:all:development']
+  });
+
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.config('nodemon', {
     dev: {
+      script: './server',
       options: {
-        port: 8000,
-        base: './client/build',
-        middleware: [require('./server')]
-      }
-    },
-    e2e: {
-      options: {
-        port: 9000,
-        base: './client/build',
-        middleware: [require('./server')]
+        watch: ['./server'],
+        ignore: ['./server/node_modules/**'],
+        env: {
+          PORT: 8000,
+          NODE_ENV: 'development'
+        }
       }
     }
   });
@@ -38,8 +40,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', ['hub:all:build']);
-  grunt.registerTask('test', ['hub:all:test', 'connect:e2e', 'protractor']);
-  grunt.registerTask('development', ['connect:dev', 'hub:all:development']);
+  grunt.registerTask('test', ['hub:all:test', 'protractor']);
+  grunt.registerTask('development', ['nodemon:dev', 'hub:all:development']);
 
   grunt.registerTask('default', ['hub:all:build']);
 };

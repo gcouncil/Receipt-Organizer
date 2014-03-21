@@ -10,7 +10,7 @@ app.use('/api', new Application().handler);
 module.exports = app;
 
 if(require.main === module) {
-  var port = process.env.PORT || 3000;
+  var port = process.env.PORT || 8000;
   require('http').createServer(app).listen(port, function() {
     console.log('Server listening on ' + port);
   });

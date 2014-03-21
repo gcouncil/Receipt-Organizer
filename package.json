@@ -18,7 +18,8 @@
     "chai": "^1.9.0",
     "mocha": "^1.18.2",
     "protractor": "^0.20.1",
-    "grunt-contrib-connect": "^0.7.1",
-    "grunt-hub": "^0.6.2"
+    "grunt-hub": "^0.6.2",
+    "grunt-nodemon": "^0.2.1",
+    "grunt-concurrent": "^0.5.0"
   }
 }
