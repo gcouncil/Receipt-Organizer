@@ -17,14 +17,13 @@ function Application(config) {
 
   app.set('env', this.config.env);
 
-  app.use(express.bodyParser());
-  app.use(express.cookieParser());
-  app.use(express.methodOverride());
+  app.use(require('body-parser')());
+  app.use(require('method-override')());
 
   routes(app, this.handlers, this.config);
 
   if (app.get('env') === 'development') {
-    app.use(express.errorHandler());
+    app.use(require('errorhandler')());
   }
 }
 

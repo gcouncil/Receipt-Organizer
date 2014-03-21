@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-app.use(express.logger());
+app.use(require('morgan')());
 app.use(express.static(__dirname + '/client/build'));
 
 var Application = require('./server/app');
