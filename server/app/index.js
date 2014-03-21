@@ -5,8 +5,12 @@ function Application(config) {
   this.config = config || {};
   this.config.env = this.config.env || process.env.NODE_ENV || 'development';
 
+  this.managers = {
+    receipts: require('./managers/receipts-manager')()
+  };
+
   this.handlers = {
-    receipts: require('./handlers/receipts-handler')()
+    receipts: require('./handlers/receipts-handler')(this.managers.receipts)
   };
 
   var app = this.handler = express();
