@@ -79,22 +79,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.config('connect', {
-    dev: {
-      options: {
-        port: 8000,
-        base: 'build'
-      }
-    },
-    e2e: {
-      options: {
-        port: 9000,
-        base: 'build'
-      }
-    }
-  });
-
   grunt.loadNpmTasks('grunt-karma');
   grunt.config('karma', {
     options: {
@@ -112,21 +96,10 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-protractor-runner');
-  grunt.config('protractor', {
-    all: {
-      options: {
-        configFile: 'e2e.conf.js'
-      }
-    }
-  });
-
   grunt.registerTask('build', ['copy', 'browserify', 'less']);
 
-  grunt.registerTask('test', ['test:unit', 'test:e2e']);
-  grunt.registerTask('test:unit', ['browserify:test', 'karma:run']);
-  grunt.registerTask('test:e2e', ['browserify:scripts', 'connect:e2e', 'protractor']);
+  grunt.registerTask('test', ['browserify:test', 'karma:run']);
 
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('development', ['karma:watch:start', 'connect:dev', 'build', 'watch']);
+  grunt.registerTask('development', ['karma:watch:start', 'build', 'watch']);
 };

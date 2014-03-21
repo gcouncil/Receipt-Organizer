@@ -4,10 +4,13 @@
   "private": true,
   "main": "app/index.js",
   "scripts": {
-    "postinstall": "bower install && webdriver-manager update",
-    "patch": "patch ./node_modules/protractor/node_modules/selenium-webdriver/testing/index.js selenium-webdriver.patch"
+    "prepublish": "bower install"
   },
   "dependencies": {
+    "lodash": "^2.4.1",
+    "moment": "^2.5.1"
+  },
+  "devDependencies": {
     "bower": "^1.3.1",
     "browserify": "^3.32.1",
     "browserify-shim": "^3.3.1",
@@ -18,18 +21,16 @@
     "grunt": "^0.4.4",
     "grunt-contrib-watch": "^0.6.0",
     "grunt-contrib-less": "^0.10.0",
-    "lodash": "^2.4.1",
-    "moment": "^2.5.1",
     "chai-as-promised": "^4.1.1",
-    "grunt-protractor-runner": "^0.2.4",
     "chai": "^1.9.0",
     "mocha": "^1.18.2",
-    "protractor": "^0.20.1",
-    "grunt-contrib-connect": "^0.7.1",
     "karma-cli": "0.0.4",
     "grunt-karma": "^0.8.2",
     "karma": "^0.12.1",
-    "karma-mocha": "^0.1.3"
+    "karma-mocha": "^0.1.3",
+    "karma-chrome-launcher": "^0.1.2",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-phantomjs-launcher": "^0.1.2"
   },
   "browserify": {
     "transform": [
@@ -45,10 +46,5 @@
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap.js",
     "ui-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
-  },
-  "devDependencies": {
-    "karma-chrome-launcher": "^0.1.2",
-    "karma-firefox-launcher": "^0.1.3",
-    "karma-phantomjs-launcher": "^0.1.2"
   }
 }
