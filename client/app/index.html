@@ -10,8 +10,10 @@
 
     <div ng-controller="InboxController">
       <view-toggle-button></view-toggle-button>
-      <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts" ng-show="viewState.showThumbnails"></receipt-thumbnail>
-      <receipt-table receipts="receipts" ng-show="viewState.showTable"></receipt-table>
+      <div ng-if="viewState.showThumbnails">
+        <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts"></receipt-thumbnail>
+      </div>
+      <receipt-table receipts="receipts" ng-if="viewState.showTable"></receipt-table>
     </div>
 
     <div ng-controller="HttpBusyController">

@@ -9,14 +9,14 @@ angular.module('epsonreceipts.widgets').directive('receiptTable', function() {
       datastore: '='
     },
     controller: function($scope, receiptEditor, receiptStorage) {
-      $scope.edit = function() {
-        var modal = receiptEditor.open($scope.receipt);
+      $scope.edit = function(receipt) {
+        var modal = receiptEditor.open(receipt);
         modal.result.then(function(receipt) {
           receiptStorage.update(receipt);
         });
       };
-      $scope.destroy = function() {
-        receiptStorage.destroy($scope.receipt);
+      $scope.destroy = function(receipt) {
+        receiptStorage.destroy(receipt);
       };
     }
 

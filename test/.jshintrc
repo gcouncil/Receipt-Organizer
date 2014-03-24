@@ -1,0 +1,17 @@
+{
+  "extends": "../.jshintrc",
+  "expr": true,
+  "globals": {
+    "before": false,
+    "after": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "describe": false,
+    "context": false,
+    "it": false,
+    "$": false,
+    "browser": false,
+    "by": false,
+    "element": false
+  }
+}

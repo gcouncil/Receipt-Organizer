@@ -15,8 +15,8 @@
     <td>{{ receipt.total | currency }}</td>
     <td>{{ receipt.paymentType }}</td>
     <td>{{ receipt.category }}</td>
-    <td><button ng-click="edit()" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button></td>
-    <td><button ng-click="delete()" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button></td>
+    <td><button ng-click="edit(receipt)" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button></td>
+    <td><button ng-click="destroy(receipt)" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button></td>
   </tr>
   <tbody>
 </table>
