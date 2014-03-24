@@ -21,4 +21,5 @@ angular.module('epsonreceipts').controller('InboxController', function($scope, $
   receiptStorage.query({ scope: $scope }, function(receipts) {
     $scope.receipts = receipts;
   });
+
 });

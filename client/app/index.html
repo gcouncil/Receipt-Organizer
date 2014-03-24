@@ -9,11 +9,16 @@
     <scan-button></scan-button>
 
     <div ng-controller="InboxController">
-      <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts"></receipt-thumbnail>
+      <div class="col-xs-2 col-xs-offset-10">
+        <view-toggle-button></view-toggle-button>
+      </div>
+      <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts" ng-show="viewState.showThumbnails"></receipt-thumbnail>
+      <receipt-table receipts="receipts" ng-show="viewState.showTable"></receipt-table>
     </div>
 
     <div ng-controller="HttpBusyController">
       <p ng-show="busy">Request In Progress</p>
     </div>
+
   </body>
 </html>
