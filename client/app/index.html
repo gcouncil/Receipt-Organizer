@@ -9,9 +9,7 @@
     <scan-button></scan-button>
 
     <div ng-controller="InboxController">
-      <div class="col-xs-2 col-xs-offset-10">
-        <view-toggle-button></view-toggle-button>
-      </div>
+      <view-toggle-button></view-toggle-button>
       <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts" ng-show="viewState.showThumbnails"></receipt-thumbnail>
       <receipt-table receipts="receipts" ng-show="viewState.showTable"></receipt-table>
     </div>
