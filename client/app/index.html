@@ -7,18 +7,10 @@
   </head>
   <body>
     <scan-button></scan-button>
-
-    <div ng-controller="InboxController">
-      <view-toggle-button></view-toggle-button>
-      <div ng-if="viewState.showThumbnails">
-        <receipt-thumbnail receipt="receipt" ng-repeat="receipt in receipts"></receipt-thumbnail>
-      </div>
-      <receipt-table receipts="receipts" ng-if="viewState.showTable"></receipt-table>
-    </div>
+    <ui-view></ui-view>
 
     <div ng-controller="HttpBusyController">
       <p ng-show="busy">Request In Progress</p>
     </div>
-
   </body>
 </html>
