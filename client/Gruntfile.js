@@ -47,11 +47,19 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.config('less', {
     styles: {
-      files: [
-        { src: 'app/styles.less', dest: 'build/styles.css' }
-      ],
+      files: [{
+        src: [
+          'app/styles.less',
+          './bower_components/ng-grid/ng-grid.css'
+        ],
+        dest: 'build/styles.css'
+      }],
       options: {
-        paths: ['./bower_components/bootstrap/less', './bower_components/font-awesome/less'],
+        paths: [
+          './bower_components/bootstrap/less',
+          './bower_components/font-awesome/less',
+        ],
+        strictImports: true,
         dumpLineNumbers: debug ? 'all' : false,
         sourceMap: debug,
         outputSourceFiles: true

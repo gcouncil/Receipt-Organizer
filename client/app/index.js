@@ -1,10 +1,12 @@
+require('jquery');
 var angular = require('angular');
 
 require('ui-utils');
 require('ui-router');
 require('ui-bootstrap');
+require('ng-grid');
 
-angular.module('epsonreceipts', ['ui.router', 'ui.bootstrap', 'epsonreceipts.widgets', 'epsonreceipts.storage']);
+angular.module('epsonreceipts', ['ui.router', 'ui.bootstrap', 'ngGrid', 'epsonreceipts.widgets', 'epsonreceipts.storage']);
 
 require('./components/widgets');
 require('./components/storage');

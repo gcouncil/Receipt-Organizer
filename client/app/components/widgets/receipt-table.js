@@ -9,6 +9,14 @@ angular.module('epsonreceipts.widgets').directive('receiptTable', function() {
       datastore: '='
     },
     controller: function($scope, receiptEditor, receiptStorage) {
+      $scope.grid = {
+        data: 'receipts',
+        columnDefs: [{
+          field: 'date', displayName: 'Date'
+        }, {
+          field: 'total', displayName: 'total'
+        }]
+      };
       $scope.edit = function(receipt) {
         var modal = receiptEditor.open(receipt);
         modal.result.then(function(receipt) {
