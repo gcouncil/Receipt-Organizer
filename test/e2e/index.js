@@ -10,6 +10,9 @@ function ReceiptPage() {
   this.receiptEditorForm = $('.modal-dialog receipt-form');
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
+
+  this.showThumbnailButton = $('.thumbnails-button');
+  this.showTableButton = $('.table-button');
 }
 
 describe('Manual Entry', function() {
@@ -38,4 +41,32 @@ describe('Manual Entry', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$39.99');
   });
+});
+
+describe('Toggling the View', function() {
+  beforeEach(function() {
+    this.page = new ReceiptPage();
+    this.page.get();
+  });
+
+  it('should should toggle from the thumbnail to the table view and back', function() {
+    // Create a new receipt
+    this.page.manualEntryButton.click();
+    $('.modal-dialog').element(by.buttonText('OK')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+
+    // Ensure that thumbnail view is displayed
+    expect($('.receipt-thumbnail-fields')).isDisplayed()).to.eventually.be.true;
+    expect(element(by.css('[ng-click="switchViews()"]')).isDisplayed()).to.eventually.be.false;
+
+    // Switch to table view
+    this.page.showTable.click();
+    expect(element(by.css('.receipt-thumbnail-fields')).isDisplayed()).to.eventually.be.false;
+    expect(element(by.css('[ng-click="switchViews()"]')).isDisplayed()).to.eventually.be.true;
+
+    // Make sure we can return to thumbnail view
+    this.page.showThumbnails.click();
+    expect(element(by.css('.receipt-thumbnail-fields')).isDisplayed()).to.eventually.be.true;
+    expect(element(by.css('[ng-click="switchViews()"]')).isDisplayed()).to.eventually.be.false;
+  })
 });
