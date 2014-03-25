@@ -18,10 +18,20 @@ angular.module('epsonreceipts.widgets').directive('input', function() {
           return angular.isNumber(value) ? value.toFixed(2) : value;
         });
 
-        ngModelController.$parsers.push(function(value) {
-          var valid = /^-?\d+(\.\d{0,2})?$/.test(value);
-          ngModelController.$setValidity('currency', valid || value === '-');
-          return valid ? parseFloat(parseFloat(value).toFixed(2)) : value;
+        ngModelController.$parsers.unshift(function(value) {
+          var number, valid;
+
+          if (ngModelController.$isEmpty(value)) {
+            number = null;
+            valid = true;
+          } else {
+            number = parseFloat(value);
+            valid = isFinite(number) && /^-?\d*\.?\d{0,2}$/.test(value);
+          }
+
+          ngModelController.$setValidity('currency', valid);
+
+          return valid ? number : value;
         });
 
         element.on('blur', function() {
