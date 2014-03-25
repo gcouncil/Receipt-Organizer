@@ -12,9 +12,19 @@ angular.module('epsonreceipts.widgets').directive('receiptTable', function() {
       $scope.grid = {
         data: 'receipts',
         columnDefs: [{
-          field: 'date', displayName: 'Date'
+          field: 'date',
+          displayName: 'Date',
+          cellFilter: 'date'
         }, {
-          field: 'total', displayName: 'total'
+          field: 'total',
+          displayName: 'total',
+          cellFilter: 'currency'
+        }, {
+          field: 'paymentType',
+          displayName: 'Payment Type'
+        }, {
+          field: 'category',
+          displayName: 'Category'
         }]
       };
       $scope.edit = function(receipt) {
