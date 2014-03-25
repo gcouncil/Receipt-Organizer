@@ -14,17 +14,52 @@ angular.module('epsonreceipts.widgets').directive('receiptTable', function() {
         columnDefs: [{
           field: 'date',
           displayName: 'Date',
-          cellFilter: 'date'
+          cellFilter: 'date',
+          minWidth: 120
         }, {
-          field: 'total',
-          displayName: 'total',
-          cellFilter: 'currency'
+          field: 'vendor',
+          displayName: 'Vendor',
+          minWidth: 200
         }, {
           field: 'paymentType',
           displayName: 'Payment Type'
         }, {
           field: 'category',
           displayName: 'Category'
+        }, {
+          field: 'city',
+          displayName: 'City'
+        }, {
+          field: 'state',
+          displayName: 'State'
+        }, {
+          field: 'tax',
+          displayName: 'Tax',
+          cellFilter: 'currency'
+        }, {
+          field: 'additionalTax',
+          displayName: 'Second Tax',
+          cellFilter: 'currency'
+        }, {
+          field: 'tip',
+          displayName: 'Tip',
+          cellFilter: 'currency'
+        }, {
+          field: 'total',
+          displayName: 'Total',
+          cellFilter: 'currency'
+        }, {
+          field: 'taxCategory',
+          displayName: 'Tax Category'
+        }, {
+          field: 'businessPurpose',
+          displayName: 'Business Purpose'
+        }, {
+          field: 'reimbursable',
+          displayName: 'Reimbursable'
+        }, {
+          field: 'billable',
+          displayName: 'Billable'
         }]
       };
       $scope.edit = function(receipt) {
