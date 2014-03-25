@@ -2,6 +2,9 @@ var angular = require('angular');
 
 angular.module('epsonreceipts.widgets', ['ui.keypress']);
 
+require('./currency-input');
+require('./form-group');
+
 require('./scan-button');
 require('./view-toggle-button');
 require('./receipt-thumbnail');

@@ -5,7 +5,8 @@ angular.module('epsonreceipts.widgets').directive('receiptForm', function() {
     restrict: 'E',
     template: require('./receipt-form.html'),
     scope: {
-      receipt: '='
+      receipt: '=',
+      form: '=name',
     }
   };
 });

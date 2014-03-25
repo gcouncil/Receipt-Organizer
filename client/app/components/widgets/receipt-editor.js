@@ -6,24 +6,32 @@ angular.module('epsonreceipts.widgets').factory('receiptEditor', function($modal
       var modal = $modal.open({
         backdrop: 'static',
         windowClass: 'receipt-editor-window',
-        template: require('./receipt-editor.html'),
-        resolve: {
-          receipt: function() { return receipt.clone(); }
-        },
-        controller: function($scope, receipt) {
-          $scope.receipt = receipt;
-
-          $scope.ok = function() {
-            $scope.$close($scope.receipt);
-          };
-
-          $scope.cancel = function() {
-            $scope.$dismiss('cancel');
-          };
+        template: '<receipt-editor receipt="receipt"></receipt-editor>',
+        controller: function($scope) {
+          $scope.receipt = receipt.clone();
         }
       });
 
       return modal;
     }
   };
+});
+
+angular.module('epsonreceipts.widgets').directive('receiptEditor', function() {
+  return {
+    restrict: 'E',
+    template: require('./receipt-editor.html'),
+    controller: function($scope) {
+      $scope.ok = function() {
+        if ($scope.form.$valid) {
+          $scope.$close($scope.receipt);
+        }
+      };
+
+      $scope.cancel = function() {
+        $scope.$dismiss('cancel');
+      };
+    }
+  };
+
 });
