@@ -13,7 +13,7 @@
 
 ## Development Usage
 
-(See submodules
+(See submodules)
 
 ### Build
 
