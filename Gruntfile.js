@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     options: {
       jshintrc: true
     },
-    all: ['Gruntfile.js', 'lib/**/*.js']
+    all: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
   });
 
   grunt.loadNpmTasks('grunt-karma');
