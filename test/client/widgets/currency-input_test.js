@@ -154,7 +154,7 @@ describe('currencyInput directive', function() {
 
         this.scope.$digest();
 
-        this.element.trigger('blur');
+        this.element.triggerHandler('blur');
       });
 
       it('should reformat the input value', function() {
@@ -171,7 +171,7 @@ describe('currencyInput directive', function() {
 
         this.scope.$digest();
 
-        this.element.trigger('blur');
+        this.element.triggerHandler('blur');
       });
 
       it('should not reformat the input value', function() {
