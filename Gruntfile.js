@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
-  grunt.initConfig({});
+  grunt.initConfig({
+    appconfig: require('config')
+  });
 
   var debug = true;
 
@@ -164,6 +166,8 @@ module.exports = function(grunt) {
       tasks: ['test:server']
     }
   });
+
+  grunt.loadTasks('./tasks');
 
   grunt.registerTask('build', ['copy', 'browserify', 'less']);
 

@@ -17,9 +17,11 @@ exports.up = function(knex, Promise) {
     t.boolean('reimbursable');
     t.boolean('billable');
     t.text('comments');
+
+    t.timestamps();
   });
 };
 
 exports.down = function(knex, Promise) {
-  knex.schema.dropTable('receipts');
+  return knex.schema.dropTable('receipts');
 };
