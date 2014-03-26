@@ -3,33 +3,102 @@ module.exports = function(grunt) {
 
   var debug = true;
 
-  grunt.loadNpmTasks('grunt-hub');
-  grunt.config('hub', {
-    all: {
-      src: ['*/Gruntfile.js']
+  // BUILD TASKS
+
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.config('browserify', {
+    options: {
+      debug: debug
+    },
+
+    scripts: {
+      files: [
+        { src: 'lib/client/index.js', dest: 'build/index.js' }
+      ]
+    },
+
+    test: {
+      files: [
+        { src: 'test/client/index.js', dest: 'build/test.js' }
+      ]
     }
   });
 
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.config('concurrent', {
-    options: {
-      logConcurrentOutput: true
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.config('copy', {
+    html: {
+      files: [
+        { src: 'lib/client/index.html', dest: 'build/index.html' }
+      ]
     },
-    dev: ['nodemon:dev', 'hub:all:development']
+    fonts: {
+      files: [{
+        expand: true,
+        cwd: './bower_components/font-awesome/fonts',
+        src: '*',
+        dest: 'build/fonts'
+      }, {
+        expand: true,
+        cwd: './bower_components/bootstrap/fonts',
+        src: '*',
+        dest: 'build/fonts'
+      }]
+    }
   });
 
-  grunt.loadNpmTasks('grunt-nodemon');
-  grunt.config('nodemon', {
-    dev: {
-      script: './server',
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.config('less', {
+    styles: {
+      files: [{
+        src: [
+          'lib/client/styles.less',
+          './bower_components/ng-grid/ng-grid.css'
+        ],
+        dest: 'build/styles.css'
+      }],
       options: {
-        watch: ['./server'],
-        ignore: ['./server/node_modules/**'],
-        env: {
-          PORT: 8000,
-          NODE_ENV: 'development'
-        }
+        paths: [
+          './bower_components/bootstrap/less',
+          './bower_components/font-awesome/less',
+        ],
+        dumpLineNumbers: debug ? 'all' : false,
+        sourceMap: debug,
+        outputSourceFiles: true
       }
+    }
+  });
+
+  // TESTING TASKS
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.config('jshint', {
+    options: {
+      jshintrc: true
+    },
+    all: ['Gruntfile.js', 'lib/**/*.js']
+  });
+
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.config('karma', {
+    options: {
+      configFile: 'karma.conf.js',
+    },
+
+    run: {},
+
+    watch: {
+      options: {
+        browsers: ['PhantomJS'],
+        background: true,
+        singleRun: false
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.config('mochaTest', {
+    server: {
+      src: ['test/server/**/*_test.js']
     }
   });
 
@@ -42,12 +111,70 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['hub:all:build']);
-  grunt.registerTask('test', ['hub:all:test', 'protractor']);
-  grunt.registerTask('test:unit', ['hub:all:test']);
-  grunt.registerTask('test:e2e', ['protractor']);
+  // WATCH TASKS
 
-  grunt.registerTask('development', ['concurrent:dev']);
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.config('concurrent', {
+    options: {
+      logConcurrentOutput: true
+    },
+    development: {
+      tasks: ['watch', 'nodemon']
+    }
+  });
 
-  grunt.registerTask('default', ['hub:all:build']);
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.config('nodemon', {
+    development: {
+      script: './lib/server',
+      options: {
+        watch: ['./lib/server', './lib/domain'],
+        env: {
+          PORT: 8000,
+          NODE_ENV: 'development'
+        }
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.config('watch', {
+    html: {
+      files: ['lib/client/index.html'],
+      tasks: ['copy:html']
+    },
+    scripts: {
+      files: ['lib/client/**/*.js', 'lib/client/**/*.html', 'lib/domain/**/*.js'],
+      tasks: ['browserify:scripts']
+    },
+    less: {
+      files: ['lib/client/**/*.less'],
+      tasks: ['less']
+    },
+    jshint: {
+      files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
+      tasks: ['jshint']
+    },
+    clientTest: {
+      files: ['test/client/**/*.js', 'lib/client/**/*.js', 'lib/client/**/*.html', 'lib/domain/**/*.js'],
+      tasks: ['browserify:test', 'karma:watch:run']
+    },
+    serverTest: {
+      files: ['test/server/**/*.js', 'lib/server/**/*.js', 'lib/domain/**/*.js'],
+      tasks: ['test:server']
+    }
+  });
+
+  grunt.registerTask('build', ['copy', 'browserify', 'less']);
+
+  grunt.registerTask('test:client', ['browserify:test', 'karma:run']);
+  grunt.registerTask('test:server', ['mochaTest:server']);
+  grunt.registerTask('test:domain', []);
+  grunt.registerTask('test:unit', ['test:client', 'test:server', 'test:domain']);
+  grunt.registerTask('test:e2e', ['browserify:scripts', 'protractor']);
+  grunt.registerTask('test', ['test:unit', 'test:e2e']);
+
+  grunt.registerTask('development', ['build', 'karma:watch:start', 'concurrent:development']);
+
+  grunt.registerTask('default', ['build']);
 };

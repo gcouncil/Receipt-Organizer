@@ -3,7 +3,7 @@ chai.use(require('chai-as-promised'));
 
 before(function(done) {
   process.env.NODE_ENV = 'test';
-  var app = require('../../server');
+  var app = require('epson-receipts/server');
   this.server = require('http').createServer(app);
   this.server.listen(9000, done);
 });
