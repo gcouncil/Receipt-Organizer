@@ -44,6 +44,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['hub:all:build']);
   grunt.registerTask('test', ['hub:all:test', 'protractor']);
+  grunt.registerTask('test:unit', ['hub:all:test']);
+  grunt.registerTask('test:e2e', ['protractor']);
+
   grunt.registerTask('development', ['concurrent:dev']);
 
   grunt.registerTask('default', ['hub:all:build']);
