@@ -1,5 +1,4 @@
 var express = require('express');
-var bcrypt = require('bcrypt');
 
 var handler = require('epson-receipts/server/handlers/users-handler');
 var domain = require('epson-receipts/domain');
@@ -21,7 +20,7 @@ describe('UsersHandler', function() {
               email: 'blewis@example.com'
             })
           ])
-        }
+        };
 
         var app = express();
         app.use(require('body-parser')());
@@ -35,7 +34,7 @@ describe('UsersHandler', function() {
         }).
         end(function(err, res) {
           self.res = res;
-          done(err)
+          done(err);
         });
       });
 
@@ -45,7 +44,7 @@ describe('UsersHandler', function() {
 
       it('should create a user', function() {
         expect(this.manager.create).to.have.been.calledWith({ email: 'blewis@example.com', password: 'password' }, sinon.match.func);
-      })
+      });
 
       it('should respond with the newly created user', function() {
         expect(this.res.body).to.have.deep.property('[0].email', 'blewis@example.com');
