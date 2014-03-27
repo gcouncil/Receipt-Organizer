@@ -71,7 +71,7 @@ describe('RecieptsHandler', function() {
         });
       });
 
-      it('should return an HTTP 200', function() {
+      it('should return an HTTP 201', function() {
         expect(this.res.status).to.equal(201);
       });
 
