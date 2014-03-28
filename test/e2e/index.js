@@ -1,5 +1,7 @@
+var async = require('async');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
+var protractor = require('protractor');
 
 function ReceiptPage() {
   this.get = function() {
@@ -17,23 +19,29 @@ function ReceiptPage() {
 
 describe('Existing Receipts', function() {
   beforeEach(function() {
+    
+    var self = this;
+    var receiptsManager = this.api.managers.receipts;
+    
     this.page = new ReceiptPage();
-    this.page.get();
-    this.page.manualEntryButton.click();
-    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
-    totalEl.clear();
-    totalEl.sendKeys('39.99');
-    $('.modal-dialog').element(by.buttonText('OK')).click();    
-    this.page.manualEntryButton.click();
-    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
-    totalEl.clear();
-    totalEl.sendKeys('2.99');
-    $('.modal-dialog').element(by.buttonText('OK')).click();    
-    this.page.manualEntryButton.click();
-    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
-    totalEl.clear();
-    totalEl.sendKeys('100.99');
-    $('.modal-dialog').element(by.buttonText('OK')).click();    
+
+    browser.call(function() {
+      return protractor.promise.checkedNodeCall(function(done) {
+	async.each([{
+	  total: 33.99
+	}, {
+	  total: 2.99
+	}, {
+	  total: 100.99
+	}],
+	receiptsManager.create,
+        function(err) {
+	  if (err) { return done(err); }
+	  self.page.get();
+	  done();
+        });
+      });
+    });
   });
 
   it('should remove receipts when delete button is clicked', function() {
