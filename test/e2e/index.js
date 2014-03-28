@@ -15,6 +15,42 @@ function ReceiptPage() {
   this.showTableButton = $('.table-button');
 }
 
+describe('Existing Receipts', function() {
+  beforeEach(function() {
+    this.page = new ReceiptPage();
+    this.page.get();
+    this.page.manualEntryButton.click();
+    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
+    totalEl.clear();
+    totalEl.sendKeys('39.99');
+    $('.modal-dialog').element(by.buttonText('OK')).click();    
+    this.page.manualEntryButton.click();
+    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
+    totalEl.clear();
+    totalEl.sendKeys('2.99');
+    $('.modal-dialog').element(by.buttonText('OK')).click();    
+    this.page.manualEntryButton.click();
+    var totalEl = this.page.receiptEditorForm.element(by.model('receipt.total'));
+    totalEl.clear();
+    totalEl.sendKeys('100.99');
+    $('.modal-dialog').element(by.buttonText('OK')).click();    
+  });
+
+  it('should remove receipts when delete button is clicked', function() {
+    var self = this;
+    expect(this.page.receipts.count()).to.eventually.equal(3);
+    var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
+    this.page.firstReceipt.$('.fa-trash-o').click();
+    expect(this.page.receipts.count()).to.eventually.equal(2);
+    browser.driver.call(function(firstId) {
+      self.page.receipts.each(function(receipt) {
+	expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+      });
+    }, null, firstIdPromise);
+  });
+
+});
+
 describe('Manual Entry', function() {
   beforeEach(function() {
     this.page = new ReceiptPage();
@@ -41,6 +77,7 @@ describe('Manual Entry', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$39.99');
   });
+
 });
 
 describe('Toggling the View', function() {
