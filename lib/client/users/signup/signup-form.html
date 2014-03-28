@@ -1,5 +1,5 @@
 <div class="signup-form-container">
-  <ng-form class="form-horizontal" name="form" ng-submit="onFormSubmit">
+  <form class="form-horizontal" name="form" ng-submit="submit()">
     <div class="form-group">
       <label class="control-label">Email</label>
       <input ng-model="user.email" type="email" class="form-control" required>
@@ -13,7 +13,7 @@
       <input ng-model="user.passwordConfirmation" type="password" class="form-control" confirmation-input="password" required>
     </div>
     <div class="form-group">
-      <input type="submit" class="btn btn-success" ng-click="create()" ng-disabled="form.$invalid" value="Sign Up!">
+      <input type="submit" class="btn btn-success" ng-disabled="form.$invalid" value="Sign Up!">
     </div>
-  </ng-form>
+  </form>
 </div>
