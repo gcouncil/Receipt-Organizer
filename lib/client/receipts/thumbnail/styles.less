@@ -5,17 +5,23 @@ receipt-thumbnail {
   width: 420px;
   height: 200px;
 
+  overflow: hidden;
+  border: solid 1px black;
+
   margin: 2em;
 }
 
-.receipt-thumbnail-image {
+.receipt-thumbnail-image-container {
   float: left;
   width: 150px;
   height: 100%;
 
   background: #999;
-  border: solid 1px black;
-  border-right: none;
+}
+
+.receipt-thumbnail-image {
+  width: 150px;
+  height: auto;
 }
 
 .receipt-thumbnail-actions {
@@ -25,12 +31,12 @@ receipt-thumbnail {
 
 .receipt-thumbnail-fields {
   float: left;
-  width: 270px;
+  width: 268px;
   height: 100%;
 
   margin: 0;
   padding: 0;
-  border: solid 1px black;
+  border-left: solid 1px black;
 
   font-size: 14px;
 }
