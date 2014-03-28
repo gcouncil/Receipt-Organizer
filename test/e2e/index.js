@@ -17,31 +17,31 @@ function ReceiptPage() {
   this.showTableButton = $('.table-button');
 }
 
+function buildReceipts(manager, receipts) {
+  var promise = protractor.promise.checkedNodeCall(function(done) {
+    async.each(
+      receipts,
+      manager.create,
+      done
+    );
+  });
+
+  browser.controlFlow().await(promise);
+}
+
 describe('Existing Receipts', function() {
   beforeEach(function() {
-    
-    var self = this;
     var receiptsManager = this.api.managers.receipts;
-    
+
     this.page = new ReceiptPage();
 
-    browser.call(function() {
-      return protractor.promise.checkedNodeCall(function(done) {
-	async.each([{
-	  total: 33.99
-	}, {
-	  total: 2.99
-	}, {
-	  total: 100.99
-	}],
-	receiptsManager.create,
-        function(err) {
-	  if (err) { return done(err); }
-	  self.page.get();
-	  done();
-        });
-      });
-    });
+    buildReceipts(receiptsManager, [
+      { total: 39.99 },
+      { total: 100.99 },
+      { total: 2.99 }
+    ]);
+
+    this.page.get();
   });
 
   it('should remove receipts when delete button is clicked', function() {
@@ -52,7 +52,7 @@ describe('Existing Receipts', function() {
     expect(this.page.receipts.count()).to.eventually.equal(2);
     browser.driver.call(function(firstId) {
       self.page.receipts.each(function(receipt) {
-	expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+        expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
       });
     }, null, firstIdPromise);
   });
