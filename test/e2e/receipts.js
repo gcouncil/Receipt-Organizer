@@ -68,7 +68,7 @@ describe('Editing Receipts', function() {
 
     // check database for the actual change
     var receiptsManager = this.api.managers.receipts;
-    var receiptQueryResults = queryReceipts(receiptsManager)
+    var receiptQueryResults = queryReceipts(receiptsManager);
 
     expect(receiptQueryResults).to.eventually.have.length(1);
     expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');

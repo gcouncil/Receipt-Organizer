@@ -9,7 +9,16 @@ function SignupPage() {
   };
 
   this.signupForm = $('form');
+  this.flashDiv = $('.alert');
 };
+
+function queryUsers(manager, options) {
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      manager.query(options || {}, done);
+    });
+  });
+}
 
 describe('Sign up', function() {
   beforeEach(function() {
@@ -30,5 +39,8 @@ describe('Sign up', function() {
     this.page.signupForm.element(by.buttonText('Sign Up!')).click();
     var redirect = browser.getCurrentUrl();
     expect(redirect).to.eventually.equal(helpers.rootUrl + '/#/receipts/thumbnails');
+
+    expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
   });
+
 });
