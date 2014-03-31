@@ -18,18 +18,64 @@ function ReceiptPage() {
 }
 
 function buildReceipts(manager, receipts) {
-  var promise = protractor.promise.checkedNodeCall(function(done) {
-    async.each(
-      receipts,
-      manager.create,
-      done
-    );
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      async.each(
+	receipts,
+	manager.create,
+	done
+      );
+    });
   });
-
-  browser.controlFlow().await(promise);
 }
 
-describe('Existing Receipts', function() {
+function queryReceipts(manager, options) {
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      manager.query(options || {}, done);
+    });
+  });
+}
+
+describe('Editing Receipts', function() {
+  beforeEach(function() {
+    var receiptsManager = this.api.managers.receipts;
+
+    this.page = new ReceiptPage();
+
+    buildReceipts(receiptsManager, [
+      { vendor: 'Walmart',
+        city: 'Boulder',
+        total: 10.00
+      }
+    ]);
+
+    this.page.get();
+  });
+
+  it('should edit a receipt with valid values', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+    expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
+
+    this.page.firstReceipt.$('.fa-edit').click();
+    var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+    $('.modal-dialog').element(by.buttonText('OK')).click();
+
+    expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+
+    // check database for the actual change
+    var receiptsManager = this.api.managers.receipts;
+    var receiptQueryResults = queryReceipts(receiptsManager)
+
+    expect(receiptQueryResults).to.eventually.have.length(1);
+    expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+  });
+});
+
+describe('Deleting Receipts', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
