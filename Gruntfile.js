@@ -7,21 +7,21 @@ module.exports = function(grunt) {
 
   // BUILD TASKS
 
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.config('browserify', {
     options: {
-      debug: debug
+      debug: debug,
+      watch: true
     },
 
     scripts: {
       files: [
-        { src: 'lib/client/index.js', dest: 'build/index.js' }
+        { src: './lib/client/index.js', dest: 'build/index.js' }
       ]
     },
 
     test: {
       files: [
-        { src: 'test/client/index.js', dest: 'build/test.js' }
+        { src: './test/client/index.js', dest: 'build/test.js' }
       ]
     }
   });
@@ -145,10 +145,6 @@ module.exports = function(grunt) {
       files: ['lib/client/index.html'],
       tasks: ['copy:html']
     },
-    scripts: {
-      files: ['lib/client/**/*.js', 'lib/client/**/*.html', 'lib/domain/**/*.js'],
-      tasks: ['browserify:scripts']
-    },
     less: {
       files: ['lib/client/**/*.less'],
       tasks: ['less']
@@ -158,8 +154,8 @@ module.exports = function(grunt) {
       tasks: ['jshint']
     },
     clientTest: {
-      files: ['test/client/**/*.js', 'lib/client/**/*.js', 'lib/client/**/*.html', 'lib/domain/**/*.js'],
-      tasks: ['browserify:test', 'karma:watch:run']
+      files: ['build/test.js'],
+      tasks: ['karma:watch:run']
     },
     serverTest: {
       files: ['test/server/**/*.js', 'lib/server/**/*.js', 'lib/domain/**/*.js'],
@@ -175,7 +171,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test:server', ['mochaTest:server']);
   grunt.registerTask('test:domain', []);
   grunt.registerTask('test:unit', ['test:client', 'test:server', 'test:domain']);
-  grunt.registerTask('test:e2e', ['browserify:scripts', 'protractor']);
+  grunt.registerTask('test:e2e', ['build', 'protractor']);
   grunt.registerTask('test', ['test:unit', 'test:e2e']);
 
   grunt.registerTask('development', ['build', 'karma:watch:start', 'concurrent:development']);
