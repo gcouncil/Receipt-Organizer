@@ -18,15 +18,23 @@ function ReceiptPage() {
 }
 
 function buildReceipts(manager, receipts) {
-  var promise = protractor.promise.checkedNodeCall(function(done) {
-    async.each(
-      receipts,
-      manager.create,
-      done
-    );
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      async.each(
+	receipts,
+	manager.create,
+	done
+      );
+    });
   });
+}
 
-  browser.controlFlow().await(promise);
+function queryReceipts(manager, options) {
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      manager.query(options || {}, done);
+    });
+  });
 }
 
 describe('Editing Receipts', function() {
@@ -57,10 +65,14 @@ describe('Editing Receipts', function() {
     $('.modal-dialog').element(by.buttonText('OK')).click();
 
     expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
-    expect(this.page.receipts.count()).to.eventually.equal(1);
     // verify that a new receipt was not created
-    // check database for the actual change
+    expect(this.page.receipts.count()).to.eventually.equal(1);
 
+    // check database for the actual change
+    var receiptsManager = this.api.managers.receipts;
+
+    expect(queryReceipts(receiptsManager)).to.eventually.have.length(1);
+    expect(queryReceipts(receiptsManager)).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 });
 
