@@ -1,5 +1,5 @@
 <div class="receipt-thumbnail-image-container">
-  <img class="receipt-thumbnail-image" ng-src="{{ receipt.image.data }}">
+  <img class="receipt-thumbnail-image" ng-src="{{ image.getImgSrc() }}">
 </div>
 <div class="receipt-thumbnail-actions">
   <button ng-click="edit()" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>

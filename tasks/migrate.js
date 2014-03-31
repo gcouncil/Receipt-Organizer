@@ -31,10 +31,10 @@ module.exports = function(grunt) {
     }).exec(this.async());
   });
 
-  grunt.registerTask('migrate:make', function() {
+  grunt.registerTask('migrate:make', function(name) {
     connect();
 
-    knex.migrate.latest({
+    knex.migrate.make(name, {
       directory: path.join(__dirname, '../migrations'),
     }).exec(this.async());
   });
