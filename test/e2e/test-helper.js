@@ -6,14 +6,20 @@ var async = require('async');
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
 
-before(Q.denodeify(function(done) {
+function wrapAsync(fn) {
+  return function() {
+    return Q.nbind(fn, this)();
+  }
+}
+
+before(wrapAsync(function(done) {
   this.app = require('epson-receipts/server');
   this.server = require('http').createServer(this.app);
   this.server.listen(9000, done);
   this.server.unref();
 }));
 
-beforeEach(Q.denodeify(function(done) {
+beforeEach(wrapAsync(function(done) {
   var knex = this.app.api.services.database.knex;
   knex('pg_catalog.pg_tables').select('tablename').where({ schemaname: 'public' }).exec(function(err, tables) {
     if (err) { return done(err); }
@@ -27,6 +33,7 @@ beforeEach(Q.denodeify(function(done) {
 }));
 
 module.exports = {
+  wrapAsync: wrapAsync,
   rootUrl: 'http://localhost:9000/',
   expect: chai.expect
 };
