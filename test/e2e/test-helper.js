@@ -9,7 +9,7 @@ chai.use(require('chai-as-promised'));
 function wrapAsync(fn) {
   return function() {
     return Q.nbind(fn, this)();
-  }
+  };
 }
 
 before(wrapAsync(function(done) {
