@@ -29,7 +29,46 @@ function buildReceipts(manager, receipts) {
   browser.controlFlow().await(promise);
 }
 
-describe('Existing Receipts', function() {
+describe('Editing Receipts', function() {
+  beforeEach(function() {
+    var receiptsManager = this.api.managers.receipts;
+
+    this.page = new ReceiptPage();
+
+    buildReceipts(receiptsManager, [
+      { vendor: 'Walmart',
+        city: 'Boulder',
+        total: 10.00
+      }
+    ]);
+
+    this.page.get();
+  });
+
+  it('should edit a receipt with valid values', function() {
+    var self = this;
+
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+    browser.driver.call(function() {
+      expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
+    });
+
+    this.page.firstReceipt.$('.fa-edit').click();
+    var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+    $('.modal-dialog').element(by.buttonText('OK')).click();
+
+    browser.driver.call(function() {
+      expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
+    });
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+    // verify that a new receipt was not created
+
+  });
+});
+
+describe('Deleting Receipts', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
