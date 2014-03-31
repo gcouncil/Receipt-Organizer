@@ -30,6 +30,14 @@ function buildUser(manager, user) {
   });
 }
 
+function authenticateUser(manager, credentials) {
+  return browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      manager.authenticate(credentials.email || '', credentials.password || '', done);
+    });
+  });
+}
+
 describe('Sign up', function() {
   beforeEach(function() {
     this.page = new SignupPage();
@@ -51,6 +59,15 @@ describe('Sign up', function() {
     expect(redirect).to.eventually.equal(helpers.rootUrl + '/#/receipts/thumbnails');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
+
+    var usersManager = this.api.managers.users;
+    var userAuthenticationResults = authenticateUser(usersManager, {
+      email: 'test@example.com',
+      password: 'password'
+    });
+
+    expect(userAuthenticationResults).to.eventually.have.deep.property('email', 'test@example.com');
+    expect(userAuthenticationResults).to.not.eventually.have.property('password');
   });
 });
 
@@ -67,7 +84,7 @@ describe('Log In', function() {
     this.page.get();
   });
 
-  it('should be possible to log in for an account', function() {
+  it('should be possible to log in to an account', function() {
     var emailField = this.page.loginForm.element(by.model('user.email'));
     emailField.sendKeys('newtestuser@example.com');
 

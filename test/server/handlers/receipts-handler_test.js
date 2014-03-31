@@ -6,6 +6,7 @@ var domain = require('epson-receipts/domain');
 var helpers = require('../test-helper');
 var expect = helpers.expect;
 var request = helpers.request;
+var sinon = helpers.sinon;
 
 describe('RecieptsHandler', function() {
   describe('index', function() {
@@ -50,7 +51,7 @@ describe('RecieptsHandler', function() {
       beforeEach(function(done) {
         var self = this;
 
-        var manager = {
+        this.manager = {
           create: this.sinon.stub().callsArgWith(1, null, [
             new domain.Receipt({
               vendor: 'Quick Left',
@@ -60,11 +61,12 @@ describe('RecieptsHandler', function() {
         };
 
         var app = express();
-        app.use(handler(manager).create);
+        app.use(require('body-parser')());
+        app.use(handler(this.manager).create);
 
         request(app)
         .post('/')
-        .send({vendor: 'Quick Left', total: '12.00'})
+        .send({vendor: 'Quick Left', total: 12.00})
         .end(function(err, res) {
           self.res = res;
           done(err);
@@ -80,6 +82,13 @@ describe('RecieptsHandler', function() {
         expect(this.res.body).to.have.deep.property('[0].total', 12.00);
       });
 
+      it('should pass the new attributes to the manager', function() {
+        expect(this.manager.create).to.have.been.calledWith({
+          vendor: 'Quick Left',
+          total: 12.00
+        }, sinon.match.func);
+      });
+
     });
   });
 
@@ -88,7 +97,7 @@ describe('RecieptsHandler', function() {
       beforeEach(function(done) {
         var self = this;
 
-        var manager = {
+        this.manager = {
           update: this.sinon.stub().callsArgWith(2, null, [
             new domain.Receipt({
               id: 1,
@@ -99,11 +108,12 @@ describe('RecieptsHandler', function() {
         };
 
         var app = express();
-        app.use(handler(manager).update);
+        app.use(require('body-parser')());
+        app.use('/:receipt', handler(this.manager).update);
 
         request(app)
         .put('/1')
-        .send({vendor: 'Quick Left', total: '1.00'})
+        .send({vendor: 'Quick Left', total: 1.00})
         .end(function(err, res) {
           self.res = res;
           done(err);
@@ -119,6 +129,12 @@ describe('RecieptsHandler', function() {
         expect(this.res.body).to.have.deep.property('[0].total', 1.00);
       });
 
+      it('should pass the new attributes to the manager', function() {
+        expect(this.manager.update).to.have.been.calledWith(1, {
+          vendor: 'Quick Left',
+          total: 1.00
+        }, sinon.match.func);
+      });
     });
   });
 
@@ -127,12 +143,13 @@ describe('RecieptsHandler', function() {
       beforeEach(function(done) {
         var self = this;
 
-        var manager = {
+        this.manager = {
           destroy: this.sinon.stub().callsArgWith(1, null, [])
         };
 
         var app = express();
-        app.use(handler(manager).destroy);
+        app.use(require('body-parser')());
+        app.use('/:receipt', handler(this.manager).destroy);
 
         request(app)
         .del('/1')
@@ -147,6 +164,9 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
+      it('should pass the new attributes to the manager', function() {
+        expect(this.manager.destroy).to.have.been.calledWith(1, sinon.match.func);
+      });
     });
   });
 });
