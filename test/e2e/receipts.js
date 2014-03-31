@@ -54,9 +54,8 @@ describe('Editing Receipts', function() {
   });
 
   it('should edit a receipt with valid values', function() {
-    var self = this;
     expect(this.page.receipts.count()).to.eventually.equal(1);
-    expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
+    expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstReceipt.$('.fa-edit').click();
     var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
@@ -64,15 +63,15 @@ describe('Editing Receipts', function() {
     originalVendor.sendKeys('Whole Foods');
     $('.modal-dialog').element(by.buttonText('OK')).click();
 
-    expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
-    // verify that a new receipt was not created
+    expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
     expect(this.page.receipts.count()).to.eventually.equal(1);
 
     // check database for the actual change
     var receiptsManager = this.api.managers.receipts;
+    var receiptQueryResults = queryReceipts(receiptsManager)
 
-    expect(queryReceipts(receiptsManager)).to.eventually.have.length(1);
-    expect(queryReceipts(receiptsManager)).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+    expect(receiptQueryResults).to.eventually.have.length(1);
+    expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 });
 
