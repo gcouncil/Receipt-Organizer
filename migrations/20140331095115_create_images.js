@@ -1,8 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('images', function(t) {
-    t.increments('id').primary();
-    t.uuid('uuid').unique().index();
+    t.uuid('uuid').primary().defaultTo('uuid_generate_v1()');
     t.text('data');
     t.text('url');
 

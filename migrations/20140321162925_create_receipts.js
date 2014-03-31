@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('receipts', function(t) {
-    t.increments('id').primary();
+    t.uuid('uuid').primary().defaultTo('uuid_generate_v1()');
     t.timestamp('date');
     t.string('vendor');
     t.string('payment_type');
