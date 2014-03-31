@@ -5,17 +5,27 @@ var protractor = require('protractor');
 function SignupPage() {
   this.get = function() {
     var url = helpers.rootUrl + '/#/signup';
-   browser.get(url);
+    browser.get(url);
   };
 
   this.signupForm = $('form');
   this.flashDiv = $('.alert');
-};
+}
 
-function queryUsers(manager, options) {
+function LoginPage() {
+  this.get = function() {
+    var url = helpers.rootUrl + '/#/login';
+    browser.get(url);
+  };
+
+  this.loginForm = $('form');
+  this.flashDiv = $('.alert');
+}
+
+function buildUser(manager, user) {
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
-      manager.query(options || {}, done);
+      manager.create(user, done);
     });
   });
 }
@@ -42,5 +52,32 @@ describe('Sign up', function() {
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
   });
+});
 
+describe('Log In', function() {
+  beforeEach(function() {
+    var usersManager = this.api.managers.users;
+    this.page = new LoginPage();
+
+    buildUser(usersManager, {
+      email: 'newtestuser@example.com',
+      password: 'password'
+    });
+
+    this.page.get();
+  });
+
+  it('should be possible to log in for an account', function() {
+    var emailField = this.page.loginForm.element(by.model('user.email'));
+    emailField.sendKeys('newtestuser@example.com');
+
+    var passwordField = this.page.loginForm.element(by.model('user.password'));
+    passwordField.sendKeys('password');
+
+    this.page.loginForm.element(by.buttonText('Log In')).click();
+    var redirect = browser.getCurrentUrl();
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '/#/receipts/thumbnails');
+
+    expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged in.');
+  });
 });
