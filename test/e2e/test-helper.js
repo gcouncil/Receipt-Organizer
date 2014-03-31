@@ -14,13 +14,14 @@ function wrapAsync(fn) {
 
 before(wrapAsync(function(done) {
   this.app = require('epson-receipts/server');
+  this.api = this.app.api;
   this.server = require('http').createServer(this.app);
   this.server.listen(9000, done);
   this.server.unref();
 }));
 
 beforeEach(wrapAsync(function(done) {
-  var knex = this.app.api.services.database.knex;
+  var knex = this.api.services.database.knex;
   knex('pg_catalog.pg_tables').select('tablename').where({ schemaname: 'public' }).exec(function(err, tables) {
     if (err) { return done(err); }
 
