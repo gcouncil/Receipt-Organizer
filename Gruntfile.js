@@ -175,7 +175,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test:server', ['mochaTest:server']);
   grunt.registerTask('test:domain', []);
   grunt.registerTask('test:unit', ['test:client', 'test:server', 'test:domain']);
-  grunt.registerTask('test:e2e', ['browserify:scripts', 'protractor']);
+  grunt.registerTask('test:e2e', ['build', 'protractor']);
   grunt.registerTask('test', ['test:unit', 'test:e2e']);
 
   grunt.registerTask('development', ['build', 'karma:watch:start', 'concurrent:development']);

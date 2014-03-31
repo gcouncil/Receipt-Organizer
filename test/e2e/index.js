@@ -7,7 +7,7 @@ function ReceiptPage() {
   };
 
   this.manualEntryButton = $('scan-button').element(by.buttonText('Manual Entry'));
-  this.receiptEditorForm = $('.modal-dialog receipt-form');
+  this.receiptEditorForm = $('.modal-dialog form');
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
 
