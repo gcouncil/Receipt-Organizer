@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'test';
 
 var Q = require('q');
-var async = require('async');
+var _ = require('lodash');
 
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
@@ -25,11 +25,10 @@ beforeEach(wrapAsync(function(done) {
   knex('pg_catalog.pg_tables').select('tablename').where({ schemaname: 'public' }).exec(function(err, tables) {
     if (err) { return done(err); }
 
-    async.each(tables, function(table, callback) {
-      if (/^knex/.test(table.tablename)) { return callback(); }
+    tables = _.map(tables, 'tablename');
+    tables = _.reject(tables, function(table) { return /^knex/.test(table); });
 
-      knex(table.tablename).truncate().exec(callback);
-    }, done);
+    knex.raw('TRUNCATE ' + tables.join(', ') + ' RESTART IDENTITY CASCADE').exec(done);
   });
 }));
 
