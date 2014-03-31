@@ -47,11 +47,8 @@ describe('Editing Receipts', function() {
 
   it('should edit a receipt with valid values', function() {
     var self = this;
-
     expect(this.page.receipts.count()).to.eventually.equal(1);
-    browser.driver.call(function() {
-      expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
-    });
+    expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstReceipt.$('.fa-edit').click();
     var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
@@ -59,11 +56,10 @@ describe('Editing Receipts', function() {
     originalVendor.sendKeys('Whole Foods');
     $('.modal-dialog').element(by.buttonText('OK')).click();
 
-    browser.driver.call(function() {
-      expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
-    });
+    expect(self.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
     expect(this.page.receipts.count()).to.eventually.equal(1);
     // verify that a new receipt was not created
+    // check database for the actual change
 
   });
 });
