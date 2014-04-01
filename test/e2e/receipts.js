@@ -17,6 +17,13 @@ function ReceiptPage() {
   this.showTableButton = $('.table-button');
 }
 
+function ReceiptTablePage() {
+  this.get = function() {
+    var url = helpers.rootUrl + '/#/receipts/table';
+    browser.get(url);
+  };
+}
+
 function buildReceipts(manager, receipts) {
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
@@ -161,4 +168,24 @@ describe('Toggling the View', function() {
     expect($('.receipt-thumbnail-fields').isPresent()).to.eventually.be.true;
     expect($('receipt-table').isPresent()).to.eventually.be.false;
   });
+});
+
+describe('Receipts Table View', function() {
+  beforeEach(function() {
+    var receiptsManager = this.api.managers.receipts;
+
+    this.page = new ReceiptTablePage();
+
+    buildReceipts(receiptsManager, [
+      { vendor: 'Quick Left', total: 39.99 }
+     ]);
+
+    this.page.get();
+  });
+
+  it('should contain existing receipts', function() {
+    expect($('receipt-table').isPresent()).to.eventually.be.true;
+    expect($('receipt-table').getText()).to.eventually.contain('39.99');
+  });
+
 });
