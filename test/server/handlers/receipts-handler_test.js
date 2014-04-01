@@ -112,7 +112,7 @@ describe('RecieptsHandler', function() {
         app.use('/:receipt', handler(this.manager).update);
 
         request(app)
-        .put('/1')
+        .put('/UUID')
         .send({vendor: 'Quick Left', total: 1.00})
         .end(function(err, res) {
           self.res = res;
@@ -130,7 +130,7 @@ describe('RecieptsHandler', function() {
       });
 
       it('should pass the new attributes to the manager', function() {
-        expect(this.manager.update).to.have.been.calledWith(1, {
+        expect(this.manager.update).to.have.been.calledWith('UUID', {
           vendor: 'Quick Left',
           total: 1.00
         }, sinon.match.func);
@@ -152,7 +152,7 @@ describe('RecieptsHandler', function() {
         app.use('/:receipt', handler(this.manager).destroy);
 
         request(app)
-        .del('/1')
+        .del('/UUID')
         .end(function(err, res) {
           if (err) {throw err;}
           self.res = res;
@@ -165,7 +165,7 @@ describe('RecieptsHandler', function() {
       });
 
       it('should pass the new attributes to the manager', function() {
-        expect(this.manager.destroy).to.have.been.calledWith(1, sinon.match.func);
+        expect(this.manager.destroy).to.have.been.calledWith('UUID', sinon.match.func);
       });
     });
   });
