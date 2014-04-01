@@ -1,1 +1,24 @@
-<div ng-grid="grid"></div>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <td>Date</td>
+        <td>Total</td>
+        <td>Payment Type</td>
+        <td>Category</td>
+        <td>Edit</td>
+        <td>Delete</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="receipt in receipts" receipt="receipt">
+        <td>{{ receipt.date | date }}</td>
+        <td>{{ receipt.total | currency }}</td>
+        <td>{{ receipt.paymentType }}</td>
+        <td>{{ receipt.category }}</td>
+        <td><button ng-click="edit()" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button></td>
+        <td><button ng-click="delete()" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -177,7 +177,8 @@ describe('Receipts Table View', function() {
     this.page = new ReceiptTablePage();
 
     buildReceipts(receiptsManager, [
-      { vendor: 'Quick Left', total: 39.99 }
+      { vendor: 'Quick Left', total: 100.00 },
+      { vendor: 'Slow Right', total: 1.00 }
      ]);
 
     this.page.get();
@@ -185,7 +186,8 @@ describe('Receipts Table View', function() {
 
   it('should contain existing receipts', function() {
     expect($('receipt-table').isPresent()).to.eventually.be.true;
-    expect($('receipt-table').getText()).to.eventually.contain('39.99');
+    expect($('receipt-table').getText()).to.eventually.contain('100.00');
+    expect($('receipt-table').getText()).to.eventually.contain('1.00');
   });
 
 });
