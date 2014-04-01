@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   function connect() {
     var config = grunt.config('appconfig');
     knex = knex || Knex.initialize({
+      debug: true,
       client: 'pg',
       connection: {
         database: config.database.name,
