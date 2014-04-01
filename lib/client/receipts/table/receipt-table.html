@@ -2,24 +2,24 @@
   <table>
     <thead>
       <tr>
-        <td>Total</td>
-        <td>Vendor</td>
-        <td>Date</td>
-        <td>Category</td>
-        <td>Payment Type</td>
-        <td>Edit</td>
-        <td>Delete</td>
+        <th></th>
+        <th></th>
+        <th>Total</th>
+        <th>Vendor</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Payment Type</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="receipt in receipts" receipt="receipt">
+      <tr ng-repeat="receipt in receipts">
+        <td><label class="checkbox"><input type="checkbox"></label></td>
+        <td>{{$index + 1}}</td>
         <td>{{ receipt.total | currency }}</td>
         <td>{{ receipt.vendor }}</td>
         <td>{{ receipt.date | date }}</td>
         <td>{{ receipt.category }}</td>
         <td>{{ receipt.paymentType }}</td>
-        <td><button ng-click="edit()" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button></td>
-        <td><button ng-click="delete()" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button></td>
       </tr>
     </tbody>
   </table>
