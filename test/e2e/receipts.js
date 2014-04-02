@@ -179,7 +179,7 @@ describe('Receipts Table View', function() {
     buildReceipts(receiptsManager, [
       { vendor: 'Quick Left', total: 100.00 },
       { vendor: 'Slow Right', total: 1.00 }
-     ]);
+    ]);
 
     this.page.get();
   });
