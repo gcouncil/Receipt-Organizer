@@ -6,6 +6,8 @@ var _ = require('lodash');
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
 
+var authenticate = require('./support/authenticate-user');
+
 function wrapAsync(fn) {
   return function() {
     return Q.nbind(fn, this)();
@@ -35,5 +37,6 @@ beforeEach(wrapAsync(function(done) {
 module.exports = {
   wrapAsync: wrapAsync,
   rootUrl: 'http://localhost:9000/',
-  expect: chai.expect
+  expect: chai.expect,
+  authenticate: authenticate
 };
