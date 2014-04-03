@@ -22,6 +22,16 @@ function LoginPage() {
   this.flashDiv = $('.alert');
 }
 
+function ReceiptPage(api) {
+  this.get = function() {
+    browser.get(helpers.rootUrl);
+    helpers.createAndLoginUser(api);
+  };
+
+  this.logoutButton = $('body').element(by.buttonText('Log Out'));
+  this.flashDiv = $('.alert');
+}
+
 function buildUser(manager, user) {
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
@@ -98,3 +108,21 @@ describe('Log In', function() {
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged in.');
   });
 });
+
+describe('Log Out', function() {
+  beforeEach(function() {
+    var receiptsManager = this.api.managers.receipts;
+
+    this.page = new ReceiptPage(this.api);
+
+    this.page.get();
+  });
+
+  it('should be possible to log out of an account', function() {
+    this.page.logoutButton.click();
+
+    expect(browser.getCurrentUrl()).to.eventually.contain(helpers.rootUrl + '#/login');
+    expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged out.');
+  });
+});
+
