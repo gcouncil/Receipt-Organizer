@@ -3,21 +3,41 @@
     <thead>
       <tr>
         <th></th>
-        <th>Total</th>
         <th>Vendor</th>
         <th>Date</th>
         <th>Category</th>
         <th>Payment Type</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Tax</th>
+        <th>Addn. Tax</th>
+        <th>Tip</th>
+        <th>Total</th>
+        <th>Tax Category</th>
+        <th>Business Purpose</th>
+        <th>Reimbursable</th>
+        <th>Billable</th>
+        <th>Comments</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="receipt in receipts">
         <td><input type="checkbox"></td>
-        <td>{{ receipt.total | currency }}</td>
         <td>{{ receipt.vendor }}</td>
         <td>{{ receipt.date | date }}</td>
         <td>{{ receipt.category }}</td>
         <td>{{ receipt.paymentType }}</td>
+        <td>{{ receipt.city }}</td>
+        <td>{{ receipt.state }}</td>
+        <td>{{ receipt.tax | currency}}</td>
+        <td>{{ receipt.additional_tax | currency}}</td>
+        <td>{{ receipt.tip | currency}}</td>
+        <td>{{ receipt.total | currency }}</td>
+        <td>{{ receipt.tax_category }}</td>
+        <td>{{ receipt.business_purpose }}</td>
+        <td>{{ receipt.reimbursable }}</td>
+        <td>{{ receipt.billable }}</td>
+        <td>{{ receipt.comments }}</td>
       </tr>
     </tbody>
   </table>
