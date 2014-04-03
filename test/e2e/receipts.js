@@ -170,24 +170,30 @@ describe('Toggling the View', function() {
   });
 });
 
-describe('Receipts Table View', function() {
+describe.only('Receipts Table View', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
     this.page = new ReceiptTablePage();
-
-    buildReceipts(receiptsManager, [
-      { vendor: 'Quick Left', total: 100.00 },
-      { vendor: 'Slow Right', total: 1.00 }
-    ]);
-
+    for (var i = 0; i <= 20; i++) {
+      buildReceipts(receiptsManager, [
+	{ vendor: 'Quick Left', total: 100.00 + i}
+      ]);
+    }
     this.page.get();
   });
 
   it('should contain existing receipts', function() {
     expect($('receipt-table').isPresent()).to.eventually.be.true;
     expect($('receipt-table').getText()).to.eventually.contain('100.00');
-    expect($('receipt-table').getText()).to.eventually.contain('1.00');
+    expect($('receipt-table').getText()).to.eventually.contain('103.00');
+  });
+
+  it('should display paginated results', function() {
+    var twentiethReceiptTotal = '$120.00'
+    expect($('receipt-table').getText()).to.not.eventually.contain(twentiethReceiptTotal);
+    //click pagination button
+    //expect page to contain $120
   });
 
 });
