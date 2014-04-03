@@ -3,9 +3,10 @@ var helpers = require('./test-helper');
 var expect = helpers.expect;
 var protractor = require('protractor');
 
-function ReceiptPage() {
+function ReceiptPage(api) {
   this.get = function() {
     browser.get(helpers.rootUrl);
+    helpers.createAndLoginUser(api);
   };
 
   this.manualEntryButton = $('scan-button').element(by.buttonText('Manual Entry'));
@@ -21,9 +22,9 @@ function buildReceipts(manager, receipts) {
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
       async.each(
-	receipts,
-	manager.create,
-	done
+        receipts,
+        manager.create,
+        done
       );
     });
   });
@@ -41,14 +42,13 @@ describe('Editing Receipts', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.api);
 
-    buildReceipts(receiptsManager, [
-      { vendor: 'Walmart',
-        city: 'Boulder',
-        total: 10.00
-      }
-    ]);
+    buildReceipts(receiptsManager, [{
+      vendor: 'Walmart',
+      city: 'Boulder',
+      total: 10.00
+    }]);
 
     this.page.get();
   });
@@ -79,7 +79,7 @@ describe('Deleting Receipts', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.api);
 
     buildReceipts(receiptsManager, [
       { total: 39.99 },
@@ -107,7 +107,7 @@ describe('Deleting Receipts', function() {
 
 describe('Manual Entry', function() {
   beforeEach(function() {
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.api);
     this.page.get();
 
     this.page.manualEntryButton.click();
@@ -136,7 +136,7 @@ describe('Manual Entry', function() {
 
 describe('Toggling the View', function() {
   beforeEach(function() {
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.api);
     this.page.get();
   });
 

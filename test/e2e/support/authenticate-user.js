@@ -1,21 +1,27 @@
 var protractor = require('protractor');
 
-function buildUser(manager, user) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      return manager.create(user, done);
-    });
-  });
-}
-
-function authenticateUser() {
-  var usersManager = this.api.managers.users;
-  var token = buildUser(usersManager, {
+function createAndLoginUser(api, user) {
+  user = user || {
     email: 'test@example.com',
     password: 'password'
+  };
+
+  var userPromise = browser.driver.controlFlow().execute(function() {
+    return protractor.promise.checkedNodeCall(function(done) {
+      return api.managers.users.create(user, done);
+    });
   });
 
-  browser.driver.controlFlow().exec(window.localStorage.setItem('currentUser', token));
-};
+  browser.call(function(user) {
+    browser.executeScript(function(user) {
+      var injector = angular.element(document.body).injector();
+      injector.get('authentication').setUser(user);
+      window.history.back();
+    }, user);
+  }, null, userPromise);
 
-module.exports = authenticateUser;
+}
+
+module.exports = {
+  createAndLoginUser: createAndLoginUser
+};
