@@ -1,4 +1,14 @@
 var protractor = require('protractor');
+function loginUser(user) {
+  browser.call(function(user) {
+    browser.executeScript(function(user) {
+      /* global angular */
+      var injector = angular.element(document.body).injector();
+      injector.get('authentication').setUser(user);
+      window.history.back();
+    }, user);
+  }, null, user);
+}
 
 function createAndLoginUser(api, user) {
   user = user || {
@@ -12,17 +22,12 @@ function createAndLoginUser(api, user) {
     });
   });
 
-  browser.call(function(user) {
-    browser.executeScript(function(user) {
-      /* global angular */
-      var injector = angular.element(document.body).injector();
-      injector.get('authentication').setUser(user);
-      window.history.back();
-    }, user);
-  }, null, userPromise);
+  loginUser(user);
 
+  return userPromise;
 }
 
 module.exports = {
+  loginUser: loginUser,
   createAndLoginUser: createAndLoginUser
 };

@@ -18,6 +18,8 @@ before(wrapAsync(function(done) {
   this.server = require('http').createServer(this.app);
   this.server.listen(9000, done);
   this.server.unref();
+
+  this.factory = require('./support/factory')(this.api.managers);
 }));
 
 beforeEach(wrapAsync(function(done) {
@@ -35,5 +37,5 @@ beforeEach(wrapAsync(function(done) {
 module.exports = _.extend({
   wrapAsync: wrapAsync,
   rootUrl: 'http://localhost:9000/',
-  expect: chai.expect
+  expect: chai.expect,
 }, require('./support/authenticate-user'));

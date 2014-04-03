@@ -8,11 +8,19 @@ var expect = helpers.expect;
 var request = helpers.request;
 var sinon = helpers.sinon;
 
+function login(user) {
+  return function(req, res, next) {
+    req.user = user;
+    next();
+  };
+}
+
 describe('RecieptsHandler', function() {
   describe('index', function() {
     context('with existing receipts', function() {
       beforeEach(function(done) {
         var self = this;
+
 
         var manager = {
           query: this.sinon.stub().callsArgWith(1, null, [
@@ -23,7 +31,14 @@ describe('RecieptsHandler', function() {
           ])
         };
 
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
+        };
+
         var app = express();
+        app.use(login(user));
         app.use(handler(manager).index);
 
         request(app)
@@ -52,7 +67,7 @@ describe('RecieptsHandler', function() {
         var self = this;
 
         this.manager = {
-          create: this.sinon.stub().callsArgWith(1, null, [
+          create: this.sinon.stub().callsArgWith(2, null, [
             new domain.Receipt({
               vendor: 'Quick Left',
               total: 12.00
@@ -60,7 +75,14 @@ describe('RecieptsHandler', function() {
           ])
         };
 
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
+        };
+
         var app = express();
+        app.use(login(user));
         app.use(require('body-parser')());
         app.use(handler(this.manager).create);
 
@@ -86,7 +108,7 @@ describe('RecieptsHandler', function() {
         expect(this.manager.create).to.have.been.calledWith({
           vendor: 'Quick Left',
           total: 12.00
-        }, sinon.match.func);
+        }, { 'user': '1a2b3c' }, sinon.match.func);
       });
 
     });
@@ -98,7 +120,7 @@ describe('RecieptsHandler', function() {
         var self = this;
 
         this.manager = {
-          update: this.sinon.stub().callsArgWith(2, null, [
+          update: this.sinon.stub().callsArgWith(3, null, [
             new domain.Receipt({
               id: 1,
               vendor: 'Quick Left',
@@ -107,7 +129,14 @@ describe('RecieptsHandler', function() {
           ])
         };
 
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
+        };
+
         var app = express();
+        app.use(login(user));
         app.use(require('body-parser')());
         app.use('/:receipt', handler(this.manager).update);
 
@@ -133,7 +162,7 @@ describe('RecieptsHandler', function() {
         expect(this.manager.update).to.have.been.calledWith('UUID', {
           vendor: 'Quick Left',
           total: 1.00
-        }, sinon.match.func);
+        }, { 'user': '1a2b3c' }, sinon.match.func);
       });
     });
   });
@@ -144,10 +173,17 @@ describe('RecieptsHandler', function() {
         var self = this;
 
         this.manager = {
-          destroy: this.sinon.stub().callsArgWith(1, null, [])
+          destroy: this.sinon.stub().callsArgWith(2, null, [])
+        };
+
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
         };
 
         var app = express();
+        app.use(login(user));
         app.use(require('body-parser')());
         app.use('/:receipt', handler(this.manager).destroy);
 
@@ -165,7 +201,7 @@ describe('RecieptsHandler', function() {
       });
 
       it('should pass the new attributes to the manager', function() {
-        expect(this.manager.destroy).to.have.been.calledWith('UUID', sinon.match.func);
+        expect(this.manager.destroy).to.have.been.calledWith('UUID', { 'user': '1a2b3c'}, sinon.match.func);
       });
     });
   });
