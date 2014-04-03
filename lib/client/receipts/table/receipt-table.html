@@ -34,9 +34,9 @@
         <td>{{ receipt.tip | currency}}</td>
         <td>{{ receipt.total | currency }}</td>
         <td>{{ receipt.tax_category }}</td>
-        <td>{{ receipt.business_purpose }}</td>
-        <td>{{ receipt.reimbursable }}</td>
-        <td>{{ receipt.billable }}</td>
+        <td>{{ receipt.business_purpose}}</td>
+        <td>{{ receipt.reimbursable | checkmark}}</td>
+        <td>{{ receipt.billable | checkmark}}</td>
         <td>{{ receipt.comments }}</td>
       </tr>
     </tbody>
