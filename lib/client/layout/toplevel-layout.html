@@ -1,6 +1,10 @@
-<flash></flash>
-<ui-view></ui-view>
-
-<div ng-controller="HttpBusyController">
-  <p ng-show="busy">Request In Progress</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-2">
+      <scan-button delegate="delegate"></scan-button>
+    </div>
+    <div class="col-xs-10">
+      <ui-view></ui-view>
+    </div>
+  </div>
 </div>

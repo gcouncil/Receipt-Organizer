@@ -53,8 +53,7 @@ module.exports = function(grunt) {
     styles: {
       files: [{
         src: [
-          'lib/client/styles.less',
-          './bower_components/ng-grid/ng-grid.css'
+          'lib/client/styles.less'
         ],
         dest: 'build/styles.css'
       }],
