@@ -20,6 +20,9 @@
     "morph": "^0.2.0",
     "config": "^0.4.35",
     "async": "^0.2.10",
+    "passport": "^0.2.0",
+    "bcrypt": "^0.7.7",
+    "passport-local": "^1.0.0",
     "uuid": "^1.4.1"
   },
   "devDependencies": {
@@ -50,6 +53,7 @@
     "browserify": "^3.32.1",
     "browserify-shim": "^3.3.1",
     "partialify": "^3.1.0",
+    "sinon-chai": "^2.5.0",
     "q": "~1.0.1",
     "watchify": "~0.6.3"
   },
