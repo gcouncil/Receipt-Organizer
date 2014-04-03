@@ -2,6 +2,7 @@ var async = require('async');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 var protractor = require('protractor');
+var _ = require('lodash');
 
 function ReceiptPage() {
   this.get = function() {
@@ -22,6 +23,7 @@ function ReceiptTablePage() {
     var url = helpers.rootUrl + '/#/receipts/table';
     browser.get(url);
   };
+  this.receipts = element.all(by.repeater('receipt in receipts'));
 }
 
 function buildReceipts(manager, receipts) {
@@ -170,16 +172,14 @@ describe('Toggling the View', function() {
   });
 });
 
-describe.only('Receipts Table View', function() {
+describe('Receipts Table View', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
     this.page = new ReceiptTablePage();
-    for (var i = 0; i <= 20; i++) {
-      buildReceipts(receiptsManager, [
-	{ vendor: 'Quick Left', total: 100.00 + i}
-      ]);
-    }
+      buildReceipts(receiptsManager, _.times(15, function(i) {
+	return { vendor: 'Quick Left', total: 100.00 + i};
+      }));
     this.page.get();
   });
 
@@ -190,10 +190,9 @@ describe.only('Receipts Table View', function() {
   });
 
   it('should display paginated results', function() {
-    var twentiethReceiptTotal = '$120.00'
-    expect($('receipt-table').getText()).to.not.eventually.contain(twentiethReceiptTotal);
-    //click pagination button
-    //expect page to contain $120
+    expect(this.page.receipts.count()).to.eventually.equal(10);
+    $('.pagination').element(by.linkText('Next')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(5);
   });
 
 });
