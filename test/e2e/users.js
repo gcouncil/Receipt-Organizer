@@ -111,8 +111,6 @@ describe('Log In', function() {
 
 describe('Log Out', function() {
   beforeEach(function() {
-    var receiptsManager = this.api.managers.receipts;
-
     this.page = new ReceiptPage(this.api);
 
     this.page.get();
