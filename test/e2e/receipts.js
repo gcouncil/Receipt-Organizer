@@ -1,12 +1,16 @@
-var async = require('async');
+var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-var protractor = require('protractor');
-var _ = require('lodash');
 
-function ReceiptPage() {
+function ReceiptPage(factory, user) {
+  this.user = user || factory.users.create({
+    email: 'test@example.com',
+    password: 'password'
+  });
+
   this.get = function() {
-    browser.get(helpers.rootUrl + '/#/receipts');
+    browser.get(helpers.rootUrl + '#/receipts');
+    helpers.loginUser(this.user);
   };
 
   this.receiptEditorForm = $('.modal-dialog form');
@@ -17,51 +21,43 @@ function ReceiptPage() {
   this.showTableButton = $('.table-button');
 }
 
-function ReceiptTablePage() {
+function ReceiptTablePage(factory, user) {
+  this.user = user || factory.users.create({
+    email: 'test@example.com',
+    password: 'password'
+  });
+
   this.get = function() {
-    var url = helpers.rootUrl + '/#/receipts/table';
+    var url = helpers.rootUrl + '#/receipts/table';
     browser.get(url);
+    helpers.loginUser(this.user);
   };
+
   this.receipts = element.all(by.repeater('receipt in receipts'));
-}
-
-function buildReceipts(manager, receipts) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      async.each(
-	receipts,
-	manager.create,
-	done
-      );
-    });
-  });
-}
-
-function queryReceipts(manager, options) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      manager.query(options || {}, done);
-    });
-  });
 }
 
 describe('Editing Receipts', function() {
   beforeEach(function() {
-    var receiptsManager = this.api.managers.receipts;
+    var self = this;
 
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.factory);
 
-    buildReceipts(receiptsManager, [
-      { vendor: 'Walmart',
+    this.page.user.then(function(user) {
+      self.factory.receipts.create({
+        vendor: 'Walmart',
         city: 'Boulder',
         total: 10.00
-      }
-    ]);
+      }, {
+        user: user.id
+      });
+    });
 
     this.page.get();
   });
 
   it('should edit a receipt with valid values', function() {
+    var self = this;
+
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
 
@@ -75,8 +71,9 @@ describe('Editing Receipts', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
 
     // check database for the actual change
-    var receiptsManager = this.api.managers.receipts;
-    var receiptQueryResults = queryReceipts(receiptsManager);
+    var receiptQueryResults = browser.call(function(user) {
+      return self.factory.receipts.query({ user: user.id });
+    }, null, this.page.user);
 
     expect(receiptQueryResults).to.eventually.have.length(1);
     expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
@@ -85,15 +82,20 @@ describe('Editing Receipts', function() {
 
 describe('Deleting Receipts', function() {
   beforeEach(function() {
-    var receiptsManager = this.api.managers.receipts;
+    var self = this;
+    this.page = new ReceiptPage(this.factory);
 
-    this.page = new ReceiptPage();
-
-    buildReceipts(receiptsManager, [
-      { total: 39.99 },
-      { total: 100.99 },
-      { total: 2.99 }
-    ]);
+    this.page.user.then(function(user) {
+      _.each([
+        { total: 39.99 },
+        { total: 100.99 },
+        { total: 2.99 }
+      ], function(data) {
+        self.factory.receipts.create(data, {
+          user: user.id
+        });
+      });
+    });
 
     this.page.get();
   });
@@ -115,7 +117,7 @@ describe('Deleting Receipts', function() {
 
 describe('Manual Entry', function() {
   beforeEach(function() {
-    this.page = new ReceiptPage();
+    this.page = new ReceiptPage(this.factory);
     this.page.get();
     $('.caret').click();
     $('.btn-group').element(by.buttonText('Manual Entry')).click();
@@ -139,13 +141,22 @@ describe('Manual Entry', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$39.99');
   });
-
 });
 
-describe.only('Toggling the View', function() {
-  it('should should toggle from the thumbnail to the table view and back', function() {
-    this.page = new ReceiptPage();
+describe('Toggling the View', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ReceiptPage(this.factory);
+    this.page.user.then(function(user) {
+      return self.factory.receipts.create({}, { user: user.id });
+    });
+
     this.page.get();
+  });
+
+  it('should should toggle from the thumbnail to the table view and back', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(1);
 
     // Ensure that thumbnail view is displayed
     expect($('.receipt-thumbnail-fields').isPresent()).to.eventually.be.true;
@@ -167,7 +178,7 @@ describe('Receipts Table View', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
-    this.page = new ReceiptTablePage();
+    this.page = new ReceiptTablePage(this.factory);
       buildReceipts(receiptsManager, _.times(15, function(i) {
 	return { vendor: 'Quick Left', total: 100.00 + i};
       }));
@@ -185,5 +196,38 @@ describe('Receipts Table View', function() {
     $('.pagination').element(by.linkText('Next')).click();
     expect(this.page.receipts.count()).to.eventually.equal(5);
   });
+});
 
+describe('Scoping to the current user', function() {
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test@example.com',
+      password: 'password'
+    });
+
+    var otherUser = this.factory.users.create({
+      email: 'other@example.com',
+      password: 'password'
+    });
+
+    this.page = new ReceiptPage(this.factory, user);
+
+    user.then(function(user) {
+      self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
+    });
+
+    otherUser.then(function(otherUser) {
+      self.factory.receipts.create({ vendor: 'Microsoft', total: 200.00 }, { user: otherUser.id });
+    });
+
+    this.page.get();
+  });
+
+  it('should only show the current users receipts', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(1);
+    expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$199.99');
+    expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('Quick Left');
+  });
 });

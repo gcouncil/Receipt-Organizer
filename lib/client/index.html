@@ -1,16 +1,11 @@
 <!doctype html>
-<html ng-app="epsonreceipts">
+<html>
   <head>
     <title>EPSON Receipts</title>
     <link rel="stylesheet" href="/styles.css" />
     <script src="/index.js"></script>
   </head>
-  <body>
-    <flash></flash>
-    <ui-view></ui-view>
-
-    <div ng-controller="HttpBusyController">
-      <p ng-show="busy">Request In Progress</p>
-    </div>
+  <body ng-app="epsonreceipts">
+    <toplevel-layout></toplevel-layout>
   </body>
 </html>

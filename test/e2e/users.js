@@ -1,10 +1,9 @@
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-var protractor = require('protractor');
 
 function SignupPage() {
   this.get = function() {
-    var url = helpers.rootUrl + '/#/signup';
+    var url = helpers.rootUrl + '#/signup';
     browser.get(url);
   };
 
@@ -14,7 +13,7 @@ function SignupPage() {
 
 function LoginPage() {
   this.get = function() {
-    var url = helpers.rootUrl + '/#/login';
+    var url = helpers.rootUrl + '#/login';
     browser.get(url);
   };
 
@@ -22,20 +21,19 @@ function LoginPage() {
   this.flashDiv = $('.alert');
 }
 
-function buildUser(manager, user) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      manager.create(user, done);
-    });
+function ReceiptPage(factory, user) {
+  this.user = user || factory.users.create({
+    email: 'test@example.com',
+    password: 'password'
   });
-}
 
-function authenticateUser(manager, credentials) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      manager.authenticate(credentials.email || '', credentials.password || '', done);
-    });
-  });
+  this.get = function() {
+    browser.get(helpers.rootUrl);
+    helpers.loginUser(this.user);
+  };
+
+  this.logoutButton = $('body').element(by.buttonText('Log Out'));
+  this.flashDiv = $('.alert');
 }
 
 describe('Sign up', function() {
@@ -56,15 +54,11 @@ describe('Sign up', function() {
 
     this.page.signupForm.element(by.buttonText('Sign Up!')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '/#/receipts/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/receipts/thumbnails');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
 
-    var usersManager = this.api.managers.users;
-    var userAuthenticationResults = authenticateUser(usersManager, {
-      email: 'test@example.com',
-      password: 'password'
-    });
+    var userAuthenticationResults = this.factory.users.authenticate('test@example.com', 'password');
 
     expect(userAuthenticationResults).to.eventually.have.deep.property('email', 'test@example.com');
     expect(userAuthenticationResults).to.not.eventually.have.property('password');
@@ -73,10 +67,9 @@ describe('Sign up', function() {
 
 describe('Log In', function() {
   beforeEach(function() {
-    var usersManager = this.api.managers.users;
     this.page = new LoginPage();
 
-    buildUser(usersManager, {
+    this.factory.users.create({
       email: 'newtestuser@example.com',
       password: 'password'
     });
@@ -93,8 +86,23 @@ describe('Log In', function() {
 
     this.page.loginForm.element(by.buttonText('Log In')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '/#/receipts/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/receipts/thumbnails');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged in.');
   });
 });
+
+describe('Log Out', function() {
+  beforeEach(function() {
+    this.page = new ReceiptPage(this.factory);
+    this.page.get();
+  });
+
+  it('should be possible to log out of an account', function() {
+    this.page.logoutButton.click();
+
+    expect(browser.getCurrentUrl()).to.eventually.contain(helpers.rootUrl + '#/login');
+    expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged out.');
+  });
+});
+
