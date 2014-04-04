@@ -5,8 +5,10 @@ var protractor = require('protractor');
 
 function wrap(fn, scope) {
   return function() {
-    var promise = Q.nfapply(fn.bind(scope), arguments);
-    return browser.call(function() { return promise; });
+    var args = arguments;
+    return browser.call(function() {
+      return Q.nfapply(fn.bind(scope), args);
+    });
   };
 }
 

@@ -1,3 +1,12 @@
-<button type="button" class="btn btn-primary" ng-click="scan()" ng-disabled="!scanner">Scan</button>
-<button type="button" class="btn btn-link" ng-click="import()">Import</button>
-<button type="button" class="btn btn-link" ng-click="create()">Manual Entry</button>
+<div class="btn-group">
+  <button type="button" class="btn btn-success btn-lg navbar-btn" ng-click="scan()" ng-disabled="!scanner">Scan</button>
+  <button type="button" class="btn btn-success dropdown-toggle btn-lg navbar-btn" data-toggle="dropdown">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><button type="button" class="btn btn-link" ng-click="import()">Import</button></li>
+    <li class="divider"></li>
+    <li><button type="button" class="btn btn-link" ng-click="create()">Manual Entry</button></li>
+  </ul>
+</div>
