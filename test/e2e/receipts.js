@@ -2,6 +2,7 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 var protractor = require('protractor');
+var async = require('async');
 
 function ReceiptPage(factory, user) {
   this.user = user || factory.users.create({
