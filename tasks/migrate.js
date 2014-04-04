@@ -9,9 +9,7 @@ module.exports = function(grunt) {
     knex = knex || Knex.initialize({
       debug: true,
       client: 'pg',
-      connection: {
-        database: config.database.name,
-      }
+      connection: config.database
     });
   }
 
