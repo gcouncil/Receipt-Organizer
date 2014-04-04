@@ -172,35 +172,71 @@ describe('Toggling the View', function() {
   });
 });
 
-describe('Receipts Table View', function() {
-  beforeEach(function() {
-    var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+context('Receipts Table View', function() {
+  describe('Pagination', function() {
+    beforeEach(function() {
+      var self = this;
 
-    this.page.user.then(function(user) {
-      _.times(15, function(i) {
-        self.factory.receipts.create({
-          vendor: 'Quick Left',
-          total: 100.00 + i
-        }, { user: user.id });
+      this.page = new ReceiptTablePage(this.factory);
+
+      this.page.user.then(function(user) {
+	_.times(15, function(i) {
+          self.factory.receipts.create({
+            vendor: 'Quick Left',
+            total: 100.00 + i
+          }, { user: user.id });
+	});
       });
+
+      this.page.get();
     });
 
-    this.page.get();
+    it('should contain existing receipts', function() {
+      expect($('receipt-table').isPresent()).to.eventually.be.true;
+      expect($('receipt-table').getText()).to.eventually.contain('100.00');
+      expect($('receipt-table').getText()).to.eventually.contain('103.00');
+    });
+
+    it('should display paginated results', function() {
+      expect(this.page.receipts.count()).to.eventually.equal(10);
+      $('.pagination').element(by.linkText('Next')).click();
+      expect(this.page.receipts.count()).to.eventually.equal(5);
+    });
   });
 
-  it('should contain existing receipts', function() {
-    expect($('receipt-table').isPresent()).to.eventually.be.true;
-    expect($('receipt-table').getText()).to.eventually.contain('100.00');
-    expect($('receipt-table').getText()).to.eventually.contain('103.00');
+  describe.only('batch delete', function() {
+    beforeEach(function() {
+      var self = this;
+
+      this.page = new ReceiptTablePage(this.factory);
+
+      this.page.user.then(function(user) {
+	_.times(4, function(i) {
+          self.factory.receipts.create({
+            vendor: 'Fake Receipt Generator',
+            total: 100.00 + i
+          }, { user: user.id });
+	});
+      });
+
+      this.page.get();
+    });
+
+    it('should delete existing receipts', function() {
+      expect(this.page.receipts.count()).to.eventually.equal(4);
+      // click the first receipt
+      // click the second receipt
+      // click the delete button
+      // expect alert for validation
+      // expect alert includes data on receipts?
+      // confirm delete
+      // expect page to contain two receipts
+      // expect the first receipt and second receipts to no longer be present
+    });
+
   });
 
-  it('should display paginated results', function() {
-    expect(this.page.receipts.count()).to.eventually.equal(10);
-    $('.pagination').element(by.linkText('Next')).click();
-    expect(this.page.receipts.count()).to.eventually.equal(5);
-  });
 });
 
 describe('Scoping to the current user', function() {
