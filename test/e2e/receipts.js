@@ -145,12 +145,10 @@ describe('Manual Entry', function() {
 
 describe('Toggling the View', function() {
   beforeEach(function() {
-    var self = this;
-
     this.page = new ReceiptPage(this.factory);
-    this.page.user.then(function(user) {
-      return self.factory.receipts.create({}, { user: user.id });
-    });
+    browser.call(function(user) {
+      return this.factory.receipts.create({}, { user: user.id });
+    }, this, this.page.user);
 
     this.page.get();
   });
@@ -176,12 +174,20 @@ describe('Toggling the View', function() {
 
 describe('Receipts Table View', function() {
   beforeEach(function() {
+    var self = this;
+
     var receiptsManager = this.api.managers.receipts;
 
     this.page = new ReceiptTablePage(this.factory);
-      buildReceipts(receiptsManager, _.times(15, function(i) {
-	return { vendor: 'Quick Left', total: 100.00 + i};
-      }));
+
+    this.page.user.then(function(user) {
+      _.times(15, function(i) {
+        self.factory.receipts.create({
+          vendor: 'Quick Left', total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
     this.page.get();
   });
 

@@ -32,7 +32,7 @@ function ReceiptPage(factory, user) {
     helpers.loginUser(this.user);
   };
 
-  this.logoutButton = $('body').element(by.buttonText('Log Out'));
+  this.logoutButton = element(by.buttonText('Log Out'));
   this.flashDiv = $('.alert');
 }
 
