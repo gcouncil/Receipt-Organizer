@@ -255,12 +255,22 @@ describe('Scoping to the current user', function() {
 
 describe('Receipts Table View', function() {
   beforeEach(function() {
+    var self = this;
     var receiptsManager = this.api.managers.receipts;
 
-    this.page = new ReceiptTablePage();
-    buildReceipts(receiptsManager, _.times(15, function(i) {
-      return { vendor: 'Quick Left', total: 100.00 + i};
-    }));
+    var user = this.factory.users.create({
+      email: 'test@example.com',
+      password: 'password'
+    });
+
+
+    user.then(function(user) {
+      _.times(15, function(i) {
+        self.factory.receipts.create({ vendor: 'Quick Left', total: 100.00 + i}, { user: user.id });
+      });
+    });
+
+    this.page = new ReceiptTablePage(this.factory, user);
     this.page.get();
   });
 
