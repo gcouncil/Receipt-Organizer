@@ -6,10 +6,9 @@ var _ = require('lodash');
 
 function ReceiptPage() {
   this.get = function() {
-    browser.get(helpers.rootUrl);
+    browser.get(helpers.rootUrl + '/#/receipts');
   };
 
-  this.manualEntryButton = $('scan-button').element(by.buttonText('Manual Entry'));
   this.receiptEditorForm = $('.modal-dialog form');
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
@@ -118,8 +117,8 @@ describe('Manual Entry', function() {
   beforeEach(function() {
     this.page = new ReceiptPage();
     this.page.get();
-
-    this.page.manualEntryButton.click();
+    $('.caret').click();
+    $('.btn-group').element(by.buttonText('Manual Entry')).click();
   });
 
   it('should show form when manual entry link is clicked', function() {
@@ -143,18 +142,10 @@ describe('Manual Entry', function() {
 
 });
 
-describe('Toggling the View', function() {
-  beforeEach(function() {
+describe.only('Toggling the View', function() {
+  it('should should toggle from the thumbnail to the table view and back', function() {
     this.page = new ReceiptPage();
     this.page.get();
-  });
-
-  it('should should toggle from the thumbnail to the table view and back', function() {
-    // Create a new receipt
-    this.page.manualEntryButton.click();
-    $('.modal-dialog').element(by.buttonText('OK')).click();
-
-    expect(this.page.receipts.count()).to.eventually.equal(1);
 
     // Ensure that thumbnail view is displayed
     expect($('.receipt-thumbnail-fields').isPresent()).to.eventually.be.true;
