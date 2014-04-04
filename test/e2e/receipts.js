@@ -1,8 +1,8 @@
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
+/* jshint unused: false */
 var protractor = require('protractor');
-var async = require('async');
 
 function ReceiptPage(factory, user) {
   this.user = user || factory.users.create({
@@ -35,20 +35,6 @@ function ReceiptTablePage(factory, user) {
     helpers.loginUser(this.user);
   };
   this.receipts = element.all(by.repeater('receipt in receipts'));
-}
-
-function buildReceipts(manager, receipts) {
-  return browser.driver.controlFlow().execute(function() {
-    return protractor.promise.checkedNodeCall(function(done) {
-      async.each(
-        receipts,
-        function(receipt, callback) {
-          manager.create(receipt, {}, callback);
-        },
-        done
-      );
-    });
-  });
 }
 
 describe('Editing Receipts', function() {
@@ -256,7 +242,6 @@ describe('Scoping to the current user', function() {
 describe('Receipts Table View', function() {
   beforeEach(function() {
     var self = this;
-    var receiptsManager = this.api.managers.receipts;
 
     var user = this.factory.users.create({
       email: 'test@example.com',
