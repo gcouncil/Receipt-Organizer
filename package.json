@@ -78,7 +78,6 @@
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-    "ng-grid": "./bower_components/ng-grid/ng-grid-2.0.7.debug.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
 }

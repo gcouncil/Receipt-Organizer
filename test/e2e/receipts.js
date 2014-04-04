@@ -2,12 +2,16 @@ var async = require('async');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 var protractor = require('protractor');
+<<<<<<< HEAD
 var uuid = require('uuid');
 
 function ReceiptPage(factory, user) {
   user = user || factory.users.create({
     email: 'test@example.com', password: 'password'
   });
+=======
+var _ = require('lodash');
+>>>>>>> master
 
   this.get = function() {
     browser.get(helpers.rootUrl);
@@ -23,7 +27,19 @@ function ReceiptPage(factory, user) {
   this.showTableButton = $('.table-button');
 }
 
+<<<<<<< HEAD
 function buildReceipts(manager, receipts, options) {
+=======
+function ReceiptTablePage() {
+  this.get = function() {
+    var url = helpers.rootUrl + '/#/receipts/table';
+    browser.get(url);
+  };
+  this.receipts = element.all(by.repeater('receipt in receipts'));
+}
+
+function buildReceipts(manager, receipts) {
+>>>>>>> master
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
       async.each(
@@ -202,4 +218,28 @@ describe.only('Scoping to the current user', function() {
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$199.99');
     expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('QuickLeft');
   });
+
+describe('Receipts Table View', function() {
+  beforeEach(function() {
+    var receiptsManager = this.api.managers.receipts;
+
+    this.page = new ReceiptTablePage();
+      buildReceipts(receiptsManager, _.times(15, function(i) {
+	return { vendor: 'Quick Left', total: 100.00 + i};
+      }));
+    this.page.get();
+  });
+
+  it('should contain existing receipts', function() {
+    expect($('receipt-table').isPresent()).to.eventually.be.true;
+    expect($('receipt-table').getText()).to.eventually.contain('100.00');
+    expect($('receipt-table').getText()).to.eventually.contain('103.00');
+  });
+
+  it('should display paginated results', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(10);
+    $('.pagination').element(by.linkText('Next')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(5);
+  });
+
 });
