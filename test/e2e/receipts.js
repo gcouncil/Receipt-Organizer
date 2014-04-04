@@ -2,16 +2,13 @@ var async = require('async');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 var protractor = require('protractor');
-<<<<<<< HEAD
-var uuid = require('uuid');
+var _ = require('lodash');
 
 function ReceiptPage(factory, user) {
   user = user || factory.users.create({
-    email: 'test@example.com', password: 'password'
+    email: 'test@example.com',
+    password: 'password'
   });
-=======
-var _ = require('lodash');
->>>>>>> master
 
   this.get = function() {
     browser.get(helpers.rootUrl);
@@ -27,9 +24,6 @@ var _ = require('lodash');
   this.showTableButton = $('.table-button');
 }
 
-<<<<<<< HEAD
-function buildReceipts(manager, receipts, options) {
-=======
 function ReceiptTablePage() {
   this.get = function() {
     var url = helpers.rootUrl + '/#/receipts/table';
@@ -39,13 +33,12 @@ function ReceiptTablePage() {
 }
 
 function buildReceipts(manager, receipts) {
->>>>>>> master
   return browser.driver.controlFlow().execute(function() {
     return protractor.promise.checkedNodeCall(function(done) {
       async.each(
         receipts,
         function(receipt, callback) {
-          manager.create(receipt, options, callback);
+          manager.create(receipt, {}, callback);
         },
         done
       );
@@ -186,7 +179,7 @@ describe('Toggling the View', function() {
   });
 });
 
-describe.only('Scoping to the current user', function() {
+describe('Scoping to the current user', function() {
   beforeEach(function() {
     var self = this;
 
@@ -219,14 +212,16 @@ describe.only('Scoping to the current user', function() {
     expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('QuickLeft');
   });
 
+});
+
 describe('Receipts Table View', function() {
   beforeEach(function() {
     var receiptsManager = this.api.managers.receipts;
 
     this.page = new ReceiptTablePage();
-      buildReceipts(receiptsManager, _.times(15, function(i) {
-	return { vendor: 'Quick Left', total: 100.00 + i};
-      }));
+    buildReceipts(receiptsManager, _.times(15, function(i) {
+      return { vendor: 'Quick Left', total: 100.00 + i};
+    }));
     this.page.get();
   });
 

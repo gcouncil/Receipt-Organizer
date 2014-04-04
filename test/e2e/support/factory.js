@@ -1,13 +1,13 @@
 var Q = require('q');
 var _ = require('lodash');
-var async = require('async');
+/* jshint unused: false */
 var protractor = require('protractor');
 
 function wrap(fn, scope) {
   return function() {
     var promise = Q.nfapply(fn.bind(scope), arguments);
-    return browser.call(function() { return promise });
-  }
+    return browser.call(function() { return promise; });
+  };
 }
 
 function wrapManager(manager) {
