@@ -176,14 +176,13 @@ describe('Receipts Table View', function() {
   beforeEach(function() {
     var self = this;
 
-    var receiptsManager = this.api.managers.receipts;
-
     this.page = new ReceiptTablePage(this.factory);
 
     this.page.user.then(function(user) {
       _.times(15, function(i) {
         self.factory.receipts.create({
-          vendor: 'Quick Left', total: 100.00 + i
+          vendor: 'Quick Left',
+          total: 100.00 + i
         }, { user: user.id });
       });
     });
