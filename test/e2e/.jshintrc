@@ -12,6 +12,8 @@
     "$$": false,
     "browser": false,
     "by": false,
-    "element": false
+    "element": false,
+    "window": false,
+    "document": false
   }
 }
