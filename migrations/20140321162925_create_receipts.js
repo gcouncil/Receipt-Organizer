@@ -1,7 +1,6 @@
 var async = require('async');
 
 exports.up = function(knex, Promise) {
-  console.log('Hello World?');
   return Promise.promisify(async.series)([
     function(cb) {
       knex.raw('CREATE EXTENSION "uuid-ossp"').exec(cb);

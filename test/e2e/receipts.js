@@ -32,7 +32,6 @@ function ReceiptTablePage(factory, user) {
     browser.get(url);
     helpers.loginUser(this.user);
   };
-
   this.receipts = element.all(by.repeater('receipt in receipts'));
 }
 
@@ -235,4 +234,39 @@ describe('Scoping to the current user', function() {
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$199.99');
     expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('Quick Left');
   });
+
+});
+
+describe('Receipts Table View', function() {
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test@example.com',
+      password: 'password'
+    });
+
+
+    user.then(function(user) {
+      _.times(15, function(i) {
+        self.factory.receipts.create({ vendor: 'Quick Left', total: 100.00 + i}, { user: user.id });
+      });
+    });
+
+    this.page = new ReceiptTablePage(this.factory, user);
+    this.page.get();
+  });
+
+  it('should contain existing receipts', function() {
+    expect($('receipt-table').isPresent()).to.eventually.be.true;
+    expect($('receipt-table').getText()).to.eventually.contain('100.00');
+    expect($('receipt-table').getText()).to.eventually.contain('103.00');
+  });
+
+  it('should display paginated results', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(10);
+    $('.pagination').element(by.linkText('Next')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(5);
+  });
+
 });
