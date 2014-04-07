@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.26/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'patch' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose run-script [ 'prepatch', 'patch', 'postpatch' ]
+5 info prepatch epson-receipts@0.0.0
+6 info patch epson-receipts@0.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info epson-receipts@0.0.0 Failed to exec patch script
+9 error epson-receipts@0.0.0 patch: `patch ./node_modules/protractor/node_modules/selenium-webdriver/testing/index.js selenium-webdriver.patch`
+9 error Exit status 1
+10 error Failed at the epson-receipts@0.0.0 patch script.
+10 error This is most likely a problem with the epson-receipts package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     patch ./node_modules/protractor/node_modules/selenium-webdriver/testing/index.js selenium-webdriver.patch
+10 error You can get their info via:
+10 error     npm owner ls epson-receipts
+10 error There is likely additional logging output above.
+11 error System Darwin 13.1.0
+12 error command "/usr/local/Cellar/node/0.10.26/bin/node" "/usr/local/bin/npm" "run" "patch"
+13 error cwd /Users/benlewis/Dropbox/Code/ql/epson-receipts
+14 error node -v v0.10.26
+15 error npm -v 1.4.3
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]
