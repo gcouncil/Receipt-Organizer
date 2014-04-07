@@ -1,8 +1,6 @@
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-/* jshint unused: false */
-var protractor = require('protractor');
 
 function ReceiptPage(factory, user) {
   this.user = user || factory.users.create({

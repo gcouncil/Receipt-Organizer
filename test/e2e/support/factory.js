@@ -1,7 +1,5 @@
 var Q = require('q');
 var _ = require('lodash');
-/* jshint unused: false */
-var protractor = require('protractor');
 
 function wrap(fn, scope) {
   return function() {
