@@ -229,14 +229,15 @@ context('Receipts Table View', function() {
       var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
       expect(this.page.receipts.count()).to.eventually.equal(4);
-      this.page.firstReceipt.$('.selected').click();
-      this.page.secondReceipt.$('.selected').click();
+      this.page.firstReceipt.$('.checkboxReceipt').click();
+      this.page.secondReceipt.$('.checkboxReceipt').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
       deleteButton.click();
-      // expect alert for validation
-      // expect alert includes data on receipts?
+      // expect modal for validation
+      // expect modal includes data on receipts?
       // confirm delete
       expect(this.page.receipts.count()).to.eventually.equal(2);
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
       // expect the first receipt and second receipts to no longer be present
     });
 
