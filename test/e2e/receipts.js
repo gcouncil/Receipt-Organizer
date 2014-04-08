@@ -182,12 +182,12 @@ context('Receipts Table View', function() {
       this.page = new ReceiptTablePage(this.factory);
 
       this.page.user.then(function(user) {
-	_.times(15, function(i) {
+        _.times(15, function(i) {
           self.factory.receipts.create({
             vendor: 'Quick Left',
             total: 100.00 + i
           }, { user: user.id });
-	});
+        });
       });
 
       this.page.get();
@@ -214,26 +214,26 @@ context('Receipts Table View', function() {
       this.page = new ReceiptTablePage(this.factory);
 
       this.page.user.then(function(user) {
-	_.times(4, function(i) {
+        _.times(4, function(i) {
           self.factory.receipts.create({
             vendor: 'Fake Receipt Generator',
             total: 100.00 + i
           }, { user: user.id });
-	});
+        });
       });
 
       this.page.get();
     });
 
     it('should delete existing receipts', function() {
-      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'))
+      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
 
-//      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beTruthy();
+      //expect(deleteButton.getAttribute('disabled')).to.eventuallly.equal('disabled');
       expect(this.page.receipts.count()).to.eventually.equal(4);
       this.page.firstReceipt.$('.selected').click();
       this.page.secondReceipt.$('.selected').click();
 
-//      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beFalsy();
+      //      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beFalsy();
       deleteButton.click();
       // expect alert for validation
       // expect alert includes data on receipts?
