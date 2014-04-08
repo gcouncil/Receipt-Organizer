@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     appconfig: require('config')
   });
 
-  var debug = true;
+  var debug = grunt.option('env') !== 'production';
 
   // BUILD TASKS
 
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
     scripts: {
       files: [
-        { src: './lib/client/index.js', dest: 'build/index.js' }
+        { src: './lib/client/index.js', dest: 'build/assets/index.js' }
       ]
     },
 
@@ -38,12 +38,12 @@ module.exports = function(grunt) {
         expand: true,
         cwd: './bower_components/font-awesome/fonts',
         src: '*',
-        dest: 'build/fonts'
+        dest: 'build/assets/fonts'
       }, {
         expand: true,
         cwd: './bower_components/bootstrap/fonts',
         src: '*',
-        dest: 'build/fonts'
+        dest: 'build/assets/fonts'
       }]
     }
   });
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         src: [
           'lib/client/styles.less'
         ],
-        dest: 'build/styles.css'
+        dest: 'build/assets/styles.css'
       }],
       options: {
         paths: [
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('./tasks');
 
-  grunt.registerTask('build', ['copy', 'browserify', 'less']);
+  grunt.registerTask('build', ['copy', 'browserify:scripts', 'less']);
 
   grunt.registerTask('test:client', ['browserify:test', 'karma:run']);
   grunt.registerTask('test:server', ['mochaTest:server']);
@@ -173,7 +173,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test:e2e', ['build', 'protractor']);
   grunt.registerTask('test', ['test:unit', 'test:e2e']);
 
-  grunt.registerTask('development', ['build', 'karma:watch:start', 'concurrent:development']);
+  grunt.registerTask('development', ['build', 'browserify:test', 'karma:watch:start', 'concurrent:development']);
 
   grunt.registerTask('default', ['build']);
 };
