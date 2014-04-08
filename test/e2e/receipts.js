@@ -33,6 +33,8 @@ function ReceiptTablePage(factory, user) {
     helpers.loginUser(this.user);
   };
   this.receipts = element.all(by.repeater('receipt in receipts'));
+  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
+  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
 }
 
 describe('Editing Receipts', function() {
@@ -205,6 +207,7 @@ context('Receipts Table View', function() {
   });
 
   describe.only('batch delete', function() {
+
     beforeEach(function() {
       var self = this;
 
@@ -223,14 +226,19 @@ context('Receipts Table View', function() {
     });
 
     it('should delete existing receipts', function() {
+      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'))
+
+//      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beTruthy();
       expect(this.page.receipts.count()).to.eventually.equal(4);
-      // click the first receipt
-      // click the second receipt
-      // click the delete button
+      this.page.firstReceipt.$('.selected').click();
+      this.page.secondReceipt.$('.selected').click();
+
+//      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beFalsy();
+      deleteButton.click();
       // expect alert for validation
       // expect alert includes data on receipts?
       // confirm delete
-      // expect page to contain two receipts
+      expect(this.page.receipts.count()).to.eventually.equal(2);
       // expect the first receipt and second receipts to no longer be present
     });
 
