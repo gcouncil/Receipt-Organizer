@@ -4,3 +4,4 @@ node_modules
 /config/runtime.json
 .elasticbeanstalk/
 tmp
+config/local.js
