@@ -225,8 +225,35 @@ context('Receipts Table View', function() {
       this.page.get();
     });
 
-    it('should delete existing receipts', function() {
+    it('should not show delete button without receipts selected', function() {
       var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
+
+     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+      //delete button is no longer disabled when receipts selected
+      this.page.firstReceipt.$('.checkboxReceipt').click();
+      this.page.secondReceipt.$('.checkboxReceipt').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+      //unselecting only one receipt will not disable button
+      this.page.firstReceipt.$('.checkboxReceipt').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+      //unselecting both receipts will disable button
+      this.page.secondReceipt.$('.checkboxReceipt').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+      //selecting again will enable button
+      this.page.firstReceipt.$('.checkboxReceipt').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    });
+
+    it('should delete existing receipts', function() {
+      var self = this;
+
+      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
+      var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
+
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
       expect(this.page.receipts.count()).to.eventually.equal(4);
       this.page.firstReceipt.$('.checkboxReceipt').click();
@@ -238,11 +265,15 @@ context('Receipts Table View', function() {
       // confirm delete
       expect(this.page.receipts.count()).to.eventually.equal(2);
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
-      // expect the first receipt and second receipts to no longer be present
+
+      // confirms that first receipt is no longer present
+      browser.driver.call(function(firstId) {
+        self.page.receipts.each(function(receipt) {
+          expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+        });
+      }, null, firstIdPromise);
     });
-
   });
-
 });
 
 describe('Scoping to the current user', function() {

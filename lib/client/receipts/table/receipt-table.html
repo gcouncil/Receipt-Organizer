@@ -25,7 +25,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="receipt in receipts">
-        <td><input type="checkbox" name="selected" class="checkboxReceipt" ng-click="selectReceipt(receipt, $event)"></td>
+        <td><input type="checkbox" name="selected" class="checkboxReceipt" ng-click="selectReceipt(receipt, $event.target.checked)"></td>
         <td>{{ receipt.vendor }}</td>
         <td>{{ receipt.date | date }}</td>
         <td>{{ receipt.category }}</td>
