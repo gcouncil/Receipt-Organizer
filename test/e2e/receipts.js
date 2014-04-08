@@ -227,13 +227,11 @@ context('Receipts Table View', function() {
 
     it('should delete existing receipts', function() {
       var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
-
-      //expect(deleteButton.getAttribute('disabled')).to.eventuallly.equal('disabled');
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
       expect(this.page.receipts.count()).to.eventually.equal(4);
       this.page.firstReceipt.$('.selected').click();
       this.page.secondReceipt.$('.selected').click();
-
-      //      expect(deleteButton.getAttribute('disabled')).to.eventuallly.beFalsy();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
       deleteButton.click();
       // expect alert for validation
       // expect alert includes data on receipts?
