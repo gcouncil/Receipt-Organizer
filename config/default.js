@@ -4,7 +4,7 @@ module.exports = {
   aws: {
     region: 'us-west-2',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    secretAccessKey: process.env.AWS_SECRET_KEY
   },
   storage: {
     receiptBucket: 'epsonreceipts-' + env + '-images'
