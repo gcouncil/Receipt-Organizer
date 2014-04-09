@@ -1,11 +1,11 @@
-<form name="form" ng-submit="ok()">
-  <div class="modal-body row">
-    <receipt-fields receipt="receipt" class="col-xs-4 form-horizontal"></receipt-fields>
-    <div class="col-xs-8" style="text-align: center;">
-      <img ng-src="{{ image.url }}" style="max-height: 100%;">
+<form name="form" ng-submit="ok()" class="receipt-editor-content">
+  <div class="receipt-editor-body row">
+    <receipt-fields receipt="receipt" class="form-horizontal"></receipt-fields>
+    <div class="receipt-editor-image">
+      <img ng-src="{{ image.url }}">
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="receipt-editor-footer">
     <button type="submit" class="btn btn-primary dialog-ok" ng-disabled="form.$invalid">OK</button>
     <button type="button" class="btn btn-warning dialog-cancel" ng-click="cancel()">Cancel</button>
   </div>

@@ -1,15 +1,32 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-2">
+<div class="toplevel-layout-header">
+    <a class="navbar-brand">EPSON Receipts</a>
+
+    <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">Request In Progress</p>
+
+    <div class="nav navbar-form navbar-right">
+      <span>{{ currentUser.email }}</span>
+      <logout-button></logout-button>
+    </div>
+</div>
+
+<nav class="navbar toplevel-layout-toolbar">
+  <div class="container-fluid">
+    <div class="navbar-nav navbar-form" style="width:200px;">
       <scan-button delegate="delegate"></scan-button>
-      <nav class="navbar navbar-fixed-bottom">
-        <div class="container-fluid">
-          <logout-button></logout-button>
-        </div>
-      </nav>
     </div>
-    <div class="col-xs-10">
-      <ui-view></ui-view>
-    </div>
+    <div ui-view="toolbar"></div>
+  </div>
+</nav>
+
+<div class="toplevel-layout-content">
+  <div class="toplevel-layout-sidebar" style="width: 200px;">
+  </div>
+
+  <div class="toplevel-layout-body">
+    <flash></flash>
+    <ui-view></ui-views>
+  </div>
+
+  <div ui-view="sidebar" class="toplevel-layout-sidebar">
   </div>
 </div>

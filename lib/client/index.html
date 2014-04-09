@@ -6,11 +6,6 @@
     <script src="/assets/index.js"></script>
   </head>
   <body ng-app="epsonreceipts">
-    <flash></flash>
     <ui-view></ui-view>
-
-    <div ng-controller="HttpBusyController">
-      <p ng-show="busy">Request In Progress</p>
-    </div>
   </body>
 </html>

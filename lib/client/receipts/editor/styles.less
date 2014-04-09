@@ -1,7 +1,43 @@
-.receipt-editor-window > .modal-dialog {
-  width: 90%;
-  min-width: 800px;
+.receipt-editor-window > {
+  .modal-dialog {
+    width: 90%;
+    min-width: 800px;
 
-  height: 90%;
-  min-height: 600px;
+    height: 90%;
+    min-height: 600px;
+  }
+
+  .modal-content {
+    height: 100%;
+  }
+}
+
+receipt-editor {
+  height: 100%;
+}
+
+.receipt-editor-content {
+  .flex-box(column);
+  height: 100%;
+  width: 100%;
+}
+
+.receipt-editor-body {
+  .flex(1, 1);
+  .flex-box();
+  overflow: hidden;
+}
+
+.receipt-editor-footer {
+  padding: @modal-inner-padding;
+  .noflex();
+}
+
+receipt-fields {
+  .noflex(400px);
+  overflow: scroll;
+}
+
+.receipt-editor-image {
+  .flex;
 }
