@@ -202,9 +202,9 @@ context('Receipts Table View', function() {
     });
 
     it('should display paginated results', function() {
-      expect(this.page.receipts.count()).to.eventually.equal(10);
+      expect(this.page.receipts.count()).to.eventually.equal(9);
       $('.pagination').element(by.linkText('Next')).click();
-      expect(this.page.receipts.count()).to.eventually.equal(5);
+      expect(this.page.receipts.count()).to.eventually.equal(6);
     });
   });
 
