@@ -1,0 +1,10 @@
+<form name="form" ng-submit="ok()">
+  <div class="modal-body row">
+    {{ receiptCount }} receipts were selected.
+    Select OK to delete permanently.
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary dialog-ok">OK</button>
+    <button type="button" class="btn btn-warning dialog-cancel" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

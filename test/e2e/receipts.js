@@ -35,6 +35,8 @@ function ReceiptTablePage(factory, user) {
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
   this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
+
+  this.receiptDeleteForm = $('.modal-dialog form');
 }
 
 describe('Editing Receipts', function() {
@@ -228,7 +230,7 @@ context('Receipts Table View', function() {
     it('should not show delete button without receipts selected', function() {
       var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
 
-     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
       //delete button is no longer disabled when receipts selected
       this.page.firstReceipt.$('.checkboxReceipt').click();
@@ -259,10 +261,14 @@ context('Receipts Table View', function() {
       this.page.firstReceipt.$('.checkboxReceipt').click();
       this.page.secondReceipt.$('.checkboxReceipt').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
       deleteButton.click();
-      // expect modal for validation
-      // expect modal includes data on receipts?
-      // confirm delete
+      expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+      $('.modal-dialog').element(by.buttonText('Cancel')).click();
+      expect(this.page.receipts.count()).to.eventually.equal(4);
+
+      deleteButton.click();
+      $('.modal-dialog').element(by.buttonText('OK')).click();
       expect(this.page.receipts.count()).to.eventually.equal(2);
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
