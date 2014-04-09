@@ -233,20 +233,20 @@ context('Receipts Table View', function() {
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
       //delete button is no longer disabled when receipts selected
-      this.page.firstReceipt.$('.checkboxReceipt').click();
-      this.page.secondReceipt.$('.checkboxReceipt').click();
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      this.page.secondReceipt.$('[type=checkbox]').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
       //unselecting only one receipt will not disable button
-      this.page.firstReceipt.$('.checkboxReceipt').click();
+      this.page.firstReceipt.$('[type=checkbox]').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
       //unselecting both receipts will disable button
-      this.page.secondReceipt.$('.checkboxReceipt').click();
+      this.page.secondReceipt.$('[type=checkbox]').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
       //selecting again will enable button
-      this.page.firstReceipt.$('.checkboxReceipt').click();
+      this.page.firstReceipt.$('[type=checkbox]').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
     });
 
@@ -258,8 +258,8 @@ context('Receipts Table View', function() {
 
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
       expect(this.page.receipts.count()).to.eventually.equal(4);
-      this.page.firstReceipt.$('.checkboxReceipt').click();
-      this.page.secondReceipt.$('.checkboxReceipt').click();
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      this.page.secondReceipt.$('[type=checkbox]').click();
       expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
       deleteButton.click();
