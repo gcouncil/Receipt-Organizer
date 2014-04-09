@@ -249,10 +249,6 @@ describe.only('tagging receipts', function() {
 
     this.page = new ReceiptPage(this.factory, user);
 
-    var receipt = user.then(function(user) {
-      return self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
-    });
-
     var tags = user.then(function(user) {
       return Q.all([
         self.factory.tags.create({ name: 'product development'}, { user: user.id }),
@@ -260,11 +256,13 @@ describe.only('tagging receipts', function() {
       ]);
     });
 
-    Q.all(receipt, tags).spread(function(receipt, tags) {
-      Q.all([
-        self.factory.taggings.create({ receipt: receipt.uuid, tag: tags[0].uuid }),
-        self.factory.taggings.create({ receipt: receipt.uuid, tag: tags[1].uuid })
-      ]);
+    Q.all([
+      user,
+      tags
+    ]).done(function(results) {
+      var user = results[0];
+      var tags = _.map(results[1], 'id');
+      self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
     });
   });
 

@@ -3,12 +3,9 @@ module.exports = function(grunt) {
   var exec = require('child_process').exec;
   var spawn = require('child_process').spawn;
 
-  var AWS = require('aws-sdk');
+  var AWS = require('../lib/server/services/aws')(grunt.config('appconfig'));
   var async = require('async');
   var moment = require('moment');
-
-  // TODO: Pull from some sort of config
-  AWS.config.region = 'us-west-2';
 
   grunt.registerTask('deploy', function() {
     var done = this.async();
