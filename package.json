@@ -71,17 +71,20 @@
     ]
   },
   "browserify-shim": {
+    "select2": "select2",
     "jquery": "$",
     "angular": "angular",
     "dynamsoft": "Dynamsoft"
   },
   "browser": {
     "jquery": "./bower_components/jquery/dist/jquery.js",
+    "select2": "./bower_components/select2/select2.js",
     "angular": "./bower_components/angular/angular.js",
     "angular-mocks": "./bower_components/angular-mocks/angular-mocks.js",
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "ui-select2": "./bower_components/angular-ui-select2/src/select2.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
 }
