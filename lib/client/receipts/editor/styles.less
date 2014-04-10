@@ -1,43 +1,30 @@
 .receipt-editor-window > {
   .modal-dialog {
-    width: 90%;
-    min-width: 800px;
-
-    height: 90%;
-    min-height: 600px;
+    width: 960px;
   }
 
-  .modal-content {
-    height: 100%;
+  .modal-body {
+    width: 960px - 2px;
+    height: 600px;
+
+    padding: 0;
+
+    .flex-box();
   }
-}
 
-receipt-editor {
-  height: 100%;
-}
-
-.receipt-editor-content {
-  .flex-box(column);
-  height: 100%;
-  width: 100%;
-}
-
-.receipt-editor-body {
-  .flex(1, 1);
-  .flex-box();
-  overflow: hidden;
-}
-
-.receipt-editor-footer {
-  padding: @modal-inner-padding;
-  .noflex();
+  .modal-footer {
+    margin-top: 0;
+  }
 }
 
 receipt-fields {
+  padding: @modal-inner-padding;
   .noflex(400px);
   overflow: scroll;
 }
 
 .receipt-editor-image {
   .flex;
+  height: 600px;
+  overflow: hidden;
 }
