@@ -17,8 +17,8 @@ function ReceiptPage(factory, user) {
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
 
-  this.showThumbnailsButton = $('.thumbnails-button');
-  this.showTableButton = $('.table-button');
+  this.showThumbnailsButton = $('receipt-view-toggle [title="Thumbnails"]');
+  this.showTableButton = $('receipt-view-toggle [title="Table"]');
 }
 
 function ReceiptTablePage(factory, user) {
@@ -176,109 +176,107 @@ describe('Toggling the View', function() {
 });
 
 
-context('Receipts Table View', function() {
-  describe('Pagination', function() {
-    beforeEach(function() {
-      var self = this;
+describe('Pagination', function() {
+  beforeEach(function() {
+    var self = this;
 
-      this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptTablePage(this.factory);
 
-      this.page.user.then(function(user) {
-        _.times(15, function(i) {
-          self.factory.receipts.create({
-            vendor: 'Quick Left',
-            total: 100.00 + i
-          }, { user: user.id });
-        });
+    this.page.user.then(function(user) {
+      _.times(15, function(i) {
+        self.factory.receipts.create({
+          vendor: 'Quick Left',
+          total: 100.00 + i
+        }, { user: user.id });
       });
-
-      this.page.get();
     });
 
-    it('should contain existing receipts', function() {
-      expect($('receipt-table').isPresent()).to.eventually.be.true;
-      expect($('receipt-table').getText()).to.eventually.contain('100.00');
-      expect($('receipt-table').getText()).to.eventually.contain('103.00');
-    });
-
-    it('should display paginated results', function() {
-      expect(this.page.receipts.count()).to.eventually.equal(9);
-      $('.pagination').element(by.linkText('Next')).click();
-      expect(this.page.receipts.count()).to.eventually.equal(6);
-    });
+    this.page.get();
   });
 
-  describe('batch delete', function() {
+  it('should contain existing receipts', function() {
+    expect($('receipt-table').isPresent()).to.eventually.be.true;
+    expect($('receipt-table').getText()).to.eventually.contain('114.00');
+    expect($('receipt-table').getText()).to.eventually.contain('106.00');
+  });
 
-    beforeEach(function() {
-      var self = this;
+  it('should display paginated results', function() {
+    expect(this.page.receipts.count()).to.eventually.equal(9);
+    $('.pagination').element(by.linkText('Next')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(6);
+  });
+});
 
-      this.page = new ReceiptTablePage(this.factory);
+describe('Batch delete', function() {
 
-      this.page.user.then(function(user) {
-        _.times(4, function(i) {
-          self.factory.receipts.create({
-            vendor: 'Fake Receipt Generator',
-            total: 100.00 + i
-          }, { user: user.id });
-        });
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ReceiptTablePage(this.factory);
+
+    this.page.user.then(function(user) {
+      _.times(4, function(i) {
+        self.factory.receipts.create({
+          vendor: 'Fake Receipt Generator',
+          total: 100.00 + i
+        }, { user: user.id });
       });
-
-      this.page.get();
     });
 
-    it('should not show delete button without receipts selected', function() {
-      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
+    this.page.get();
+  });
 
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+  it('should not show delete button without receipts selected', function() {
+    var deleteButton = $('receipts-toolbar [title="Delete"]');
 
-      //delete button is no longer disabled when receipts selected
-      this.page.firstReceipt.$('[type=checkbox]').click();
-      this.page.secondReceipt.$('[type=checkbox]').click();
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
-      //unselecting only one receipt will not disable button
-      this.page.firstReceipt.$('[type=checkbox]').click();
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    //delete button is no longer disabled when receipts selected
+    this.page.firstReceipt.$('[type=checkbox]').click();
+    this.page.secondReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
-      //unselecting both receipts will disable button
-      this.page.secondReceipt.$('[type=checkbox]').click();
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    //unselecting only one receipt will not disable button
+    this.page.firstReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
-      //selecting again will enable button
-      this.page.firstReceipt.$('[type=checkbox]').click();
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
-    });
+    //unselecting both receipts will disable button
+    this.page.secondReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
-    it('should delete existing receipts', function() {
-      var self = this;
+    //selecting again will enable button
+    this.page.firstReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+  });
 
-      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
-      var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
+  it('should delete existing receipts', function() {
+    var self = this;
 
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
-      expect(this.page.receipts.count()).to.eventually.equal(4);
-      this.page.firstReceipt.$('[type=checkbox]').click();
-      this.page.secondReceipt.$('[type=checkbox]').click();
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    var deleteButton = $('receipts-toolbar [title="Delete"]');
+    var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
 
-      deleteButton.click();
-      expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
-      $('.modal-dialog').element(by.buttonText('Cancel')).click();
-      expect(this.page.receipts.count()).to.eventually.equal(4);
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    expect(this.page.receipts.count()).to.eventually.equal(4);
+    this.page.firstReceipt.$('[type=checkbox]').click();
+    this.page.secondReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
-      deleteButton.click();
-      $('.modal-dialog').element(by.buttonText('OK')).click();
-      expect(this.page.receipts.count()).to.eventually.equal(2);
-      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    deleteButton.click();
+    expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+    $('.modal-dialog').element(by.buttonText('Cancel')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(4);
 
-      // confirms that first receipt is no longer present
-      browser.driver.call(function(firstId) {
-        self.page.receipts.each(function(receipt) {
-          expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
-        });
-      }, null, firstIdPromise);
-    });
+    deleteButton.click();
+    $('.modal-dialog').element(by.buttonText('OK')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(2);
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+    // confirms that first receipt is no longer present
+    browser.driver.call(function(firstId) {
+      self.page.receipts.each(function(receipt) {
+        expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+      });
+    }, null, firstIdPromise);
   });
 });
 
@@ -314,5 +312,4 @@ describe('Scoping to the current user', function() {
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$199.99');
     expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('Quick Left');
   });
-
 });
