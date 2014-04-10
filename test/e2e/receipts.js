@@ -33,6 +33,10 @@ function ReceiptTablePage(factory, user) {
     helpers.loginUser(this.user);
   };
   this.receipts = element.all(by.repeater('receipt in receipts'));
+  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
+  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
+
+  this.receiptDeleteForm = $('.modal-dialog form');
 }
 
 describe('Editing Receipts', function() {
@@ -171,34 +175,110 @@ describe('Toggling the View', function() {
   });
 });
 
-describe('Receipts Table View', function() {
-  beforeEach(function() {
-    var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+context('Receipts Table View', function() {
+  describe('Pagination', function() {
+    beforeEach(function() {
+      var self = this;
 
-    this.page.user.then(function(user) {
-      _.times(15, function(i) {
-        self.factory.receipts.create({
-          vendor: 'Quick Left',
-          total: 100.00 + i
-        }, { user: user.id });
+      this.page = new ReceiptTablePage(this.factory);
+
+      this.page.user.then(function(user) {
+        _.times(15, function(i) {
+          self.factory.receipts.create({
+            vendor: 'Quick Left',
+            total: 100.00 + i
+          }, { user: user.id });
+        });
       });
+
+      this.page.get();
     });
 
-    this.page.get();
+    it('should contain existing receipts', function() {
+      expect($('receipt-table').isPresent()).to.eventually.be.true;
+      expect($('receipt-table').getText()).to.eventually.contain('100.00');
+      expect($('receipt-table').getText()).to.eventually.contain('103.00');
+    });
+
+    it('should display paginated results', function() {
+      expect(this.page.receipts.count()).to.eventually.equal(9);
+      $('.pagination').element(by.linkText('Next')).click();
+      expect(this.page.receipts.count()).to.eventually.equal(6);
+    });
   });
 
-  it('should contain existing receipts', function() {
-    expect($('receipt-table').isPresent()).to.eventually.be.true;
-    expect($('receipt-table').getText()).to.eventually.contain('100.00');
-    expect($('receipt-table').getText()).to.eventually.contain('103.00');
-  });
+  describe('batch delete', function() {
 
-  it('should display paginated results', function() {
-    expect(this.page.receipts.count()).to.eventually.equal(10);
-    $('.pagination').element(by.linkText('Next')).click();
-    expect(this.page.receipts.count()).to.eventually.equal(5);
+    beforeEach(function() {
+      var self = this;
+
+      this.page = new ReceiptTablePage(this.factory);
+
+      this.page.user.then(function(user) {
+        _.times(4, function(i) {
+          self.factory.receipts.create({
+            vendor: 'Fake Receipt Generator',
+            total: 100.00 + i
+          }, { user: user.id });
+        });
+      });
+
+      this.page.get();
+    });
+
+    it('should not show delete button without receipts selected', function() {
+      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
+
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+      //delete button is no longer disabled when receipts selected
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      this.page.secondReceipt.$('[type=checkbox]').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+      //unselecting only one receipt will not disable button
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+      //unselecting both receipts will disable button
+      this.page.secondReceipt.$('[type=checkbox]').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+      //selecting again will enable button
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    });
+
+    it('should delete existing receipts', function() {
+      var self = this;
+
+      var deleteButton = $('.batch-buttons').element(by.buttonText('Delete'));
+      var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
+
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+      expect(this.page.receipts.count()).to.eventually.equal(4);
+      this.page.firstReceipt.$('[type=checkbox]').click();
+      this.page.secondReceipt.$('[type=checkbox]').click();
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+      deleteButton.click();
+      expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+      $('.modal-dialog').element(by.buttonText('Cancel')).click();
+      expect(this.page.receipts.count()).to.eventually.equal(4);
+
+      deleteButton.click();
+      $('.modal-dialog').element(by.buttonText('OK')).click();
+      expect(this.page.receipts.count()).to.eventually.equal(2);
+      expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+      // confirms that first receipt is no longer present
+      browser.driver.call(function(firstId) {
+        self.page.receipts.each(function(receipt) {
+          expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+        });
+      }, null, firstIdPromise);
+    });
   });
 });
 
@@ -233,40 +313,6 @@ describe('Scoping to the current user', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$199.99');
     expect(this.page.firstReceipt.element(by.binding('receipt.vendor')).getText()).to.eventually.equal('Quick Left');
-  });
-
-});
-
-describe('Receipts Table View', function() {
-  beforeEach(function() {
-    var self = this;
-
-    var user = this.factory.users.create({
-      email: 'test@example.com',
-      password: 'password'
-    });
-
-
-    user.then(function(user) {
-      _.times(15, function(i) {
-        self.factory.receipts.create({ vendor: 'Quick Left', total: 100.00 + i}, { user: user.id });
-      });
-    });
-
-    this.page = new ReceiptTablePage(this.factory, user);
-    this.page.get();
-  });
-
-  it('should contain existing receipts', function() {
-    expect($('receipt-table').isPresent()).to.eventually.be.true;
-    expect($('receipt-table').getText()).to.eventually.contain('100.00');
-    expect($('receipt-table').getText()).to.eventually.contain('103.00');
-  });
-
-  it('should display paginated results', function() {
-    expect(this.page.receipts.count()).to.eventually.equal(10);
-    $('.pagination').element(by.linkText('Next')).click();
-    expect(this.page.receipts.count()).to.eventually.equal(5);
   });
 
 });
