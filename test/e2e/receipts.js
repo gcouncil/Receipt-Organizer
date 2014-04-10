@@ -18,8 +18,8 @@ function ReceiptPage(factory, user) {
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
 
-  this.showThumbnailsButton = $('.thumbnails-button');
-  this.showTableButton = $('.table-button');
+  this.showThumbnailsButton = $('receipt-view-toggle [title="Thumbnails"]');
+  this.showTableButton = $('receipt-view-toggle [title="Table"]');
 
   this.tagOrganizer = $('.tag-organizer');
 }
