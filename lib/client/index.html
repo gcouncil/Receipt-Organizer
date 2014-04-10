@@ -3,7 +3,11 @@
   <head>
     <title>EPSON Receipts</title>
     <link rel="stylesheet" href="/assets/styles.css" />
+    <% if (env.production) { %>
+    <script src="/assets/index.min.js"></script>
+    <% } else { %>
     <script src="/assets/index.js"></script>
+    <% } %>
   </head>
   <body ng-app="epsonreceipts">
     <ui-view></ui-view>

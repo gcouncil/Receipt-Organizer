@@ -1,9 +1,11 @@
 module.exports = function(grunt) {
+  var debug = grunt.option('env') !== 'production';
+
   grunt.initConfig({
     appconfig: require('config')
   });
 
-  var debug = grunt.option('env') !== 'production';
+  grunt.config('env.' + grunt.option('env'), true);
 
   // BUILD TASKS
 
@@ -31,7 +33,12 @@ module.exports = function(grunt) {
     html: {
       files: [
         { src: 'lib/client/index.html', dest: 'build/index.html' }
-      ]
+      ],
+      options: {
+        process: function(content, path) {
+          return grunt.template.process(content);
+        }
+      }
     },
     fonts: {
       files: [{
@@ -55,7 +62,7 @@ module.exports = function(grunt) {
         src: [
           'lib/client/styles.less'
         ],
-        dest: 'build/assets/styles.css'
+        dest: 'tmp/assets/styles.css'
       }],
       options: {
         paths: [
@@ -66,6 +73,14 @@ module.exports = function(grunt) {
         sourceMap: debug,
         outputSourceFiles: true
       }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.config('autoprefixer', {
+    styles: {
+      src: 'tmp/assets/styles.css',
+      dest: 'build/assets/styles.css'
     }
   });
 
@@ -112,6 +127,16 @@ module.exports = function(grunt) {
     }
   });
 
+
+  // Uglify
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.config('uglify', {
+    scripts: {
+      src: 'build/assets/index.js',
+      dest: 'build/assets/index.min.js'
+    }
+  });
+
   // WATCH TASKS
 
   grunt.loadNpmTasks('grunt-concurrent');
@@ -146,7 +171,7 @@ module.exports = function(grunt) {
     },
     less: {
       files: ['lib/client/**/*.less'],
-      tasks: ['less']
+      tasks: ['less', 'autoprefixer']
     },
     jshint: {
       files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
@@ -164,7 +189,7 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('./tasks');
 
-  grunt.registerTask('build', ['copy', 'browserify:scripts', 'less']);
+  grunt.registerTask('build', ['copy', 'browserify:scripts', 'less', 'autoprefixer', 'uglify']);
 
   grunt.registerTask('test:client', ['browserify:test', 'karma:run']);
   grunt.registerTask('test:server', ['mochaTest:server']);
