@@ -133,7 +133,10 @@ module.exports = function(grunt) {
   grunt.config('uglify', {
     scripts: {
       src: 'build/assets/index.js',
-      dest: 'build/assets/index.min.js'
+      dest: 'build/assets/index.min.js',
+      options: {
+        mangle: false
+      }
     }
   });
 
