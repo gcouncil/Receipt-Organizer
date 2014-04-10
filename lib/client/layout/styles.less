@@ -1,3 +1,48 @@
 toplevel-layout {
-  .container-fluid()
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  min-width: 900px;
+  .flex-box(column);
+}
+
+.toplevel-layout-header {
+  .noflex();
+
+  .navbar;
+  .navbar-default;
+  .container-fluid;
+  margin: 0;
+}
+
+.toplevel-layout-toolbar {
+  .noflex();
+
+  .navbar;
+  .container-fluid;
+  margin: 0;
+
+  box-shadow: 0 2px 6px -4px #999;
+}
+
+.toplevel-layout-content {
+  .flex();
+  .flex-box();
+}
+
+.toplevel-layout-sidebar {
+  color: #ccc;
+  .noflex();
+}
+
+.toplevel-layout-body {
+  .flex();
+  .flex-box();
+  overflow: auto;
+
+  > ui-view {
+    .flex;
+  }
 }

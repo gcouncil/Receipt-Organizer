@@ -1,0 +1,12 @@
+.flex-box(@direction: row, @wrap: nowrap) {
+  display: flex;
+  flex-flow: @direction @wrap;
+}
+
+.flex(@grow: 1, @shrink: 1, @basis: auto) {
+  flex: @grow @shrink @basis;
+}
+
+.noflex(@basis: auto) {
+  .flex(0, 0, @basis);
+}
