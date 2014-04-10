@@ -21,7 +21,7 @@ function ReceiptPage(factory, user) {
   this.showThumbnailsButton = $('.thumbnails-button');
   this.showTableButton = $('.table-button');
 
-  this.organizerPanel = $('.organizer-panel');
+  this.tagOrganizer = $('.tag-organizer');
 }
 
 function ReceiptTablePage(factory, user) {
@@ -270,9 +270,9 @@ describe.only('tagging receipts', function() {
     this.page.get();
   });
 
-  it('should display all of the user\'s tags in the organizer bar', function() {
-    expect(this.page.organizerPanel.getText()).to.eventually.contain('product development');
-    expect(this.page.organizerPanel.getText()).to.eventually.contain('materials');
+  it('should display all of the user\'s tags in the tag organizer bar', function() {
+    expect(this.page.tagOrganizer.getText()).to.eventually.contain('product development');
+    expect(this.page.tagOrganizer.getText()).to.eventually.contain('materials');
   });
 
   xit('should display non-nested tags on the form', function() {
