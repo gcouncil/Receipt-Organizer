@@ -20,6 +20,8 @@ function ReceiptPage(factory, user) {
 
   this.showThumbnailsButton = $('.thumbnails-button');
   this.showTableButton = $('.table-button');
+
+  this.organizerPanel = $('.organizer-panel');
 }
 
 function ReceiptTablePage(factory, user) {
@@ -264,11 +266,18 @@ describe.only('tagging receipts', function() {
       var tags = _.map(results[1], 'id');
       self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
     });
+
+    this.page.get();
   });
 
-  it('should display non-nested tags on the form', function() {
+  it('should display all of the user\'s tags in the organizer bar', function() {
+    expect(this.page.organizerPanel.getText()).to.eventually.contain('product development');
+    expect(this.page.organizerPanel.getText()).to.eventually.contain('materials');
+  });
+
+  xit('should display non-nested tags on the form', function() {
     this.page.firstReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.binding('receipt.tags')).getText()).to.eventually.contain('product development');
-    expect(this.page.receiptEditorForm.element(by.binding('receipt.tags')).getText()).to.eventually.contain('materials');
+    expect(this.page.receiptEditorForm.element(by.model('receipt.tags')).getAttribute('value')).to.eventually.contain('product development');
+    expect(this.page.receiptEditorForm.element(by.model('receipt.tags')).getAttribute('value')).to.eventually.contain('materials');
   });
 });
