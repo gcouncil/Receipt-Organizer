@@ -76,6 +76,7 @@
   "browserify-shim": {
     "jquery": "$",
     "angular": "angular",
+    "d3": "d3",
     "dynamsoft": "Dynamsoft"
   },
   "browser": {
@@ -85,6 +86,7 @@
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
 }
