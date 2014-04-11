@@ -398,10 +398,9 @@ describe.only('tagging receipts', function() {
     expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).to.eventually.equal('product development');
   });
 
-  xit('should display non-nested tags on the form', function() {
+  it('should display non-nested tags on the form', function() {
     this.page.firstReceipt.$('.fa-edit').click();
-    this.page.receiptEditorForm.$('[ui-select2]').click();
-    expect(this.page.receiptEditorForm.$('[ui-select2]').getAttribute('value')).to.eventually.contain('product development');
-    expect(this.page.receiptEditorForm.element(by.model('receipt.tags')).getAttribute('value')).to.eventually.contain('materials');
+    expect(this.page.receiptEditorForm.findElements(by.tagName('option')).getText()).to.eventually.contain('product development');
   });
+
 });
