@@ -391,6 +391,13 @@ describe.only('tagging receipts', function() {
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('write-offs');
   });
 
+  it('should be possible to delete an existing tag', function() {
+    expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).to.eventually.equal('materials');
+    this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).$('i').click();
+    expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).not.to.eventually.equal('materials');
+    expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).to.eventually.equal('product development');
+  });
+
   xit('should display non-nested tags on the form', function() {
     this.page.firstReceipt.$('.fa-edit').click();
     this.page.receiptEditorForm.$('[ui-select2]').click();
