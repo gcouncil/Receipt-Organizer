@@ -87,7 +87,6 @@
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-    "ui-select2": "./bower_components/angular-ui-select2/src/select2.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
 }
