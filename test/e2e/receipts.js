@@ -252,7 +252,7 @@ describe('Batch delete', function() {
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
   });
 
-  it('should delete existing receipts', function() {
+  it('should batch delete existing receipts from the table view', function() {
     var self = this;
 
     var deleteButton = $('receipts-toolbar [title="Delete"]');
@@ -281,6 +281,38 @@ describe('Batch delete', function() {
       });
     }, null, firstIdPromise);
   });
+
+  it('should batch delete existing receipts from the thumbnail view', function() {
+    var self = this;
+    $('receipt-view-toggle [title="Thumbnails"]').click();
+
+    var deleteButton = $('receipts-toolbar [title="Delete"]');
+    var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
+
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    expect(this.page.receipts.count()).to.eventually.equal(4);
+    this.page.firstReceipt.$('[type=checkbox]').click();
+    this.page.secondReceipt.$('[type=checkbox]').click();
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+    deleteButton.click();
+    expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+    $('.modal-dialog').element(by.buttonText('Cancel')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(4);
+
+    deleteButton.click();
+    $('.modal-dialog').element(by.buttonText('OK')).click();
+    expect(this.page.receipts.count()).to.eventually.equal(2);
+    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+
+    // confirms that first receipt is no longer present
+    browser.driver.call(function(firstId) {
+      self.page.receipts.each(function(receipt) {
+        expect(receipt.evaluate('receipt.id')).to.not.eventually.equal(firstId);
+      });
+    }, null, firstIdPromise);
+  });
+
 });
 
 describe('Scoping to the current user', function() {

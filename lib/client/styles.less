@@ -1,7 +1,10 @@
 @import "bootstrap";
 @import "font-awesome";
+
 @import (inline) "select2.css";
 @import (inline) "select2-bootstrap.css";
+
+@icon-font-path: '/assets/fonts/';
 @fa-font-path: '/assets/fonts';
 
 @import "./less/flexbox";
@@ -11,3 +14,7 @@
 @import "./users/styles";
 @import "./tags/styles";
 
+ui-view {
+  .flex-box(column);
+  .flex();
+}
