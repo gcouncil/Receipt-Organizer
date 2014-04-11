@@ -22,6 +22,7 @@ function ReceiptPage(factory, user) {
   this.showTableButton = $('receipt-view-toggle [title="Table"]');
 
   this.tagOrganizer = $('.tag-organizer');
+  this.newTag = $('.new-tag');
 }
 
 function ReceiptTablePage(factory, user) {
@@ -349,7 +350,7 @@ describe('Scoping to the current user', function() {
   });
 });
 
-describe('tagging receipts', function() {
+describe.only('tagging receipts', function() {
   beforeEach(function() {
     var self = this;
 
@@ -382,6 +383,12 @@ describe('tagging receipts', function() {
   it('should display all of the user\'s tags in the tag organizer bar', function() {
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('product development');
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('materials');
+  });
+
+  it('should be possible to create a new tag', function() {
+    this.page.newTag.element(by.model('newTag')).sendKeys('write-offs');
+    this.page.newTag.element(by.buttonText('Create')).click();
+    expect(this.page.tagOrganizer.getText()).to.eventually.contain('write-offs');
   });
 
   xit('should display non-nested tags on the form', function() {
