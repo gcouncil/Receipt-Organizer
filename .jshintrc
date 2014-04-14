@@ -10,5 +10,6 @@
   "quotmark": "single",
   "undef": true,
   "unused": "vars",
-  "trailing": true
+  "trailing": true,
+  "latedef": "nofunc"
 }

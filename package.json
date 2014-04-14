@@ -77,6 +77,7 @@
     "select2": "select2",
     "jquery": "$",
     "angular": "angular",
+    "d3": "d3",
     "dynamsoft": "Dynamsoft"
   },
   "browser": {
@@ -89,6 +90,7 @@
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
     "ui-sortable": "./bower_components/angular-ui-sortable/sortable.js",
+    "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
 }
