@@ -350,7 +350,7 @@ describe('Scoping to the current user', function() {
   });
 });
 
-describe.only('tagging receipts', function() {
+describe('tagging receipts', function() {
   beforeEach(function() {
     var self = this;
 
@@ -400,7 +400,7 @@ describe.only('tagging receipts', function() {
 
   it('should display non-nested tags on the form', function() {
     this.page.firstReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.findElements(by.tagName('option')).getText()).to.eventually.contain('product development');
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
 });
