@@ -1,1 +1,3 @@
-<receipt-thumbnail receipt="receipt" selected="receipts.selected[receipt.id]" ng-repeat="receipt in receipts.items"></receipt-thumbnail>
+<div ui-sortable ng-model="receipts.items">
+  <receipt-thumbnail receipt="receipt" selected="receipts.selected[receipt.id]" ng-repeat="receipt in receipts.items"></receipt-thumbnail>
+</div>
