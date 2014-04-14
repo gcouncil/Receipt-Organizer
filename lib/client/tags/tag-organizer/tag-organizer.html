@@ -1,5 +1,5 @@
 <div class="container-fluid tag-organizer">
-  <ul>
+  <ul ui-sortable ng-model="tags">
     <li ng-repeat="tag in tags" tag="tag">
     <a ng-href="{{ $state.href($state.current, { tag: tag.id }) }}">{{ tag.name }}</a>
       <button ng-click="delete(tag)" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i></button>
