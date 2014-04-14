@@ -13,3 +13,5 @@
     <li><button type="button" class="btn btn-link" ng-click="create()">Manual Entry</button></li>
   </ul>
 </div>
+
+<select ng-model="scanner" ng-options="s.name for s in scanners track by s.id" ng-show="scanners.length > 1"></select>
