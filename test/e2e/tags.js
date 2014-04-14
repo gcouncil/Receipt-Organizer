@@ -17,6 +17,9 @@ function ReceiptPage(factory, user) {
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
   this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
+  this.receiptEditorForm = $('.modal-dialog form');
+
+  this.showTableButton = $('receipt-view-toggle [title="Table"]');
 
   this.tagOrganizer = $('.tag-organizer');
   this.firstTagInOrganizer = element(by.repeater('tag in tags').row(0));
@@ -24,7 +27,7 @@ function ReceiptPage(factory, user) {
   this.newTag = $('.new-tag');
 }
 
-describe('CRUD', function() {
+describe.only('CRUD', function() {
   beforeEach(function() {
     var self = this;
 
@@ -72,14 +75,14 @@ describe('CRUD', function() {
 
   it('should be possible to delete an existing tag', function() {
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('materials');
-    this.page.tagOrganizer.firstTagInOrganizer.$('i').click();
-    expect(this.page.tagOrganizer.firstTagInOrganizer.getText()).not.to.eventually.equal('materials');
-    expect(this.page.tagOrganizer.firstTagInOrganizer.getText()).to.eventually.equal('product development');
+    this.page.firstTagInOrganizer.$('i').click();
+    expect(this.page.firstTagInOrganizer.getText()).not.to.eventually.equal('materials');
+    expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('product development');
   });
 
 });
 
-describe.only('filtering', function() {
+describe('filtering', function() {
 
   beforeEach(function() {
     var self = this;
@@ -120,7 +123,7 @@ describe.only('filtering', function() {
     this.page.get();
   });
 
-  it('should filter receipts by tag on the thumbnail view', function() {
+  function testFilteringByTag() {
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('utilities');
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('rent');
     expect(this.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
@@ -135,6 +138,15 @@ describe.only('filtering', function() {
 
     expect(this.page.firstReceipt.getText()).to.eventually.contain('Boulder Property Management');
     expect(this.page.receipts).to.eventually.have.length(1);
+  }
+
+  it('should filter receipts by tag on the thumbnail view', function() {
+    testFilteringByTag();
+  });
+
+  it('should filter receipts by tag on the table view', function() {
+    this.page.showTableButton.click();
+    testFilteringByTag();
   });
 
 });
