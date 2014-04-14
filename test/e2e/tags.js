@@ -16,13 +16,15 @@ function ReceiptPage(factory, user) {
 
   this.receipts = element.all(by.repeater('receipt in receipts'));
   this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
+  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
 
   this.tagOrganizer = $('.tag-organizer');
-  this.firstTagInOrganizer = this.page.tagOrganizer.element(by.repeater('tag in tags').row(0));
+  this.firstTagInOrganizer = element(by.repeater('tag in tags').row(0));
+  this.secondTagInOrganizer = element(by.repeater('tag in tags').row(1));
   this.newTag = $('.new-tag');
 }
 
-describe('tagging receipts', function() {
+describe('CRUD', function() {
   beforeEach(function() {
     var self = this;
 
@@ -57,6 +59,11 @@ describe('tagging receipts', function() {
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('materials');
   });
 
+  it('should display non-nested tags on the form', function() {
+    this.page.firstReceipt.$('.fa-edit').click();
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
+  });
+
   it('should be possible to create a new tag', function() {
     this.page.newTag.element(by.model('newTag')).sendKeys('write-offs');
     this.page.newTag.element(by.buttonText('Create')).click();
@@ -65,14 +72,69 @@ describe('tagging receipts', function() {
 
   it('should be possible to delete an existing tag', function() {
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('materials');
-    this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).$('i').click();
-    expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).not.to.eventually.equal('materials');
-    expect(this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText()).to.eventually.equal('product development');
+    this.page.tagOrganizer.firstTagInOrganizer.$('i').click();
+    expect(this.page.tagOrganizer.firstTagInOrganizer.getText()).not.to.eventually.equal('materials');
+    expect(this.page.tagOrganizer.firstTagInOrganizer.getText()).to.eventually.equal('product development');
   });
 
-  it('should display non-nested tags on the form', function() {
-    this.page.firstReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
+});
+
+describe.only('filtering', function() {
+
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test2@example.com',
+      password: 'password'
+    });
+
+    this.page = new ReceiptPage(this.factory, user);
+
+    var tag1 = user.then(function(user) {
+      return Q.all([
+        self.factory.tags.create({ name: 'rent'}, { user: user.id }),
+      ]);
+    });
+
+
+    var tag2 = user.then(function(user) {
+      return Q.all([
+        self.factory.tags.create({ name: 'utilities'}, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      user,
+      tag1,
+      tag2
+    ]).done(function(results) {
+      var user = results[0];
+      var tag1 = _.map(results[1], 'id');
+      var tag2 = _.map(results[2], 'id');
+      self.factory.receipts.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, tags: tag1 }, { user: user.id });
+      self.factory.receipts.create({ vendor: 'Xcel Energy', total: 74.64, tags: tag2 }, { user: user.id });
+
+    });
+
+    this.page.get();
+  });
+
+  it('should filter receipts by tag on the thumbnail view', function() {
+    expect(this.page.tagOrganizer.getText()).to.eventually.contain('utilities');
+    expect(this.page.tagOrganizer.getText()).to.eventually.contain('rent');
+    expect(this.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
+    expect(this.page.secondReceipt.getText()).to.eventually.contain('Boulder Property Management');
+
+    this.page.firstTagInOrganizer.$('a').click();
+
+    expect(this.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
+    expect(this.page.receipts).to.eventually.have.length(1);
+
+    this.page.secondTagInOrganizer.$('a').click();
+
+    expect(this.page.firstReceipt.getText()).to.eventually.contain('Boulder Property Management');
+    expect(this.page.receipts).to.eventually.have.length(1);
   });
 
 });

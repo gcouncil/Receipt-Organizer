@@ -1,7 +1,7 @@
 <div class="container-fluid tag-organizer">
   <ul>
     <li ng-repeat="tag in tags" tag="tag">
-      <a href="#">{{ tag.name }}</a>
+    <a ng-href="{{ $state.href($state.current, { tag: tag.id }) }}">{{ tag.name }}</a>
       <button ng-click="delete(tag)" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i></button>
     </li>
   </ul>
