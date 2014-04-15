@@ -21,23 +21,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="receipt in receipts.items" ng-dblclick="$emit('receipts.edit', receipt)">
+      <tr ng-repeat="receipt in receipts.items track by receipt.id">
         <td><input type="checkbox" name="selected" ng-model="receipts.selected[receipt.id]"></td>
-        <td>{{ receipt.vendor }}</td>
-        <td>{{ receipt.date | date }}</td>
-        <td>{{ receipt.category }}</td>
-        <td>{{ receipt.paymentType }}</td>
-        <td>{{ receipt.city }}</td>
-        <td>{{ receipt.state }}</td>
-        <td>{{ receipt.tax | currency}}</td>
-        <td>{{ receipt.additional_tax | currency}}</td>
-        <td>{{ receipt.tip | currency}}</td>
-        <td>{{ receipt.total | currency }}</td>
-        <td>{{ receipt.tax_category }}</td>
-        <td>{{ receipt.business_purpose}}</td>
-        <td>{{ receipt.reimbursable | checkmark}}</td>
-        <td>{{ receipt.billable | checkmark}}</td>
-        <td>{{ receipt.comments }}</td>
+        <td table-data-field><input type="text" ng-model="receipt.vendor" ng-blur="update(receipt)"><p class="placeholder">{{receipt.vendor}}</p></a></td>
+        <td table-data-field><input datepicker-popup ng-model="receipt.date" ng-blur="update(receipt)"><p class="placeholder">{{receipt.date | date}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.category" ng-blur="update(receipt)"><p class="placeholder">{{receipt.category}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.paymentType" ng-blur="update(receipt)"><p class="placeholder">{{receipt.paymentType}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.city" ng-blur="update(receipt)"><p class="placeholder">{{receipt.city}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.state" ng-blur="update(receipt)"><p class="placeholder">{{receipt.state}}</p></td>
+        <td table-data-field><input type="currency" ng-model="receipt.tax" ng-blur="update(receipt)"><p class="placeholder">{{receipt.tax ? '$' + receipt.tax: ''}}</p></td>
+        <td table-data-field><input type="currency" ng-model="receipt.additionalTax" ng-blur="update(receipt)"><p class="placeholder">{{receipt.additionalTax ? '$' + receipt.additionalTax: ''}}</p></td>
+        <td table-data-field><input type="currency" ng-model="receipt.tip" ng-blur="update(receipt)"><p class="placeholder">{{receipt.tip ? '$' + receipt.tip : receipt.tip}}</p></td>
+        <td table-data-field><input type="currency" ng-model="receipt.total" ng-blur="update(receipt)"><p class="placeholder">{{receipt.total ? '$' + receipt.total : receipt.total}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.taxCategory" ng-blur="update(receipt)"><p class="placeholder">{{receipt.taxCategory}}</p></td>
+        <td table-data-field><input type="text" ng-model="receipt.businessPurpose" ng-blur="update(receipt)"><p class="placeholder">{{receipt.businessPurpose}}</p></td>
+        <td table-data-field><input type="checkbox" ng-model="receipt.reimbursable" ng-blur="update(receipt)"></td>
+        <td table-data-field><input type="checkbox" ng-model="receipt.billable" ng-blur="update(receipt)"></td>
+        <td table-data-field><textarea ng-model="receipt.comments" ng-blur="update(receipt)"></textarea><p class="placeholder">{{receipt.comments}}</p></td>
       </tr>
     </tbody>
   </table>
