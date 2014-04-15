@@ -27,11 +27,11 @@
     "uuid": "^1.4.1",
     "passport-http": "^0.2.2",
     "angular-local-storage": "0.0.1",
-    "passport-token": "^0.1.1",
     "aws-sdk": "^2.0.0-rc13",
     "basic-auth": "0.0.1",
     "boom": "^2.4.0",
-    "base64-js": "0.0.6"
+    "base64-js": "0.0.6",
+    "passport-http-bearer": "^1.0.1"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
