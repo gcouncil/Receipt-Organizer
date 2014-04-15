@@ -29,6 +29,7 @@ receipt-thumbnail {
 
 .receipt-thumbnail-image-container {
   .noflex(120px);
+  .flex-box(column);
 
   background: #999;
 }
@@ -36,6 +37,20 @@ receipt-thumbnail {
 .receipt-thumbnail-image {
   width: 120px;
   height: auto;
+}
+
+.receipt-thumbnail-image-message {
+  .flex();
+  .flex-box(column);
+  justify-content: center;
+  align-item: center;
+  text-align: center;
+
+  color: white;
+
+  > * {
+    height: auto;
+  }
 }
 
 .receipt-thumbnail-actions {
