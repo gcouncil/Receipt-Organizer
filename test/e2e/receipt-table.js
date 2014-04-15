@@ -34,16 +34,16 @@ describe('Toggling the View', function() {
     this.page.get();
   });
 
-  it('should should toggle from the thumbnail to the table view and back', function() {
+  it('should should toggle from the table to the thumbnail view and back', function() {
     expect(this.page.receipts.count()).to.eventually.equal(1);
 
     // Ensure that table view is displayed
-    this.page.showThumbnailsButton.click();
+    this.page.showTableButton.click();
     expect($('.receipt-thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('receipt-table').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
-    this.page.showTableButton.click();
+    this.page.showThumbnailsButton.click();
     expect($('.receipt-thumbnail-fields').isPresent()).to.eventually.be.true;
     expect($('receipt-table').isPresent()).to.eventually.be.false;
 

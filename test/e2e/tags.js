@@ -27,7 +27,7 @@ function ReceiptPage(factory, user) {
   this.newTag = $('.new-tag');
 }
 
-describe.only('CRUD', function() {
+describe('CRUD', function() {
   beforeEach(function() {
     var self = this;
 
@@ -123,30 +123,30 @@ describe('filtering', function() {
     this.page.get();
   });
 
-  function testFilteringByTag() {
-    expect(this.page.tagOrganizer.getText()).to.eventually.contain('utilities');
-    expect(this.page.tagOrganizer.getText()).to.eventually.contain('rent');
-    expect(this.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
-    expect(this.page.secondReceipt.getText()).to.eventually.contain('Boulder Property Management');
+  function testFilteringByTag(self) {
+    expect(self.page.tagOrganizer.getText()).to.eventually.contain('utilities');
+    expect(self.page.tagOrganizer.getText()).to.eventually.contain('rent');
+    expect(self.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.secondReceipt.getText()).to.eventually.contain('Boulder Property Management');
 
-    this.page.firstTagInOrganizer.$('a').click();
+    self.page.firstTagInOrganizer.$('a').click();
 
-    expect(this.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
-    expect(this.page.receipts).to.eventually.have.length(1);
+    expect(self.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.receipts).to.eventually.have.length(1);
 
-    this.page.secondTagInOrganizer.$('a').click();
+    self.page.secondTagInOrganizer.$('a').click();
 
-    expect(this.page.firstReceipt.getText()).to.eventually.contain('Boulder Property Management');
-    expect(this.page.receipts).to.eventually.have.length(1);
+    expect(self.page.firstReceipt.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.receipts).to.eventually.have.length(1);
   }
 
   it('should filter receipts by tag on the thumbnail view', function() {
-    testFilteringByTag();
+    testFilteringByTag(this);
   });
 
   it('should filter receipts by tag on the table view', function() {
     this.page.showTableButton.click();
-    testFilteringByTag();
+    testFilteringByTag(this);
   });
 
 });

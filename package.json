@@ -82,14 +82,12 @@
   },
   "browser": {
     "jquery": "./bower_components/jquery/dist/jquery.js",
-    "jquery-ui": "./bower_components/jquery-ui/ui/jquery-ui.js",
     "select2": "./bower_components/select2/select2.js",
     "angular": "./bower_components/angular/angular.js",
     "angular-mocks": "./bower_components/angular-mocks/angular-mocks.js",
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-bootstrap": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-    "ui-sortable": "./bower_components/angular-ui-sortable/sortable.js",
     "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js"
   }
