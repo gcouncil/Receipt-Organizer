@@ -8,35 +8,22 @@ function ReceiptPage(factory, user) {
     password: 'password'
   });
 
-  this.get = function() {
-    browser.get(helpers.rootUrl + '#/receipts');
+  this.get = function(view) {
+    browser.get(helpers.rootUrl + '#/receipts' + (view ? '/' + view : ''));
     helpers.loginUser(this.user);
   };
 
   this.receiptEditorForm = $('.modal-dialog form');
-  this.receipts = element.all(by.repeater('receipt in receipts'));
-  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
+
+  var receiptRepeater = by.repeater('receipt in receipts.pagination.pageItems');
+  this.receipts = element.all(receiptRepeater);
+  this.firstReceipt = element(receiptRepeater.row(0));
+  this.secondReceipt = element(receiptRepeater.row(1));
+
+  this.receiptDeleteForm = $('.modal-dialog form');
 
   this.showThumbnailsButton = $('receipt-view-toggle [title="Thumbnails"]');
   this.showTableButton = $('receipt-view-toggle [title="Table"]');
-}
-
-function ReceiptTablePage(factory, user) {
-  this.user = user || factory.users.create({
-    email: 'test@example.com',
-    password: 'password'
-  });
-
-  this.get = function() {
-    var url = helpers.rootUrl + '#/receipts/table';
-    browser.get(url);
-    helpers.loginUser(this.user);
-  };
-  this.receipts = element.all(by.repeater('receipt in receipts'));
-  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
-  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
-
-  this.receiptDeleteForm = $('.modal-dialog form');
 }
 
 describe('Editing Receipts', function() {
@@ -180,7 +167,7 @@ describe('Pagination', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
 
     this.page.user.then(function(user) {
       _.times(15, function(i) {
@@ -191,7 +178,7 @@ describe('Pagination', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should contain existing receipts', function() {
@@ -202,7 +189,7 @@ describe('Pagination', function() {
 
   it('should display paginated results', function() {
     expect(this.page.receipts.count()).to.eventually.equal(9);
-    $('.pagination').element(by.linkText('Next')).click();
+    $('page-nav').element(by.buttonText('Next')).click();
     expect(this.page.receipts.count()).to.eventually.equal(6);
   });
 });
@@ -212,7 +199,7 @@ describe('Batch delete', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
 
     this.page.user.then(function(user) {
       _.times(4, function(i) {
@@ -223,7 +210,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should not show delete button without receipts selected', function() {
