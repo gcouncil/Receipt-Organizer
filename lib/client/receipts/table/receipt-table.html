@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="receipt in receipts.items" ng-dblclick="$emit('receipts.edit', receipt)">
+      <tr ng-repeat="receipt in receipts.pagination.pageItems" ng-dblclick="$emit('receipts.edit', receipt)">
         <td><is-selected selection="receipts.selection" selection-id="receipt.id"></is-selected></td>
         <td>{{ receipt.vendor }}</td>
         <td>{{ receipt.date | date }}</td>
