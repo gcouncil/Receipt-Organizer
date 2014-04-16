@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="receipt in receipts.items" ng-dblclick="$emit('receipts.edit', receipt)">
-        <td><input type="checkbox" name="selected" ng-model="receipts.selected[receipt.id]"></td>
+        <td><is-selected selection="receipts.selection" selection-id="receipt.id"></is-selected></td>
         <td>{{ receipt.vendor }}</td>
         <td>{{ receipt.date | date }}</td>
         <td>{{ receipt.category }}</td>

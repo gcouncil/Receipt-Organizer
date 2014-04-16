@@ -1,18 +1,13 @@
 <div class="nav navbar-nav navbar-left navbar-form">
-  <div class="btn btn-default" ng-click="receipts.toggleFullSelection()">
-    <input type="checkbox"
-    ng-checked="receipts.isSelected()"
-    ui-indeterminate="receipts.isPartiallySelected()"
-    >
-  </div>
-  <button class="btn btn-default" title="Validate" disabled><i class="fa fa-check"></i></button>
+  <bulk-selection selection="receipts.selection"></bulk-selection>
+   <button class="btn btn-default" title="Validate" disabled><i class="fa fa-check"></i></button>
   <button class="btn btn-default" title="Edit" disabled><i class="fa fa-edit"></i></button>
   <button class="btn btn-default" title="Delete" ng-click="destroy()" ng-disabled="!receipts.selection.length"><i class="fa fa-trash-o"></i></button>
   <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
 </div>
 <div class="nav navbar-nav navbar-right navbar-form">
-  <span ng-show="receipts.total">{{ receipts.first }}-{{ receipts.last }} of {{ receipts.total }}</span>
-  <pagination total-items="receipts.total" page="receipts.page" items-per-page="receipts.perPage" max-size="0"></pagination>
-  <receipt-view-toggle></receipt-view-toggle>
+  <page-nav paginator="receipts.pagination"></page-nav>
+
+ <receipt-view-toggle></receipt-view-toggle>
 </div>
 
