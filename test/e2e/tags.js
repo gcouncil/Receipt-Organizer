@@ -62,20 +62,21 @@ describe('CRUD', function() {
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('materials');
   });
 
-  it('should display non-nested tags on the form', function() {
+  it('should display tags on the form', function() {
     this.page.firstReceipt.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
   it('should be possible to create a new tag', function() {
     this.page.newTag.element(by.model('newTag')).sendKeys('write-offs');
-    this.page.newTag.element(by.buttonText('Create')).click();
+    this.page.newTag.element(by.css('.fa-plus')).click();
     expect(this.page.tagOrganizer.getText()).to.eventually.contain('write-offs');
   });
 
   it('should be possible to delete an existing tag', function() {
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('materials');
-    this.page.firstTagInOrganizer.$('i').click();
+    this.page.firstTagInOrganizer.$('.fa-caret-down').click();
+    this.page.firstTagInOrganizer.$('.fa-trash-o').click();
     expect(this.page.firstTagInOrganizer.getText()).not.to.eventually.equal('materials');
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('product development');
   });
