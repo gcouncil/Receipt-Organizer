@@ -8,7 +8,12 @@
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><button type="button" class="btn btn-link" ng-click="import()">Import</button></li>
+    <li>
+      <label class="btn btn-link">
+        Import
+        <input type="file" multiple style="display: none;" ng-model="files" ng-change="import(files)">
+      </label>
+    </li>
     <li class="divider"></li>
     <li><button type="button" class="btn btn-link" ng-click="create()">Manual Entry</button></li>
   </ul>
