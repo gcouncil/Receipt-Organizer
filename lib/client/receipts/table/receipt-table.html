@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts.pagination.pageItems track by receipt.id">
+      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts.pagination.pageItems track by receipt.id" ng-init="receipt = receipt.clone()">
         <td><is-selected selection="receipts.selection" selection-id="receipt.id"></is-selected></td>
         <td table-data-field>
           <span class="placeholder">{{ receipt.vendor }}</span>
