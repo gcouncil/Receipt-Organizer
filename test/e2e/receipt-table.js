@@ -2,36 +2,16 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 
-function ReceiptTablePage(factory, user) {
-  this.user = user || factory.users.create({
-    email: 'test@example.com',
-    password: 'password'
-  });
-
-  this.get = function() {
-    var url = helpers.rootUrl + '#/receipts/table';
-    browser.get(url);
-    helpers.loginUser(this.user);
-  };
-
-  this.showThumbnailsButton = $('receipt-view-toggle [title="Thumbnails"]');
-  this.showTableButton = $('receipt-view-toggle [title="Table"]');
-
-  this.receipts = element.all(by.repeater('receipt in receipts'));
-  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
-  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
-
-  this.receiptDeleteForm = $('.modal-dialog form');
-}
+var ReceiptPage = require('./pages/receipts-page');
 
 describe('Toggling the View', function() {
   beforeEach(function() {
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
     browser.call(function(user) {
       return this.factory.receipts.create({}, { user: user.id });
     }, this, this.page.user);
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should should toggle from the table to the thumbnail view and back', function() {
@@ -59,7 +39,7 @@ describe('Pagination', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
 
     this.page.user.then(function(user) {
       _.times(15, function(i) {
@@ -70,7 +50,7 @@ describe('Pagination', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should contain existing receipts', function() {
@@ -81,7 +61,7 @@ describe('Pagination', function() {
 
   it('should display paginated results', function() {
     expect(this.page.receipts.count()).to.eventually.equal(9);
-    $('.pagination').element(by.linkText('Next')).click();
+    $('page-nav .btn-group').element(by.buttonText('Next')).click();
     expect(this.page.receipts.count()).to.eventually.equal(6);
   });
 });
@@ -90,7 +70,7 @@ describe('Editing Receipts in Table View', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
 
     this.page.user.then(function(user) {
       self.factory.receipts.create({
@@ -102,7 +82,7 @@ describe('Editing Receipts in Table View', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should edit a receipt with valid values', function() {
@@ -137,7 +117,7 @@ describe('Batch delete', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ReceiptTablePage(this.factory);
+    this.page = new ReceiptPage(this.factory);
 
     this.page.user.then(function(user) {
       _.times(4, function(i) {
@@ -148,7 +128,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should not show delete button without receipts selected', function() {

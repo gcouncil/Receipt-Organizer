@@ -2,23 +2,8 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 
-function ReceiptPage(factory, user) {
-  this.user = user || factory.users.create({
-    email: 'test@example.com',
-    password: 'password'
-  });
+var ReceiptPage = require('./pages/receipts-page');
 
-  this.get = function() {
-    browser.get(helpers.rootUrl + '#/receipts');
-    helpers.loginUser(this.user);
-  };
-
-  this.receiptEditorForm = $('.modal-dialog form');
-  this.receipts = element.all(by.repeater('receipt in receipts'));
-  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
-  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
-  this.receiptDeleteForm = $('.modal-dialog form');
-}
 
 describe('Manual Entry', function() {
   beforeEach(function() {
@@ -142,7 +127,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get();
+    this.page.get('table');
   });
 
   it('should batch delete existing receipts from the thumbnail view', function() {

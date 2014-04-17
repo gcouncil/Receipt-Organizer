@@ -21,8 +21,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts.items track by receipt.id">
-        <td><input type="checkbox" name="selected" ng-model="receipts.selected[receipt.id]"></td>
+      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts.pagination.pageItems track by receipt.id">
+        <td><is-selected selection="receipts.selection" selection-id="receipt.id"></is-selected></td>
         <td table-data-field>
           <span class="placeholder">{{ receipt.vendor }}</span>
           <input class="form-control" type="text" ng-model="receipt.vendor">

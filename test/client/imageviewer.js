@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var extendedZoom = require('epson-receipts/client/imageviewer/support/extended-zoom');
+var extendedZoom = require('epson-receipts/client/images/support/extended-zoom');
 
 describe('Extended Zoom', function() {
   describe('.translate', function() {
