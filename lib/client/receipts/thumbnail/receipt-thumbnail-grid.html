@@ -1,3 +1,1 @@
-<div>
-  <receipt-thumbnail receipt="receipt" selected="receipts.selected[receipt.id]" ng-repeat="receipt in receipts.items"></receipt-thumbnail>
-</div>
+<receipt-thumbnail receipt="receipt" selection="receipts.selection" ng-repeat="receipt in receipts.pagination.pageItems"></receipt-thumbnail>
