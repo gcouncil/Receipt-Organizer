@@ -1,11 +1,8 @@
-<form name="new-tag-form" class="new-tag" ng-submit="ok()">
-  <div class="form-group">
-    <label class="col-xs-12 control-label">Create a new tag</label>
-    <div class="col-xs-12">
+<form name="new-tag-form" class="new-tag" ng-blur="toggle()" ng-submit="ok()">
+  <div class="col-xs-12">
+    <div class="input-group input-group-sm">
       <input ng-model="newTag" class="form-control">
-    </div>
-    <div class="col-xs-12">
-      <button type="button" class="btn btn-default" ng-click="ok()">Create</button>
+      <span class="input-group-btn"><button ng-click="ok()" class="btn btn-default"><i class="fa fa-plus"></i></button></span>
     </div>
   </div>
 </form>
