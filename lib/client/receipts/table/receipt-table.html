@@ -28,8 +28,8 @@
           <input class="form-control" type="text" ng-model="receipt.vendor">
         </td>
         <td table-data-field>
-          <span class="placeholder">{{ receipt.date | date }}</span>
-          <input class="form-control" datepicker-popup datapicker-append-to-body="true" type="text" ng-model="receipt.date">
+          <span class="placeholder">{{ receipt.date | date: 'shortDate' }}</span>
+          <input class="form-control"type="text" ng-model="receipt.date" bs-datepicker>
         </td>
         <td table-data-field>
           <span class="placeholder">{{ receipt.category }}</span>
