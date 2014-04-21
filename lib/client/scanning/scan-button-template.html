@@ -1,0 +1,13 @@
+<div class="btn-group">
+  <button type="button" class="btn btn-success" ng-click="twain.scan()" ng-disabled="!twain.driver" style="width: 125px">
+    <i class="fa fa-spinner fa-spin" ng-show="scannerBusy"></i>
+    Scan <small ng-if="twain.driver">({{ shortDriverName() }})</small>
+  </button>
+  <button type="button" class="btn btn-success" ng-click="dropdown.show()">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+</div>
+
+<input id="{{ fileInputId }}" type="file" multiple ng-hide="true" ng-model="files" ng-change="$emit('receipts:newimages', files)">
+

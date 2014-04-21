@@ -77,7 +77,8 @@ module.exports = function(grunt) {
         paths: [
           './bower_components/bootstrap/less',
           './bower_components/font-awesome/less',
-          './bower_components/select2'
+          './bower_components/select2',
+          './bower_components/angular-motion/dist'
         ],
         dumpLineNumbers: debug ? 'all' : false,
         sourceMap: debug,
