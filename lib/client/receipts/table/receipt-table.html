@@ -21,15 +21,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts.pagination.pageItems track by receipt.id">
-        <td><is-selected selection="receipts.selection" selection-id="receipt.id"></is-selected></td>
+      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts track by receipt.id" ng-init="receipt = receipt.clone()">
+        <td><is-selected selection="selection" selection-id="receipt.id"></is-selected></td>
         <td table-data-field>
           <span class="placeholder">{{ receipt.vendor }}</span>
           <input class="form-control" type="text" ng-model="receipt.vendor">
         </td>
         <td table-data-field>
-          <span class="placeholder">{{ receipt.date | date }}</span>
-          <input class="form-control" datepicker-popup datapicker-append-to-body="true" type="text" ng-model="receipt.date">
+          <span class="placeholder">{{ receipt.date | date: 'shortDate' }}</span>
+          <input class="form-control"type="text" ng-model="receipt.date" bs-datepicker>
         </td>
         <td table-data-field>
           <span class="placeholder">{{ receipt.category }}</span>

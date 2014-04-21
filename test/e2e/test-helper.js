@@ -6,6 +6,7 @@ var _ = require('lodash');
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
 
+
 before(function(done) {
   var self = this;
 
@@ -15,6 +16,8 @@ before(function(done) {
   this.server.unref();
 
   this.factory = require('./support/factory')(this.api.managers);
+
+  browser.driver.manage().window().setSize(1920, 1080);
 
   browser.call(function() {
     return Q.ninvoke(self.server, 'listen', 9000);
