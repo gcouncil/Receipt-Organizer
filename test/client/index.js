@@ -3,4 +3,3 @@ require('angular-mocks');
 
 require('./widgets');
 require('./imageviewer');
-require('./receipts');
