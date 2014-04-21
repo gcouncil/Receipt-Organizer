@@ -1,0 +1,16 @@
+<ul tabindex="-1" class="dropdown-menu" role="menu">
+  <li role="presentation">
+    <label for="{{ fileInputId }}">Import</label>
+  </li>
+  <li role="presentation">
+    <a role="menuitem" tabindex="-1" ng-click="$emit('receipts:new')">Manual Entry</a>
+  </li>
+  <li class="divider"></li>
+  <li role="presentation" class="dropdown-header">Scanner Drivers</li>
+  <li role="presentation" class="disabled" ng-hide="twain.drivers"><a>No Drivers Available</a></li>
+  <li role="presentation" ng-repeat="driver in twain.drivers" ng-class="{ 'active': isSelected(driver) }">
+    <a tabindex="-1" ng-click="select(driver)">
+      {{ driver }}
+    </a>
+  </li>
+</ul>

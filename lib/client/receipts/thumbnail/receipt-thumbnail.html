@@ -1,5 +1,5 @@
 <div class="receipt-thumbnail-checkbox">
-  <input type="checkbox" ng-model="selected">
+  <is-selected selection="selection" selection-id="receipt.id">
 </div>
 <div class="receipt-thumbnail-image-container">
   <img class="receipt-thumbnail-image" ng-src="{{ image.url }}" ng-show="receipt.image">
@@ -12,8 +12,8 @@
   </div>
 </div>
 <div class="receipt-thumbnail-actions">
-  <button ng-click="$emit('receipts.edit', receipt)" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>
-  <button ng-click="$emit('receipts.destroy', receipt)" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
+  <button ng-click="$emit('receipts:edit', receipt)" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>
+  <button ng-click="$emit('receipts:destroy', receipt)" type="button" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
 </div>
 <div class="receipt-thumbnail-fields">
   <div class="receipt-thumbnail-field">

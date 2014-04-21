@@ -1,0 +1,34 @@
+.receipt-editor-dialog > {
+  width: 960px;
+
+  .modal-body {
+    width: 960px - 2px;
+    height: 600px;
+
+    padding: 0;
+
+    .flex-box();
+  }
+
+  .modal-footer {
+    margin-top: 0;
+  }
+}
+
+.receipt-editor-fields {
+  padding: @modal-inner-padding;
+  .noflex(400px);
+  overflow: scroll;
+}
+
+.receipt-editor-image {
+  .flex;
+  .flex-box;
+  height: 600px;
+  overflow: hidden;
+}
+
+.select2-search-field input {
+  width: 260px !important;
+}
+

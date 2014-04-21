@@ -1,0 +1,13 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ng-pluralize count="count" when="when"></ng-pluralize>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" ng-click="no()">{{ noLabel }}</button>
+        <button class="btn btn-danger" ng-click="yes()">{{ yesLabel }}</button>
+      </div>
+    </div>
+  </div>
+</div>

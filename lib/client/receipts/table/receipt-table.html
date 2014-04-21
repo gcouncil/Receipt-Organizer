@@ -1,8 +1,8 @@
 <div class="container-fluid">
-  <table class="table table-hover table-condensed">
+  <table class="table table-hover table-condensed receipt-table">
     <thead>
       <tr>
-        <th></th>
+        <th style="width: 30px;"></th>
         <th>Vendor</th>
         <th>Date</th>
         <th>Category</th>
@@ -21,23 +21,66 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="receipt in receipts.items" ng-dblclick="$emit('receipts.edit', receipt)">
-        <td><input type="checkbox" name="selected" ng-model="receipts.selected[receipt.id]"></td>
-        <td>{{ receipt.vendor }}</td>
-        <td>{{ receipt.date | date }}</td>
-        <td>{{ receipt.category }}</td>
-        <td>{{ receipt.paymentType }}</td>
-        <td>{{ receipt.city }}</td>
-        <td>{{ receipt.state }}</td>
-        <td>{{ receipt.tax | currency}}</td>
-        <td>{{ receipt.additional_tax | currency}}</td>
-        <td>{{ receipt.tip | currency}}</td>
-        <td>{{ receipt.total | currency }}</td>
-        <td>{{ receipt.tax_category }}</td>
-        <td>{{ receipt.business_purpose}}</td>
-        <td>{{ receipt.reimbursable | checkmark}}</td>
-        <td>{{ receipt.billable | checkmark}}</td>
-        <td>{{ receipt.comments }}</td>
+      <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts track by receipt.id" ng-init="receipt = receipt.clone()">
+        <td><is-selected selection="selection" selection-id="receipt.id"></is-selected></td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.vendor }}</span>
+          <input class="form-control" type="text" ng-model="receipt.vendor">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.date | date: 'shortDate' }}</span>
+          <input class="form-control"type="text" ng-model="receipt.date" bs-datepicker>
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.category }}</span>
+          <input class="form-control" type="text" ng-model="receipt.category">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.paymentType }}</span>
+          <input class="form-control" type="text" ng-model="receipt.paymentType">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.city }}</span>
+          <input class="form-control" type="text" ng-model="receipt.city">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.state }}</span>
+          <input class="form-control" type="text" ng-model="receipt.state">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.tax | currency }}</span>
+          <input class="form-control" type="currency" ng-model="receipt.tax">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.additionalTax | currency }}</span>
+          <input class="form-control" type="currency" ng-model="receipt.additionalTax">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.tip | currency }}</span>
+          <input class="form-control" type="currency" ng-model="receipt.tip">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.total | currency }}</span>
+          <input class="form-control" type="currency" ng-model="receipt.total">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.taxCategory }}</span>
+          <input class="form-control" type="text" ng-model="receipt.taxCategory">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.businessPurpose }}</span>
+          <input class="form-control" type="text" ng-model="receipt.businessPurpose">
+        </td>
+        <td>
+          <input type="checkbox" ng-model="receipt.reimbursable">
+        </td>
+        <td>
+          <input type="checkbox" ng-model="receipt.billable">
+        </td>
+        <td table-data-field>
+          <span class="placeholder">{{ receipt.comments }}</span>
+          <textarea class="form-control" ng-model="receipt.comments"></textarea>
+        </td>
       </tr>
     </tbody>
   </table>

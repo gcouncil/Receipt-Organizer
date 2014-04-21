@@ -1,17 +1,31 @@
 @import "bootstrap";
 @import "font-awesome";
 
+@import (inline) "select2.css";
+@import (inline) "select2-bootstrap.css";
+@import (inline) "angular-motion.css";
+
 @icon-font-path: '/assets/fonts/';
 @fa-font-path: '/assets/fonts';
 
 @import "./less/flexbox";
 
-@import "./imageviewer/styles";
+@import "./images/styles";
 @import "./layout/styles";
 @import "./receipts/styles";
 @import "./users/styles";
+@import "./tags/styles";
+@import "./receipt-editor/receipt-editor-styles";
 
 ui-view {
   .flex-box(column);
   .flex();
+}
+
+.datepicker .btn-default {
+  border: none;
+}
+
+.dropdown-menu > li > label {
+  &:extend(.dropdown-menu > li > a);
 }

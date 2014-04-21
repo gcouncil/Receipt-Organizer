@@ -52,8 +52,17 @@ module.exports = function(grunt) {
         src: '*',
         dest: 'build/assets/fonts'
       }]
+    },
+    images: {
+      files: [{
+        expand: true,
+        cwd: './bower_components/select2',
+        src: ['*.png', '*.gif'],
+        dest: 'build/assets'
+      }]
     }
   });
+
 
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.config('less', {
@@ -68,6 +77,8 @@ module.exports = function(grunt) {
         paths: [
           './bower_components/bootstrap/less',
           './bower_components/font-awesome/less',
+          './bower_components/select2',
+          './bower_components/angular-motion/dist'
         ],
         dumpLineNumbers: debug ? 'all' : false,
         sourceMap: debug,
