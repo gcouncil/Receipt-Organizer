@@ -1,5 +1,3 @@
-require('epson-receipts/client');
-require('angular-mocks');
-
+require('./test-helper');
 require('./widgets');
 require('./imageviewer');
