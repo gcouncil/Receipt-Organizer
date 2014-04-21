@@ -10,7 +10,7 @@ describe('Manual Entry', function() {
     this.page = new ReceiptPage(this.factory);
     this.page.get();
     $('.caret').click();
-    $('.btn-group').element(by.buttonText('Manual Entry')).click();
+    element(by.linkText('Manual Entry')).click();
   });
 
   it('should show form when manual entry link is clicked', function() {
@@ -27,7 +27,7 @@ describe('Manual Entry', function() {
     categoryEl.sendKeys('Miscellaneous');
 
     expect(this.page.receipts.count()).to.eventually.equal(0);
-    $('.modal-dialog').element(by.buttonText('OK')).click();
+    this.page.receiptEditorSave.click();
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.element(by.binding('receipt.total')).getText()).to.eventually.equal('$39.99');
   });
@@ -62,7 +62,7 @@ describe('Editing Receipts', function() {
     var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
-    $('.modal-dialog').element(by.buttonText('OK')).click();
+    this.page.receiptEditorSave.click();
 
     expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
     expect(this.page.receipts.count()).to.eventually.equal(1);
@@ -102,6 +102,7 @@ describe('Deleting Receipts', function() {
     expect(this.page.receipts.count()).to.eventually.equal(3);
     var firstIdPromise = this.page.firstReceipt.evaluate('receipt.id');
     this.page.firstReceipt.$('.fa-trash-o').click();
+    this.page.receiptDeleteConfirmButton.click();
     expect(this.page.receipts.count()).to.eventually.equal(2);
     browser.driver.call(function(firstId) {
       self.page.receipts.each(function(receipt) {
@@ -144,12 +145,12 @@ describe('Batch delete', function() {
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
     deleteButton.click();
-    expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+    expect(this.page.receiptDeleteConfirmation.isDisplayed()).to.eventually.be.true;
     $('.modal-dialog').element(by.buttonText('Cancel')).click();
     expect(this.page.receipts.count()).to.eventually.equal(4);
 
     deleteButton.click();
-    $('.modal-dialog').element(by.buttonText('OK')).click();
+    this.page.receiptDeleteConfirmButton.click();
     expect(this.page.receipts.count()).to.eventually.equal(2);
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 

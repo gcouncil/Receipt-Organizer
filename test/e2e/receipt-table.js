@@ -61,7 +61,7 @@ describe('Pagination', function() {
 
   it('should display paginated results', function() {
     expect(this.page.receipts.count()).to.eventually.equal(9);
-    $('page-nav .btn-group').element(by.buttonText('Next')).click();
+    $('er-pagination .btn-group').element(by.buttonText('Next')).click();
     expect(this.page.receipts.count()).to.eventually.equal(6);
   });
 });
@@ -86,28 +86,29 @@ describe('Editing Receipts in Table View', function() {
   });
 
   it('should edit a receipt with valid values', function() {
-    //var self = this;
+    var self = this;
 
     expect(this.page.receipts.count()).to.eventually.equal(1);
     expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Walmart');
 
-    //this.page.firstReceipt.$('.fa-edit').click();
-    //var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
-    //originalVendor.clear();
-    //originalVendor.sendKeys('Whole Foods');
-    //$('.modal-dialog').element(by.buttonText('OK')).click();
+    this.page.firstReceipt.$('input[type="checkbox"][selection]').click();
+    this.page.receiptToolbarEdit.click();
 
-    //expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
-    //expect(this.page.receipts.count()).to.eventually.equal(1);
+    var originalVendor = this.page.receiptEditorForm.element(by.model('receipt.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+    this.page.receiptEditorSave.click();
 
-    //// check database for the actual change
-    //var receiptQueryResults = browser.call(function(user) {
-    //return self.factory.receipts.query({ user: user.id });
-    //}, null, this.page.user);
+    expect(this.page.firstReceipt.evaluate('receipt.vendor')).to.eventually.equal('Whole Foods');
+    expect(this.page.receipts.count()).to.eventually.equal(1);
 
-    //expect(receiptQueryResults).to.eventually.have.length(1);
-    //expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
-    //});
+    // check database for the actual change
+    var receiptQueryResults = browser.call(function(user) {
+      return self.factory.receipts.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(receiptQueryResults).to.eventually.have.length(1);
+    expect(receiptQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 
 });
@@ -167,12 +168,13 @@ describe('Batch delete', function() {
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
     deleteButton.click();
-    expect(this.page.receiptDeleteForm.isDisplayed()).to.eventually.be.true;
+    expect(this.page.receiptDeleteConfirmation.isDisplayed()).to.eventually.be.true;
     $('.modal-dialog').element(by.buttonText('Cancel')).click();
     expect(this.page.receipts.count()).to.eventually.equal(4);
 
     deleteButton.click();
-    $('.modal-dialog').element(by.buttonText('OK')).click();
+    this.page.receiptDeleteConfirmButton.click();
+
     expect(this.page.receipts.count()).to.eventually.equal(2);
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 

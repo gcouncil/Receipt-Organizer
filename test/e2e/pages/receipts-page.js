@@ -11,17 +11,22 @@ function ReceiptPage(factory, user) {
     helpers.loginUser(this.user);
   };
 
+  this.receiptEditor = $('.modal-dialog');
   this.receiptEditorForm = $('.modal-dialog form');
+  this.receiptEditorSave = this.receiptEditor.element(by.buttonText('Done'));
 
-  var receiptRepeater = by.repeater('receipt in receipts.pagination.pageItems');
+  var receiptRepeater = by.repeater('receipt in receipts track by receipt.id');
   this.receipts = element.all(receiptRepeater);
   this.firstReceipt = element(receiptRepeater.row(0));
   this.secondReceipt = element(receiptRepeater.row(1));
 
-  this.receiptDeleteForm = $('.modal-dialog form');
+  this.receiptDeleteConfirmation = $('.modal-dialog');
+  this.receiptDeleteConfirmButton = this.receiptDeleteConfirmation.element(by.buttonText('Delete'));
 
   this.showThumbnailsButton = $('receipt-view-toggle [title="Thumbnails"]');
   this.showTableButton = $('receipt-view-toggle [title="Table"]');
+
+  this.receiptToolbarEdit = $('receipts-toolbar [title="Edit"]');
 }
 
 module.exports = ReceiptPage;
