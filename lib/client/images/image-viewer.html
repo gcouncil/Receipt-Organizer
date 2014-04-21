@@ -3,4 +3,11 @@
   <div class="btn btn-default" ng-click="zoom(1/1.5)"><i class="fa fa-minus"></i></div>
 </div>
 
-<h1 class="image-viewer-message" ng-if="message" ng-bind-html="message"></h1>
+<h1 class="image-viewer-message">
+  <div ng-show="imageLoader.loading">
+    Loading<br>
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+  </div>
+  <div ng-show="imageLoader.missing">No image.</div>
+  <div ng-show="imageLoader.error">Error!</div>
+</h1>
