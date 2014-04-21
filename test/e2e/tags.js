@@ -22,8 +22,8 @@ function ReceiptPage(factory, user) {
   this.showTableButton = $('receipt-view-toggle [title="Table"]');
 
   this.tagOrganizer = $('.tag-organizer');
-  this.firstTagInOrganizer = element(by.repeater('tag in tags').row(0));
-  this.secondTagInOrganizer = element(by.repeater('tag in tags').row(1));
+  this.firstTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(0));
+  this.secondTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(1));
   this.newTag = $('.new-tag');
 }
 
@@ -74,6 +74,9 @@ describe('CRUD', function() {
   });
 
   it('should be possible to delete an existing tag', function() {
+    this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText().then(function(res) {
+      console.log(res);
+    });
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('materials');
     this.page.firstTagInOrganizer.$('.fa-caret-down').click();
     this.page.firstTagInOrganizer.$('.fa-trash-o').click();
