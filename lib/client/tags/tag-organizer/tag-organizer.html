@@ -1,9 +1,0 @@
-<div class="container-fluid tag-organizer">
-  <a ng-href="{{ $state.href($state.current, { tag: null }) }}">All Receipts</a>
-  <ul>
-    <li ng-repeat="tag in tags" tag="tag" receipt-drop-zone draggable="true" draggable-item="{ type: 'tag', id: tag.id, name: tag.name }">
-      <a ng-href="{{ $state.href($state.current, { tag: tag.id }) }}">{{ tag.name }}</a>
-      <tag-actions tag="tag"></tag-actions>
-    </li>
-  </ul>
-</div>
