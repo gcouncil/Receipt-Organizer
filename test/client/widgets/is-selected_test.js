@@ -5,22 +5,10 @@ describe('isSelected directive', function() {
 
   beforeEach(function() {
 
-    angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
+    angular.injector(['ngMock', 'epsonreceipts.widgets']).invoke(function($rootScope, $compile) {
       elm = angular.element(
-      '<table>' +
-        '<thead>' +
-          '<tr>' +
-            '<th></th>' +
-          '</tr>' +
-        '</thead>' +
-        '<tbody>' +
-          '<tr>' +
-            '<td>' +
-              '<is-selected selection="selection" selection-id="1"></is-selected>' +
-            '</td>' +
-          '</tr>' +
-        '</tbody>' +
-      '</table>');
+        '<input type=checkbox>'
+      );
       scope = $rootScope.$new();
       $compile(elm)(scope);
       scope.$digest();
@@ -28,8 +16,13 @@ describe('isSelected directive', function() {
   });
   context('when not selected', function() {
     it('should not have selected property', function() {
-      var rows = elm.find('tr');
-      console.log(rows.eq(0));
+      scope.$apply(function() {
+        scope.selection = {};
+      });
+      console.log(elm);
+      //expect(elm.html()).toContain("Hello");
+      //var checkbox = elm.find('input');
+      //console.log(checkbox);
       //console.log(elm.find('input'));
       //row to not have selected property
     });
