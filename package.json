@@ -91,6 +91,7 @@
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
     "angular-animate": "./bower_components/angular-animate/angular-animate.js",
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
+    "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js",
     "angular-strap": "./bower_components/angular-strap/dist/angular-strap.tpl.js"

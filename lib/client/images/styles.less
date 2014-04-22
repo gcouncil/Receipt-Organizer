@@ -1,7 +1,7 @@
 image-viewer {
   position: relative;
-
-  flex: 1;
+  display: block;
+  .flex();
   background: #000;
 }
 
@@ -9,4 +9,12 @@ image-viewer {
   position: absolute;
   top: @modal-inner-padding;
   right: @modal-inner-padding;
+}
+
+.image-viewer-message {
+  position: absolute;
+  width: 100%;
+
+  text-align: center;
+  color: #fff;
 }

@@ -2,7 +2,15 @@
   <is-selected selection="selection" selection-id="receipt.id">
 </div>
 <div class="receipt-thumbnail-image-container">
-  <img class="receipt-thumbnail-image" ng-src="{{ image.url }}">
+  <img class="receipt-thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
+  <div class="receipt-thumbnail-image-message">
+    <div ng-show="imageLoader.loading">
+      Loading<br>
+      <i class="fa fa-spinner fa-spin fa-3x"></i>
+    </div>
+    <div ng-show="imageLoader.missing">No image.</div>
+    <div ng-show="imageLoader.error">Error!</div>
+  </div>
 </div>
 <div class="receipt-thumbnail-actions">
   <button ng-click="$emit('receipts:edit', receipt)" type="button" class="btn btn-link"><i class="fa fa-edit"></i></button>
