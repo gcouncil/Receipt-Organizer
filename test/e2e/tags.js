@@ -3,29 +3,7 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 
-function ReceiptPage(factory, user) {
-  this.user = user || factory.users.create({
-    email: 'test@example.com',
-    password: 'password'
-  });
-
-  this.get = function() {
-    browser.get(helpers.rootUrl + '#/receipts');
-    helpers.loginUser(this.user);
-  };
-
-  this.receipts = element.all(by.repeater('receipt in receipts'));
-  this.firstReceipt = element(by.repeater('receipt in receipts').row(0));
-  this.secondReceipt = element(by.repeater('receipt in receipts').row(1));
-  this.receiptEditorForm = $('.modal-dialog form');
-
-  this.showTableButton = $('receipt-view-toggle [title="Table"]');
-
-  this.tagOrganizer = $('.tag-organizer');
-  this.firstTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(0));
-  this.secondTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(1));
-  this.newTag = $('.new-tag');
-}
+var ReceiptPage = require('./pages/receipts-page');
 
 describe('CRUD', function() {
   beforeEach(function() {
@@ -154,3 +132,61 @@ describe('filtering', function() {
   });
 
 });
+
+describe.only('Multiple Tagging', function() {
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test@example.com',
+      password: 'password'
+    });
+
+    this.page = new ReceiptPage(this.factory, user);
+
+    var tags = user.then(function(user) {
+      return Q.all([
+        self.factory.tags.create({ name: 'depreciation'}, { user: user.id }),
+        self.factory.tags.create({ name: 'insurance'}, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      user,
+      tags
+    ]).done(function(results) {
+      var user = results[0];
+      var tags = _.map(results[1], 'id');
+      self.factory.tags.create({ name: 'travel' }, { user: user.id });
+      self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
+      self.factory.receipts.create({ vendor: 'Slow Right', total: 911.11, tags: tags }, { user: user.id });
+    });
+
+    this.page.get();
+  });
+
+  it('should tag multiple receipts', function() {
+    this.page.firstReceipt.$('.fa-edit').click();
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).not.to.eventually.contain('travel');
+    this.page.receiptEditorSave.click();
+
+    this.page.secondReceipt.$('.fa-edit').click();
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).not.to.eventually.contain('travel');
+    this.page.receiptEditorSave.click();
+
+    this.page.firstReceipt.$('[type="checkbox"]').click();
+    this.page.secondReceipt.$('[type="checkbox"]').click();
+    this.page.receiptToolbarTag.click();
+    expect(this.page.receiptToolbarTagDropdown.getText()).to.eventually.contain('travel');
+
+    this.page.firstReceipt.$('.fa-edit').click();
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('travel');
+    this.page.receiptEditorSave.click();
+
+    this.page.secondReceipt.$('.fa-edit').click();
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('travel');
+    this.page.receiptEditorSave.click();
+  });
+
+});
+
