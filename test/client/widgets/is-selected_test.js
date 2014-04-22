@@ -1,38 +1,50 @@
+var angular = require('angular');
+var $ = require('jquery');
 var expect = require('chai').expect;
 
 describe('isSelected directive', function() {
-  var elm, scope;
-
   beforeEach(function() {
+    var self = this;
 
-    angular.injector(['ngMock', 'epsonreceipts.widgets']).invoke(function($rootScope, $compile) {
-      elm = angular.element(
-        '<input type=checkbox>'
-      );
-      scope = $rootScope.$new();
-      $compile(elm)(scope);
-      scope.$digest();
+    angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
+      self.compile = function(template) {
+        self.scope = $rootScope.$new();
+        self.scope.selection = {
+          isSelected: self.sinon.stub(),
+          toggleSelection: self.sinon.stub()
+        };
+        self.scope.selectionId = '1';
+
+
+        template = template || '<is-selected selection="selection" selection-id="selectionId"></is-selected>';
+        self.wrapper = $compile(template)(self.scope);
+        self.scope.$digest();
+      };
     });
+    this.compile();
   });
+
   context('when not selected', function() {
-    it('should not have selected property', function() {
-      scope.$apply(function() {
-        scope.selection = {};
-      });
-      console.log(elm);
-      //expect(elm.html()).toContain("Hello");
-      //var checkbox = elm.find('input');
-      //console.log(checkbox);
-      //console.log(elm.find('input'));
-      //row to not have selected property
+    it('should not have checked property', function() {
+      this.scope.selection.isSelected.returns(false);
+      this.scope.$digest();
+      expect($(this.wrapper).is(':checked')).to.be.false;
     });
   });
 
   context('when selected', function() {
-    xit('should have selected property', function() {
-      var checkbox = elm.find('checkbox');
-      checkbox.click();
-      //expect row to have selected property
+    it('should have selected property', function() {
+      this.scope.selection.isSelected.returns(true);
+      this.scope.$digest();
+      expect($(this.wrapper).is(':checked')).to.be.true;
+    });
+  });
+
+  describe('on change', function() {
+    it('should toggle selection when clicked', function() {
+      this.wrapper.prop('checked', true);
+      this.wrapper.change();
+      expect(this.scope.selection.toggleSelection).to.have.been.calledWith('1', true);
     });
   });
 });
