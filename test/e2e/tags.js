@@ -52,9 +52,6 @@ describe('CRUD', function() {
   });
 
   it('should be possible to delete an existing tag', function() {
-    this.page.tagOrganizer.element(by.repeater('tag in tags').row(0)).getText().then(function(res) {
-      console.log(res);
-    });
     expect(this.page.firstTagInOrganizer.getText()).to.eventually.equal('materials');
     this.page.firstTagInOrganizer.$('.fa-caret-down').click();
     this.page.firstTagInOrganizer.$('.fa-trash-o').click();
@@ -133,7 +130,7 @@ describe('filtering', function() {
 
 });
 
-describe.only('Multiple Tagging', function() {
+describe('Multiple Tagging', function() {
   beforeEach(function() {
     var self = this;
 
@@ -157,9 +154,9 @@ describe.only('Multiple Tagging', function() {
     ]).done(function(results) {
       var user = results[0];
       var tags = _.map(results[1], 'id');
-      self.factory.tags.create({ name: 'travel' }, { user: user.id });
       self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
       self.factory.receipts.create({ vendor: 'Slow Right', total: 911.11, tags: tags }, { user: user.id });
+      self.factory.tags.create({ name: 'travel' }, { user: user.id });
     });
 
     this.page.get();
@@ -167,24 +164,25 @@ describe.only('Multiple Tagging', function() {
 
   it('should tag multiple receipts', function() {
     this.page.firstReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.secondReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.firstReceipt.$('[type="checkbox"]').click();
     this.page.secondReceipt.$('[type="checkbox"]').click();
     this.page.receiptToolbarTag.click();
-    expect(this.page.receiptToolbarTagDropdown.getText()).to.eventually.contain('travel');
+    expect($('.receipt-dropdown').getText()).to.eventually.contain('travel');
+    $('.receipt-dropdown').element(by.linkText('travel')).click();
 
     this.page.firstReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.secondReceipt.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });
 

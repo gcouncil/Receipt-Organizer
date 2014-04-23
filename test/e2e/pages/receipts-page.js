@@ -27,8 +27,8 @@ function ReceiptPage(factory, user) {
   this.showTableButton = $('receipt-view-toggle [title="Table"]');
 
   this.receiptToolbarEdit = $('receipts-toolbar [title="Edit"]');
-  this.receiptToolbarTag = $('receipt-toolbar [titile="Tag"]');
-  this.receiptToolbarTagDropdown = $('receipt-dropdown');
+  this.receiptToolbarTag = $('receipts-toolbar [title="Tag"]');
+  this.receiptToolbarTagDropdown = $('.receipt-dropdown');
 
   this.tagOrganizer = $('.tag-organizer');
   this.firstTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(0));
