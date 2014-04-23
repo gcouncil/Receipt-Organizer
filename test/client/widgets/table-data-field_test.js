@@ -24,6 +24,43 @@ describe('tableDataField directive', function() {
     });
   });
 
+  context('when input is valid', function() {
+    beforeEach(function() {
+      this.compile('<input>');
+    });
+
+    it('should not toggle class of element as has-error', function() {
+      expect(this.element.hasClass(errorClass)).to.be.false;
+    });
+
+    it('should display the span and link only', function() {
+      expect(this.input.css('display')).to.include('none');
+      expect(this.span.css('display')).to.include('inline');
+      expect(this.link.css('display')).to.include('inline');
+    });
+
+    it('should continue to display only span and link on blur', function() {
+      this.input.blur();
+      expect(this.input.css('display')).to.include('none');
+      expect(this.span.css('display')).to.include('inline');
+      expect(this.link.css('display')).to.include('inline');
+    });
+
+    it('should display the input field when clicked', function() {
+      this.input.click();
+      expect(this.input.css('display')).to.include('inline');
+      expect(this.span.css('display')).to.include('none');
+      expect(this.link.css('display')).to.include('none');
+    });
+
+    it('should switch input visibility on click and then blur', function() {
+      this.input.click();
+      expect(this.input.css('display')).to.include('inline');
+      this.input.blur();
+      expect(this.input.css('display')).to.include('none');
+    });
+  });
+
   context('when input is invalid', function() {
     beforeEach(function() {
       this.compile('<input class=ng-invalid>');
@@ -34,6 +71,13 @@ describe('tableDataField directive', function() {
     });
 
     it('should display only the input', function() {
+      expect(this.input.css('display')).to.include('inline');
+      expect(this.span.css('display')).to.include('none');
+      expect(this.link.css('display')).to.include('none');
+    });
+
+    it('should continue to display only input on blur', function() {
+      this.input.blur();
       expect(this.input.css('display')).to.include('inline');
       expect(this.span.css('display')).to.include('none');
       expect(this.link.css('display')).to.include('none');
@@ -56,16 +100,5 @@ describe('tableDataField directive', function() {
         expect(this.element.hasClass(errorClass)).to.be.false;
       });
     });
-  });
-
-  context('when input is valid', function() {
-    beforeEach(function() {
-      this.compile('<input>');
-    });
-
-    it('should not toggle class of element as has-error', function() {
-      expect(this.element.hasClass(errorClass)).to.be.false;
-    });
-
   });
 });
