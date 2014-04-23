@@ -1,16 +1,20 @@
 <div class="nav navbar-nav navbar-left navbar-form">
   <bulk-selection selection="receipts.selection"></bulk-selection>
-   <button class="btn btn-default" title="Validate" disabled><i class="fa fa-check"></i></button>
-   <button class="btn btn-default" title="Edit"
-     ng-click="$emit('receipts:edit', receipts.selection.selectedItems)"
-     ng-disabled="!receipts.selection.hasSelection()">
-     <i class="fa fa-edit"></i>
-   </button>
-   <button class="btn btn-default" title="Delete"
-     ng-click="$emit('receipts:destroy', receipts.selection.selectedItems)"
-     ng-disabled="!receipts.selection.hasSelection()">
-     <i class="fa fa-trash-o"></i>
-   </button>
+  <button class="btn btn-default" title="Validate"
+    ng-click="$emit('receipts:reviewed', receipts.selection.selectedItems)"
+    ng-disabled="!receipts.selection.hasSelection()">
+    <i class="fa fa-check"></i>
+  </button>
+  <button class="btn btn-default" title="Edit"
+    ng-click="$emit('receipts:edit', receipts.selection.selectedItems)"
+    ng-disabled="!receipts.selection.hasSelection()">
+    <i class="fa fa-edit"></i>
+  </button>
+  <button class="btn btn-default" title="Delete"
+    ng-click="$emit('receipts:destroy', receipts.selection.selectedItems)"
+    ng-disabled="!receipts.selection.hasSelection()">
+    <i class="fa fa-trash-o"></i>
+  </button>
   <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
 </div>
 <div class="nav navbar-nav navbar-right navbar-form">
