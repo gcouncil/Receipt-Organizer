@@ -1,4 +1,5 @@
 var angular = require('angular');
+var $ = require('jquery');
 var expect = require('chai').expect;
 
 describe('tableDataField directive', function() {
@@ -16,6 +17,8 @@ describe('tableDataField directive', function() {
         self.wrapper = $compile('<table><tr ng-form name="form-auto-save">' + baseTemplate + '</tr></table>')(self.scope);
         self.element = angular.element(self.wrapper.find('td')[0]);
         self.input = angular.element(self.wrapper.find('input')[0]);
+        self.span = angular.element(self.wrapper.find('span')[0]);
+        self.link = angular.element(self.wrapper.find('a')[0]);
         self.scope.$digest();
       };
     });
@@ -26,8 +29,14 @@ describe('tableDataField directive', function() {
       this.compile('<input class=ng-invalid>');
     });
 
-    it('should toggle element with has error class', function() {
+    it('should toggle the error class', function() {
       expect(this.element.hasClass(errorClass)).to.be.true;
+    });
+
+    it('should display only the input', function() {
+      expect(this.input.css('display')).to.include('inline');
+      expect(this.span.css('display')).to.include('none');
+      expect(this.link.css('display')).to.include('none');
     });
 
     context('after input validity has changed', function() {
@@ -35,23 +44,15 @@ describe('tableDataField directive', function() {
         this.input.toggleClass('ng-invalid', false);
       });
 
-      it('should remain invalid without action', function() {
-        expect(this.element.hasClass(errorClass)).to.be.true;
-      });
-
-      it('should update on click', function() {
-        this.input.click();
-        expect(this.element.hasClass(errorClass)).to.be.false;
-      });
-
-      it('should update on blur', function() {
+      it('should update visibility on blur to show span and link', function() {
         this.input.blur();
-        expect(this.element.hasClass(errorClass)).to.be.false;
+        expect(this.input.css('display')).to.include('none');
+        expect(this.span.css('display')).to.include('inline');
+        expect(this.link.css('display')).to.include('inline');
       });
 
-      xit('should update on focus if class has focus-hack', function() {
-        this.input.focus();
-        console.log(this.wrapper);
+      it('should update error class on blur', function() {
+        this.input.blur();
         expect(this.element.hasClass(errorClass)).to.be.false;
       });
     });
