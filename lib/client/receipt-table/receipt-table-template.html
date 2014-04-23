@@ -23,51 +23,51 @@
     <tbody>
       <tr ng-form form-confirm-leave form-auto-save="update(receipt)" ng-repeat="receipt in receipts track by receipt.id" ng-init="receipt = receipt.clone()">
         <td><is-selected selection="selection" selection-id="receipt.id"></is-selected></td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.vendor }}</span>
           <input class="form-control" type="text" ng-model="receipt.vendor">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.date | date: 'shortDate' }}</span>
-          <input class="form-control"type="text" ng-model="receipt.date" bs-datepicker>
+          <datepicker ng-model="receipt.date"></datepicker>
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.category }}</span>
           <input class="form-control" type="text" ng-model="receipt.category">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.paymentType }}</span>
           <input class="form-control" type="text" ng-model="receipt.paymentType">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.city }}</span>
           <input class="form-control" type="text" ng-model="receipt.city">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.state }}</span>
           <input class="form-control" type="text" ng-model="receipt.state">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.tax | currency }}</span>
           <input class="form-control" type="currency" ng-model="receipt.tax">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.additionalTax | currency }}</span>
           <input class="form-control" type="currency" ng-model="receipt.additionalTax">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.tip | currency }}</span>
           <input class="form-control" type="currency" ng-model="receipt.tip">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.total | currency }}</span>
           <input class="form-control" type="currency" ng-model="receipt.total">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.taxCategory }}</span>
           <input class="form-control" type="text" ng-model="receipt.taxCategory">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.businessPurpose }}</span>
           <input class="form-control" type="text" ng-model="receipt.businessPurpose">
         </td>
@@ -77,7 +77,7 @@
         <td>
           <input type="checkbox" ng-model="receipt.billable">
         </td>
-        <td table-data-field>
+        <td table-data-field form-group>
           <span class="placeholder">{{ receipt.comments }}</span>
           <textarea class="form-control" ng-model="receipt.comments"></textarea>
         </td>
