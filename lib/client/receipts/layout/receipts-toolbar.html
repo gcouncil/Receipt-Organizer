@@ -1,6 +1,6 @@
 <div class="nav navbar-nav navbar-left navbar-form">
   <bulk-selection selection="receipts.selection"></bulk-selection>
-  <button class="btn btn-default" title="Validate"
+  <button class="btn btn-default" title="Mark as Reviewed"
     ng-click="$emit('receipts:reviewed', receipts.selection.selectedItems)"
     ng-disabled="!receipts.selection.hasSelection()">
     <i class="fa fa-check"></i>
