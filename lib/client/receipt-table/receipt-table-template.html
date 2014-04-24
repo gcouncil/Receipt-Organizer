@@ -2,7 +2,7 @@
   <table class="table table-condensed receipt-table">
     <thead>
       <tr>
-        <th style="width: 30px;"></th>
+        <th style="width: 45px;"></th>
         <th>Vendor</th>
         <th>Date</th>
         <th>Category</th>
@@ -28,7 +28,12 @@
         ng-repeat="receipt in receipts track by receipt.id"
         ng-init="receipt = receipt.clone()"
         ng-class="{ 'receipt-table-row-reviewed': receipt.reviewed, 'receipt-table-row-unreviewed': !receipt.reviewed }">
-        <td><is-selected selection="selection" selection-id="receipt.id"></is-selected></td>
+        <td>
+          <is-selected selection="selection" selection-id="receipt.id"></is-selected>
+          &nbsp;
+          <i class="fa fa-check-circle receipt-thumbnail-reviewed-icon" ng-if="receipt.reviewed" title="Reviewed"></i>
+          <i class="fa fa-flag receipt-thumbnail-unreviewed-icon" ng-if="!receipt.reviewed" title="Needs Review"></i>
+        </td>
         <td table-data-field form-group>
           <span class="placeholder">{{ receipt.vendor }}</span>
           <input class="form-control" type="text" ng-model="receipt.vendor">
