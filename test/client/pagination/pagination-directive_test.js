@@ -7,18 +7,17 @@ describe('pagination directive', function() {
   beforeEach(function() {
     var self = this;
 
-    angular.mock.module('ngMock', 'epsonreceipts');
+    angular.mock.module('ngMock', 'epsonreceipts.pagination');
     angular.mock.inject(function($rootScope, $compile, $controller) {
       self.scope = $rootScope.$new();
 
-      self.compile = function(template) {
+      self.compile = function() {
         self.scope.paginationController = $controller('PaginationController', { $scope: self.scope });
-        template = template || '<er-pagination controller="paginationController"></er-pagination>';
-        self.wrapper = $compile('<div>' + template + '</div>')(self.scope);
-        self.element = self.wrapper.find('er-pagination');
+        var template = '<er-pagination controller="paginationController"></er-pagination>';
+        self.element = $compile(template)(self.scope);
         self.previousButton = $(self.element.find('button')[0]);
         self.nextButton = $(self.element.find('button')[1]);
-        self.totals = self.wrapper.find('span');
+        self.totals = self.element.find('span');
         self.scope.$digest();
       };
     });

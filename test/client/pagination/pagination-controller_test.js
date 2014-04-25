@@ -6,7 +6,7 @@ describe('pagination controller', function() {
   beforeEach(function() {
     var self = this;
 
-    angular.mock.module('ngMock', 'epsonreceipts');
+    angular.mock.module('ngMock', 'epsonreceipts.pagination');
     angular.mock.inject(function($rootScope, $controller) {
       self.scope = $rootScope.$new();
 
@@ -76,11 +76,39 @@ describe('pagination controller', function() {
 
 
   describe('events', function() {
-    it('should emit change event on update', function() {
-      var onChange = this.sinon.stub();
-      this.paginationController.on('change', onChange);
+    beforeEach(function() {
+      this.onChange = this.sinon.stub();
+      this.paginationController.on('change', this.onChange);
+    });
+
+    it('should emit change event on setSkip', function() {
       this.paginationController.setSkip(1);
-      expect(onChange).to.have.been.called;
+      expect(this.onChange).to.have.been.called;
+    });
+
+    it('should emit change event on setItems', function() {
+      this.paginationController.setItems(['a', 'b']);
+      expect(this.onChange).to.have.been.called;
+    });
+
+    it('should emit change event on setLimit', function() {
+      this.paginationController.setLimit(4);
+      expect(this.onChange).to.have.been.called;
+    });
+
+    it('should emit change event on next if it has items', function() {
+      this.paginationController.setLimit(2);
+      this.paginationController.setItems(['a', 'b', 'c', 'd']);
+      this.paginationController.next();
+      expect(this.onChange).to.have.been.called;
+    });
+
+    it('should emit change event on previous if it has items', function() {
+      this.paginationController.setLimit(2);
+      this.paginationController.setSkip(2);
+      this.paginationController.setItems(['a', 'b', 'c', 'd']);
+      this.paginationController.previous();
+      expect(this.onChange).to.have.been.called;
     });
   });
 });
