@@ -135,24 +135,25 @@ describe('Batch delete', function() {
   it('should not show delete button without receipts selected', function() {
     var deleteButton = $('receipts-toolbar [title="Delete"]');
 
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    expect(deleteButton.isEnabled()).to.eventually.be.false;
 
     //delete button is no longer disabled when receipts selected
     this.page.firstReceipt.$('[type=checkbox]').click();
     this.page.secondReceipt.$('[type=checkbox]').click();
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+
+    expect(deleteButton.isEnabled()).to.eventually.be.true;
 
     //unselecting only one receipt will not disable button
     this.page.firstReceipt.$('[type=checkbox]').click();
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    expect(deleteButton.isEnabled()).to.eventually.be.true;
 
     //unselecting both receipts will disable button
     this.page.secondReceipt.$('[type=checkbox]').click();
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    expect(deleteButton.isEnabled()).to.eventually.be.false;
 
     //selecting again will enable button
     this.page.firstReceipt.$('[type=checkbox]').click();
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    expect(deleteButton.isEnabled()).to.eventually.be.true;
   });
 
   it('should batch delete existing receipts from the table view', function() {
@@ -165,7 +166,7 @@ describe('Batch delete', function() {
     expect(this.page.receipts.count()).to.eventually.equal(4);
     this.page.firstReceipt.$('[type=checkbox]').click();
     this.page.secondReceipt.$('[type=checkbox]').click();
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
+    expect(deleteButton.isEnabled()).to.eventually.be.true;
 
     deleteButton.click();
     expect(this.page.receiptDeleteConfirmation.isDisplayed()).to.eventually.be.true;
@@ -176,7 +177,7 @@ describe('Batch delete', function() {
     this.page.receiptDeleteConfirmButton.click();
 
     expect(this.page.receipts.count()).to.eventually.equal(2);
-    expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
+    expect(deleteButton.isEnabled()).to.eventually.be.false;
 
     // confirms that first receipt is no longer present
     browser.driver.call(function(firstId) {
