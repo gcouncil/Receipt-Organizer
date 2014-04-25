@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('tableDataField directive', function() {
+describe('tableDataField directive', function() {
   beforeEach(function() {
     var ctx = this;
 
