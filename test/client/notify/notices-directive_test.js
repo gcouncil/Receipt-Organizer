@@ -9,7 +9,6 @@ describe('notices directive', function() {
       notices: []
     };
 
-
     angular.mock.module('ngMock', 'epsonreceipts.notify', { notify: ctx.notify });
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
