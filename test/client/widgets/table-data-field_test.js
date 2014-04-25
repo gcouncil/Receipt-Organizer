@@ -2,97 +2,95 @@ var angular = require('angular');
 var expect = require('chai').expect;
 
 describe.only('tableDataField directive', function() {
-  var errorClass = 'has-error';
-
   beforeEach(function() {
-    var self = this;
+    var ctx = this;
 
     angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
-      self.scope = $rootScope.$new();
+      ctx.scope = $rootScope.$new();
+      ctx.compile = function(template) {
+        template = '<div table-data-field><input ng-model="data"><span class="placeholder"></span></div>';
+        ctx.wrapper = $compile(template)(ctx.scope);
+        ctx.element = ctx.wrapper;
+        ctx.input = angular.element(ctx.wrapper.find('input')[0]);
+        ctx.span = angular.element(ctx.wrapper.find('span')[0]);
+        ctx.link = angular.element(ctx.wrapper.find('a')[0]);
+        ctx.ngModelController = ctx.input.controller('ngModel');
 
-      self.compile = function(template) {
-        template = template || '<input ng-model="data">';
-        var baseTemplate = '<td table-data-field>' + template + '<span class=placeholder></span></td>';
-        self.wrapper = $compile('<table><tr ng-form name="form-auto-save">' + baseTemplate + '</tr></table>')(self.scope);
-        self.element = angular.element(self.wrapper.find('td')[0]);
-        self.input = angular.element(self.wrapper.find('input')[0]);
-        self.span = angular.element(self.wrapper.find('span')[0]);
-        self.link = angular.element(self.wrapper.find('a')[0]);
-        self.ngModelController = self.input.controller('ngModel');
-        self.scope.$digest();
-        angular.element('body').append(self.wrapper);
+        angular.element('body').append(ctx.wrapper);
+        ctx.scope.$digest();
       };
     });
   });
 
+  afterEach(function() {
+    if (this.wrapper) {
+      this.wrapper.remove();
+    }
+  });
+
   context('when input is valid', function() {
     beforeEach(function() {
-      this.compile('<input ng-model="data">');
+      this.compile();
     });
 
     it('should display the span and link only', function() {
-      expect(this.input.css('display')).to.include('none');
-      expect(this.span.css('display')).to.include('inline');
-      expect(this.link.css('display')).to.include('inline');
+      expect(this.input.css('display')).to.equal('none');
+      expect(this.span.css('display')).to.not.equal('none');
+      expect(this.link.css('display')).to.not.equal('none');
     });
 
     it('should continue to display only span and link on blur', function() {
-      this.input.blur();
-      expect(this.input.css('display')).to.include('none');
-      expect(this.span.css('display')).to.include('inline');
-      expect(this.link.css('display')).to.include('inline');
+      this.input.triggerHandler('blur');
+      expect(this.input.css('display')).to.equal('none');
+      expect(this.span.css('display')).to.not.equal('none');
+      expect(this.link.css('display')).to.not.equal('none');
     });
 
     it('should display the input field when clicked', function() {
-      this.input.click();
-      expect(this.input.css('display')).to.include('inline');
-      expect(this.span.css('display')).to.include('none');
-      expect(this.link.css('display')).to.include('none');
+      this.element.click();
+      expect(this.input.css('display')).to.not.equal('none');
+      expect(this.span.css('display')).to.equal('none');
+      expect(this.link.css('display')).to.equal('none');
     });
 
     it('should switch input visibility on click and then blur', function() {
-      this.input.click();
-      expect(this.input.css('display')).to.include('inline');
-      this.input.blur();
-      expect(this.input.css('display')).to.include('none');
+      this.element.click();
+      expect(this.input.css('display')).to.not.equal('none');
+      this.input.triggerHandler('blur');
+      expect(this.input.css('display')).to.equal('none');
     });
   });
 
   context('when input is invalid', function() {
     beforeEach(function() {
-      this.compile('<input class=ng-invalid ng-model="data">');
+      this.compile();
       this.ngModelController.$setValidity('valid', false);
       this.scope.$digest();
     });
 
     it('should display just the input', function() {
-      expect(this.input.css('display')).to.include('inline');
-      expect(this.span.css('display')).to.include('none');
-      expect(this.link.css('display')).to.include('none');
+      expect(this.input.css('display')).to.not.equal('none');
+      expect(this.span.css('display')).to.equal('none');
+      expect(this.link.css('display')).to.equal('none');
     });
 
     it('should continue to display only input on blur', function() {
-      this.input.blur();
-      expect(this.input.css('display')).to.include('inline');
-      expect(this.span.css('display')).to.include('none');
-      expect(this.link.css('display')).to.include('none');
+      this.input.triggerHandler('blur');
+      expect(this.input.css('display')).to.not.equal('none');
+      expect(this.span.css('display')).to.equal('none');
+      expect(this.link.css('display')).to.equal('none');
     });
 
     context('after input validity has changed', function() {
       beforeEach(function() {
-        this.input.toggleClass('ng-invalid', false);
+        this.ngModelController.$setValidity('valid', true);
+        this.scope.$digest();
       });
 
-      xit('should update visibility on blur to show span and link', function() {
-        this.input.blur();
-        expect(this.input.css('display')).to.include('none');
-        expect(this.span.css('display')).to.include('inline');
-        expect(this.link.css('display')).to.include('inline');
-      });
-
-      xit('should update error class on blur', function() {
-        this.input.blur();
-        expect(this.element.hasClass(errorClass)).to.be.false;
+      it('should update visibility to show span and link', function() {
+        expect(this.input.css('display')).to.equal('none');
+        expect(this.span.css('display')).to.not.equal('none');
+        expect(this.link.css('display')).to.not.equal('none');
       });
     });
   });
