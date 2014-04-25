@@ -128,6 +128,8 @@
       <div class="modal-footer">
         <label class="pull-left"><input type="checkbox"> Needs further review</label>
 
+        <span ng-if="pagination.total > 1">{{ pagination.first }} of {{ pagination.total }}</span>
+
         <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
         <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Done</button>
         <button type="button" class="btn btn-default"

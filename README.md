@@ -10,7 +10,8 @@
 4. selenium-webdriver is broken, until it is fixed run `npm run patch` to apply a patch.
 5. To install e2e test dependencies run `npm run update-webdriver`
 6. Run `createdb epson_receipts_development` and `createdb epson_receipts_test` to create databases
-8. Run `grunt migrate` to migrate
+7. Run `NODE_ENV=test grunt migrate` to migrate the test database and
+   `grunt migrate` to migrate the development database.
 
 ### Watch / Development
 
