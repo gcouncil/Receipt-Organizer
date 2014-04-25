@@ -100,7 +100,7 @@ describe('pagination controller', function() {
       this.paginationController.setLimit(2);
       this.paginationController.setItems(['a', 'b', 'c', 'd']);
       this.paginationController.next();
-      expect(this.onChange).to.have.been.called;
+      expect(this.onChange).to.have.callCount(3);
     });
 
     it('should emit change event on previous if it has items', function() {
@@ -108,7 +108,7 @@ describe('pagination controller', function() {
       this.paginationController.setSkip(2);
       this.paginationController.setItems(['a', 'b', 'c', 'd']);
       this.paginationController.previous();
-      expect(this.onChange).to.have.been.called;
+      expect(this.onChange).to.have.callCount(4);
     });
   });
 });
