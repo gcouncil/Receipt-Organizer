@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('pagination controller', function() {
+describe('pagination controller', function() {
 
   beforeEach(function() {
     var self = this;
