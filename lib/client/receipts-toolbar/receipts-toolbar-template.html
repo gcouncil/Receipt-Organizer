@@ -5,7 +5,10 @@
     ng-disabled="!receipts.selection.hasSelection()">
     <i class="fa fa-check"></i>
   </button>
-  <button class="btn btn-default" title="Edit"
+  <receipts-toolbar-tag-button
+    selection="receipts.selection">
+  </receipts-toolbar-tag-button>
+   <button class="btn btn-default" title="Edit"
     ng-click="$emit('receipts:edit', receipts.selection.selectedItems)"
     ng-disabled="!receipts.selection.hasSelection()">
     <i class="fa fa-edit"></i>
@@ -20,6 +23,12 @@
 <div class="nav navbar-nav navbar-right navbar-form">
   <er-pagination controller="receipts.pagination"></er-pagination>
 
- <receipt-view-toggle></receipt-view-toggle>
+  <receipt-view-toggle></receipt-view-toggle>
+</div>
+
+<div class="tags-panel" ng-show="showingTags">
+  <ul>
+    <li ng-repeat="tag in tags"><a ng-click="addTag()">{{ tag.name }}</a></li>
+  </ul>
 </div>
 

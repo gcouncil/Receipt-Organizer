@@ -14,9 +14,31 @@
 
 .tag-organizer li {
   padding: 5px 0;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  background: white;
+  margin: 0;
+
+  form {
+    display: inline;
+
+    input {
+      color: black;
+      width: 70%;
+      margin-right: 0;
+      display: inline;
+    }
+  }
 }
 
-.new-tag button {
+.new-tag-button {
   margin-top: 10px;
+  float: right;
+}
+
+.dropdown-menu li p {
+  color: black;
+}
+
+.tag-organizer a:hover {
+  text-decoration: none;
 }
