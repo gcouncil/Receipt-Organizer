@@ -1,20 +1,23 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('logoutButton directive', function() {
+describe('logoutButton directive', function() {
   beforeEach(function() {
     var ctx = this;
 
     ctx.sessionStorage = {
-      logout: this.sinon.stub()
+      logout: ctx.sinon.stub()
     };
 
     ctx.notify = {
-      success: this.sinon.stub(),
-      error: this.sinon.stub()
+      success: ctx.sinon.stub(),
+      error: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts', { sessionStorage: ctx.sessionStorage });
+    angular.mock.module('ngMock', 'epsonreceipts', {
+      sessionStorage: ctx.sessionStorage,
+      notify: ctx.notify
+    });
 
     angular.mock.inject(function($rootScope, $compile, $state, $q) {
       ctx.scope = $rootScope.$new();
@@ -27,15 +30,33 @@ describe.only('logoutButton directive', function() {
       ctx.deferred = $q.defer();
       ctx.sessionStorage.logout.returns(ctx.deferred.promise);
 
+      ctx.state = ctx.sinon.stub($state, 'go');
     });
     ctx.compile();
   });
 
-  it('should log the user out', function() {
-    var ctx = this;
+  context('logging out', function() {
+    beforeEach(function() {
+      var ctx = this;
 
-    ctx.scope.logout();
-    expect(ctx.sessionStorage.logout).to.have.been.called;
-    // expect(ctx.notify.success).to.have.been.called;
+      ctx.scope.logout();
+      ctx.deferred.resolve();
+      ctx.scope.$digest();
+    });
+
+    it('should log the user out of session storage', function() {
+      var ctx = this;
+      expect(ctx.sessionStorage.logout).to.have.been.called;
+    });
+
+    it('should notify that the user was logged out', function() {
+      var ctx = this;
+      expect(ctx.notify.success).to.have.been.calledWith('Successfully logged out.');
+    });
+
+    it('should redirect to the login path', function() {
+      var ctx = this;
+      expect(ctx.state).to.have.been.calledWith('login');
+    });
   });
 });
