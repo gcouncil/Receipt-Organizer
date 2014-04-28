@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <label class="pull-left"><input type="checkbox"> Needs further review</label>
+        <label class="pull-left"><input type="checkbox" ng-model="unreviewed[receipt.id]"> Needs further review</label>
 
         <span ng-if="pagination.total > 1">{{ pagination.first }} of {{ pagination.total }}</span>
 

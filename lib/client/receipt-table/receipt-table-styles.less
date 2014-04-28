@@ -24,3 +24,17 @@ receipt-table {
     }
   }
 }
+
+.receipt-table-row-unreviewed {
+  background: #def;
+
+  &:hover {
+    background: darken(#def, 5%);
+  }
+}
+
+.receipt-table-row-reviewed {
+  &:hover {
+    background: @gray-lighter;
+  }
+}
