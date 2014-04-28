@@ -4,3 +4,4 @@ require('./images');
 require('./confirmation');
 require('./notify');
 require('./pagination');
+require('./scanning');
