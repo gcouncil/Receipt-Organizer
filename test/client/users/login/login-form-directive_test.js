@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('loginForm directive', function() {
+describe.only('loginForm directive', function() {
   beforeEach(function() {
     var ctx = this;
 
@@ -98,6 +98,13 @@ describe('loginForm directive', function() {
       var ctx = this;
       expect(ctx.state).not.to.have.been.called;
     });
+  });
+
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
   });
 
 });
