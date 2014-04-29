@@ -3,50 +3,62 @@ var expect = require('chai').expect;
 
 describe('currencyInput directive', function() {
   beforeEach(function() {
-    var self = this;
+    var ctx = this;
 
     angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
-      self.scope = $rootScope.$new();
+      ctx.scope = $rootScope.$new();
 
-      self.compile = function(template) {
+      ctx.compile = function(template) {
         template = template || '<input type="currency" ng-model="value">';
-        self.wrapper = $compile('<ng-form name="form">' + template + '</ng-form>')(self.scope);
-        self.element = self.wrapper.find('input');
-        self.ngModelController = self.element.controller('ngModel');
-        self.scope.$digest();
+        ctx.wrapper = $compile('<ng-form name="form">' + template + '</ng-form>')(ctx.scope);
+        ctx.element = ctx.wrapper.find('input');
+        ctx.ngModelController = ctx.element.controller('ngModel');
+        ctx.scope.$digest();
       };
 
     });
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   describe('validations', function() {
     function itShouldBeValid() {
       it('should mark the field valid', function() {
-        expect(this.ngModelController.$valid).to.be.true;
+        var ctx = this;
+        expect(ctx.ngModelController.$valid).to.be.true;
       });
 
       it('should mark the form valid', function() {
-        expect(this.scope.form.$valid).to.be.true;
+        var ctx = this;
+        expect(ctx.scope.form.$valid).to.be.true;
       });
     }
 
     function itShouldBeInvalid() {
       it('should mark the field invalid', function() {
-        expect(this.ngModelController.$invalid).to.be.true;
+        var ctx = this;
+        expect(ctx.ngModelController.$invalid).to.be.true;
       });
 
       it('should mark the form invalid', function() {
-        expect(this.scope.form.$invalid).to.be.true;
+        var ctx = this;
+        expect(ctx.scope.form.$invalid).to.be.true;
       });
     }
 
     context('when a reasonable value is entered', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('99.42');
+        ctx.ngModelController.$setViewValue('99.42');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       itShouldBeValid();
@@ -54,11 +66,12 @@ describe('currencyInput directive', function() {
 
     context('when a negative value is entered', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('-99.42');
+        ctx.ngModelController.$setViewValue('-99.42');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       itShouldBeValid();
@@ -66,11 +79,12 @@ describe('currencyInput directive', function() {
 
     context('with a blank', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('');
+        ctx.ngModelController.$setViewValue('');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       itShouldBeValid();
@@ -78,11 +92,12 @@ describe('currencyInput directive', function() {
 
     context('when letters are entered', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('abc');
+        ctx.ngModelController.$setViewValue('abc');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       itShouldBeInvalid();
@@ -90,11 +105,12 @@ describe('currencyInput directive', function() {
 
     context('when there are too many digits after the decimal point', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('42.111');
+        ctx.ngModelController.$setViewValue('42.111');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       itShouldBeInvalid();
@@ -104,78 +120,88 @@ describe('currencyInput directive', function() {
   describe('formatter', function() {
     context('with a normal value', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.scope.value = 42.1;
+        ctx.scope.value = 42.1;
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       it('should format the value with 2 decimal digits', function() {
-        expect(this.ngModelController.$viewValue).to.equal('42.10');
+        var ctx = this;
+        expect(ctx.ngModelController.$viewValue).to.equal('42.10');
       });
     });
 
     context('with a null value', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.scope.value = null;
+        ctx.scope.value = null;
 
-        this.scope.$digest();
+        ctx.scope.$digest();
       });
 
       it('should format the value as null', function() {
-        expect(this.ngModelController.$viewValue).to.be.null;
+        var ctx = this;
+        expect(ctx.ngModelController.$viewValue).to.be.null;
       });
     });
   });
 
   describe('parser', function() {
     beforeEach(function() {
-      this.compile();
+      var ctx = this;
+      ctx.compile();
 
-      this.ngModelController.$setViewValue('42');
+      ctx.ngModelController.$setViewValue('42');
 
-      this.scope.$digest();
+      ctx.scope.$digest();
     });
 
     it('should parse the value into a number', function() {
-      expect(this.scope.value).to.equal(42);
+      var ctx = this;
+      expect(ctx.scope.value).to.equal(42);
     });
   });
 
   describe('blur', function() {
     context('with a valid value', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.ngModelController.$setViewValue('42');
+        ctx.ngModelController.$setViewValue('42');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
 
-        this.element.triggerHandler('blur');
+        ctx.element.triggerHandler('blur');
       });
 
       it('should reformat the input value', function() {
-        expect(this.element.val()).to.equal('42.00');
+        var ctx = this;
+        expect(ctx.element.val()).to.equal('42.00');
       });
     });
 
     context('with a invalid value', function() {
       beforeEach(function() {
-        this.compile();
+        var ctx = this;
+        ctx.compile();
 
-        this.element.val('Don\'t Panic');
-        this.ngModelController.$setViewValue('Don\'t Panic');
+        ctx.element.val('Don\'t Panic');
+        ctx.ngModelController.$setViewValue('Don\'t Panic');
 
-        this.scope.$digest();
+        ctx.scope.$digest();
 
-        this.element.triggerHandler('blur');
+        ctx.element.triggerHandler('blur');
       });
 
       it('should not reformat the input value', function() {
-        expect(this.element.val()).to.equal('Don\'t Panic');
+        var ctx = this;
+        expect(ctx.element.val()).to.equal('Don\'t Panic');
       });
     });
   });
