@@ -5,9 +5,7 @@ describe('scan button directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.twain = {
-      driver: {
-        replace: ctx.sinon.stub()
-      }
+      driver: 'DRIVER'
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.scanning', {
