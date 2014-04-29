@@ -15,6 +15,13 @@ describe('pagination controller', function() {
     });
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   describe('initialization', function() {
     it('has no items on initialization', function() {
       var ctx = this;
