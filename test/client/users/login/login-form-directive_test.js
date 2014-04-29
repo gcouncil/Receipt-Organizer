@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('loginForm directive', function() {
+describe('loginForm directive', function() {
   beforeEach(function() {
     var ctx = this;
 
