@@ -1,7 +1,8 @@
 var angular = require('angular');
 var expect = require('chai').expect;
+var $ = require('jquery');
 
-describe.only('draggable item directive', function() {
+describe('draggable item directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.event = {
@@ -16,9 +17,9 @@ describe.only('draggable item directive', function() {
 
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
-      ctx.data = '{type: "receipt", data: "DATA"}';
+      ctx.scope.data = {type: 'receipt', data: 'DATA'};
       ctx.compile = function() {
-        ctx.element = $compile('<div draggable-item="' + ctx.data + '"></div>')(ctx.scope);
+        ctx.element = $compile('<div draggable-item="{{ data }}"></div>')(ctx.scope);
         ctx.scope.$digest();
       };
     });
@@ -27,7 +28,8 @@ describe.only('draggable item directive', function() {
 
   it('sets the dataTransfer MIME type and data on dragstart', function() {
     var ctx = this;
-    ctx.element.triggerHandler('dragstart');
-    ctx.scope.$digest();
+    var e = $.Event('dragstart', ctx.event);
+    $(ctx.element).trigger(e);
+    expect(e.dataTransfer.setData).to.have.been.calledWith('application/json+receipt', JSON.stringify(ctx.scope.data));
   });
 });
