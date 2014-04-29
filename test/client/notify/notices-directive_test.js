@@ -21,6 +21,13 @@ describe('notices directive', function() {
     ctx.compile();
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   describe('view', function() {
     it('displays notices', function() {
       var ctx = this;

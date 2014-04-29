@@ -6,12 +6,12 @@ describe('loginForm directive', function() {
     var ctx = this;
 
     ctx.sessionStorage = {
-      login: this.sinon.stub()
+      login: ctx.sinon.stub()
     };
 
     ctx.notify = {
-      success: this.sinon.stub(),
-      error: this.sinon.stub()
+      success: ctx.sinon.stub(),
+      error: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts', {
@@ -33,6 +33,13 @@ describe('loginForm directive', function() {
       ctx.state = ctx.sinon.stub($state, 'go');
     });
     ctx.compile();
+  });
+
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
   });
 
   context('on successful login', function() {
@@ -98,13 +105,6 @@ describe('loginForm directive', function() {
       var ctx = this;
       expect(ctx.state).not.to.have.been.called;
     });
-  });
-
-  afterEach(function() {
-    var ctx = this;
-    if (ctx.scope) {
-      ctx.scope.$destroy();
-    }
   });
 
 });

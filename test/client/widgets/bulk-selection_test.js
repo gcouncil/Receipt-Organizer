@@ -4,60 +4,72 @@ var expect = require('chai').expect;
 
 describe('bulkSelection directive', function() {
   beforeEach(function() {
-    var self = this;
+    var ctx = this;
 
     angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
-      self.compile = function(template) {
-        self.scope = $rootScope.$new();
+      ctx.compile = function(template) {
+        ctx.scope = $rootScope.$new();
 
-        self.scope.selection = {
-          toggleFullSelection: self.sinon.stub(),
-          hasSelection: self.sinon.stub(),
-          isPartiallySelected: self.sinon.stub()
+        ctx.scope.selection = {
+          toggleFullSelection: ctx.sinon.stub(),
+          hasSelection: ctx.sinon.stub(),
+          isPartiallySelected: ctx.sinon.stub()
         };
         template = template || '<bulk-selection selection="selection"></bulk-selection>';
-        self.wrapper = $compile(template)(self.scope);
-        self.scope.$digest();
+        ctx.wrapper = $compile(template)(ctx.scope);
+        ctx.scope.$digest();
       };
     });
 
-    this.compile();
+    ctx.compile();
 
-    it('should display as not checked when the selection is empty', function() {
-      this.scope.selection.hasSelection.returns(false);
-      this.scope.selection.isPartiallySelected.returns(false);
+  });
 
-      this.scope.$digest();
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
 
-      expect($(this.wrapper).find('input:checkbox').is(':checked')).to.be.false;
-      expect($(this.wrapper).find('input:checkbox').is(':indeterminate')).to.be.false;
-    });
+  it('should display as not checked when the selection is empty', function() {
+    var ctx = this;
+    ctx.scope.selection.hasSelection.returns(false);
+    ctx.scope.selection.isPartiallySelected.returns(false);
 
-    it('should display as checked when the selection is complete', function() {
-      this.scope.selection.hasSelection.returns(true);
-      this.scope.selection.isPartiallySelected.returns(false);
+    ctx.scope.$digest();
 
-      this.scope.$digest();
+    expect($(ctx.wrapper).find('input:checkbox').is(':checked')).to.be.false;
+    expect($(ctx.wrapper).find('input:checkbox').is(':indeterminate')).to.be.false;
+  });
 
-      expect($(this.wrapper).find('input:checkbox').is(':checked')).to.be.true;
-      expect($(this.wrapper).find('input:checkbox').is(':indeterminate')).to.be.false;
-    });
+  it('should display as checked when the selection is complete', function() {
+    var ctx = this;
+    ctx.scope.selection.hasSelection.returns(true);
+    ctx.scope.selection.isPartiallySelected.returns(false);
 
-    it('should display as indeterminate when the selection is partial', function() {
-      this.scope.selection.hasSelection.returns(true);
-      this.scope.selection.isPartiallySelected.returns(true);
+    ctx.scope.$digest();
 
-      this.scope.$digest();
+    expect($(ctx.wrapper).find('input:checkbox').is(':checked')).to.be.true;
+    expect($(ctx.wrapper).find('input:checkbox').is(':indeterminate')).to.be.false;
+  });
 
-      // NOTE: Chrome will always return false for is(':checked') whenever it is indeterminate
-      // expect($(this.wrapper).find('input:checkbox').is(':checked')).to.be.true;
-      expect($(this.wrapper).find('input:checkbox').is(':indeterminate')).to.be.true;
-    });
+  it('should display as indeterminate when the selection is partial', function() {
+    var ctx = this;
+    ctx.scope.selection.hasSelection.returns(true);
+    ctx.scope.selection.isPartiallySelected.returns(true);
 
-    it('should toggle selection when clicked', function() {
-      this.wrapper.click();
+    ctx.scope.$digest();
 
-      expect(this.scope.selection.toggleFullSelection).to.have.been.called;
-    });
+    // NOTE: Chrome will always return false for is(':checked') whenever it is indeterminate
+    // expect($(ctx.wrapper).find('input:checkbox').is(':checked')).to.be.true;
+    expect($(ctx.wrapper).find('input:checkbox').is(':indeterminate')).to.be.true;
+  });
+
+  it('should toggle selection when clicked', function() {
+    var ctx = this;
+    ctx.wrapper.click();
+
+    expect(ctx.scope.selection.toggleFullSelection).to.have.been.called;
   });
 });

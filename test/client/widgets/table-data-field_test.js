@@ -23,74 +23,88 @@ describe('tableDataField directive', function() {
   });
 
   afterEach(function() {
-    if (this.wrapper) {
-      this.wrapper.remove();
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+    if (ctx.wrapper) {
+      ctx.wrapper.remove();
     }
   });
 
   context('when input is valid', function() {
     beforeEach(function() {
-      this.compile();
+      var ctx = this;
+      ctx.compile();
     });
 
     it('should display the span and link only', function() {
-      expect(this.input.css('display')).to.equal('none');
-      expect(this.span.css('display')).to.not.equal('none');
-      expect(this.link.css('display')).to.not.equal('none');
+      var ctx = this;
+      expect(ctx.input.css('display')).to.equal('none');
+      expect(ctx.span.css('display')).to.not.equal('none');
+      expect(ctx.link.css('display')).to.not.equal('none');
     });
 
     it('should continue to display only span and link on blur', function() {
-      this.input.triggerHandler('blur');
-      expect(this.input.css('display')).to.equal('none');
-      expect(this.span.css('display')).to.not.equal('none');
-      expect(this.link.css('display')).to.not.equal('none');
+      var ctx = this;
+      ctx.input.triggerHandler('blur');
+      expect(ctx.input.css('display')).to.equal('none');
+      expect(ctx.span.css('display')).to.not.equal('none');
+      expect(ctx.link.css('display')).to.not.equal('none');
     });
 
     it('should display the input field when clicked', function() {
-      this.element.click();
-      expect(this.input.css('display')).to.not.equal('none');
-      expect(this.span.css('display')).to.equal('none');
-      expect(this.link.css('display')).to.equal('none');
+      var ctx = this;
+      ctx.element.click();
+      expect(ctx.input.css('display')).to.not.equal('none');
+      expect(ctx.span.css('display')).to.equal('none');
+      expect(ctx.link.css('display')).to.equal('none');
     });
 
     it('should switch input visibility on click and then blur', function() {
-      this.element.click();
-      expect(this.input.css('display')).to.not.equal('none');
-      this.input.triggerHandler('blur');
-      expect(this.input.css('display')).to.equal('none');
+      var ctx = this;
+      ctx.element.click();
+      expect(ctx.input.css('display')).to.not.equal('none');
+      ctx.input.triggerHandler('blur');
+      expect(ctx.input.css('display')).to.equal('none');
     });
   });
 
   context('when input is invalid', function() {
     beforeEach(function() {
-      this.compile();
-      this.ngModelController.$setValidity('valid', false);
-      this.scope.$digest();
+      var ctx = this;
+      ctx.compile();
+      ctx.ngModelController.$setValidity('valid', false);
+      ctx.scope.$digest();
     });
 
     it('should display just the input', function() {
-      expect(this.input.css('display')).to.not.equal('none');
-      expect(this.span.css('display')).to.equal('none');
-      expect(this.link.css('display')).to.equal('none');
+      var ctx = this;
+      expect(ctx.input.css('display')).to.not.equal('none');
+      expect(ctx.span.css('display')).to.equal('none');
+      expect(ctx.link.css('display')).to.equal('none');
     });
 
     it('should continue to display only input on blur', function() {
-      this.input.triggerHandler('blur');
-      expect(this.input.css('display')).to.not.equal('none');
-      expect(this.span.css('display')).to.equal('none');
-      expect(this.link.css('display')).to.equal('none');
+      var ctx = this;
+      ctx.input.triggerHandler('blur');
+      expect(ctx.input.css('display')).to.not.equal('none');
+      expect(ctx.span.css('display')).to.equal('none');
+      expect(ctx.link.css('display')).to.equal('none');
     });
 
     context('after input validity has changed', function() {
       beforeEach(function() {
-        this.ngModelController.$setValidity('valid', true);
-        this.scope.$digest();
+        var ctx = this;
+        ctx.ngModelController.$setValidity('valid', true);
+        ctx.scope.$digest();
       });
 
       it('should update visibility to show span and link', function() {
-        expect(this.input.css('display')).to.equal('none');
-        expect(this.span.css('display')).to.not.equal('none');
-        expect(this.link.css('display')).to.not.equal('none');
+        var ctx = this;
+        expect(ctx.input.css('display')).to.equal('none');
+        expect(ctx.span.css('display')).to.not.equal('none');
+        expect(ctx.link.css('display')).to.not.equal('none');
       });
     });
   });
