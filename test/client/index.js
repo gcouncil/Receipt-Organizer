@@ -1,6 +1,8 @@
 require('./test-helper');
-require('./widgets');
-require('./images');
+
 require('./confirmation');
+require('./images');
+require('./layout');
 require('./notify');
 require('./pagination');
+require('./widgets');
