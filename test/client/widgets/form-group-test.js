@@ -6,7 +6,7 @@ describe('formGroup directive', function() {
   beforeEach(function() {
     var ctx = this;
 
-    angular.mock.module('ngMock', 'epsonreceipts');
+    angular.mock.module('ngMock', 'epsonreceipts.widgets');
     angular.mock.inject(function($rootScope, $compile, $timeout) {
       ctx.$timeout = $timeout;
       ctx.scope = $rootScope.$new();
