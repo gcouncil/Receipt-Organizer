@@ -1,8 +1,8 @@
 <div class="nav navbar-nav">
-  <span ng-if="unreviewedReceiptTally" class="animate-if">
+  <span ng-if="reviewer.unreviewedTally()" class="animate-if">
     <div class="bg-warning">
       Review Button!
-      {{ }}
+      {{ reviewer.unreviewedTally() }}
     </div>
   </span>
 </div>
