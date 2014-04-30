@@ -1,8 +1,7 @@
 <div class="nav navbar-nav">
   <span ng-if="reviewer.unreviewedTally()" class="animate-if">
     <div class="bg-warning">
-      Review Button!
-      {{ reviewer.unreviewedTally() }}
+      <ng-pluralize count="reviewer.unreviewedTally()" when="{'one': '1 receipt needs review', 'other': '{} receipts need review'}"></ng-pluralize>
     </div>
   </span>
 </div>
