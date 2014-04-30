@@ -2,9 +2,14 @@
   <span ng-if="reviewer.unreviewedTally()" class="animate-if">
     <div class="bg-warning callout vertically-centered">
       <h3>
-        <ng-pluralize count="reviewer.unreviewedTally()" when="{'one': '1 receipt Needs Review', 'other': '{} Receipts Need Review'}"></ng-pluralize>
+        <ng-pluralize count="reviewer.unreviewedTally()" 
+          when="{'one': '1 Receipt Needs Review',
+            'other': '{} Receipts Need Review'}">
+        </ng-pluralize>
       </h3>
-      <button title="Review Now" class="btn btn-default" style="width: 125px">Review Now!</button>
+      <button title="Review Now" class="btn btn-default" style="width: 125px">
+        Review Now!
+      </button>
     </div>
   </span>
 </div>
