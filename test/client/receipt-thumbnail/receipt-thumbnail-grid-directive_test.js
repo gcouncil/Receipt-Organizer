@@ -2,7 +2,7 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe.only('receipt thumbnail grid directive', function() {
+describe('receipt thumbnail grid directive', function() {
 
   beforeEach(function() {
     var ctx = this;
