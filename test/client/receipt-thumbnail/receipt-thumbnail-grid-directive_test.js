@@ -7,8 +7,11 @@ describe('receipt thumbnail grid directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.pagination = {
-      setLimit: ctx.sinon.stub(),
-      items: []
+      setLimit: ctx.sinon.stub()
+    };
+
+    ctx.pagination2 = {
+      setLimit: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.receiptThumbnail');
@@ -41,14 +44,18 @@ describe('receipt thumbnail grid directive', function() {
     $(ctx.element).height(400);
 
     ctx.$interval.flush(101);
-    expect(ctx.pagination.setLimit).to.have.been.called;
+    expect(ctx.pagination.setLimit).to.have.been.calledTwice;
   });
 
-  xit('should update the pagination limit whenever the pagination is changed', function() {
+  it('should update the pagination limit whenever the pagination is changed', function() {
     var ctx = this;
-    ctx.scope.pagination.items = ['a'];
+
+    $(ctx.element).width(400);
+    $(ctx.element).height(400);
+    ctx.$interval.flush(101);
+    ctx.scope.pagination = ctx.pagination2;
     ctx.scope.$digest();
-    expect(ctx.pagination.setLimit).to.have.been.called;
+    expect(ctx.pagination2.setLimit).to.have.been.called;
   });
 
 });
