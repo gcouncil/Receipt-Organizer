@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('receipts toolbar tag button directive', function() {
+describe('receipts toolbar tag button directive', function() {
   beforeEach(function() {
     var ctx = this;
 
