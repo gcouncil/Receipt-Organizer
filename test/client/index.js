@@ -6,5 +6,6 @@ require('./layout');
 require('./notify');
 require('./pagination');
 require('./scanning');
+require('./storage');
 require('./users');
 require('./widgets');
