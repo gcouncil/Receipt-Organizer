@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('tag storage service', function() {
+describe('tag storage service', function() {
 
   beforeEach(function() {
     var ctx = this;
