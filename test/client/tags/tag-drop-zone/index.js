@@ -1,1 +1,1 @@
-require('./tag-drop-zone_test');
+require('./tag-drop-zone-directive_test');

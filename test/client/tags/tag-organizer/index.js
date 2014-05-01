@@ -1,1 +1,1 @@
-require('./tag-organizer_test');
+require('./tag-organizer-directive_test');
