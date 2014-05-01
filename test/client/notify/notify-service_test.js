@@ -25,11 +25,12 @@ describe('notify service', function() {
     });
 
     it('should timeout', function() {
+      var ctx = this;
       angular.mock.inject(function(notify) {
-        this.clock = this.sinon.useFakeTimers();
+        ctx.clock = ctx.sinon.useFakeTimers();
         notify.success('you succeeded');
         expect(_.size(notify.notices)).to.equal(1);
-        this.clock.tick(4001);
+        ctx.clock.tick(4001);
         expect(_.size(notify.notices)).to.equal(0);
       });
     });
