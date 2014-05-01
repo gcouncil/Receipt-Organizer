@@ -13,4 +13,5 @@ browser.driver.navigate = function() {
 
 after(function() {
   istanbul.Report.create('lcov', { dir: 'coverage/e2e' }).writeReport(collector, true);
+  istanbul.Report.create('json', { dir: 'coverage/e2e' }).writeReport(collector, true);
 });

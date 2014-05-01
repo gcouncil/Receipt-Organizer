@@ -4,8 +4,12 @@ var through = require('through');
 var instrumenter = new istanbul.Instrumenter();
 
 module.exports = function(file) {
-  var instrument = /epson-receipts\/(node_modules\/epson-receipts|lib)/.test(file);
+  file = require('fs').realpathSync(file);
+  file = require('path').relative(process.cwd(), file);
+  var instrument = /^lib/.test(file);
   var buffers = [];
+
+  console.log(file);
 
   function write(buffer) {
     if (!instrument) { return this.queue(buffer); }

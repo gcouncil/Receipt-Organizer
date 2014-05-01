@@ -1,10 +1,17 @@
 var istanbul = require('istanbul');
 var instrumenter = new istanbul.Instrumenter();
 
+function normalizeFile(file) {
+  file = require('fs').realpathSync(file);
+  file = require('path').relative(process.cwd(), file);
+  return file;
+}
+
 istanbul.hook.hookRequire(function(file) {
-  return /epson-receipts\/(node_modules\/epson-receipts|lib)/.test(file);
+  file = normalizeFile(file);
+  return /^lib/.test(file);
 }, function(code, file) {
-  console.log(file);
+  file = normalizeFile(file);
   return instrumenter.instrumentSync(code, file);
 });
 
@@ -12,4 +19,5 @@ after(function() {
   var collector = new istanbul.Collector();
   collector.add(global.__coverage__);
   istanbul.Report.create('lcov', { dir: 'coverage/server' }).writeReport(collector, true);
+  istanbul.Report.create('json', { dir: 'coverage/server' }).writeReport(collector, true);
 });
