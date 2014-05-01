@@ -164,6 +164,72 @@ describe('Batch delete', function() {
 
 });
 
+
+describe.only('Review Now button', function() {
+
+  context('with unreviewed receipts', function() {
+
+    beforeEach(function() {
+      var self = this;
+
+      this.page = new ReceiptPage(this.factory);
+
+      this.page.user.then(function(user) {
+        _.times(4, function(i) {
+          self.factory.receipts.create({
+            reviewed: false
+          }, { user: user.id });
+        });
+        self.factory.receipts.create({
+          reviewed: true
+        }, { user: user.id });
+      });
+      this.page.get('table');
+    });
+
+    it('should display the callout when unreviewed receipts are present', function() {
+      expect(this.page.receiptCallout.isPresent()).to.eventually.be.true;
+    });
+
+    it('should inform the user how many receipts require review', function() {
+      expect(this.page.receipts.count()).to.eventually.equal(5);
+      expect(this.page.receiptCallout.getText()).to.eventually.contain('4 Receipts');
+    });
+
+    it('should allow the user to edit on Review button click', function() {
+      this.page.receiptReviewNowButton.click();
+      expect(this.page.receiptEditorForm.isPresent()).to.eventually.be.true;
+      expect(this.page.receiptEditor.getText()).to.eventually.contain('1 of 4');
+    });
+
+    it('should allow user to review all unreviewed receipts', function() {
+      var ctx = this;
+      this.page.receiptReviewNowButton.click();
+      _.times(3, function(i) {
+        ctx.page.receiptEditorNext.click();
+      });
+      this.page.receiptEditorSave.click();
+
+      expect(this.page.receipts.count()).to.eventually.equal(5);
+      expect(this.page.receiptCallout.isPresent()).to.eventually.be.false;
+    });
+  });
+
+  context('without unreviewed receipts', function() {
+
+    beforeEach(function() {
+      this.page = new ReceiptPage(this.factory);
+      this.page.get('table');
+    });
+
+    it('should not display the callout', function() {
+      expect(this.page.receiptCallout.isPresent()).to.eventually.be.false;
+    });
+
+  });
+
+});
+
 describe('Scoping to the current user', function() {
   beforeEach(function() {
     var self = this;

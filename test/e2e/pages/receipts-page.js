@@ -14,6 +14,8 @@ function ReceiptPage(factory, user) {
   this.receiptEditor = $('.modal-dialog');
   this.receiptEditorForm = $('.modal-dialog form');
   this.receiptEditorSave = this.receiptEditor.element(by.buttonText('Done'));
+  this.receiptEditorNext = this.receiptEditor.element(by.buttonText('Next'));
+
 
   var receiptRepeater = by.repeater('receipt in receipts track by receipt.id');
   this.receipts = element.all(receiptRepeater);
@@ -34,6 +36,9 @@ function ReceiptPage(factory, user) {
   this.firstTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(0));
   this.secondTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(1));
   this.newTag = $('.new-tag');
+
+  this.receiptCallout = $('.callout');
+  this.receiptReviewNowButton = $('.callout [title="Review Now"]');
 }
 
 module.exports = ReceiptPage;
