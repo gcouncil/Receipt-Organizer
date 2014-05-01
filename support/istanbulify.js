@@ -9,8 +9,6 @@ module.exports = function(file) {
   var instrument = /^lib/.test(file);
   var buffers = [];
 
-  console.log(file);
-
   function write(buffer) {
     if (!instrument) { return this.queue(buffer); }
 
