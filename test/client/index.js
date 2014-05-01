@@ -9,5 +9,6 @@ require('./receipt-table');
 require('./receipt-thumbnail');
 require('./receipts-toolbar');
 require('./scanning');
+require('./storage');
 require('./users');
 require('./widgets');
