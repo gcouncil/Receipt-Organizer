@@ -165,7 +165,7 @@ describe('Batch delete', function() {
 });
 
 
-describe.only('Review Now button', function() {
+describe('Review Now button', function() {
 
   context('with unreviewed receipts', function() {
 
