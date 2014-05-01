@@ -1,3 +1,6 @@
+require('./support/coverage');
+require('epson-receipts/server');
+
 var supertest = require('supertest');
 var sinon = require('sinon');
 

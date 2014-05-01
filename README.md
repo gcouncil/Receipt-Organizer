@@ -28,5 +28,5 @@ Run `grunt build`.
 ### Tests
 
 Run `grunt test` to run all tests
-
+Or `grunt test --coverage` to generate coverage reports in the `coverage` folder.
 

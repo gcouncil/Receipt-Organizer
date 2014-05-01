@@ -33,6 +33,11 @@ module.exports = function(grunt) {
 
       b = (options.watch ? watchify : browserify)(file.src);
       b.on('update', bundle);
+
+      if (options.coverage) {
+        b.transform({ global: true }, './support/istanbulify');
+      }
+
       bundle();
     }, done);
   });
