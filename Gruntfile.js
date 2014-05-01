@@ -12,7 +12,8 @@ module.exports = function(grunt) {
   grunt.config('browserify', {
     options: {
       debug: debug,
-      watch: true
+      watch: true,
+      coverage: grunt.option('coverage')
     },
 
     scripts: {

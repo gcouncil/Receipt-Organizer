@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+require('./support/coverage');
 
 var Q = require('q');
 var _ = require('lodash');
