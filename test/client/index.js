@@ -8,6 +8,7 @@ require('./pagination');
 require('./receipt-table');
 require('./receipt-thumbnail');
 require('./receipts-toolbar');
+require('./receipts');
 require('./scanning');
 require('./storage');
 require('./users');
