@@ -127,9 +127,9 @@ describe('receipt drop zone directive', function() {
           ctx.element.trigger(e);
         });
 
-        it('should change the class', function() {
+        it('should not change the class', function() {
           var ctx = this;
-          expect(ctx.element.hasClass('drop-active')).to.be.true;
+          expect(ctx.element.hasClass('drop-active')).not.to.be.true;
         });
 
         it('should not add copy drop effect', function() {
@@ -151,9 +151,9 @@ describe('receipt drop zone directive', function() {
           ctx.element.trigger(e);
         });
 
-        it('should change the class', function() {
+        it('should not change the class', function() {
           var ctx = this;
-          expect(ctx.element.hasClass('drop-active')).to.be.true;
+          expect(ctx.element.hasClass('drop-active')).not.to.be.true;
         });
 
         it('should not add copy drop effect', function() {
