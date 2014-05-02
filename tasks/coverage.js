@@ -7,8 +7,10 @@ module.exports = function(grunt) {
   grunt.registerTask('coverage', function() {
     var collector = new istanbul.Collector();
 
-    var files = glob.sync(__dirname + '/../coverage/**/coverage*.json');
+    var files = glob.sync(__dirname + '/../coverage/**/coverage-final.json');
     _.each(files, function(file) {
+      if (/all\/coverage-final\.json/.test(file)) { return; }
+
       console.log('Adding coverage from: ' + file);
       var coverage = JSON.parse(fs.readFileSync(file));
       collector.add(coverage);
