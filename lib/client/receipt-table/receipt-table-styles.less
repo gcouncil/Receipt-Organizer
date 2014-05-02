@@ -1,4 +1,12 @@
 receipt-table {
+  .flex-box();
+  .flex();
+  align-content: stretch;
+
+  .receipt-table-container {
+    .flex();
+    overflow: auto;
+  }
 
   table.receipt-table {
     min-width: 1600px;
@@ -22,20 +30,17 @@ receipt-table {
       }
     }
   }
-}
 
-.container {
-  display: -webkit-flex;
-  display: flex;
-}
+  .receipt-table-sidebar {
+    .flex-box();
+    .noflex(300px);
+    align-content: stretch;
+    overflow: hidden;
+  }
 
-nav.initial {
-  width: 300px;
-}
-
-.flex1 {
-  -webkit-flex: 1;
-  flex: 1;
+  image-viewer {
+    .flex();
+  }
 }
 
 .receipt-table-row-unreviewed {
