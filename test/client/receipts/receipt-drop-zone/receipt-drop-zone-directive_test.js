@@ -119,7 +119,7 @@ describe('receipt drop zone directive', function() {
         };
       });
 
-      context('dragenter', function() {
+      describe('dragenter', function() {
         beforeEach(function() {
           var ctx = this;
 
@@ -143,7 +143,7 @@ describe('receipt drop zone directive', function() {
         });
       });
 
-      context('dragover', function() {
+      describe('dragover', function() {
         beforeEach(function() {
           var ctx = this;
 
