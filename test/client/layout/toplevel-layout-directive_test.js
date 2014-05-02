@@ -30,6 +30,13 @@ describe('toplevel layout directive', function() {
     ctx.compile();
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   it('sets the current user in the scope', function() {
     var ctx = this;
     expect(ctx.currentUser.get).to.have.been.called;

@@ -12,7 +12,8 @@ module.exports = function(grunt) {
   grunt.config('browserify', {
     options: {
       debug: debug,
-      watch: true
+      watch: true,
+      coverage: grunt.option('coverage')
     },
 
     scripts: {
@@ -210,7 +211,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test:domain', []);
   grunt.registerTask('test:unit', ['test:client', 'test:server', 'test:domain']);
   grunt.registerTask('test:e2e', ['build', 'protractor']);
-  grunt.registerTask('test', ['test:unit', 'test:e2e']);
+  grunt.registerTask('test', ['test:unit', 'test:e2e', 'coverage']);
 
   grunt.registerTask('development', ['build', 'browserify:test', 'karma:watch:start', 'concurrent:development']);
 

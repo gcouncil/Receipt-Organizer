@@ -37,8 +37,8 @@ function ReceiptPage(factory, user) {
   this.secondTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(1));
   this.newTag = $('.new-tag');
 
-  this.receiptCallout = $('.callout');
-  this.receiptReviewNowButton = $('.callout [title="Review Now"]');
+  this.receiptCallout = $('.animate-if');
+  this.receiptReviewNowButton = $('.animate-if [title="Review Now"]');
 }
 
 module.exports = ReceiptPage;

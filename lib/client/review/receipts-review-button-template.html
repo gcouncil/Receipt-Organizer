@@ -1,15 +1,11 @@
-<div class="vertical-container">
-  <span ng-if="review.unreviewedTally" class="animate-if">
-    <div class="bg-warning callout vertically-centered">
-      <h3>
-        <ng-pluralize count="review.unreviewedTally"
-          when="{'one': '1 Receipt Needs Review',
-            'other': '{} Receipts Need Review'}">
-        </ng-pluralize>
-      </h3>
-      <button class="btn btn-default" title="Review Now" ng-click="$emit('receipts:edit', review.unreviewedItems)" style="width: 125px">
-        Review Now!
-      </button>
-    </div>
-  </span>
+<div class="alert alert-warning text-center animate-if" ng-if="review.unreviewedTally">
+  <h3>
+    <ng-pluralize count="review.unreviewedTally"
+    when="{'one': '1 Receipt Needs Review',
+    'other': '{} Receipts Need Review'}">
+    </ng-pluralize>
+  </h3>
+  <button class="btn btn-warning" title="Review Now" ng-click="$emit('receipts:edit', review.unreviewedItems)">
+    Review Now!
+  </button>
 </div>

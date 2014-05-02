@@ -3,58 +3,71 @@ var expect = require('chai').expect;
 
 describe('confirmationInput directive', function() {
   beforeEach(function() {
-    var self = this;
+    var ctx = this;
 
     angular.injector(['ngMock', 'epsonreceipts']).invoke(function($rootScope, $compile) {
-      self.scope = $rootScope.$new();
+      ctx.scope = $rootScope.$new();
 
-      self.compile = function(template) {
+      ctx.compile = function(template) {
         template = template || '<input ng-model="user.password" required><input ng-model="user.passwordConfirmation" confirmation-input="user.password" required>';
-        self.wrapper = $compile('<ng-form name="form">' + template + '</ng-form>')(self.scope);
+        ctx.wrapper = $compile('<ng-form name="form">' + template + '</ng-form>')(ctx.scope);
 
-        self.passwordInput = angular.element(self.wrapper.find('input')[0]);
-        self.passwordConfirmationInput = angular.element(self.wrapper.find('input')[1]);
+        ctx.passwordInput = angular.element(ctx.wrapper.find('input')[0]);
+        ctx.passwordConfirmationInput = angular.element(ctx.wrapper.find('input')[1]);
 
-        self.passwordController = self.passwordInput.controller('ngModel');
-        self.passwordConfirmationController = self.passwordConfirmationInput.controller('ngModel');
+        ctx.passwordController = ctx.passwordInput.controller('ngModel');
+        ctx.passwordConfirmationController = ctx.passwordConfirmationInput.controller('ngModel');
 
-        self.scope.$digest();
+        ctx.scope.$digest();
       };
     });
+  });
+
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
   });
 
   describe('validations', function() {
     context('when the fields match', function() {
       beforeEach(function() {
-        this.compile();
-        this.passwordController.$setViewValue('password');
-        this.passwordConfirmationController.$setViewValue('password');
-        this.scope.$digest();
+        var ctx = this;
+        ctx.compile();
+        ctx.passwordController.$setViewValue('password');
+        ctx.passwordConfirmationController.$setViewValue('password');
+        ctx.scope.$digest();
       });
 
       it('should show the field as valid', function() {
-        expect(this.passwordConfirmationController.$valid).to.be.true;
+        var ctx = this;
+        expect(ctx.passwordConfirmationController.$valid).to.be.true;
       });
 
       it('should show the form as valid', function() {
-        expect(this.scope.form.$valid).to.be.true;
+        var ctx = this;
+        expect(ctx.scope.form.$valid).to.be.true;
       });
     });
 
     context('when the fields do not match', function() {
       beforeEach(function() {
-        this.compile();
-        this.passwordController.$setViewValue('password');
-        this.passwordConfirmationController.$setViewValue('abracadabra');
-        this.scope.$digest();
+        var ctx = this;
+        ctx.compile();
+        ctx.passwordController.$setViewValue('password');
+        ctx.passwordConfirmationController.$setViewValue('abracadabra');
+        ctx.scope.$digest();
       });
 
       it('should show the field as invalid', function() {
-        expect(this.passwordConfirmationController.$invalid).to.be.true;
+        var ctx = this;
+        expect(ctx.passwordConfirmationController.$invalid).to.be.true;
       });
 
       it('should show the form as invalid', function() {
-        expect(this.scope.form.$invalid).to.be.true;
+        var ctx = this;
+        expect(ctx.scope.form.$invalid).to.be.true;
       });
     });
   });

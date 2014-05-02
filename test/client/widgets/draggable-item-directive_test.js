@@ -26,6 +26,13 @@ describe('draggable item directive', function() {
     ctx.compile();
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   it('sets the dataTransfer MIME type and data on dragstart', function() {
     var ctx = this;
     var e = $.Event('dragstart', ctx.event);

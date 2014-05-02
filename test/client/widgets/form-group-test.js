@@ -23,63 +23,75 @@ describe('formGroup directive', function() {
     ctx.compile();
   });
 
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
+  });
+
   describe('error display', function() {
     it('should not display an error when pristine', function() {
-      expect(this.ngModelController.$valid).to.be.true;
-      expect(this.element.hasClass('has-error')).to.be.false;
+      var ctx = this;
+      expect(ctx.ngModelController.$valid).to.be.true;
+      expect(ctx.element.hasClass('has-error')).to.be.false;
     });
 
     it('should display an error when invalid data is present', function() {
-      this.ngModelController.$setViewValue('abc');
-      this.ngModelController.$setValidity('valid', false);
-      this.scope.$digest();
-      this.input.blur();
-      expect(this.element.hasClass('has-error')).to.be.true;
+      var ctx = this;
+      ctx.ngModelController.$setViewValue('abc');
+      ctx.ngModelController.$setValidity('valid', false);
+      ctx.scope.$digest();
+      ctx.input.blur();
+      expect(ctx.element.hasClass('has-error')).to.be.true;
     });
 
     it('should not display an error when invalid data is corrected', function() {
-      this.ngModelController.$setViewValue('abc');
-      this.ngModelController.$setValidity('valid', false);
-      this.input.blur();
-      this.scope.$digest();
-      expect(this.element.hasClass('has-error')).to.be.true;
+      var ctx = this;
+      ctx.ngModelController.$setViewValue('abc');
+      ctx.ngModelController.$setValidity('valid', false);
+      ctx.input.blur();
+      ctx.scope.$digest();
+      expect(ctx.element.hasClass('has-error')).to.be.true;
 
-      this.ngModelController.$setViewValue('ab');
-      this.ngModelController.$setValidity('valid', true);
-      this.scope.$digest();
+      ctx.ngModelController.$setViewValue('ab');
+      ctx.ngModelController.$setValidity('valid', true);
+      ctx.scope.$digest();
 
-      expect(this.element.hasClass('has-error')).to.be.false;
+      expect(ctx.element.hasClass('has-error')).to.be.false;
     });
 
     it('get the has-error class based on a timeout', function() {
-      this.ngModelController.$setViewValue('abc');
-      this.ngModelController.$setValidity('valid', false);
-      this.scope.$digest();
-      this.$timeout.flush(1e3);
+      var ctx = this;
+      ctx.ngModelController.$setViewValue('abc');
+      ctx.ngModelController.$setValidity('valid', false);
+      ctx.scope.$digest();
+      ctx.$timeout.flush(1e3);
 
-      expect(this.element.hasClass('has-error')).to.be.true;
+      expect(ctx.element.hasClass('has-error')).to.be.true;
     });
 
     it('get the has-error class based on a debounced timeout', function() {
-      this.ngModelController.$setViewValue('abc');
-      this.ngModelController.$setValidity('valid', false);
-      this.scope.$digest();
+      var ctx = this;
+      ctx.ngModelController.$setViewValue('abc');
+      ctx.ngModelController.$setValidity('valid', false);
+      ctx.scope.$digest();
 
-      this.$timeout.flush(0.75e3);
-      this.scope.$digest();
+      ctx.$timeout.flush(0.75e3);
+      ctx.scope.$digest();
 
-      this.ngModelController.$setViewValue('abcd');
-      this.scope.$digest();
+      ctx.ngModelController.$setViewValue('abcd');
+      ctx.scope.$digest();
 
-      this.$timeout.flush(0.75e3);
-      this.scope.$digest();
+      ctx.$timeout.flush(0.75e3);
+      ctx.scope.$digest();
 
-      expect(this.element.hasClass('has-error')).to.be.false;
+      expect(ctx.element.hasClass('has-error')).to.be.false;
 
-      this.$timeout.flush(0.75e3);
-      this.scope.$digest();
+      ctx.$timeout.flush(0.75e3);
+      ctx.scope.$digest();
 
-      expect(this.element.hasClass('has-error')).to.be.true;
+      expect(ctx.element.hasClass('has-error')).to.be.true;
     });
 
   });

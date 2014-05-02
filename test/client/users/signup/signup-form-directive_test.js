@@ -6,16 +6,16 @@ describe('signupForm directive', function() {
     var ctx = this;
 
     ctx.userStorage = {
-      create: this.sinon.stub()
+      create: ctx.sinon.stub()
     };
 
     ctx.currentUser = {
-      set: this.sinon.stub()
+      set: ctx.sinon.stub()
     };
 
     ctx.notify = {
-      success: this.sinon.stub(),
-      error: this.sinon.stub()
+      success: ctx.sinon.stub(),
+      error: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts', {
@@ -37,6 +37,13 @@ describe('signupForm directive', function() {
 
     });
     ctx.compile();
+  });
+
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
   });
 
   context('successful signup', function() {
