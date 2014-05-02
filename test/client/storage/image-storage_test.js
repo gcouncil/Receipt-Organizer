@@ -44,7 +44,6 @@ describe('image storage service', function() {
 
   describe('fetch', function() {
     it('should reject fetch if no id is supplied', function(done) {
-      var ctx = this;
       angular.mock.inject(function($rootScope, $q, imageStorage) {
         var promise = imageStorage.fetch({});
 
