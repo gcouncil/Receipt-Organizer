@@ -11,5 +11,6 @@ require('./receipts-toolbar');
 require('./receipts');
 require('./scanning');
 require('./storage');
+require('./support');
 require('./users');
 require('./widgets');
