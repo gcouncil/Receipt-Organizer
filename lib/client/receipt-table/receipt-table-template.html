@@ -35,6 +35,7 @@
           form-auto-save="update(receipt)"
           ng-repeat="receipt in receipts track by receipt.id"
           ng-init="receipt = receipt.clone()"
+          ng-click="$emit('tableSelect', receipt)"
           ng-class="{ 'receipt-table-row-reviewed': receipt.reviewed, 'receipt-table-row-unreviewed': !receipt.reviewed }">
           <td>
             <is-selected selection="selection" selection-id="receipt.id"></is-selected>
