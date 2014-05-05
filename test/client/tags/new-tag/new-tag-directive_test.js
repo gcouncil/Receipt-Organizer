@@ -33,7 +33,6 @@ describe('new tag directive', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.scope.newTag = 'NEWTAG';
-      ctx.scope.newFlag = true;
       ctx.scope.ok();
     });
 
@@ -45,22 +44,6 @@ describe('new tag directive', function() {
     it('sets the newTag to null', function() {
       var ctx = this;
       expect(ctx.scope.newTag).to.be.null;
-    });
-
-    it('sets the newFlag to false', function() {
-      var ctx = this;
-      expect(ctx.scope.newFlag).to.be.false;
-    });
-  });
-
-  describe('toggle', function() {
-    it('toggles the new flag', function() {
-      var ctx = this;
-      expect(ctx.scope.newFlag).to.be.false;
-      ctx.scope.toggle();
-      expect(ctx.scope.newFlag).to.be.true;
-      ctx.scope.toggle();
-      expect(ctx.scope.newFlag).to.be.false;
     });
   });
 });
