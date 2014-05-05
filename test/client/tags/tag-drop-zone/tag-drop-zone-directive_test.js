@@ -25,7 +25,10 @@ describe('tag drop zone directive', function() {
 
       ctx.compile = function() {
         ctx.element = $compile('<div tag-drop-zone receipt="receipt"></div>')(ctx.scope);
-        ctx.scope.receipt = { name: 'receipt1', id: 1 };
+        ctx.scope.receipt = {
+          name: 'receipt1',
+          id: 1
+        };
         ctx.deferred = $q.defer();
         ctx.receiptStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
@@ -63,8 +66,15 @@ describe('tag drop zone directive', function() {
           ctx.element.trigger(e);
         });
 
-        it('should change the class', function() {
+        it('should the drop-active class', function() {
           var ctx = this;
+          expect(ctx.element.hasClass('drop-active')).to.be.true;
+        });
+
+        it('should keep the drop-active class on subsiquent events', function() {
+          var ctx = this;
+          var e = $.Event('dragenter', ctx.event);
+          ctx.element.trigger(e);
           expect(ctx.element.hasClass('drop-active')).to.be.true;
         });
 
@@ -188,7 +198,6 @@ describe('tag drop zone directive', function() {
         preventDefault: ctx.sinon.stub()
       };
 
-
       var e = $.Event('drop', ctx.event);
       ctx.element.trigger(e);
     });
@@ -210,6 +219,7 @@ describe('tag drop zone directive', function() {
       var ctx = this;
       ctx.deferred.resolve({
         tags: [],
+        addTag: ctx.sinon.stub().returns(true),
         clone: function() {
           return angular.copy(this);
         }

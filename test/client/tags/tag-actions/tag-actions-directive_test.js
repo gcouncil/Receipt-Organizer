@@ -63,21 +63,21 @@ describe('tag actions directive', function() {
     expect(ctx.tagStorage.destroy).to.have.been.calledWith('TAG');
   });
 
-  it('toggles the edit flag', function() {
+  it('sets the edit flag', function() {
     var ctx = this;
     var tag = ctx.element.isolateScope().dropdown.$scope.tag;
     expect(tag.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.toggleEdit(tag);
+    ctx.element.isolateScope().dropdown.$scope.startEdit(tag);
     expect(tag.showEdit).to.be.true;
-    ctx.element.isolateScope().dropdown.$scope.toggleEdit(tag);
-    expect(tag.showEdit).to.be.false;
+    ctx.element.isolateScope().dropdown.$scope.startEdit(tag);
+    expect(tag.showEdit).to.be.true;
   });
 
   it('turns editing off', function() {
     var ctx = this;
     var tag = ctx.element.isolateScope().dropdown.$scope.tag;
     expect(tag.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.toggleEdit(tag);
+    ctx.element.isolateScope().dropdown.$scope.startEdit(tag);
     expect(tag.showEdit).to.be.true;
     ctx.element.isolateScope().dropdown.$scope.noEdit(tag);
     expect(tag.showEdit).to.be.false;
