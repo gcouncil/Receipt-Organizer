@@ -82,6 +82,33 @@ describe('image drop zone directive', function() {
         },
         preventDefault: ctx.sinon.stub()
       };
+
+      ctx.errorEvent = {
+        dataTransfer: {
+          types: [],
+          items: []
+        },
+        preventDefault: ctx.sinon.stub()
+      };
+    });
+
+    context('with errors', function() {
+      it('dragover should not work if the types are wrong', function() {
+        var ctx = this;
+        var e = $.Event('dragover', ctx.errorEvent);
+        $(ctx.element).trigger(e);
+        expect(ctx.errorEvent.dataTransfer.dropEffect).to.be.undefined;
+        expect(ctx.errorEvent.preventDefault).not.to.have.been.called;
+      });
+
+      it('dragenter should not work if the types are wrong', function() {
+        var ctx = this;
+        var e = $.Event('dragenter', ctx.errorEvent);
+        $(ctx.element).trigger(e);
+        expect(ctx.errorEvent.dataTransfer.dropEffect).to.be.undefined;
+        expect(ctx.errorEvent.preventDefault).not.to.have.been.called;
+      });
+
     });
 
     context('setting dropeffect and preventDefault on dragenter', function() {
@@ -189,6 +216,20 @@ describe('image drop zone directive', function() {
         expect(ctx.event.preventDefault).not.to.have.been.called;
       });
 
+      it('should not create the images if there are not files', function() {
+        var ctx = this;
+        ctx.event = {
+          dataTransfer: {
+            types: [],
+            items: []
+          },
+          preventDefault: ctx.sinon.stub()
+        };
+
+        var e = $.Event('drop', ctx.event);
+        $(ctx.element).trigger(e);
+        expect(ctx.imageStorage.create).not.to.have.been.called;
+      });
     });
 
     context('with jpeg items', function() {
@@ -239,6 +280,14 @@ describe('image drop zone directive', function() {
         expect(ctx.notify.success).to.have.been.calledWith('Created 1 new receipts');
       });
 
+      it('should display error message if there is a server error', function() {
+        var ctx = this;
+        ctx.imageDeferred.reject();
+        ctx.receiptDeferred.reject();
+        ctx.scope.$digest();
+        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding receipts');
+      });
+
     });
 
     context('with jpeg files', function() {
@@ -283,8 +332,13 @@ describe('image drop zone directive', function() {
         expect(ctx.notify.success).to.have.been.calledWith('Created 1 new receipts');
       });
 
+      it('should display error message if there is a server error', function() {
+        var ctx = this;
+        ctx.imageDeferred.reject();
+        ctx.receiptDeferred.reject();
+        ctx.scope.$digest();
+        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding receipts');
+      });
     });
-
   });
-
 });

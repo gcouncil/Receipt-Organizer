@@ -13,6 +13,16 @@ describe('notify service', function() {
       });
     });
 
+    it('should accept a notice object', function() {
+      angular.mock.inject(function(notify) {
+        notify.add('success', { message: 'YOU WIN'});
+        expect(_.values(notify.notices)[0]).to.deep.equal({
+          message: 'YOU WIN',
+          type: 'success'
+        });
+      });
+    });
+
     it('should add messages correctly', function() {
       angular.mock.inject(function(notify) {
         expect(notify.notices).to.deep.equal({});

@@ -189,35 +189,44 @@ describe('receipt drop zone directive', function() {
       };
 
 
-      ctx.deferred.resolve({
-        tags: [],
-        clone: function() {
-          return angular.copy(this);
-        }
+      context('with successful tagging', function() {
+        beforeEach(function() {
+          ctx.deferred.resolve({
+            tags: [],
+            clone: function() {
+              return angular.copy(this);
+            }
+          });
+          var e = $.Event('drop', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should get the data from the event', function() {
+          var ctx = this;
+          expect(ctx.event.dataTransfer.getData).to.have.been.called;
+        });
+
+        it('should display duplicate message if there is no result', function() {
+          var ctx = this;
+          ctx.receiptStorage.update.returns();
+          ctx.scope.$digest();
+          expect(ctx.notify.error).to.have.been.calledWith('Receipt already tagged with tag1!');
+        });
+
+        it('should display success message if there is a result', function() {
+          var ctx = this;
+          ctx.receiptStorage.update.returns('RECEIPT');
+          ctx.scope.$digest();
+          expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your receipt.');
+        });
       });
-      var e = $.Event('drop', ctx.event);
-      ctx.element.trigger(e);
-    });
 
-    it('should get the data from the event', function() {
-      var ctx = this;
-      expect(ctx.event.dataTransfer.getData).to.have.been.called;
-    });
-
-    it('should display duplicate message if there is no result', function() {
-      var ctx = this;
-      ctx.receiptStorage.update.returns();
-      ctx.scope.$digest();
-      expect(ctx.notify.error).to.have.been.calledWith('Receipt already tagged with tag1!');
-    });
-
-    it('should display success message if there is a result', function() {
-      var ctx = this;
-      ctx.receiptStorage.update.returns('RECEIPT');
-      ctx.scope.$digest();
-      expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your receipt.');
+      it('should display errors', function() {
+        ctx.deferred.reject();
+        var e = $.Event('drop', ctx.event);
+        ctx.element.trigger(e);
+        expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 to your receipt.');
+      });
     });
   });
-
-
 });
