@@ -8,7 +8,6 @@ describe('selection', function() {
   });
 
   describe('initialization', function() {
-
     it('should have no visible items', function() {
       var ctx = this;
       expect(ctx.selection.visibleItems).to.deep.equal([]);
@@ -23,7 +22,6 @@ describe('selection', function() {
       var ctx = this;
       expect(ctx.selection.selectedItems).to.deep.equal([]);
     });
-
   });
 
   describe('methods', function() {
@@ -98,5 +96,4 @@ describe('selection', function() {
       });
     });
   });
-
 });
