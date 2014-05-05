@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2014-05-05v1
+
+CACHE:
+
+NETWORK:
+
+FALLBACK:
+
+/ /offline-message.html
+
+SETTINGS:
+
+prefer-online
