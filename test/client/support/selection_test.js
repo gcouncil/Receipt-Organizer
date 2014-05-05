@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var _ = require('lodash');
 var Selection = require('../../../lib/client/support/selection.js');
 
-describe.only('selection', function() {
+describe('selection', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.selection = new Selection();
@@ -39,12 +39,12 @@ describe.only('selection', function() {
         ];
       });
 
-      xit('should set attributes', function() {
+      it('should set visible items', function() {
         var ctx = this;
         ctx.selection.visibleItems = ctx.selection.selectedItems;
-        ctx.selection.set({ name: 'b'});
-        expect(ctx.selection.selectedItems).to.deep.equal([
-          { id: 1, name: 'a', vowel: true }
+        ctx.selection.set({ visibleItems: [{ id: 2, name: 'b', vowel: false }] });
+        expect(ctx.selection.visibleItems).to.deep.equal([
+          { id: 2, name: 'b', vowel: false }
         ]);
       });
 
@@ -71,14 +71,26 @@ describe.only('selection', function() {
 
       it('should know whether a particular item is selected', function() {
         var ctx = this;
-        expect(ctx.selection.isSelected(2)).not.to.be.false;
+        ctx.selection.toggleSelection(2, true);
+        expect(ctx.selection.isSelected(2)).to.be.true;
       });
 
-      it('toggleSelection', function() {
+      it('should toggleSelection', function() {
         var ctx = this;
-        expect(ctx.selection.isSelected(2)).not.to.be.false;
-        ctx.selection.toggleSelection(2);
+        ctx.selection.toggleSelection(2, true);
+        expect(ctx.selection.isSelected(2)).to.be.true;
+        ctx.selection.toggleSelection(2, false);
         expect(ctx.selection.isSelected(2)).to.be.false;
+      });
+
+      it('should toggleFullSelection', function() {
+        var ctx = this;
+        ctx.selection.visibleItems = ctx.selection.selectedItems;
+        expect(ctx.selection.isFullySelected()).to.be.true;
+        ctx.selection.toggleFullSelection();
+        expect(ctx.selection.isFullySelected()).to.be.false;
+        ctx.selection.toggleFullSelection();
+        expect(ctx.selection.isFullySelected()).to.be.true;
       });
     });
   });
