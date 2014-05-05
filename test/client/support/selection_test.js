@@ -1,5 +1,4 @@
 var expect = require('chai').expect;
-var _ = require('lodash');
 var Selection = require('../../../lib/client/support/selection.js');
 
 describe('selection', function() {
@@ -28,45 +27,51 @@ describe('selection', function() {
   });
 
   describe('methods', function() {
+    it('should set visible items', function() {
+      var ctx = this;
+      expect(ctx.selection.visibleItems).to.deep.equal([]);
+      ctx.selection.set({ visibleItems: [{ id: 2, name: 'b', vowel: false }] });
+      expect(ctx.selection.visibleItems).to.deep.equal([
+        { id: 2, name: 'b', vowel: false }
+      ]);
+    });
+
     context('with items', function() {
       beforeEach(function() {
         var ctx = this;
-        ctx.selection.selectedItems = [
-          { id: 1, name: 'a', vowel: true },
-          { id: 2, name: 'b', vowel: false },
-          { id: 3, name: 'c', vowel: false },
-          { id: 4, name: 'd', vowel: false }
-        ];
+        ctx.selection.set({
+          visibleItems: [
+            { id: 1, name: 'a', vowel: true },
+            { id: 2, name: 'b', vowel: false },
+            { id: 3, name: 'c', vowel: false },
+            { id: 4, name: 'd', vowel: false }
+          ]
+        });
       });
 
-      it('should set visible items', function() {
-        var ctx = this;
-        ctx.selection.visibleItems = ctx.selection.selectedItems;
-        ctx.selection.set({ visibleItems: [{ id: 2, name: 'b', vowel: false }] });
-        expect(ctx.selection.visibleItems).to.deep.equal([
-          { id: 2, name: 'b', vowel: false }
-        ]);
-      });
 
       it('should know if it has a selection', function() {
         var ctx = this;
+        expect(ctx.selection.hasSelection()).to.be.false;
+        ctx.selection.toggleSelection(1, true);
         expect(ctx.selection.hasSelection()).to.be.true;
       });
 
       it('should know if it is fully selected', function() {
         var ctx = this;
         expect(ctx.selection.isFullySelected()).to.be.false;
-        ctx.selection.visibleItems = ctx.selection.selectedItems;
+        ctx.selection.toggleSelection(1, true);
+        ctx.selection.toggleSelection(2, true);
+        ctx.selection.toggleSelection(3, true);
+        ctx.selection.toggleSelection(4, true);
         expect(ctx.selection.isFullySelected()).to.be.true;
       });
 
       it('should know if it is partially selected', function() {
         var ctx = this;
-        ctx.selection.visibleItems = _.clone(ctx.selection.selectedItems);
-        ctx.selection.visibleItems.push({ id: 5, name: 'e', vowel: true });
-        expect(ctx.selection.isPartiallySelected()).to.be.true;
-        ctx.selection.selectedItems.push({ id: 5, name: 'e', vowel: true });
         expect(ctx.selection.isPartiallySelected()).to.be.false;
+        ctx.selection.toggleSelection(1, true);
+        expect(ctx.selection.isPartiallySelected()).to.be.true;
       });
 
       it('should know whether a particular item is selected', function() {
@@ -85,12 +90,11 @@ describe('selection', function() {
 
       it('should toggleFullSelection', function() {
         var ctx = this;
-        ctx.selection.visibleItems = ctx.selection.selectedItems;
-        expect(ctx.selection.isFullySelected()).to.be.true;
-        ctx.selection.toggleFullSelection();
         expect(ctx.selection.isFullySelected()).to.be.false;
         ctx.selection.toggleFullSelection();
         expect(ctx.selection.isFullySelected()).to.be.true;
+        ctx.selection.toggleFullSelection();
+        expect(ctx.selection.isFullySelected()).to.be.false;
       });
     });
   });
