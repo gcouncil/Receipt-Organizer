@@ -8,15 +8,18 @@ describe('receipt table directive', function() {
     var ctx = this;
     ctx.receiptStorage = ctx.sinon.stub();
 
-    angular.mock.module('ngMock', 'epsonreceipts.receiptTable', {
-      receiptStorage: ctx.receiptStorage
+    angular.mock.module('ngMock', 'epsonreceipts.receiptTable', 'epsonreceipts.storage', {
+      receiptStorage: ctx.receiptStorage,
+      imageStorage: ctx.imageStorage,
+      options: {}
     });
 
-    angular.mock.inject(function($rootScope, $compile) {
+    angular.mock.inject(function($rootScope, $compile, $controller) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
         ctx.element = $compile('<receipt-table></receipt-table>')(ctx.scope);
+        ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
         ctx.scope.receipts = [{
           vendor: 'a',
           date: new Date(),
