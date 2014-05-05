@@ -69,15 +69,13 @@ describe('authentication service', function() {
     });
 
     it('should not set the header', function() {
-      angular.mock.inject(function($rootScope, $httpBackend, tagStorage) {
-        $httpBackend.expectGET('/api/tags', {
+      angular.mock.inject(function($rootScope, $httpBackend, $http) {
+        $httpBackend.expectGET('/', {
           Accept: 'application/json, text/plain, */*'
         }).respond(200);
 
-        // use tagStorage to send a request to the $httpBackend
-        // so that headers can be checked
+        $http.get('/');
 
-        tagStorage.query({});
         $httpBackend.flush();
 
         $rootScope.$digest();
