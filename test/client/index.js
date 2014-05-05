@@ -10,6 +10,7 @@ require('./receipt-thumbnail');
 require('./receipts-toolbar');
 require('./receipts');
 require('./scanning');
+require('./tags');
 require('./storage');
 require('./users');
 require('./widgets');

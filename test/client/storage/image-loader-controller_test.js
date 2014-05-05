@@ -137,6 +137,7 @@ describe('image loader controller', function() {
         });
 
         describe('successful server response', function() {
+          /* globals window:true */
           beforeEach(function() {
             var ctx = this;
             ctx.blob = 'IMAGE';
