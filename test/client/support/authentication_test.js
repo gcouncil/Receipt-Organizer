@@ -26,16 +26,14 @@ describe('authentication service', function() {
     });
 
     it('should add an Authorization header with a bearer token', function() {
-      angular.mock.inject(function($rootScope, $httpBackend, tagStorage) {
-        $httpBackend.expectGET('/api/tags', {
+      angular.mock.inject(function($rootScope, $httpBackend, $http) {
+        $httpBackend.expectGET('/', {
           Accept: 'application/json, text/plain, */*',
           Authorization: 'Bearer TOKEN'
         }).respond(200);
 
-        // use tagStorage to send a request to the $httpBackend
-        // so that headers can be checked
+        $http.get('/');
 
-        tagStorage.query({});
         $httpBackend.flush();
 
         $rootScope.$digest();
@@ -45,13 +43,14 @@ describe('authentication service', function() {
     context('server error', function() {
       it('should set the currentUser to null', function() {
         var ctx = this;
-        angular.mock.inject(function($rootScope, $httpBackend, tagStorage) {
-          $httpBackend.expectGET('/api/tags', {
+        angular.mock.inject(function($rootScope, $httpBackend, $http) {
+          $httpBackend.expectGET('/', {
             Accept: 'application/json, text/plain, */*',
             Authorization: 'Bearer TOKEN'
           }).respond(401);
 
-          tagStorage.query({});
+          $http.get('/');
+
           $httpBackend.flush();
           expect(ctx.currentUser.set).to.have.been.calledWith(null);
           expect(ctx.state.go).to.have.been.called;
