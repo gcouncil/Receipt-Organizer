@@ -5,7 +5,8 @@ describe('scan button directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.twain = {
-      driver: 'DRIVER'
+      driver: 'DRIVER',
+      isBusy: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.scanning', {
@@ -69,7 +70,7 @@ describe('scan button directive', function() {
   it('should watch whether twain is busy', function() {
     var ctx = this;
     ctx.dropdownScope.select('EPSON DS-510');
-    ctx.twain.isBusy = true;
+    ctx.twain.isBusy.returns(true);
     ctx.scope.$digest();
     expect(ctx.scope.scannerBusy).to.be.true;
   });
