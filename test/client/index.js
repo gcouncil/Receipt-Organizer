@@ -12,5 +12,6 @@ require('./receipts');
 require('./scanning');
 require('./tags');
 require('./storage');
+require('./support');
 require('./users');
 require('./widgets');
