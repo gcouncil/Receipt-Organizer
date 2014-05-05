@@ -230,6 +230,19 @@ describe('tag drop zone directive', function() {
       expect(ctx.notify.success).to.have.been.called;
     });
 
+    it('should display an error if the tag is a duplicate', function() {
+      var ctx = this;
+      ctx.deferred.resolve({
+        tags: [],
+        addTag: ctx.sinon.stub().returns(false),
+        clone: function() {
+          return angular.copy(this);
+        }
+      });
+
+      ctx.scope.$digest();
+      expect(ctx.notify.error).to.have.been.called;
+    });
   });
 });
 
