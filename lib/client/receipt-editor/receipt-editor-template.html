@@ -6,49 +6,49 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Date</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.date" class="form-control" bs-datepicker autoclose="true">
+              <input ng-model="expense.date" class="form-control" bs-datepicker autoclose="true">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Vendor Name</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.vendor" class="form-control">
+              <input ng-model="expense.vendor" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Payment Type</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.paymentType" class="form-control">
+              <input ng-model="expense.paymentType" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Category</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.category" class="form-control">
+              <input ng-model="expense.category" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">City</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.city" class="form-control">
+              <input ng-model="expense.city" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">State</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.state" class="form-control">
+              <input ng-model="expense.state" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Tax</label>
             <div class="col-xs-9">
-              <input type="currency" ng-model="receipt.tax" class="form-control">
+              <input type="currency" ng-model="expense.tax" class="form-control">
             </div>
           </div>
 
@@ -56,42 +56,42 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Second Tax</label>
             <div class="col-xs-9">
-              <input type="currency" ng-model="receipt.additionalTax" class="form-control">
+              <input type="currency" ng-model="expense.additionalTax" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Total</label>
             <div class="col-xs-9">
-              <input type="currency" ng-model="receipt.total" class="form-control">
+              <input type="currency" ng-model="expense.total" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Tip</label>
             <div class="col-xs-9">
-              <input type="currency" ng-model="receipt.tip" class="form-control">
+              <input type="currency" ng-model="expense.tip" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Tax Category</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.taxCategory" class="form-control">
+              <input ng-model="expense.taxCategory" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Business Purpose</label>
             <div class="col-xs-9">
-              <input ng-model="receipt.businessPurpose" class="form-control">
+              <input ng-model="expense.businessPurpose" class="form-control">
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-xs-9 col-xs-offset-3">
               <label>
-                <input type="checkbox" ng-model="receipt.reimbursable">
+                <input type="checkbox" ng-model="expense.reimbursable">
                 Reimbursable
               </label>
             </div>
@@ -100,7 +100,7 @@
           <div class="form-group">
             <div class="col-xs-9 col-xs-offset-3">
               <label>
-                <input type="checkbox" ng-model="receipt.billable">
+                <input type="checkbox" ng-model="expense.billable">
                 Billable
               </label>
             </div>
@@ -109,14 +109,14 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Comments</label>
             <div class="col-xs-9">
-              <textarea ng-model="receipt.comments" class="form-control"></textarea>
+              <textarea ng-model="expense.comments" class="form-control"></textarea>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Tags</label>
             <div class="col-xs-9">
-              <receipt-tags-input receipt="receipt"></receipt-tags-input>
+              <expense-tags-input expense="expense"></expense-tags-input>
             </div>
           </div>
 
@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <label class="pull-left"><input type="checkbox" ng-model="unreviewed[receipt.id]"> Needs further review</label>
+        <label class="pull-left"><input type="checkbox" ng-model="unreviewed[expense.id]"> Needs further review</label>
 
         <span ng-if="pagination.total > 1">{{ pagination.first }} of {{ pagination.total }}</span>
 

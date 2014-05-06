@@ -146,7 +146,7 @@ describe('TagsHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
-      it('should respond with the updated receipt', function() {
+      it('should respond with the updated expense', function() {
         expect(this.res.body).to.have.deep.property('[0].name', 'Travel');
       });
 

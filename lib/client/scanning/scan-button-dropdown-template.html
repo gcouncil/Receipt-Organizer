@@ -2,11 +2,11 @@
   <li role="presentation">
     <label ng-click="$event.stopPropagation()">
       Import
-      <input type="file" multiple ng-hide="true" ng-model="files" ng-change="$emit('receipts:newimages', files); $hide()">
+      <input type="file" multiple ng-hide="true" ng-model="files" ng-change="$emit('expenses:newimages', files); $hide()">
     </label>
   </li>
   <li role="presentation">
-    <a role="menuitem" tabindex="-1" ng-click="$emit('receipts:new')">Manual Entry</a>
+    <a role="menuitem" tabindex="-1" ng-click="$emit('expenses:new')">Manual Entry</a>
   </li>
   <li class="divider"></li>
   <li role="presentation" class="dropdown-header">Scanner Drivers</li>

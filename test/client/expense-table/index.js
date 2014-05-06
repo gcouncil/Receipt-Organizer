@@ -1,1 +1,1 @@
-require('./receipt-table-directive_test');
+require('./expense-table-directive_test');

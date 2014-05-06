@@ -12,7 +12,7 @@ describe('toplevel layout directive', function() {
 
     angular.mock.inject(function($rootScope, $compile, $httpBackend) {
       ctx.scope = $rootScope.$new();
-      $httpBackend.when('GET', '/api/receipts').respond([]);
+      $httpBackend.when('GET', '/api/expenses').respond([]);
       $httpBackend.when('GET', '/api/tags').respond([]);
 
       ctx.compile = function() {

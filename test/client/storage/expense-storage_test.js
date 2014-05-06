@@ -13,11 +13,11 @@ function waitFor(promise, done) {
   promise.then(function() { cb(); }, cb);
 }
 
-function seedReceipts(done) {
-  angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
-    $httpBackend.expectGET('/api/receipts').respond(200, [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ]);
+function seedExpenses(done) {
+  angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+    $httpBackend.expectGET('/api/expenses').respond(200, [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ]);
 
-    var promise = receiptStorage.load();
+    var promise = expenseStorage.load();
 
     $httpBackend.flush();
 
@@ -26,12 +26,12 @@ function seedReceipts(done) {
   });
 }
 
-describe('receipt storage service', function() {
+describe('expense storage service', function() {
 
   beforeEach(function() {
     var ctx = this;
     ctx.domain = {
-      Receipt: ctx.sinon.stub().returnsArg(0)
+      Expense: ctx.sinon.stub().returnsArg(0)
     };
 
     angular.mock.module('epsonreceipts.storage', {
@@ -40,15 +40,15 @@ describe('receipt storage service', function() {
   });
 
   describe('load', function() {
-    it('should get the receipts from the server', function(done) {
+    it('should get the expenses from the server', function(done) {
       var ctx = this;
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
-        $httpBackend.expectGET('/api/receipts').respond(200, [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ]);
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+        $httpBackend.expectGET('/api/expenses').respond(200, [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ]);
 
-        var promise = receiptStorage.load();
+        var promise = expenseStorage.load();
 
         $httpBackend.flush();
-        expect(ctx.domain.Receipt).to.have.been.calledTwice.and.to.have.been.calledWithNew;
+        expect(ctx.domain.Expense).to.have.been.calledTwice.and.to.have.been.calledWithNew;
         expect(promise).notify(done);
 
         $rootScope.$digest();
@@ -57,15 +57,15 @@ describe('receipt storage service', function() {
   });
 
   describe('fetch', function() {
-    beforeEach(seedReceipts);
+    beforeEach(seedExpenses);
 
-    it('should fetch the receipt', function(done) {
+    it('should fetch the expense', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 2, name: 'RECEIPT2' };
-      angular.mock.inject(function($rootScope, receiptStorage) {
-        var promise = receiptStorage.fetch(2);
+      ctx.expense = { id: 2, name: 'EXPENSE2' };
+      angular.mock.inject(function($rootScope, expenseStorage) {
+        var promise = expenseStorage.fetch(2);
 
-        expect(promise).to.eventually.deep.equal(ctx.receipt).and.notify(done);
+        expect(promise).to.eventually.deep.equal(ctx.expense).and.notify(done);
 
         $rootScope.$digest();
       });
@@ -74,17 +74,17 @@ describe('receipt storage service', function() {
   });
 
   describe('watch', function() {
-    beforeEach(seedReceipts);
+    beforeEach(seedExpenses);
 
-    it('should watch the receipt collection', function() {
+    it('should watch the expense collection', function() {
       var ctx = this;
-      ctx.receipts = [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ];
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
+      ctx.expenses = [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ];
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
         ctx.scope = $rootScope.$new();
-        $httpBackend.expectGET('/api/receipts').respond(200, [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ]);
+        $httpBackend.expectGET('/api/expenses').respond(200, [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ]);
 
-        receiptStorage.watch(ctx.scope, function(result) {
-          expect(result).to.deep.equal(ctx.receipts);
+        expenseStorage.watch(ctx.scope, function(result) {
+          expect(result).to.deep.equal(ctx.expenses);
         });
 
         $httpBackend.flush();
@@ -92,18 +92,18 @@ describe('receipt storage service', function() {
       });
     });
 
-    it('should filter the receipt collection', function() {
+    it('should filter the expense collection', function() {
       var ctx = this;
-      ctx.receipts = [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ];
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
+      ctx.expenses = [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ];
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
         ctx.scope = $rootScope.$new();
-        $httpBackend.expectGET('/api/receipts').respond(200, [ {id: 1, name: 'RECEIPT1'}, {id: 2, name: 'RECEIPT2'} ]);
+        $httpBackend.expectGET('/api/expenses').respond(200, [ {id: 1, name: 'EXPENSE1'}, {id: 2, name: 'EXPENSE2'} ]);
 
-        receiptStorage.watch(ctx.scope, function(result) {
-          expect(result).not.to.deep.equal(ctx.receipts);
-          expect(result).to.deep.equal([ {id: 1, name: 'RECEIPT1' } ]);
-        }).setFilter('isReceipt1', function(receipt) {
-          return receipt.name === 'RECEIPT1';
+        expenseStorage.watch(ctx.scope, function(result) {
+          expect(result).not.to.deep.equal(ctx.expenses);
+          expect(result).to.deep.equal([ {id: 1, name: 'EXPENSE1' } ]);
+        }).setFilter('isExpense1', function(expense) {
+          return expense.name === 'EXPENSE1';
         });
 
         $httpBackend.flush();
@@ -114,18 +114,18 @@ describe('receipt storage service', function() {
   });
 
   describe('create', function() {
-    it('should send a new receipt to the server', function(done) {
+    it('should send a new expense to the server', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 4, name: 'RECEIPT4' };
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
-        $httpBackend.expectPOST('/api/receipts').respond(201, ctx.receipt);
+      ctx.expense = { id: 4, name: 'EXPENSE4' };
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+        $httpBackend.expectPOST('/api/expenses').respond(201, ctx.expense);
 
-        ctx.domain.Receipt.returns(ctx.receipt);
+        ctx.domain.Expense.returns(ctx.expense);
 
-        var promise = receiptStorage.create(ctx.receipt);
+        var promise = expenseStorage.create(ctx.expense);
 
         $httpBackend.flush();
-        expect(ctx.domain.Receipt).to.have.been.calledWithNew;
+        expect(ctx.domain.Expense).to.have.been.calledWithNew;
         expect(promise).notify(done);
 
         $rootScope.$digest();
@@ -134,19 +134,19 @@ describe('receipt storage service', function() {
   });
 
   describe('update', function() {
-    it('should change the receipt on the server', function(done) {
+    it('should change the expense on the server', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 5, name: 'RECEIPT5' };
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
-        $httpBackend.expectPUT('/api/receipts/5').respond(200, ctx.receipt);
+      ctx.expense = { id: 5, name: 'EXPENSE5' };
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+        $httpBackend.expectPUT('/api/expenses/5').respond(200, ctx.expense);
 
-        ctx.domain.Receipt.returns(ctx.receipt);
+        ctx.domain.Expense.returns(ctx.expense);
 
-        var promise = receiptStorage.update(ctx.receipt);
+        var promise = expenseStorage.update(ctx.expense);
 
         $httpBackend.flush();
-        expect(ctx.domain.Receipt).to.have.been.calledWithNew;
-        expect(promise).to.eventually.deep.equal(ctx.receipt).and.notify(done);
+        expect(ctx.domain.Expense).to.have.been.calledWithNew;
+        expect(promise).to.eventually.deep.equal(ctx.expense).and.notify(done);
 
         $rootScope.$digest();
       });
@@ -154,36 +154,36 @@ describe('receipt storage service', function() {
   });
 
   describe('persist', function() {
-    beforeEach(seedReceipts);
+    beforeEach(seedExpenses);
 
-    it('should update the receipt if it exists', function(done) {
+    it('should update the expense if it exists', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 2, name: 'RECEIPT2' };
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
+      ctx.expense = { id: 2, name: 'EXPENSE2' };
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
 
-        $httpBackend.expectPUT('/api/receipts/2').respond(201, ctx.receipt);
-        var promise = receiptStorage.persist(ctx.receipt);
+        $httpBackend.expectPUT('/api/expenses/2').respond(201, ctx.expense);
+        var promise = expenseStorage.persist(ctx.expense);
 
         $httpBackend.flush();
-        expect(ctx.domain.Receipt).to.have.been.calledWithNew;
-        expect(promise).to.eventually.deep.equal(ctx.receipt).and.notify(done);
+        expect(ctx.domain.Expense).to.have.been.calledWithNew;
+        expect(promise).to.eventually.deep.equal(ctx.expense).and.notify(done);
 
         $rootScope.$digest();
       });
 
     });
 
-    it('should create the receipt if it doesnt exist', function(done) {
+    it('should create the expense if it doesnt exist', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 6, name: 'RECEIPT6' };
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
+      ctx.expense = { id: 6, name: 'EXPENSE6' };
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
 
-        $httpBackend.expectPOST('/api/receipts').respond(201, ctx.receipt);
-        var promise = receiptStorage.persist(ctx.receipt);
+        $httpBackend.expectPOST('/api/expenses').respond(201, ctx.expense);
+        var promise = expenseStorage.persist(ctx.expense);
 
         $httpBackend.flush();
-        expect(ctx.domain.Receipt).to.have.been.calledWithNew;
-        expect(promise).to.eventually.deep.equal(ctx.receipt).and.notify(done);
+        expect(ctx.domain.Expense).to.have.been.calledWithNew;
+        expect(promise).to.eventually.deep.equal(ctx.expense).and.notify(done);
 
         $rootScope.$digest();
       });
@@ -191,15 +191,15 @@ describe('receipt storage service', function() {
   });
 
   describe('destroy', function() {
-    beforeEach(seedReceipts);
+    beforeEach(seedExpenses);
 
-    it('should destroy the receipt', function(done) {
+    it('should destroy the expense', function(done) {
       var ctx = this;
-      ctx.receipt = { id: 2, name: 'RECEIPT2' };
-      angular.mock.inject(function($rootScope, $httpBackend, receiptStorage) {
-        $httpBackend.expectDELETE('/api/receipts/2').respond(200);
+      ctx.expense = { id: 2, name: 'EXPENSE2' };
+      angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+        $httpBackend.expectDELETE('/api/expenses/2').respond(200);
 
-        var promise = receiptStorage.destroy(ctx.receipt);
+        var promise = expenseStorage.destroy(ctx.expense);
 
         $httpBackend.flush();
         expect(promise).notify(done);

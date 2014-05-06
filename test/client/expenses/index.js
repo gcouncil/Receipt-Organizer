@@ -1,2 +1,2 @@
-require('./receipt-drop-zone');
+require('./expense-drop-zone');
 require('./events_test');

@@ -2,14 +2,14 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe('receipt table directive', function() {
+describe('expense table directive', function() {
 
   beforeEach(function() {
     var ctx = this;
-    ctx.receiptStorage = ctx.sinon.stub();
+    ctx.expenseStorage = ctx.sinon.stub();
 
-    angular.mock.module('ngMock', 'epsonreceipts.receiptTable', 'epsonreceipts.storage', {
-      receiptStorage: ctx.receiptStorage,
+    angular.mock.module('ngMock', 'epsonreceipts.expenseTable', 'epsonreceipts.storage', {
+      expenseStorage: ctx.expenseStorage,
       imageStorage: ctx.imageStorage,
       options: {}
     });
@@ -18,9 +18,9 @@ describe('receipt table directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<receipt-table receipts="receipts"></receipt-table>')(ctx.scope);
+        ctx.element = $compile('<expense-table expenses="expenses"></expense-table>')(ctx.scope);
         ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
-        ctx.scope.receipts = [{
+        ctx.scope.expenses = [{
           vendor: 'a',
           date: new Date(),
           category: 'b',
@@ -58,13 +58,13 @@ describe('receipt table directive', function() {
       };
     });
 
-    xit('set the scope receipt to closest row\'s receipt', function() {
-      var ctx = this;
-      expect(ctx.scope.receipt).to.be.undefined
-      ctx.focus();
-      ctx.scope.$digest();
-      expect(ctx.scope.receipt).to.equal(ctx.scope.receipts[0]);
-    });
+    // it('set the scope expense to closest row\'s expense', function() {
+    //   var ctx = this;
+    //   expect(ctx.scope.expense).to.be.undefined;
+    //   ctx.focus();
+    //   ctx.scope.$digest();
+    //   expect(ctx.scope.expense).to.equal(ctx.scope.expenses[0]);
+    // });
   });
 
 

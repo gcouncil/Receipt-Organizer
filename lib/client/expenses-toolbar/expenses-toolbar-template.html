@@ -1,29 +1,29 @@
 <div class="nav navbar-nav navbar-left navbar-form">
-  <bulk-selection selection="receipts.selection"></bulk-selection>
+  <bulk-selection selection="expenses.selection"></bulk-selection>
   <button class="btn btn-default" title="Mark as Reviewed"
-    ng-click="$emit('receipts:reviewed', receipts.selection.selectedItems)"
-    ng-disabled="!receipts.selection.hasSelection()">
+    ng-click="$emit('expenses:reviewed', expenses.selection.selectedItems)"
+    ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-check"></i>
   </button>
-  <receipts-toolbar-tag-button
-    selection="receipts.selection">
-  </receipts-toolbar-tag-button>
+  <expenses-toolbar-tag-button
+    selection="expenses.selection">
+  </expenses-toolbar-tag-button>
    <button class="btn btn-default" title="Edit"
-    ng-click="$emit('receipts:edit', receipts.selection.selectedItems)"
-    ng-disabled="!receipts.selection.hasSelection()">
+    ng-click="$emit('expenses:edit', expenses.selection.selectedItems)"
+    ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-edit"></i>
   </button>
   <button class="btn btn-default" title="Delete"
-    ng-click="$emit('receipts:destroy', receipts.selection.selectedItems)"
-    ng-disabled="!receipts.selection.hasSelection()">
+    ng-click="$emit('expenses:destroy', expenses.selection.selectedItems)"
+    ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-trash-o"></i>
   </button>
   <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
 </div>
 <div class="nav navbar-nav navbar-right navbar-form">
-  <er-pagination controller="receipts.pagination"></er-pagination>
+  <er-pagination controller="expenses.pagination"></er-pagination>
 
-  <receipt-view-toggle></receipt-view-toggle>
+  <expense-view-toggle></expense-view-toggle>
 </div>
 
 <div class="tags-panel" ng-show="showingTags">

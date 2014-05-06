@@ -1,21 +1,21 @@
-<label class="receipt-thumbnail-titlebar">
-  <div class="receipt-thumbnail-checkbox">
-    <is-selected selection="selection" selection-id="receipt.id">
+<label class="expense-thumbnail-titlebar">
+  <div class="expense-thumbnail-checkbox">
+    <is-selected selection="selection" selection-id="expense.id">
   </div>
-  <div class="receipt-thumbnail-title">
-    <span>Receipt</span>
-    <i class="fa fa-check-circle receipt-thumbnail-reviewed-icon" ng-if="receipt.reviewed" title="Reviewed"></i>
-    <i class="fa fa-flag receipt-thumbnail-unreviewed-icon" ng-if="!receipt.reviewed" title="Needs Review"></i>
+  <div class="expense-thumbnail-title">
+    <span>Expense</span>
+    <i class="fa fa-check-circle expense-thumbnail-reviewed-icon" ng-if="expense.reviewed" title="Reviewed"></i>
+    <i class="fa fa-flag expense-thumbnail-unreviewed-icon" ng-if="!expense.reviewed" title="Needs Review"></i>
   </div>
 </label>
-<div class="receipt-thumbnail-body">
-  <div class="receipt-thumbnail-actions">
-    <a ng-click="$emit('receipts:edit', receipt)" href="#"><i class="fa fa-edit"></i></a>
-    <a ng-click="$emit('receipts:destroy', receipt)" href="#"><i class="fa fa-trash-o"></i></a>
+<div class="expense-thumbnail-body">
+  <div class="expense-thumbnail-actions">
+    <a ng-click="$emit('expenses:edit', expense)" href="#"><i class="fa fa-edit"></i></a>
+    <a ng-click="$emit('expenses:destroy', expense)" href="#"><i class="fa fa-trash-o"></i></a>
   </div>
-  <div class="receipt-thumbnail-image-container">
-    <img class="receipt-thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
-    <div class="receipt-thumbnail-image-message">
+  <div class="expense-thumbnail-image-container">
+    <img class="expense-thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
+    <div class="expense-thumbnail-image-message">
       <div ng-show="imageLoader.loading">
         Loading<br>
         <i class="fa fa-spinner fa-spin fa-3x"></i>
@@ -24,22 +24,22 @@
       <div ng-show="imageLoader.error">Error!</div>
     </div>
   </div>
-  <div class="receipt-thumbnail-fields">
-    <div class="receipt-thumbnail-field">
-      <div class="receipt-thumbnail-label">Vendor:</div>
-      <div class="receipt-thumbnail-value">{{ receipt.vendor }}</div>
+  <div class="expense-thumbnail-fields">
+    <div class="expense-thumbnail-field">
+      <div class="expense-thumbnail-label">Vendor:</div>
+      <div class="expense-thumbnail-value">{{ expense.vendor }}</div>
     </div>
-    <div class="receipt-thumbnail-field">
-      <div class="receipt-thumbnail-label">Date:</div>
-      <div class="receipt-thumbnail-value">{{ receipt.date | date }}</div>
+    <div class="expense-thumbnail-field">
+      <div class="expense-thumbnail-label">Date:</div>
+      <div class="expense-thumbnail-value">{{ expense.date | date }}</div>
     </div>
-    <div class="receipt-thumbnail-field">
-      <div class="receipt-thumbnail-label">Total:</div>
-      <div class="receipt-thumbnail-value">{{ receipt.total | currency }}</div>
+    <div class="expense-thumbnail-field">
+      <div class="expense-thumbnail-label">Total:</div>
+      <div class="expense-thumbnail-value">{{ expense.total | currency }}</div>
     </div>
-    <div class="receipt-thumbnail-field">
-      <div class="receipt-thumbnail-label">Category:</div>
-      <div class="receipt-thumbnail-value">{{ receipt.category }}</div>
+    <div class="expense-thumbnail-field">
+      <div class="expense-thumbnail-label">Category:</div>
+      <div class="expense-thumbnail-value">{{ expense.category }}</div>
     </div>
   </div>
 </div>

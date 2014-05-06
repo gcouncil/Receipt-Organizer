@@ -1,5 +1,5 @@
 require('./test-helper');
-require('./receipts');
-require('./receipt-table');
+require('./expenses');
+require('./expense-table');
 require('./tags');
 require('./users');

@@ -1,14 +1,14 @@
-receipt-table {
+expense-table {
   .flex-box();
   .flex();
   align-content: stretch;
 
-  .receipt-table-container {
+  .expense-table-container {
     .flex();
     overflow: auto;
   }
 
-  table.receipt-table {
+  table.expense-table {
     min-width: 1600px;
     table-layout: fixed;
 
@@ -31,7 +31,7 @@ receipt-table {
     }
   }
 
-  .receipt-table-sidebar {
+  .expense-table-sidebar {
     .flex-box();
     .noflex(300px);
     align-content: stretch;
@@ -43,7 +43,7 @@ receipt-table {
   }
 }
 
-.receipt-table-row-unreviewed {
+.expense-table-row-unreviewed {
   background: #def;
 
   &:hover {
@@ -51,7 +51,7 @@ receipt-table {
   }
 }
 
-.receipt-table-row-reviewed {
+.expense-table-row-reviewed {
   &:hover {
     background: @gray-lighter;
   }

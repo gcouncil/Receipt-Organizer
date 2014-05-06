@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('receipts toolbar tag button directive', function() {
+describe('expenses toolbar tag button directive', function() {
   beforeEach(function() {
     var ctx = this;
 
@@ -9,7 +9,7 @@ describe('receipts toolbar tag button directive', function() {
       query: ctx.sinon.stub()
     };
 
-    ctx.receiptStorage = {
+    ctx.expenseStorage = {
       update: ctx.sinon.stub()
     };
 
@@ -29,13 +29,13 @@ describe('receipts toolbar tag button directive', function() {
 
     ctx.selection = {
       selectedItems: [
-        { name: 'receipt1', tags: [] },
+        { name: 'expense1', tags: [] },
       ]
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.receiptsToolbar', {
+    angular.mock.module('ngMock', 'epsonreceipts.expensesToolbar', {
       tagStorage: ctx.tagStorage,
-      receiptStorage: ctx.receiptStorage,
+      expenseStorage: ctx.expenseStorage,
       notify: ctx.notify,
       $dropdown: ctx.dropdown
     });
@@ -43,7 +43,7 @@ describe('receipts toolbar tag button directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<receipts-toolbar-tag-button selection="selection"></receipts-toolbar-tag-button>')(ctx.scope);
+        ctx.element = $compile('<expenses-toolbar-tag-button selection="selection"></expenses-toolbar-tag-button>')(ctx.scope);
         ctx.scope.dropdown = ctx.dropdown();
         ctx.scope.selection = ctx.selection;
         ctx.scope.$digest();
@@ -72,31 +72,31 @@ describe('receipts toolbar tag button directive', function() {
     });
   });
 
-  describe('tagging receipts', function() {
+  describe('tagging expenses', function() {
 
-    it('should tag the receipts with the selected tag', function() {
+    it('should tag the expenses with the selected tag', function() {
       var ctx = this;
-      ctx.scope.dropdown.$scope.tagReceipts({ name: 'tag1', id: 1 });
-      expect(ctx.receiptStorage.update).to.have.been.calledWith({ name: 'receipt1', tags: [1] });
+      ctx.scope.dropdown.$scope.tagExpenses({ name: 'tag1', id: 1 });
+      expect(ctx.expenseStorage.update).to.have.been.calledWith({ name: 'expense1', tags: [1] });
       ctx.scope.$digest();
-      expect(ctx.notify.success).to.have.been.calledWith('Tagged 1 receipt with tag1');
+      expect(ctx.notify.success).to.have.been.calledWith('Tagged 1 expense with tag1');
     });
 
-    it('should not double tag receipts', function() {
+    it('should not double tag expenses', function() {
       var ctx = this;
       ctx.selection = {
         selectedItems: [
-          { name: 'receipt2', tags: [1] },
+          { name: 'expense2', tags: [1] },
         ]
       };
       ctx.compile();
 
-      ctx.scope.dropdown.$scope.tagReceipts({ name: 'tag1', id: 1 });
-      expect(ctx.receiptStorage.update).not.to.have.been.calledWith({ name: 'receipt2', tags: [1] });
-      expect(ctx.receiptStorage.update).not.to.have.been.calledWith({ name: 'receipt2', tags: [1, 1] });
+      ctx.scope.dropdown.$scope.tagExpenses({ name: 'tag1', id: 1 });
+      expect(ctx.expenseStorage.update).not.to.have.been.calledWith({ name: 'expense2', tags: [1] });
+      expect(ctx.expenseStorage.update).not.to.have.been.calledWith({ name: 'expense2', tags: [1, 1] });
       ctx.scope.$digest();
       expect(ctx.notify.success).not.to.have.been.called;
-      expect(ctx.notify.error).to.have.been.calledWith('Selected receipt already tagged with tag1');
+      expect(ctx.notify.error).to.have.been.calledWith('Selected expense already tagged with tag1');
     });
   });
 

@@ -2,7 +2,7 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe('receipt thumbnail grid directive', function() {
+describe('expense thumbnail grid directive', function() {
 
   beforeEach(function() {
     var ctx = this;
@@ -14,13 +14,13 @@ describe('receipt thumbnail grid directive', function() {
       setLimit: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.receiptThumbnail');
+    angular.mock.module('ngMock', 'epsonreceipts.expenseThumbnail');
 
     angular.mock.inject(function($rootScope, $compile, $interval) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<receipt-thumbnail-grid pagination="pagination"></receipt-thumbnail-grid>')(ctx.scope);
+        ctx.element = $compile('<expense-thumbnail-grid pagination="pagination"></expense-thumbnail-grid>')(ctx.scope);
         ctx.scope.pagination = ctx.pagination;
         ctx.scope.$digest();
         ctx.$interval = $interval;

@@ -2,11 +2,11 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe('receipt drop zone directive', function() {
+describe('expense drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
 
-    ctx.receiptStorage = {
+    ctx.expenseStorage = {
       fetch: ctx.sinon.stub(),
       update: ctx.sinon.stub()
     };
@@ -16,8 +16,8 @@ describe('receipt drop zone directive', function() {
       error: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.receipts.drop-zone', {
-      receiptStorage: ctx.receiptStorage,
+    angular.mock.module('ngMock', 'epsonreceipts.expenses.drop-zone', {
+      expenseStorage: ctx.expenseStorage,
       notify: ctx.notify
     });
 
@@ -25,10 +25,10 @@ describe('receipt drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div receipt-drop-zone tag="tag"></div>')(ctx.scope);
+        ctx.element = $compile('<div expense-drop-zone tag="tag"></div>')(ctx.scope);
         ctx.scope.tag = { name: 'tag1', id: 1 };
         ctx.deferred = $q.defer();
-        ctx.receiptStorage.fetch.returns(ctx.deferred.promise);
+        ctx.expenseStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });
@@ -48,7 +48,7 @@ describe('receipt drop zone directive', function() {
         var ctx = this;
         ctx.event = {
           dataTransfer: {
-            types: ['application/json+receipt']
+            types: ['application/json+expense']
           },
           preventDefault: ctx.sinon.stub()
         };
@@ -168,13 +168,13 @@ describe('receipt drop zone directive', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.data = JSON.stringify({
-        type: 'receipt',
+        type: 'expense',
         id: 2
       });
 
       ctx.event = {
         dataTransfer: {
-          types: ['application/json+receipt'],
+          types: ['application/json+expense'],
           dropEffect: 'copy',
           getData: ctx.sinon.stub().returns(ctx.data)
         },
@@ -204,16 +204,16 @@ describe('receipt drop zone directive', function() {
 
       it('should display duplicate message if there is no result', function() {
         var ctx = this;
-        ctx.receiptStorage.update.returns();
+        ctx.expenseStorage.update.returns();
         ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('Receipt already tagged with tag1!');
+        expect(ctx.notify.error).to.have.been.calledWith('Expense already tagged with tag1!');
       });
 
       it('should display success message if there is a result', function() {
         var ctx = this;
-        ctx.receiptStorage.update.returns('RECEIPT');
+        ctx.expenseStorage.update.returns('EXPENSE');
         ctx.scope.$digest();
-        expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your receipt.');
+        expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your expense.');
       });
     });
 
@@ -228,7 +228,7 @@ describe('receipt drop zone directive', function() {
       it('should display errors', function() {
         var ctx = this;
         ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your receipt.');
+        expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your expense.');
       });
     });
   });

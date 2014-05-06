@@ -1,16 +1,16 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('receipt events', function() {
+describe('expense events', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.domain = {
-      Receipt: ctx.sinon.stub()
+      Expense: ctx.sinon.stub()
     };
 
     ctx.receiptEditor = ctx.sinon.stub();
 
-    ctx.receiptStorage = {
+    ctx.expenseStorage = {
       create: ctx.sinon.stub(),
       destroy: ctx.sinon.stub(),
       persist: ctx.sinon.stub()
@@ -27,10 +27,10 @@ describe('receipt events', function() {
       error: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.receipts', {
+    angular.mock.module('ngMock', 'epsonreceipts.expenses', {
       domain: ctx.domain,
       receiptEditor: ctx.receiptEditor,
-      receiptStorage: ctx.receiptStorage,
+      expenseStorage: ctx.expenseStorage,
       imageStorage: ctx.imageStorage,
       confirmation: ctx.confirmation,
       notify: ctx.notify
@@ -40,7 +40,7 @@ describe('receipt events', function() {
       ctx.scope = $rootScope.$new();
       ctx.deferred = $q.defer();
       ctx.deferred2 = $q.defer();
-      ctx.receipts = ['RECEIPT1', 'RECEIPT2'];
+      ctx.expenses = ['EXPENSE1', 'EXPENSE2'];
     });
   });
 
@@ -51,76 +51,76 @@ describe('receipt events', function() {
     }
   });
 
-  context('receipts:edit', function() {
+  context('expenses:edit', function() {
     beforeEach(function() {
       var ctx = this;
-      ctx.scope.$emit('receipts:edit', ctx.receipts);
+      ctx.scope.$emit('expenses:edit', ctx.expenses);
       ctx.scope.$digest();
     });
 
-    it('should launch the receipt editor on receipts:edit', function() {
+    it('should launch the receipt editor on expenses:edit', function() {
       var ctx = this;
-      expect(ctx.receiptEditor).to.have.been.calledWith(ctx.receipts);
+      expect(ctx.receiptEditor).to.have.been.calledWith(ctx.expenses);
     });
   });
 
-  context('receipts:destroy', function() {
+  context('expenses:destroy', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.confirmation.returns(ctx.deferred.promise);
     });
 
-    it('should destroy one receipt', function() {
+    it('should destroy one expense', function() {
       var ctx = this;
-      ctx.scope.$emit('receipts:destroy', ctx.receipts[0]);
+      ctx.scope.$emit('expenses:destroy', ctx.expenses[0]);
       ctx.deferred.resolve();
       ctx.scope.$digest();
       expect(ctx.confirmation).to.have.been.calledWith({
         count: 1,
         yes: 'Delete',
         when: {
-          one: 'Are you sure you want to delete this receipt?',
-          other: 'Are you sure you want to delete these {} receipts?'
+          one: 'Are you sure you want to delete this expense?',
+          other: 'Are you sure you want to delete these {} expenses?'
         },
         no: 'Cancel'
       });
-      expect(ctx.receiptStorage.destroy).to.have.been.calledWith('RECEIPT1');
+      expect(ctx.expenseStorage.destroy).to.have.been.calledWith('EXPENSE1');
     });
 
-    it('should destroy multiple receipts', function() {
+    it('should destroy multiple expenses', function() {
       var ctx = this;
-      ctx.scope.$emit('receipts:destroy', ctx.receipts);
+      ctx.scope.$emit('expenses:destroy', ctx.expenses);
       ctx.deferred.resolve();
       ctx.scope.$digest();
       expect(ctx.confirmation).to.have.been.calledWith({
         count: 2,
         yes: 'Delete',
         when: {
-          one: 'Are you sure you want to delete this receipt?',
-          other: 'Are you sure you want to delete these {} receipts?'
+          one: 'Are you sure you want to delete this expense?',
+          other: 'Are you sure you want to delete these {} expenses?'
         },
         no: 'Cancel'
       });
-      expect(ctx.receiptStorage.destroy).to.have.been.calledWith('RECEIPT1');
-      expect(ctx.receiptStorage.destroy).to.have.been.calledWith('RECEIPT2');
+      expect(ctx.expenseStorage.destroy).to.have.been.calledWith('EXPENSE1');
+      expect(ctx.expenseStorage.destroy).to.have.been.calledWith('EXPENSE2');
     });
   });
 
-  context('receipts:new', function() {
+  context('expenses:new', function() {
     beforeEach(function() {
       var ctx = this;
-      ctx.scope.$emit('receipts:new');
+      ctx.scope.$emit('expenses:new');
       ctx.scope.$digest();
     });
 
-    it('should create a new receipt', function() {
+    it('should create a new expense', function() {
       var ctx = this;
-      expect(ctx.domain.Receipt).to.have.been.called.withNew;
+      expect(ctx.domain.Expense).to.have.been.called.withNew;
       expect(ctx.receiptEditor).to.have.been.called;
     });
   });
 
-  context('receipts:newimages', function() {
+  context('expenses:newimages', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.blobs = [
@@ -136,7 +136,7 @@ describe('receipt events', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.deferred2.resolve(ctx.image);
-        ctx.scope.$emit('receipts:newimages', ctx.blobs);
+        ctx.scope.$emit('expenses:newimages', ctx.blobs);
         ctx.scope.$digest();
       });
 
@@ -144,7 +144,7 @@ describe('receipt events', function() {
         var ctx = this;
         expect(ctx.imageStorage.create).to.have.been.calledWith(ctx.blobs[0]);
         expect(ctx.imageStorage.create).to.have.been.calledWith(ctx.blobs[1]);
-        expect(ctx.receiptStorage.create).to.have.been.calledWith({ image: ctx.image.id });
+        expect(ctx.expenseStorage.create).to.have.been.calledWith({ image: ctx.image.id });
         expect(ctx.notify.success).to.have.been.calledWith('2 Image(s) added');
       });
 
@@ -157,33 +157,33 @@ describe('receipt events', function() {
     it('should display errors', function() {
       var ctx = this;
       ctx.deferred2.reject('ERROR');
-      ctx.scope.$emit('receipts:newimages', ctx.blobs);
+      ctx.scope.$emit('expenses:newimages', ctx.blobs);
       ctx.scope.$digest();
       expect(ctx.imageStorage.create).to.have.been.calledWith(ctx.blobs[0]);
       expect(ctx.notify.error).to.have.been.calledWith('Error while importing images');
     });
   });
 
-  context('receipts:reviewed', function() {
+  context('expenses:reviewed', function() {
     beforeEach(function() {
       var ctx = this;
-      ctx.receipts = [
+      ctx.expenses = [
         { id: 1, reviewed: false },
         { id: 2, reviewed: true }
       ];
-      ctx.scope.$emit('receipts:reviewed', ctx.receipts);
+      ctx.scope.$emit('expenses:reviewed', ctx.expenses);
       ctx.scope.$digest();
     });
 
-    it('should mark unreviewed receipts as reviewed', function() {
+    it('should mark unreviewed expenses as reviewed', function() {
       var ctx = this;
-      expect(ctx.receipts[0].reviewed).to.be.true;
-      expect(ctx.receiptStorage.persist).to.have.been.calledWith(ctx.receipts[0]);
+      expect(ctx.expenses[0].reviewed).to.be.true;
+      expect(ctx.expenseStorage.persist).to.have.been.calledWith(ctx.expenses[0]);
     });
 
-    it('should update reviewed receipts', function() {
+    it('should update reviewed expenses', function() {
       var ctx = this;
-      expect(ctx.receiptStorage.persist).not.to.have.been.calledWith(ctx.receipts[1]);
+      expect(ctx.expenseStorage.persist).not.to.have.been.calledWith(ctx.expenses[1]);
     });
   });
 });

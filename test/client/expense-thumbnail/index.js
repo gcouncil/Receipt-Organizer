@@ -1,2 +1,2 @@
-require('./receipt-thumbnail-directive_test');
-require('./receipt-thumbnail-grid-directive_test');
+require('./expense-thumbnail-directive_test');
+require('./expense-thumbnail-grid-directive_test');

@@ -1,1 +1,1 @@
-require('./receipt-drop-zone-directive_test');
+require('./expense-drop-zone-directive_test');
