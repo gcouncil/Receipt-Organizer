@@ -1,8 +1,8 @@
 <form name="new-tag-form" class="new-tag" ng-submit="ok()">
   <div class="col-xs-12">
     <div class="input-group input-group-sm">
-      <input ng-model="newTag" class="form-control">
-      <span class="input-group-btn"><button ng-click="ok()" class="btn btn-default"><i class="fa fa-plus"></i></button></span>
+      <label ng-show="!showing" ng-click="show()"><i class="fa fa-plus"></i> Create Folder</label>
+      <input class="form-control" ng-model="newTag" ng-show="showing" ng-blur="hide()">
     </div>
   </div>
 </form>
