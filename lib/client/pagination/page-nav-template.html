@@ -1,8 +1,0 @@
-<span ng-show="pagination.total">
-  {{ pagination.first() }}-{{ pagination.last() }} of {{ pagination.total }}
-</span>
-
-<div class="btn-group">
-  <button class="btn btn-default" ng-disabled="!pagination.hasPrevious()" ng-click="pagination.previousPage()">Previous</button>
-  <button class="btn btn-default" ng-disabled="!pagination.hasNext()" ng-click="pagination.nextPage()">Next</button>
-</div>
