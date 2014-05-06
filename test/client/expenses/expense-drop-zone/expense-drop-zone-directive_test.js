@@ -165,70 +165,125 @@ describe('expense drop zone directive', function() {
 
 
   describe('drop events', function() {
-    beforeEach(function() {
-      var ctx = this;
-      ctx.data = JSON.stringify({
-        type: 'expense',
-        id: 2
-      });
-
-      ctx.event = {
-        dataTransfer: {
-          types: ['application/json+expense'],
-          dropEffect: 'copy',
-          getData: ctx.sinon.stub().returns(ctx.data)
-        },
-        preventDefault: ctx.sinon.stub()
-      };
-
-    });
-
-    context('without errors', function() {
+    context('with the wrong type of data', function() {
       beforeEach(function() {
         var ctx = this;
+        ctx.data = JSON.stringify({
+          type: 'tag',
+          id: 3
+        });
+
+        ctx.event = {
+          dataTransfer: {
+            types: ['application/json+expense'],
+            dropEffect: 'copy',
+            getData: ctx.sinon.stub().returns(ctx.data)
+          },
+          preventDefault: ctx.sinon.stub()
+        };
+
         ctx.deferred.resolve({
           tags: [],
           clone: function() {
             return angular.copy(this);
           }
         });
+
         var e = $.Event('drop', ctx.event);
         ctx.element.trigger(e);
       });
 
-      it('should get the data from the event', function() {
+      it('should not add the tag the expense', function() {
         var ctx = this;
-        ctx.scope.$digest();
-        expect(ctx.event.dataTransfer.getData).to.have.been.called;
-      });
-
-      it('should display duplicate message if there is no result', function() {
-        var ctx = this;
-        ctx.expenseStorage.update.returns();
-        ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('Expense already tagged with tag1!');
-      });
-
-      it('should display success message if there is a result', function() {
-        var ctx = this;
-        ctx.expenseStorage.update.returns('EXPENSE');
-        ctx.scope.$digest();
-        expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your expense.');
+        expect(ctx.expenseStorage.fetch).not.to.have.been.called;
       });
     });
 
-    context('with errors', function() {
+    context('with correct data type', function() {
       beforeEach(function() {
         var ctx = this;
-        ctx.deferred.reject();
-        var e = $.Event('drop', ctx.event);
-        ctx.element.trigger(e);
+        ctx.data = JSON.stringify({
+          type: 'expense',
+          id: 2
+        });
+        ctx.event = {
+          dataTransfer: {
+            types: ['application/json+expense'],
+            dropEffect: 'copy',
+            getData: ctx.sinon.stub().returns(ctx.data)
+          },
+          preventDefault: ctx.sinon.stub()
+        };
       });
 
-      it('should display errors', function() {
-        var ctx = this;
-        ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your expense.');
+      context('with a duplicate', function() {
+        beforeEach(function() {
+          var ctx = this;
+          ctx.deferred.resolve({
+            tags: [1],
+            clone: function() {
+              return angular.copy(this);
+            }
+          });
+          var e = $.Event('drop', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should not update the expense if there is a duplicate', function() {
+          var ctx = this;
+          ctx.scope.$digest();
+          expect(ctx.expenseStorage.update).not.to.have.been.called;
+        });
+
+        it('should display duplicate message if there is no result', function() {
+          var ctx = this;
+          ctx.expenseStorage.update.returns();
+          ctx.scope.$digest();
+          expect(ctx.notify.error).to.have.been.calledWith('Expense already tagged with tag1!');
+        });
+
+      });
+
+      context('without errors', function() {
+        beforeEach(function() {
+          var ctx = this;
+          ctx.deferred.resolve({
+            tags: [],
+            clone: function() {
+              return angular.copy(this);
+            }
+          });
+          var e = $.Event('drop', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should get the data from the event', function() {
+          var ctx = this;
+          ctx.scope.$digest();
+          expect(ctx.event.dataTransfer.getData).to.have.been.called;
+        });
+
+        it('should display success message if there is a result', function() {
+          var ctx = this;
+          ctx.expenseStorage.update.returns('EXPENSE');
+          ctx.scope.$digest();
+          expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your expense.');
+        });
+      });
+
+      context('with errors', function() {
+        beforeEach(function() {
+          var ctx = this;
+          ctx.deferred.reject();
+          var e = $.Event('drop', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should display errors', function() {
+          var ctx = this;
+          ctx.scope.$digest();
+          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your expense.');
+        });
       });
     });
   });
