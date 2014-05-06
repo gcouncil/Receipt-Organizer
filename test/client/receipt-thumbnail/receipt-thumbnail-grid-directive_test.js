@@ -37,6 +37,14 @@ describe('receipt thumbnail grid directive', function() {
     }
   });
 
+  it('should not work if there is no pagination', function() {
+    var ctx = this;
+    delete ctx.scope.pagination;
+    $(ctx.element).width(400);
+    ctx.$interval.flush(101);
+    expect(ctx.pagination.setLimit).not.to.have.beenCalled;
+  });
+
   it('should update the pagination whenever the element is resized', function() {
     var ctx = this;
 

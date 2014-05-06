@@ -43,9 +43,7 @@ describe('receipt drop zone directive', function() {
   });
 
   describe('drag events', function() {
-
     context('with valid types', function() {
-
       beforeEach(function() {
         var ctx = this;
         ctx.event = {
@@ -55,7 +53,6 @@ describe('receipt drop zone directive', function() {
           preventDefault: ctx.sinon.stub()
         };
       });
-
 
       context('dragenter', function() {
         beforeEach(function() {
@@ -104,11 +101,9 @@ describe('receipt drop zone directive', function() {
           expect(ctx.event.preventDefault).to.have.been.called;
         });
       });
-
     });
 
     context('with invalid types', function() {
-
       beforeEach(function() {
         var ctx = this;
         ctx.event = {
@@ -146,7 +141,6 @@ describe('receipt drop zone directive', function() {
       describe('dragover', function() {
         beforeEach(function() {
           var ctx = this;
-
           var e = $.Event('dragover', ctx.event);
           ctx.element.trigger(e);
         });
@@ -166,10 +160,9 @@ describe('receipt drop zone directive', function() {
           expect(ctx.event.preventDefault).not.to.have.been.called;
         });
       });
-
     });
-
   });
+
 
   describe('drop events', function() {
     beforeEach(function() {
@@ -188,36 +181,55 @@ describe('receipt drop zone directive', function() {
         preventDefault: ctx.sinon.stub()
       };
 
+    });
 
-      ctx.deferred.resolve({
-        tags: [],
-        clone: function() {
-          return angular.copy(this);
-        }
+    context('without errors', function() {
+      beforeEach(function() {
+        var ctx = this;
+        ctx.deferred.resolve({
+          tags: [],
+          clone: function() {
+            return angular.copy(this);
+          }
+        });
+        var e = $.Event('drop', ctx.event);
+        ctx.element.trigger(e);
       });
-      var e = $.Event('drop', ctx.event);
-      ctx.element.trigger(e);
+
+      it('should get the data from the event', function() {
+        var ctx = this;
+        ctx.scope.$digest();
+        expect(ctx.event.dataTransfer.getData).to.have.been.called;
+      });
+
+      it('should display duplicate message if there is no result', function() {
+        var ctx = this;
+        ctx.receiptStorage.update.returns();
+        ctx.scope.$digest();
+        expect(ctx.notify.error).to.have.been.calledWith('Receipt already tagged with tag1!');
+      });
+
+      it('should display success message if there is a result', function() {
+        var ctx = this;
+        ctx.receiptStorage.update.returns('RECEIPT');
+        ctx.scope.$digest();
+        expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your receipt.');
+      });
     });
 
-    it('should get the data from the event', function() {
-      var ctx = this;
-      expect(ctx.event.dataTransfer.getData).to.have.been.called;
-    });
+    context('with errors', function() {
+      beforeEach(function() {
+        var ctx = this;
+        ctx.deferred.reject();
+        var e = $.Event('drop', ctx.event);
+        ctx.element.trigger(e);
+      });
 
-    it('should display duplicate message if there is no result', function() {
-      var ctx = this;
-      ctx.receiptStorage.update.returns();
-      ctx.scope.$digest();
-      expect(ctx.notify.error).to.have.been.calledWith('Receipt already tagged with tag1!');
-    });
-
-    it('should display success message if there is a result', function() {
-      var ctx = this;
-      ctx.receiptStorage.update.returns('RECEIPT');
-      ctx.scope.$digest();
-      expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your receipt.');
+      it('should display errors', function() {
+        var ctx = this;
+        ctx.scope.$digest();
+        expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your receipt.');
+      });
     });
   });
-
-
 });

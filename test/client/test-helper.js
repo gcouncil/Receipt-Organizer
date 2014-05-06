@@ -12,11 +12,6 @@ if (!Function.prototype.bind) {
 
 var sinon = require('sinon');
 
-if (!Function.prototype.bind) {
-  console.log('Polyfilling Function bind');
-  Function.prototype.bind = require('function-bind');
-}
-
 beforeEach(function() {
   this.sinon = sinon.sandbox.create();
 });

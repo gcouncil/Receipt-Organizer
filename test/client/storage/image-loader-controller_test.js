@@ -132,7 +132,7 @@ describe('image loader controller', function() {
 
           it('should give back the error', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.error).to.deep.equal(new Error('FAIL'));
+            expect(ctx.imageLoaderController.error).to.be.an.instanceof(Error);
           });
         });
 
@@ -167,10 +167,8 @@ describe('image loader controller', function() {
             var ctx = this;
             expect(ctx.imageLoaderController.error).to.be.undefined;
           });
-
         });
       });
-
     });
   });
 });

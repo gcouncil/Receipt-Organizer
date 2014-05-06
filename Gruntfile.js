@@ -127,6 +127,9 @@ module.exports = function(grunt) {
   grunt.config('mochaTest', {
     server: {
       src: ['test/server/**/*_test.js']
+    },
+    domain: {
+      src: ['test/domain/**/*_test.js']
     }
   });
 
@@ -199,6 +202,10 @@ module.exports = function(grunt) {
     serverTest: {
       files: ['test/server/**/*.js', 'lib/server/**/*.js', 'lib/domain/**/*.js'],
       tasks: ['test:server']
+    },
+    domainTest: {
+      files: ['test/domain/**/*.js'],
+      tasks: ['test:domain']
     }
   });
 
@@ -208,7 +215,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test:client', ['browserify:test', 'karma:run']);
   grunt.registerTask('test:server', ['mochaTest:server']);
-  grunt.registerTask('test:domain', []);
+  grunt.registerTask('test:domain', ['mochaTest:domain']);
   grunt.registerTask('test:unit', ['test:client', 'test:server', 'test:domain']);
   grunt.registerTask('test:e2e', ['build', 'protractor']);
   grunt.registerTask('test', ['test:unit', 'test:e2e', 'coverage']);
