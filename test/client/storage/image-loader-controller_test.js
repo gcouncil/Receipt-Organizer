@@ -9,7 +9,7 @@ describe('image loader controller', function() {
     };
 
     ctx.options = {
-      receipt: 'receipt'
+      expense: 'expense'
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.storage', {
@@ -19,7 +19,7 @@ describe('image loader controller', function() {
 
     angular.mock.inject(function($rootScope, $q, $controller) {
       ctx.scope = $rootScope.$new();
-      ctx.scope.receipt = {
+      ctx.scope.expense = {
         image: ''
       };
       ctx.deferred = $q.defer();
@@ -48,12 +48,12 @@ describe('image loader controller', function() {
     });
   });
 
-  describe('receipt image change events', function() {
+  describe('expense image change events', function() {
     context('when invalid', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.imageStorage.fetch.returns(ctx.deferred.promise);
-        ctx.scope.receipt.image = null;
+        ctx.scope.expense.image = null;
         ctx.scope.$digest();
       });
 
@@ -83,7 +83,7 @@ describe('image loader controller', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.imageStorage.fetch.returns(ctx.deferred.promise);
-        ctx.scope.receipt.image = 'IMAGE';
+        ctx.scope.expense.image = 'IMAGE';
         ctx.scope.$digest();
       });
 

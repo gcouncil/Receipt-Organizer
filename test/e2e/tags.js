@@ -3,7 +3,7 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 
-var ReceiptPage = require('./pages/receipts-page');
+var ExpensePage = require('./pages/expenses-page');
 
 describe('CRUD', function() {
   beforeEach(function() {
@@ -14,7 +14,7 @@ describe('CRUD', function() {
       password: 'password'
     });
 
-    this.page = new ReceiptPage(this.factory, user);
+    this.page = new ExpensePage(this.factory, user);
 
     var tags = user.then(function(user) {
       return Q.all([
@@ -29,7 +29,7 @@ describe('CRUD', function() {
     ]).done(function(results) {
       var user = results[0];
       var tags = _.map(results[1], 'id');
-      self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
+      self.factory.expenses.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
     });
 
     this.page.get();
@@ -41,7 +41,7 @@ describe('CRUD', function() {
   });
 
   it('should display tags on the form', function() {
-    this.page.firstReceipt.$('.fa-edit').click();
+    this.page.firstExpense.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
@@ -71,7 +71,7 @@ describe('filtering', function() {
       password: 'password'
     });
 
-    this.page = new ReceiptPage(this.factory, user);
+    this.page = new ExpensePage(this.factory, user);
 
     var tag1 = user.then(function(user) {
       return Q.all([
@@ -94,8 +94,8 @@ describe('filtering', function() {
       var user = results[0];
       var tag1 = _.map(results[1], 'id');
       var tag2 = _.map(results[2], 'id');
-      self.factory.receipts.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, tags: tag1 }, { user: user.id });
-      self.factory.receipts.create({ vendor: 'Xcel Energy', total: 74.64, tags: tag2 }, { user: user.id });
+      self.factory.expenses.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, tags: tag1 }, { user: user.id });
+      self.factory.expenses.create({ vendor: 'Xcel Energy', total: 74.64, tags: tag2 }, { user: user.id });
 
     });
 
@@ -105,25 +105,25 @@ describe('filtering', function() {
   function testFilteringByTag(self) {
     expect(self.page.tagOrganizer.getText()).to.eventually.contain('utilities');
     expect(self.page.tagOrganizer.getText()).to.eventually.contain('rent');
-    expect(self.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
-    expect(self.page.secondReceipt.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.firstExpense.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.secondExpense.getText()).to.eventually.contain('Boulder Property Management');
 
     self.page.firstTagInOrganizer.$('a').click();
 
-    expect(self.page.firstReceipt.getText()).to.eventually.contain('Xcel Energy');
-    expect(self.page.receipts).to.eventually.have.length(1);
+    expect(self.page.firstExpense.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.expenses).to.eventually.have.length(1);
 
     self.page.secondTagInOrganizer.$('a').click();
 
-    expect(self.page.firstReceipt.getText()).to.eventually.contain('Boulder Property Management');
-    expect(self.page.receipts).to.eventually.have.length(1);
+    expect(self.page.firstExpense.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.expenses).to.eventually.have.length(1);
   }
 
-  it('should filter receipts by tag on the thumbnail view', function() {
+  it('should filter expenses by tag on the thumbnail view', function() {
     testFilteringByTag(this);
   });
 
-  it('should filter receipts by tag on the table view', function() {
+  it('should filter expenses by tag on the table view', function() {
     this.page.showTableButton.click();
     testFilteringByTag(this);
   });
@@ -139,7 +139,7 @@ describe('Multiple Tagging', function() {
       password: 'password'
     });
 
-    this.page = new ReceiptPage(this.factory, user);
+    this.page = new ExpensePage(this.factory, user);
 
     var tags = user.then(function(user) {
       return Q.all([
@@ -154,34 +154,34 @@ describe('Multiple Tagging', function() {
     ]).done(function(results) {
       var user = results[0];
       var tags = _.map(results[1], 'id');
-      self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
-      self.factory.receipts.create({ vendor: 'Slow Right', total: 911.11, tags: tags }, { user: user.id });
+      self.factory.expenses.create({ vendor: 'Quick Left', total: 199.99, tags: tags }, { user: user.id });
+      self.factory.expenses.create({ vendor: 'Slow Right', total: 911.11, tags: tags }, { user: user.id });
       self.factory.tags.create({ name: 'travel' }, { user: user.id });
     });
 
     this.page.get();
   });
 
-  it('should tag multiple receipts', function() {
-    this.page.firstReceipt.$('.fa-edit').click();
+  it('should tag multiple expenses', function() {
+    this.page.firstExpense.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.secondReceipt.$('.fa-edit').click();
+    this.page.secondExpense.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.firstReceipt.$('[type="checkbox"]').click();
-    this.page.secondReceipt.$('[type="checkbox"]').click();
-    this.page.receiptToolbarTag.click();
-    expect($('.receipt-dropdown').getText()).to.eventually.contain('travel');
-    $('.receipt-dropdown').element(by.linkText('travel')).click();
+    this.page.firstExpense.$('[type="checkbox"]').click();
+    this.page.secondExpense.$('[type="checkbox"]').click();
+    this.page.expenseToolbarTag.click();
+    expect($('.expense-dropdown').getText()).to.eventually.contain('travel');
+    $('.expense-dropdown').element(by.linkText('travel')).click();
 
-    this.page.firstReceipt.$('.fa-edit').click();
+    this.page.firstExpense.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.secondReceipt.$('.fa-edit').click();
+    this.page.secondExpense.$('.fa-edit').click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });

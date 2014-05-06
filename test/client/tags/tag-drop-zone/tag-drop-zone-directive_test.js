@@ -5,7 +5,7 @@ var $ = require('jquery');
 describe('tag drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
-    ctx.receiptStorage = {
+    ctx.expenseStorage = {
       update: ctx.sinon.stub().returnsArg(0),
       fetch: ctx.sinon.stub()
     };
@@ -16,7 +16,7 @@ describe('tag drop zone directive', function() {
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.tags', {
-      receiptStorage: ctx.receiptStorage,
+      expenseStorage: ctx.expenseStorage,
       notify: ctx.notify
     });
 
@@ -24,13 +24,13 @@ describe('tag drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div tag-drop-zone receipt="receipt"></div>')(ctx.scope);
-        ctx.scope.receipt = {
-          name: 'receipt1',
+        ctx.element = $compile('<div tag-drop-zone expense="expense"></div>')(ctx.scope);
+        ctx.scope.expense = {
+          name: 'expense1',
           id: 1
         };
         ctx.deferred = $q.defer();
-        ctx.receiptStorage.fetch.returns(ctx.deferred.promise);
+        ctx.expenseStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });
@@ -191,7 +191,7 @@ describe('tag drop zone directive', function() {
 
       ctx.event = {
         dataTransfer: {
-          types: ['application/json+receipt'],
+          types: ['application/json+expense'],
           dropEffect: 'copy',
           getData: ctx.sinon.stub().returns(ctx.data)
         },
@@ -210,7 +210,7 @@ describe('tag drop zone directive', function() {
     it('should display duplicate message if there is no result', function() {
       var ctx = this;
       ctx.deferred.reject();
-      ctx.receiptStorage.update.returns(null);
+      ctx.expenseStorage.update.returns(null);
       ctx.scope.$digest();
       expect(ctx.notify.error).to.have.been.called;
     });
@@ -225,7 +225,7 @@ describe('tag drop zone directive', function() {
         }
       });
 
-      ctx.receiptStorage.update.returns('RECEIPT');
+      ctx.expenseStorage.update.returns('EXPENSE');
       ctx.scope.$digest();
       expect(ctx.notify.success).to.have.been.called;
     });

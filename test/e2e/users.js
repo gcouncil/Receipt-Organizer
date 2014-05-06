@@ -21,7 +21,7 @@ function LoginPage() {
   this.flashDiv = $('.alert');
 }
 
-function ReceiptPage(factory, user) {
+function ExpensePage(factory, user) {
   this.user = user || factory.users.create({
     email: 'test@example.com',
     password: 'password'
@@ -54,7 +54,7 @@ describe('Sign up', function() {
 
     this.page.signupForm.element(by.buttonText('Sign Up!')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/receipts/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/expenses/thumbnails');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
 
@@ -86,7 +86,7 @@ describe('Log In', function() {
 
     this.page.loginForm.element(by.buttonText('Log In')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/receipts/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/expenses/thumbnails');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged in.');
   });
@@ -94,7 +94,7 @@ describe('Log In', function() {
 
 describe('Log Out', function() {
   beforeEach(function() {
-    this.page = new ReceiptPage(this.factory);
+    this.page = new ExpensePage(this.factory);
     this.page.get();
   });
 
