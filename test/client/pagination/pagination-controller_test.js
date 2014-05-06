@@ -60,6 +60,14 @@ describe('pagination controller', function() {
   });
 
   describe('next', function() {
+    it('should not update if there is not a next page', function() {
+      var ctx = this;
+      ctx.paginationController.setLimit(2);
+      ctx.paginationController.setItems(['a', 'b'], 2);
+      ctx.paginationController.next();
+      expect(ctx.paginationController.items).to.deep.equal(['a', 'b']);
+    });
+
     it('should update the items to the next page', function() {
       var ctx = this;
       ctx.paginationController.setLimit(2);
@@ -73,7 +81,15 @@ describe('pagination controller', function() {
   });
 
   describe('previous', function() {
-    it('should update the items to the previous page', function() {
+    it('should not update if there is not a previous page', function() {
+      var ctx = this;
+      ctx.paginationController.setLimit(2);
+      ctx.paginationController.setItems(['a', 'b'], 2);
+      ctx.paginationController.previous();
+      expect(ctx.paginationController.items).to.deep.equal(['a', 'b']);
+    });
+
+   it('should update the items to the previous page', function() {
       var ctx = this;
       ctx.paginationController.setLimit(2);
       ctx.paginationController.setItems(['a', 'b', 'c', 'd', 'e', 'f'], 6);
