@@ -34,6 +34,41 @@ describe('Toggling the View', function() {
   });
 });
 
+//TODO Unable to test e2e due to image creation testing touching AWS
+//TODO UNCLE
+
+//describe.only('Image Viewing', function() {
+  //beforeEach(function() {
+    //var self = this;
+
+    //this.page = new ReceiptPage(this.factory);
+
+    //this.page.user.then(function(user) {
+      //self.factory.receipts.create({
+        //vendor: 'Quick Left',
+        //total: 100.00
+      //}, { user: user.id });
+
+      //self.factory.images.create({}, { user: user.id}, function(image) {
+
+        //self.factory.receipts.create({
+          //vendor: 'Quick Right',
+          //total: 100.01,
+          //image: image.id
+        //}, { user: user.id });
+
+      //});
+    //});
+
+    //this.page.get('table');
+  //});
+
+  //it('should not show an image', function() {
+    //var imageSvg = $('svg');
+    //expect(imageSvg.find('image').getAttribute('href')).to.eventually.be.null;
+  //});
+//});
+
 
 describe('Pagination', function() {
   beforeEach(function() {

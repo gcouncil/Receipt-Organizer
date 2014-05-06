@@ -8,15 +8,18 @@ describe('receipt table directive', function() {
     var ctx = this;
     ctx.receiptStorage = ctx.sinon.stub();
 
-    angular.mock.module('ngMock', 'epsonreceipts.receiptTable', {
-      receiptStorage: ctx.receiptStorage
+    angular.mock.module('ngMock', 'epsonreceipts.receiptTable', 'epsonreceipts.storage', {
+      receiptStorage: ctx.receiptStorage,
+      imageStorage: ctx.imageStorage,
+      options: {}
     });
 
-    angular.mock.inject(function($rootScope, $compile) {
+    angular.mock.inject(function($rootScope, $compile, $controller) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<receipt-table></receipt-table>')(ctx.scope);
+        ctx.element = $compile('<receipt-table receipts="receipts"></receipt-table>')(ctx.scope);
+        ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
         ctx.scope.receipts = [{
           vendor: 'a',
           date: new Date(),
@@ -33,7 +36,7 @@ describe('receipt table directive', function() {
     ctx.event = {
       target: ctx.element.find('td')[0],
       which: 0,
-      preventDefault: ctx.sinon.stub()
+      preventDefault: ctx.sinon.stub(),
     };
 
   });
@@ -44,6 +47,26 @@ describe('receipt table directive', function() {
       ctx.scope.$destroy();
     }
   });
+
+//TODO Unable to test unit functionallity of image loader due to focus
+  describe('focus events', function() {
+    beforeEach(function() {
+      var ctx = this;
+      ctx.focus = function() {
+        var e =  $.Event('focus', ctx.event);
+        $(ctx.element).triggerHandler(e);
+      };
+    });
+
+    xit('set the scope receipt to closest row\'s receipt', function() {
+      var ctx = this;
+      expect(ctx.scope.receipt).to.be.undefined
+      ctx.focus();
+      ctx.scope.$digest();
+      expect(ctx.scope.receipt).to.equal(ctx.scope.receipts[0]);
+    });
+  });
+
 
   describe('keydown events', function() {
     beforeEach(function() {

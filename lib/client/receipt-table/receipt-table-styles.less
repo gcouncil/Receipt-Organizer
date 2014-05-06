@@ -1,5 +1,12 @@
 receipt-table {
-  width: 100%;
+  .flex-box();
+  .flex();
+  align-content: stretch;
+
+  .receipt-table-container {
+    .flex();
+    overflow: auto;
+  }
 
   table.receipt-table {
     min-width: 1600px;
@@ -22,6 +29,17 @@ receipt-table {
         padding: 3px;
       }
     }
+  }
+
+  .receipt-table-sidebar {
+    .flex-box();
+    .noflex(300px);
+    align-content: stretch;
+    overflow: hidden;
+  }
+
+  image-viewer {
+    .flex();
   }
 }
 
