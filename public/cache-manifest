@@ -2,8 +2,14 @@ CACHE MANIFEST
 # 2014-05-05v1
 
 CACHE:
+index.html
+styles.css
+index.js
+# Production:
+# index.min.js
 
 NETWORK:
+*
 
 FALLBACK:
 
