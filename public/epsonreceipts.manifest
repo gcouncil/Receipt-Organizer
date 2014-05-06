@@ -1,10 +1,11 @@
 CACHE MANIFEST
-# 2014-05-05v1
+# 2014-05-06v1
 
 CACHE:
-index.html
-styles.css
-index.js
+/index.html
+/assets/styles.css
+/assets/index.js
+/assets/fonts/fontawesome-webfont.woff?v=4.0.3
 # Production:
 # index.min.js
 
