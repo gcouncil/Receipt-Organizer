@@ -1,0 +1,11 @@
+<div class="alert alert-warning text-center animate-if" ng-if="review.unreviewedTally">
+  <h3>
+    <ng-pluralize count="review.unreviewedTally"
+    when="{'one': '1 Expense Needs Review',
+    'other': '{} Expenses Need Review'}">
+    </ng-pluralize>
+  </h3>
+  <button class="btn btn-warning" title="Review Now" ng-click="$emit('expenses:edit', review.unreviewedItems)">
+    Review Now!
+  </button>
+</div>

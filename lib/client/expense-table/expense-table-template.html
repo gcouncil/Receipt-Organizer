@@ -1,0 +1,102 @@
+<div class="container-fluid expense-table-container">
+  <table class="table table-condensed expense-table">
+    <thead>
+      <tr>
+        <th style="width: 45px;"></th>
+        <th>Vendor</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Payment Type</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Tax</th>
+        <th>Addn. Tax</th>
+        <th>Tip</th>
+        <th>Total</th>
+        <th>Tax Category</th>
+        <th>Business Purpose</th>
+        <th>Reimbursable</th>
+        <th>Billable</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        ng-form
+        form-confirm-leave
+        form-auto-save="update(expense)"
+        ng-repeat="expense in expenses track by expense.id"
+        ng-init="expense = expense.clone()"
+        ng-class="{ 'expense-table-row-reviewed': expense.reviewed, 'expense-table-row-unreviewed': !expense.reviewed }">
+        <td>
+          <is-selected selection="selection" selection-id="expense.id"></is-selected>
+          &nbsp;
+          <i class="fa fa-check-circle expense-thumbnail-reviewed-icon" ng-if="expense.reviewed" title="Reviewed"></i>
+          <i class="fa fa-flag expense-thumbnail-unreviewed-icon" ng-if="!expense.reviewed" title="Needs Review"></i>
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.vendor }}</span>
+          <input class="form-control" type="text" ng-model="expense.vendor">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.date | date: 'shortDate' }}</span>
+          <datepicker ng-model="expense.date"></datepicker>
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.category }}</span>
+          <input class="form-control" type="text" ng-model="expense.category">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.paymentType }}</span>
+          <input class="form-control" type="text" ng-model="expense.paymentType">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.city }}</span>
+          <input class="form-control" type="text" ng-model="expense.city">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.state }}</span>
+          <input class="form-control" type="text" ng-model="expense.state">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.tax | currency }}</span>
+          <input class="form-control" type="currency" ng-model="expense.tax">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.additionalTax | currency }}</span>
+          <input class="form-control" type="currency" ng-model="expense.additionalTax">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.tip | currency }}</span>
+          <input class="form-control" type="currency" ng-model="expense.tip">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.total | currency }}</span>
+          <input class="form-control" type="currency" ng-model="expense.total">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.taxCategory }}</span>
+          <input class="form-control" type="text" ng-model="expense.taxCategory">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.businessPurpose }}</span>
+          <input class="form-control" type="text" ng-model="expense.businessPurpose">
+        </td>
+        <td>
+          <input type="checkbox" ng-model="expense.reimbursable">
+        </td>
+        <td>
+          <input type="checkbox" ng-model="expense.billable">
+        </td>
+        <td table-data-field form-group>
+          <span class="placeholder">{{ expense.comments }}</span>
+          <textarea class="form-control" ng-model="expense.comments"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="expense-table-sidebar">
+  <image-viewer image-loader="imageLoader"></image-viewer>
+</div>
