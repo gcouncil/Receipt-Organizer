@@ -5,6 +5,7 @@ require('./images');
 require('./layout');
 require('./notify');
 require('./pagination');
+require('./review');
 require('./receipt-table');
 require('./receipt-thumbnail');
 require('./receipts-toolbar');
