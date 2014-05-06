@@ -1,3 +1,5 @@
+require('./test-helper');
+
 var domain = require('epson-receipts/domain');
 var expect = require('chai').expect;
 
