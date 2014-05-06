@@ -2,7 +2,6 @@ var angular = require('angular');
 var expect = require('chai').expect;
 
 describe('review controller', function() {
-
   beforeEach(function() {
     var self = this;
 
@@ -36,7 +35,6 @@ describe('review controller', function() {
       expect(this.reviewController.unreviewedTally).to.equal(2);
     });
   });
-
 });
 
 

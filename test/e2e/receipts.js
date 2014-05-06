@@ -1,9 +1,7 @@
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-
 var ReceiptPage = require('./pages/receipts-page');
-
 
 describe('Manual Entry', function() {
   beforeEach(function() {
@@ -161,14 +159,10 @@ describe('Batch delete', function() {
       });
     }, null, firstIdPromise);
   });
-
 });
 
-
 describe('Review Now button', function() {
-
   context('with unreviewed receipts', function() {
-
     beforeEach(function() {
       var self = this;
 
@@ -216,7 +210,6 @@ describe('Review Now button', function() {
   });
 
   context('without unreviewed receipts', function() {
-
     beforeEach(function() {
       this.page = new ReceiptPage(this.factory);
       this.page.get('table');
@@ -225,20 +218,16 @@ describe('Review Now button', function() {
     it('should not display the callout', function() {
       expect(this.page.receiptCallout.isPresent()).to.eventually.be.false;
     });
-
   });
-
 });
 
 describe('Scoping to the current user', function() {
   beforeEach(function() {
     var self = this;
-
     var user = this.factory.users.create({
       email: 'test@example.com',
       password: 'password'
     });
-
     var otherUser = this.factory.users.create({
       email: 'other@example.com',
       password: 'password'
@@ -249,7 +238,6 @@ describe('Scoping to the current user', function() {
     user.then(function(user) {
       self.factory.receipts.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
     });
-
     otherUser.then(function(otherUser) {
       self.factory.receipts.create({ vendor: 'Microsoft', total: 200.00 }, { user: otherUser.id });
     });

@@ -16,7 +16,6 @@ function ReceiptPage(factory, user) {
   this.receiptEditorSave = this.receiptEditor.element(by.buttonText('Done'));
   this.receiptEditorNext = this.receiptEditor.element(by.buttonText('Next'));
 
-
   var receiptRepeater = by.repeater('receipt in receipts track by receipt.id');
   this.receipts = element.all(receiptRepeater);
   this.firstReceipt = element(receiptRepeater.row(0));
