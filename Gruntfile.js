@@ -41,6 +41,18 @@ module.exports = function(grunt) {
         }
       }
     },
+    cacheManifest: {
+      files: [
+        { src: 'lib/client/cache.manifest.ejs', dest: 'build/cache.manifest' }
+      ],
+      options: {
+        process: function(content, path) {
+          // TODO: Calculate build hash
+          grunt.config('buildHash', Math.random());
+          return grunt.template.process(content);
+        }
+      }
+    },
     fonts: {
       files: [{
         expand: true,
@@ -206,6 +218,10 @@ module.exports = function(grunt) {
     domainTest: {
       files: ['test/domain/**/*.js'],
       tasks: ['test:domain']
+    },
+    cacheManifest: {
+      files: ['build/**', '!build/cache.manifest'],
+      tasks: ['copy:cacheManifest']
     }
   });
 
