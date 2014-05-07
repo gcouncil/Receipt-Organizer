@@ -1,8 +1,7 @@
 CACHE MANIFEST
-# 2014-05-06v1
+# 2014-05-07v13
 
 CACHE:
-/index.html
 /assets/styles.css
 /assets/index.js
 /assets/fonts/fontawesome-webfont.woff?v=4.0.3
@@ -18,4 +17,4 @@ FALLBACK:
 
 SETTINGS:
 
-prefer-online
+# prefer-online
