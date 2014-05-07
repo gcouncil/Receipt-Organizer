@@ -1,6 +1,6 @@
 <div class="toplevel-layout-header">
     <a class="navbar-brand">EPSON Receipts</a>
-
+    <p class="navbar-text" ng-show="offline" ng-controller="OfflineController"><i class="fa fa-warning"></i>Offline</p>
     <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">Request In Progress</p>
 
     <div class="nav navbar-form navbar-right">
