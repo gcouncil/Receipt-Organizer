@@ -15,14 +15,14 @@ function login(user) {
   };
 }
 
-describe('FoldersHandler', function() {
+describe.only('FoldersHandler', function() {
   describe('index', function() {
+
     context('with existing folders', function() {
       beforeEach(function(done) {
         var self = this;
 
-
-        var manager = {
+        this.manager = {
           query: this.sinon.stub().callsArgWith(1, null, [
             new domain.Folder({
               name: 'Food'
@@ -38,7 +38,7 @@ describe('FoldersHandler', function() {
 
         var app = express();
         app.use(login(user));
-        app.use(handler(manager).index);
+        app.use(handler(this.manager).index);
 
         request(app)
         .get('/')
@@ -48,6 +48,12 @@ describe('FoldersHandler', function() {
         });
       });
 
+      afterEach(function() {
+        delete this.manager;
+        delete this.user;
+        delete this.res;
+      });
+
       it('should return an HTTP 200', function() {
         expect(this.res.status).to.equal(200);
       });
@@ -55,7 +61,47 @@ describe('FoldersHandler', function() {
       it('should respond with an array of folders', function() {
         expect(this.res.body).to.have.deep.property('[0].name', 'Food');
       });
+    });
+  });
 
+  describe('index2', function() {
+    context('with errors', function() {
+      beforeEach(function(done) {
+        var self = this;
+
+        this.manager = {
+          query: this.sinon.stub().callsArgWith(1, new Error(401), [])
+        };
+
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
+        };
+
+        var app = express();
+        app.use(login(user));
+        app.use(require('body-parser')());
+        app.use(handler(this.manager).index);
+
+        request(app)
+        .get('/')
+        .expect(new Error(401))
+        .end(function(err, res) {
+          self.err = err;
+          done(err);
+        });
+      });
+
+      afterEach(function() {
+        delete this.manager;
+        delete this.user;
+        delete this.res;
+      });
+
+      it('should return a 401', function() {
+        expect(this.err).to.be.an.instanceof(Error);
+      });
     });
   });
 
@@ -66,9 +112,7 @@ describe('FoldersHandler', function() {
 
         this.manager = {
           create: this.sinon.stub().callsArgWith(2, null, [
-            new domain.Folder({
-              name: 'Medical'
-            })
+            new domain.Folder({ name: 'Medical' })
           ])
         };
 
@@ -117,8 +161,8 @@ describe('FoldersHandler', function() {
         this.manager = {
           update: this.sinon.stub().callsArgWith(3, null, [
             new domain.Folder({
-              name: 'Travel'
-            })
+            name: 'Travel'
+          })
           ])
         };
 
