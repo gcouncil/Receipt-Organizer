@@ -4,11 +4,22 @@ var expect = require('chai').expect;
 describe('toplevel layout directive', function() {
   beforeEach(function() {
     var ctx = this;
+
     ctx.currentUser = {
       email: ctx.sinon.stub(),
       get: ctx.sinon.stub()
     };
-    angular.mock.module('ngMock', 'epsonreceipts', { currentUser: ctx.currentUser } );
+
+    ctx.offline = {
+      isOffline: function() {
+        return false;
+      }
+    };
+
+    angular.mock.module('ngMock', 'epsonreceipts', {
+      currentUser: ctx.currentUser,
+      offline: ctx.offline
+    });
 
     angular.mock.inject(function($rootScope, $compile, $httpBackend) {
       ctx.scope = $rootScope.$new();

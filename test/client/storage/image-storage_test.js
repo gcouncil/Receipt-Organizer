@@ -10,9 +10,16 @@ describe('image storage service', function() {
       Image: ctx.sinon.stub()
     };
 
+    ctx.offline = {
+      isOffline: function() {
+        return false;
+      }
+    };
+
     angular.mock.module('epsonreceipts.storage', {
       uuid: ctx.uuid,
-      domain: ctx.domain
+      domain: ctx.domain,
+      offline: ctx.offline
     });
   });
 
