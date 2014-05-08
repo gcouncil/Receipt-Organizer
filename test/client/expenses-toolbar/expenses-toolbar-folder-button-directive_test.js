@@ -79,7 +79,7 @@ describe('expenses toolbar folder button directive', function() {
       ctx.scope.dropdown.$scope.folderExpenses({ name: 'folder1', id: 1 });
       expect(ctx.expenseStorage.update).to.have.been.calledWith({ name: 'expense1', folders: [1] });
       ctx.scope.$digest();
-      expect(ctx.notify.success).to.have.been.calledWith('Folderged 1 expense with folder1');
+      expect(ctx.notify.success).to.have.been.calledWith('Added 1 expense to folder1');
     });
 
     it('should not double folder expenses', function() {
@@ -96,7 +96,7 @@ describe('expenses toolbar folder button directive', function() {
       expect(ctx.expenseStorage.update).not.to.have.been.calledWith({ name: 'expense2', folders: [1, 1] });
       ctx.scope.$digest();
       expect(ctx.notify.success).not.to.have.been.called;
-      expect(ctx.notify.error).to.have.been.calledWith('Selected expense already folderged with folder1');
+      expect(ctx.notify.error).to.have.been.calledWith('Selected expense already in folder1');
     });
   });
 
