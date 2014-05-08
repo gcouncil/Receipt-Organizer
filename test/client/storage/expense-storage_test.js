@@ -167,8 +167,10 @@ describe('expense storage service', function() {
       var ctx = this;
       ctx.expense = { id: 2, name: 'EXPENSE2' };
       angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
+        $httpBackend.expectPUT('/api/expenses/2').respond(200, ctx.expense);
 
-        $httpBackend.expectPUT('/api/expenses/2').respond(201, ctx.expense);
+        ctx.domain.Expense.returns(ctx.expense);
+
         var promise = expenseStorage.persist(ctx.expense);
 
         $httpBackend.flush();
@@ -205,6 +207,8 @@ describe('expense storage service', function() {
       ctx.expense = { id: 2, name: 'EXPENSE2' };
       angular.mock.inject(function($rootScope, $httpBackend, expenseStorage) {
         $httpBackend.expectDELETE('/api/expenses/2').respond(200);
+
+        ctx.domain.Expense.returns(ctx.expense);
 
         var promise = expenseStorage.destroy(ctx.expense);
 
