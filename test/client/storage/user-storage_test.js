@@ -22,7 +22,7 @@ describe('user storage service', function() {
   });
 
   describe('create', function() {
-    it('should create the new user', function() {
+    it('should create the new user', function(done) {
       var ctx = this;
       ctx.user = { email: 'test@example.com', password: 'password' };
 
@@ -32,12 +32,11 @@ describe('user storage service', function() {
         var promise = userStorage.create(ctx.user);
         $httpBackend.flush();
 
-        expect(promise).to.eventually.deep.equal(ctx.user);
+        expect(promise).to.eventually.deep.equal(ctx.user).and.notify(done);
         expect(ctx.domain.User).to.have.been.called.withNew;
-
         $rootScope.$digest();
+
       });
     });
   });
-
 });
