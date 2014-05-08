@@ -1,10 +1,10 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('tag organizer directive', function() {
+describe('folder organizer directive', function() {
   beforeEach(function() {
     var ctx = this;
-    ctx.tagStorage = {
+    ctx.folderStorage = {
       query: ctx.sinon.stub(),
       update: ctx.sinon.stub(),
       destroy: ctx.sinon.stub()
@@ -15,15 +15,15 @@ describe('tag organizer directive', function() {
       go: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.tags', {
-      tagStorage: ctx.tagStorage,
+    angular.mock.module('ngMock', 'epsonreceipts.folders', {
+      folderStorage: ctx.folderStorage,
       $state: ctx.state
     });
 
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
       ctx.compile = function() {
-        ctx.element = $compile('<tag-organizer></tag-organizer>')(ctx.scope);
+        ctx.element = $compile('<folder-organizer></folder-organizer>')(ctx.scope);
         ctx.scope.$digest();
       };
     });
@@ -42,42 +42,42 @@ describe('tag organizer directive', function() {
     expect(ctx.scope.$state).to.equal(ctx.state);
   });
 
-  it('should query tagStorage', function() {
+  it('should query folderStorage', function() {
     var ctx = this;
-    ctx.tags = ['TAG1', 'TAG1'];
-    ctx.tagStorage.query.returns(ctx.tags);
+    ctx.folders = ['FOLDER1', 'FOLDER1'];
+    ctx.folderStorage.query.returns(ctx.folders);
     ctx.scope.$digest();
-    expect(ctx.tagStorage.query).to.have.been.called;
+    expect(ctx.folderStorage.query).to.have.been.called;
   });
 
-  it('should delete a tag', function() {
+  it('should delete a folder', function() {
     var ctx = this;
-    ctx.scope.delete('TAG');
+    ctx.scope.delete('FOLDER');
     ctx.scope.$digest();
-    expect(ctx.tagStorage.destroy).to.have.been.calledWith('TAG');
+    expect(ctx.folderStorage.destroy).to.have.been.calledWith('FOLDER');
   });
 
-  it('should filter tags', function() {
+  it('should filter folders', function() {
     var ctx = this;
     ctx.scope.filter('billable');
     ctx.scope.$digest();
-    expect(ctx.state.go).to.have.been.calledWith(ctx.state.$current, { tag: 'billable' });
+    expect(ctx.state.go).to.have.been.calledWith(ctx.state.$current, { folder: 'billable' });
   });
 
-  it('should update a tag and turn off the edit panel', function() {
+  it('should update a folder and turn off the edit panel', function() {
     var ctx = this;
-    ctx.tag = { name: 'TAG', showEdit: true };
-    ctx.scope.update(ctx.tag);
+    ctx.folder = { name: 'FOLDER', showEdit: true };
+    ctx.scope.update(ctx.folder);
     ctx.scope.$digest();
-    expect(ctx.tagStorage.update).to.have.been.calledWith(ctx.tag);
-    expect(ctx.tag.showEdit).to.be.false;
+    expect(ctx.folderStorage.update).to.have.been.calledWith(ctx.folder);
+    expect(ctx.folder.showEdit).to.be.false;
   });
 
   it('should hide the edit panel', function() {
     var ctx = this;
-    ctx.tag = { name: 'TAG', showEdit: true };
-    ctx.scope.noEdit(ctx.tag);
+    ctx.folder = { name: 'FOLDER', showEdit: true };
+    ctx.scope.noEdit(ctx.folder);
     ctx.scope.$digest();
-    expect(ctx.tag.showEdit).to.be.false;
+    expect(ctx.folder.showEdit).to.be.false;
   });
 });

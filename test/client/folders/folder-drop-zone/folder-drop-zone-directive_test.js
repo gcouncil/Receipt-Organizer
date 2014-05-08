@@ -2,7 +2,7 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe('tag drop zone directive', function() {
+describe('folder drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.expenseStorage = {
@@ -15,7 +15,7 @@ describe('tag drop zone directive', function() {
       error: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.tags', {
+    angular.mock.module('ngMock', 'epsonreceipts.folders', {
       expenseStorage: ctx.expenseStorage,
       notify: ctx.notify
     });
@@ -24,7 +24,7 @@ describe('tag drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div tag-drop-zone expense="expense"></div>')(ctx.scope);
+        ctx.element = $compile('<div folder-drop-zone expense="expense"></div>')(ctx.scope);
         ctx.scope.expense = {
           name: 'expense1',
           id: 1
@@ -52,7 +52,7 @@ describe('tag drop zone directive', function() {
         var ctx = this;
         ctx.event = {
           dataTransfer: {
-            types: ['application/json+tag']
+            types: ['application/json+folder']
           },
           preventDefault: ctx.sinon.stub()
         };
@@ -184,8 +184,8 @@ describe('tag drop zone directive', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.data = JSON.stringify({
-        name: 'tag1',
-        type: 'tag',
+        name: 'folder1',
+        type: 'folder',
         id: 2
       });
 
@@ -218,8 +218,8 @@ describe('tag drop zone directive', function() {
     it('should display success message if there is a result', function() {
       var ctx = this;
       ctx.deferred.resolve({
-        tags: [],
-        addTag: ctx.sinon.stub().returns(true),
+        folders: [],
+        addFolder: ctx.sinon.stub().returns(true),
         clone: function() {
           return angular.copy(this);
         }
@@ -230,11 +230,11 @@ describe('tag drop zone directive', function() {
       expect(ctx.notify.success).to.have.been.called;
     });
 
-    it('should display an error if the tag is a duplicate', function() {
+    it('should display an error if the folder is a duplicate', function() {
       var ctx = this;
       ctx.deferred.resolve({
-        tags: [],
-        addTag: ctx.sinon.stub().returns(false),
+        folders: [],
+        addFolder: ctx.sinon.stub().returns(false),
         clone: function() {
           return angular.copy(this);
         }

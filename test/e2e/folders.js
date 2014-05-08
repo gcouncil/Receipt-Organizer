@@ -42,7 +42,7 @@ describe('CRUD', function() {
 
   it('should display folders on the form', function() {
     this.page.firstExpense.$('.fa-edit').click();
-    expect(this.page.receiptEditorForm.element(by.folderName('option')).getText()).to.eventually.contain('materials');
+    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
   it('should be possible to create a new folder', function() {

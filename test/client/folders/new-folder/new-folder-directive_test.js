@@ -1,21 +1,21 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('new tag directive', function() {
+describe('new folder directive', function() {
   beforeEach(function() {
     var ctx = this;
-    ctx.tagStorage = {
+    ctx.folderStorage = {
       create: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.tags', {
-      tagStorage: ctx.tagStorage
+    angular.mock.module('ngMock', 'epsonreceipts.folders', {
+      folderStorage: ctx.folderStorage
     });
 
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
       ctx.compile = function() {
-        ctx.element = $compile('<new-tag></new-tag>')(ctx.scope);
+        ctx.element = $compile('<new-folder></new-folder>')(ctx.scope);
         ctx.scope.$digest();
       };
     });
@@ -32,18 +32,18 @@ describe('new tag directive', function() {
   describe('ok method', function() {
     beforeEach(function() {
       var ctx = this;
-      ctx.scope.newTag = 'NEWTAG';
+      ctx.scope.newFolder = 'NEWFOLDER';
       ctx.scope.ok();
     });
 
-    it('creates the tag', function() {
+    it('creates the folder', function() {
       var ctx = this;
-      expect(ctx.tagStorage.create).to.have.been.calledWith({ name: 'NEWTAG' });
+      expect(ctx.folderStorage.create).to.have.been.calledWith({ name: 'NEWFOLDER' });
     });
 
-    it('sets the newTag to null', function() {
+    it('sets the newFolder to null', function() {
       var ctx = this;
-      expect(ctx.scope.newTag).to.be.null;
+      expect(ctx.scope.newFolder).to.be.null;
     });
   });
 });

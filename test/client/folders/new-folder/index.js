@@ -1,1 +1,1 @@
-require('./new-tag-directive_test');
+require('./new-folder-directive_test');

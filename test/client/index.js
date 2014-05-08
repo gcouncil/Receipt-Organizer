@@ -11,7 +11,7 @@ require('./expense-thumbnail');
 require('./expenses-toolbar');
 require('./expenses');
 require('./scanning');
-require('./tags');
+require('./folders');
 require('./storage');
 require('./support');
 require('./users');
