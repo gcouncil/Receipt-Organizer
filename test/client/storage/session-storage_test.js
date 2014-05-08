@@ -11,9 +11,16 @@ describe('session storage service', function() {
 
     ctx.domain = ctx.sinon.stub();
 
+    ctx.offline = {
+      isOffline: function() {
+        return false;
+      }
+    };
+
     angular.mock.module('epsonreceipts.storage', {
       currentUser: ctx.currentUser,
-      domain: ctx.domain
+      domain: ctx.domain,
+      offline: ctx.offline
     });
   });
 

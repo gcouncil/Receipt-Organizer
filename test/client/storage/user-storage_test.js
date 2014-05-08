@@ -9,8 +9,15 @@ describe('user storage service', function() {
       User: ctx.sinon.stub().returnsArg(0)
     };
 
+    ctx.offline = {
+      isOffline: function() {
+        return false;
+      }
+    };
+
     angular.mock.module('epsonreceipts.storage', {
-      domain: ctx.domain
+      domain: ctx.domain,
+      offline: ctx.offline
     });
   });
 
