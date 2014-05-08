@@ -239,7 +239,7 @@ describe('expense drop zone directive', function() {
           var ctx = this;
           ctx.expenseStorage.update.returns();
           ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('Expense already folderged with folder1!');
+          expect(ctx.notify.error).to.have.been.calledWith('Expense already in the folder1 folder!');
         });
 
       });
@@ -267,7 +267,7 @@ describe('expense drop zone directive', function() {
           var ctx = this;
           ctx.expenseStorage.update.returns('EXPENSE');
           ctx.scope.$digest();
-          expect(ctx.notify.success).to.have.been.calledWith('Added the folder1 folder to your expense.');
+          expect(ctx.notify.success).to.have.been.calledWith('Added your expense to the folder1 folder.');
         });
       });
 
@@ -282,7 +282,7 @@ describe('expense drop zone directive', function() {
         it('should display errors', function() {
           var ctx = this;
           ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding folder1 folder to your expense.');
+          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your expense to the folder1 folder.');
         });
       });
     });
