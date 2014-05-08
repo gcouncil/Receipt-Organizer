@@ -13,7 +13,7 @@ describe('toplevel layout directive', function() {
     angular.mock.inject(function($rootScope, $compile, $httpBackend) {
       ctx.scope = $rootScope.$new();
       $httpBackend.when('GET', '/api/expenses').respond([]);
-      $httpBackend.when('GET', '/api/tags').respond([]);
+      $httpBackend.when('GET', '/api/folders').respond([]);
 
       ctx.compile = function() {
         ctx.element = $compile('<toplevel-layout></toplevel-layout>')(ctx.scope);

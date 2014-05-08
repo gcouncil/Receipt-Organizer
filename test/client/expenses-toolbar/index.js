@@ -1,1 +1,1 @@
-require('./expenses-toolbar-tag-button-directive_test');
+require('./expenses-toolbar-folder-button-directive_test');

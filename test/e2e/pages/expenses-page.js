@@ -28,13 +28,13 @@ function ExpensePage(factory, user) {
   this.showTableButton = $('expense-view-toggle [title="Table"]');
 
   this.expenseToolbarEdit = $('expenses-toolbar [title="Edit"]');
-  this.expenseToolbarTag = $('expenses-toolbar [title="Tag"]');
-  this.expenseToolbarTagDropdown = $('.expense-dropdown');
+  this.expenseToolbarFolder = $('expenses-toolbar [title="Folder"]');
+  this.expenseToolbarFolderDropdown = $('.expense-dropdown');
 
-  this.tagOrganizer = $('.tag-organizer');
-  this.firstTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(0));
-  this.secondTagInOrganizer = this.tagOrganizer.element(by.repeater('tag in tags').row(1));
-  this.newTag = $('.new-tag');
+  this.folderOrganizer = $('.folder-organizer');
+  this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
+  this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
+  this.newFolder = $('.new-folder');
 
   this.expenseCallout = $('.animate-if');
   this.expenseReviewNowButton = $('.animate-if [title="Review Now"]');

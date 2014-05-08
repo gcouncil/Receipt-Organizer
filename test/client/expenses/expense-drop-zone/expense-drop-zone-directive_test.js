@@ -25,8 +25,8 @@ describe('expense drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div expense-drop-zone tag="tag"></div>')(ctx.scope);
-        ctx.scope.tag = { name: 'tag1', id: 1 };
+        ctx.element = $compile('<div expense-drop-zone folder="folder"></div>')(ctx.scope);
+        ctx.scope.folder = { name: 'folder1', id: 1 };
         ctx.deferred = $q.defer();
         ctx.expenseStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
@@ -169,7 +169,7 @@ describe('expense drop zone directive', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.data = JSON.stringify({
-          type: 'tag',
+          type: 'folder',
           id: 3
         });
 
@@ -183,7 +183,7 @@ describe('expense drop zone directive', function() {
         };
 
         ctx.deferred.resolve({
-          tags: [],
+          folders: [],
           clone: function() {
             return angular.copy(this);
           }
@@ -193,7 +193,7 @@ describe('expense drop zone directive', function() {
         ctx.element.trigger(e);
       });
 
-      it('should not add the tag the expense', function() {
+      it('should not add the folder the expense', function() {
         var ctx = this;
         expect(ctx.expenseStorage.fetch).not.to.have.been.called;
       });
@@ -220,7 +220,7 @@ describe('expense drop zone directive', function() {
         beforeEach(function() {
           var ctx = this;
           ctx.deferred.resolve({
-            tags: [1],
+            folders: [1],
             clone: function() {
               return angular.copy(this);
             }
@@ -239,7 +239,7 @@ describe('expense drop zone directive', function() {
           var ctx = this;
           ctx.expenseStorage.update.returns();
           ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('Expense already tagged with tag1!');
+          expect(ctx.notify.error).to.have.been.calledWith('Expense already in the folder1 folder!');
         });
 
       });
@@ -248,7 +248,7 @@ describe('expense drop zone directive', function() {
         beforeEach(function() {
           var ctx = this;
           ctx.deferred.resolve({
-            tags: [],
+            folders: [],
             clone: function() {
               return angular.copy(this);
             }
@@ -267,7 +267,7 @@ describe('expense drop zone directive', function() {
           var ctx = this;
           ctx.expenseStorage.update.returns('EXPENSE');
           ctx.scope.$digest();
-          expect(ctx.notify.success).to.have.been.calledWith('Added the tag1 tag to your expense.');
+          expect(ctx.notify.success).to.have.been.calledWith('Added your expense to the folder1 folder.');
         });
       });
 
@@ -282,7 +282,7 @@ describe('expense drop zone directive', function() {
         it('should display errors', function() {
           var ctx = this;
           ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding tag1 tag to your expense.');
+          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your expense to the folder1 folder.');
         });
       });
     });
