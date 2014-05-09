@@ -9,6 +9,34 @@ var request = helpers.request;
 var sinon = helpers.sinon;
 
 describe('UsersHandler', function() {
+  describe('server errors', function() {
+    beforeEach(function() {
+      this.manager = {
+        create: this.sinon.stub().callsArgWith(1, new Error(), []),
+      };
+
+      this.app = express();
+      this.app.use(require('body-parser')());
+    });
+
+    afterEach(function() {
+      delete this.manager;
+      delete this.app;
+    });
+
+    describe('create', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).create);
+        request(this.app)
+        .post('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+  });
+
   describe('create', function() {
     context('a new user', function() {
       beforeEach(function(done) {

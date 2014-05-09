@@ -41,7 +41,6 @@ describe('ImagesHandler', function() {
     afterEach(function() {
       delete this.manager;
       delete this.user;
-      delete this.res;
       delete this.app;
     });
 
