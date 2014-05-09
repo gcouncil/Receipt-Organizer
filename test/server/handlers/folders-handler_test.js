@@ -16,8 +16,97 @@ function login(user) {
 }
 
 describe.only('FoldersHandler', function() {
-  describe('index', function() {
+  describe('server errors', function() {
+    beforeEach(function() {
+      this.manager = {
+        query: this.sinon.stub().callsArgWith(1, new Error(), []),
+        create: this.sinon.stub().callsArgWith(2, new Error(), []),
+        update: this.sinon.stub().callsArgWith(3, new Error(), []),
+        destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
+      };
 
+      var user = {
+        id: '1a2b3c',
+        email: 'abc@abc.com',
+        token: 'XYZ'
+      };
+
+      this.app = express();
+      this.app.use(login(user));
+      this.app.use(require('body-parser')());
+
+    });
+
+    afterEach(function() {
+      delete this.manager;
+      delete this.user;
+      delete this.res;
+      delete this.app;
+    });
+
+    describe('index', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).index);
+        request(this.app)
+        .get('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+    describe('create', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).create);
+        request(this.app)
+        .post('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+    describe('update', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).update);
+        request(this.app)
+        .put('/UUID')
+        .send({ name: 'Travel' })
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+    describe('destroy', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).destroy);
+        request(this.app)
+        .delete('/UUID')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+
+      it('should send a 401 if unauthorized', function() {
+        this.app.use(handler(this.manager).destroy);
+        this.manager.destroy.callsArgWith(2, 401);
+        request(this.app)
+        .delete('/UUID')
+        .end(function(err, res) {
+          expect(res.status).to.equal(401);
+        });
+
+      });
+    });
+
+  });
+
+  describe('index', function() {
     context('with existing folders', function() {
       beforeEach(function(done) {
         var self = this;
@@ -64,46 +153,6 @@ describe.only('FoldersHandler', function() {
     });
   });
 
-  describe('index2', function() {
-    context('with errors', function() {
-      beforeEach(function(done) {
-        var self = this;
-
-        this.manager = {
-          query: this.sinon.stub().callsArgWith(1, new Error(401), [])
-        };
-
-        var user = {
-          id: '1a2b3c',
-          email: 'abc@abc.com',
-          token: 'XYZ'
-        };
-
-        var app = express();
-        app.use(login(user));
-        app.use(require('body-parser')());
-        app.use(handler(this.manager).index);
-
-        request(app)
-        .get('/')
-        .expect(new Error(401))
-        .end(function(err, res) {
-          self.err = err;
-          done(err);
-        });
-      });
-
-      afterEach(function() {
-        delete this.manager;
-        delete this.user;
-        delete this.res;
-      });
-
-      it('should return a 401', function() {
-        expect(this.err).to.be.an.instanceof(Error);
-      });
-    });
-  });
 
   describe('create', function() {
     context('with a new folder', function() {
@@ -161,8 +210,8 @@ describe.only('FoldersHandler', function() {
         this.manager = {
           update: this.sinon.stub().callsArgWith(3, null, [
             new domain.Folder({
-            name: 'Travel'
-          })
+              name: 'Travel'
+            })
           ])
         };
 
@@ -240,5 +289,4 @@ describe.only('FoldersHandler', function() {
     });
   });
 });
-
 
