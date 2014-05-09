@@ -16,6 +16,86 @@ function login(user) {
 }
 
 describe('ImagesHandler', function() {
+
+  describe('server errors', function() {
+    beforeEach(function() {
+      this.manager = {
+        show: this.sinon.stub().callsArgWith(2, new Error(), []),
+        showMetadata: this.sinon.stub().callsArgWith(2, new Error(), []),
+        create: this.sinon.stub().callsArgWith(4, new Error(), []),
+        destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
+      };
+
+      var user = {
+        id: '1a2b3c',
+        email: 'abc@abc.com',
+        token: 'XYZ'
+      };
+
+      this.app = express();
+      this.app.use(login(user));
+      this.app.use(require('body-parser')());
+
+    });
+
+    afterEach(function() {
+      delete this.manager;
+      delete this.user;
+      delete this.res;
+      delete this.app;
+    });
+
+    describe('show', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).show);
+        request(this.app)
+        .get('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+    describe('showMetadata', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).showMetadata);
+        request(this.app)
+        .get('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+
+    describe('create', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).create);
+        request(this.app)
+        .post('/')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+
+    describe('destroy', function() {
+      it('should return a 500', function(done) {
+        this.app.use(handler(this.manager).destroy);
+        request(this.app)
+        .delete('/UUID')
+        .expect(500)
+        .end(function(err, res) {
+          done(err);
+        });
+      });
+    });
+  });
+
+
   describe('show', function() {
     context('with existing images', function() {
       beforeEach(function(done) {

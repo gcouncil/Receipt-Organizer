@@ -15,7 +15,7 @@ function login(user) {
   };
 }
 
-describe.only('FoldersHandler', function() {
+describe('FoldersHandler', function() {
   describe('server errors', function() {
     beforeEach(function() {
       this.manager = {
@@ -34,7 +34,6 @@ describe.only('FoldersHandler', function() {
       this.app = express();
       this.app.use(login(user));
       this.app.use(require('body-parser')());
-
     });
 
     afterEach(function() {
