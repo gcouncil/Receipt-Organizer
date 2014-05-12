@@ -15,14 +15,16 @@ function login(user) {
   };
 }
 
-describe('RecieptsHandler', function() {
+describe('ExpensesHandler', function() {
   describe('server errors', function() {
     beforeEach(function() {
+      var ctx = this;
+
       this.manager = {
-        query: this.sinon.stub().callsArgWith(1, new Error(), []),
-        create: this.sinon.stub().callsArgWith(2, new Error(), []),
-        update: this.sinon.stub().callsArgWith(3, new Error(), []),
-        destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
+        query: this.sinon.stub().callsArgWith(1, new Error()),
+        create: this.sinon.stub().callsArgWith(2, new Error()),
+        update: this.sinon.stub().callsArgWith(3, new Error()),
+        destroy: this.sinon.stub().callsArgWith(2, new Error())
       };
 
       var user = {
@@ -34,11 +36,17 @@ describe('RecieptsHandler', function() {
       this.app = express();
       this.app.use(login(user));
       this.app.use(require('body-parser')());
+
+      this.errorHandler = function(err, req, res, next) {
+        ctx.error = err;
+        res.send(500);
+      };
     });
 
     describe('index', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).index);
+        this.app.use(this.errorHandler);
         request(this.app)
         .get('/')
         .expect(500)
@@ -51,6 +59,7 @@ describe('RecieptsHandler', function() {
     describe('create', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).create);
+        this.app.use(this.errorHandler);
         request(this.app)
         .post('/')
         .expect(500)
@@ -63,6 +72,7 @@ describe('RecieptsHandler', function() {
     describe('update', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).update);
+        this.app.use(this.errorHandler);
         request(this.app)
         .put('/UUID')
         .send({ name: 'Travel' })
@@ -76,6 +86,7 @@ describe('RecieptsHandler', function() {
     describe('destroy', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).destroy);
+        this.app.use(this.errorHandler);
         request(this.app)
         .delete('/UUID')
         .expect(500)
@@ -92,12 +103,10 @@ describe('RecieptsHandler', function() {
       beforeEach(function(done) {
         var self = this;
 
-
         var manager = {
           query: this.sinon.stub().callsArgWith(1, null, [
             new domain.Expense({
-              vendor: 'Quick Left',
-              total: 100.42
+              fields: [{ name: 'vendor', value: 'test' }]
             })
           ])
         };
@@ -125,8 +134,8 @@ describe('RecieptsHandler', function() {
       });
 
       it('should respond with an array of expenses', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 100.42);
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
     });
@@ -140,8 +149,7 @@ describe('RecieptsHandler', function() {
         this.manager = {
           create: this.sinon.stub().callsArgWith(2, null, [
             new domain.Expense({
-              vendor: 'Quick Left',
-              total: 12.00
+              fields: [{ name: 'vendor', value: 'test' }]
             })
           ])
         };
@@ -171,8 +179,8 @@ describe('RecieptsHandler', function() {
       });
 
       it('should respond with the newly created expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 12.00);
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
       it('should pass the new attributes to the manager', function() {
@@ -193,9 +201,8 @@ describe('RecieptsHandler', function() {
         this.manager = {
           update: this.sinon.stub().callsArgWith(3, null, [
             new domain.Expense({
+              fields: [{ name: 'vendor', value: 'test' }],
               id: 1,
-              vendor: 'Quick Left',
-              total: 1.00
             })
           ])
         };
@@ -225,8 +232,8 @@ describe('RecieptsHandler', function() {
       });
 
       it('should respond with the updated expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 1.00);
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
       it('should pass the new attributes to the manager', function() {
