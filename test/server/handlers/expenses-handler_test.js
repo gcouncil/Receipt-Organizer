@@ -36,12 +36,6 @@ describe('RecieptsHandler', function() {
       this.app.use(require('body-parser')());
     });
 
-    afterEach(function() {
-      delete this.manager;
-      delete this.user;
-      delete this.app;
-    });
-
     describe('index', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).index);

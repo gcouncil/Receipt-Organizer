@@ -38,12 +38,6 @@ describe('ImagesHandler', function() {
 
     });
 
-    afterEach(function() {
-      delete this.manager;
-      delete this.user;
-      delete this.app;
-    });
-
     describe('show', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).show);
