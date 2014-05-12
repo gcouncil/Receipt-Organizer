@@ -1,6 +1,6 @@
 var express = require('express');
 
-var handler = require('epson-receipts/server/handlers/expenses-handler');
+var handler = require('epson-receipts/server/handlers/images-handler');
 var domain = require('epson-receipts/domain');
 
 var helpers = require('../test-helper');
@@ -15,13 +15,14 @@ function login(user) {
   };
 }
 
-describe('RecieptsHandler', function() {
+describe('ImagesHandler', function() {
+
   describe('server errors', function() {
     beforeEach(function() {
       this.manager = {
-        query: this.sinon.stub().callsArgWith(1, new Error(), []),
-        create: this.sinon.stub().callsArgWith(2, new Error(), []),
-        update: this.sinon.stub().callsArgWith(3, new Error(), []),
+        show: this.sinon.stub().callsArgWith(2, new Error(), []),
+        showMetadata: this.sinon.stub().callsArgWith(2, new Error(), []),
+        create: this.sinon.stub().callsArgWith(4, new Error(), []),
         destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
       };
 
@@ -34,11 +35,12 @@ describe('RecieptsHandler', function() {
       this.app = express();
       this.app.use(login(user));
       this.app.use(require('body-parser')());
+
     });
 
-    describe('index', function() {
+    describe('show', function() {
       it('should return a 500', function(done) {
-        this.app.use(handler(this.manager).index);
+        this.app.use(handler(this.manager).show);
         request(this.app)
         .get('/')
         .expect(500)
@@ -48,11 +50,11 @@ describe('RecieptsHandler', function() {
       });
     });
 
-    describe('create', function() {
+    describe('showMetadata', function() {
       it('should return a 500', function(done) {
-        this.app.use(handler(this.manager).create);
+        this.app.use(handler(this.manager).showMetadata);
         request(this.app)
-        .post('/')
+        .get('/')
         .expect(500)
         .end(function(err, res) {
           done(err);
@@ -60,12 +62,12 @@ describe('RecieptsHandler', function() {
       });
     });
 
-    describe('update', function() {
+
+    describe('create', function() {
       it('should return a 500', function(done) {
-        this.app.use(handler(this.manager).update);
+        this.app.use(handler(this.manager).create);
         request(this.app)
-        .put('/UUID')
-        .send({ name: 'Travel' })
+        .post('/')
         .expect(500)
         .end(function(err, res) {
           done(err);
@@ -87,19 +89,13 @@ describe('RecieptsHandler', function() {
   });
 
 
-  describe('index', function() {
-    context('with existing expenses', function() {
+  describe('show', function() {
+    context('with existing images', function() {
       beforeEach(function(done) {
         var self = this;
 
-
         var manager = {
-          query: this.sinon.stub().callsArgWith(1, null, [
-            new domain.Expense({
-              vendor: 'Quick Left',
-              total: 100.42
-            })
-          ])
+          imageUrl: this.sinon.stub().callsArgWith(2, null, 'IMAGE_URL')
         };
 
         var user = {
@@ -110,10 +106,11 @@ describe('RecieptsHandler', function() {
 
         var app = express();
         app.use(login(user));
-        app.use(handler(manager).index);
+        app.use(require('body-parser')());
+        app.use('/:image', handler(manager).show);
 
         request(app)
-        .get('/')
+        .get('/abc')
         .end(function(err, res) {
           self.res = res;
           done(err);
@@ -124,25 +121,61 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
-      it('should respond with an array of expenses', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 100.42);
+      it('should respond with an array of folders', function() {
+        expect(this.res.body).to.have.deep.property('url', 'IMAGE_URL');
       });
 
     });
   });
 
+  describe('showMetadata', function() {
+    context('with existing images', function() {
+      beforeEach(function(done) {
+        var self = this;
+
+        var manager = {
+          fetch: this.sinon.stub().callsArgWith(2, null, { data: 'METADATA'})
+        };
+
+        var user = {
+          id: '1a2b3c',
+          email: 'abc@abc.com',
+          token: 'XYZ'
+        };
+
+        var app = express();
+        app.use(login(user));
+        app.use(require('body-parser')());
+        app.use('/:image', handler(manager).showMetadata);
+
+        request(app)
+        .get('/abc')
+        .end(function(err, res) {
+          self.res = res;
+          done(err);
+        });
+      });
+
+      it('should return an HTTP 200', function() {
+        expect(this.res.status).to.equal(200);
+      });
+
+      it('should respond with an array of folders', function() {
+        expect(this.res.body).to.have.deep.property('data', 'METADATA');
+      });
+
+    });
+
+  });
+
   describe('create', function() {
-    context('with a new expense', function() {
+    context('with a new image', function() {
       beforeEach(function(done) {
         var self = this;
 
         this.manager = {
-          create: this.sinon.stub().callsArgWith(2, null, [
-            new domain.Expense({
-              vendor: 'Quick Left',
-              total: 12.00
-            })
+          create: this.sinon.stub().callsArgWith(3, null, [
+            new domain.Image({ id: '123' })
           ])
         };
 
@@ -159,7 +192,7 @@ describe('RecieptsHandler', function() {
 
         request(app)
         .post('/')
-        .send({vendor: 'Quick Left', total: 12.00})
+        .send({ id: '123' })
         .end(function(err, res) {
           self.res = res;
           done(err);
@@ -170,76 +203,19 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(201);
       });
 
-      it('should respond with the newly created expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 12.00);
+      it('should respond with the newly created folder', function() {
+        expect(this.res.body).to.have.deep.property('[0].id', '123');
       });
 
       it('should pass the new attributes to the manager', function() {
-        expect(this.manager.create).to.have.been.calledWith({
-          vendor: 'Quick Left',
-          total: 12.00
-        }, { 'user': '1a2b3c' }, sinon.match.func);
+        expect(this.manager.create).to.have.been.called;
       });
 
-    });
-  });
-
-  describe('update', function() {
-    context('with existing expenses', function() {
-      beforeEach(function(done) {
-        var self = this;
-
-        this.manager = {
-          update: this.sinon.stub().callsArgWith(3, null, [
-            new domain.Expense({
-              id: 1,
-              vendor: 'Quick Left',
-              total: 1.00
-            })
-          ])
-        };
-
-        var user = {
-          id: '1a2b3c',
-          email: 'abc@abc.com',
-          token: 'XYZ'
-        };
-
-        var app = express();
-        app.use(login(user));
-        app.use(require('body-parser')());
-        app.use('/:expense', handler(this.manager).update);
-
-        request(app)
-        .put('/UUID')
-        .send({vendor: 'Quick Left', total: 1.00})
-        .end(function(err, res) {
-          self.res = res;
-          done(err);
-        });
-      });
-
-      it('should return an HTTP 200', function() {
-        expect(this.res.status).to.equal(200);
-      });
-
-      it('should respond with the updated expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 1.00);
-      });
-
-      it('should pass the new attributes to the manager', function() {
-        expect(this.manager.update).to.have.been.calledWith('UUID', {
-          vendor: 'Quick Left',
-          total: 1.00
-        }, { 'user': '1a2b3c' }, sinon.match.func);
-      });
     });
   });
 
   describe('destroy', function() {
-    context('with existing expenses', function() {
+    context('with an existing image', function() {
       beforeEach(function(done) {
         var self = this;
 
@@ -256,7 +232,7 @@ describe('RecieptsHandler', function() {
         var app = express();
         app.use(login(user));
         app.use(require('body-parser')());
-        app.use('/:expense', handler(this.manager).destroy);
+        app.use('/:image', handler(this.manager).destroy);
 
         request(app)
         .del('/UUID')
@@ -277,3 +253,5 @@ describe('RecieptsHandler', function() {
     });
   });
 });
+
+
