@@ -11,17 +11,24 @@ var sinon = helpers.sinon;
 describe('UsersHandler', function() {
   describe('server errors', function() {
     beforeEach(function() {
+      var ctx = this;
       this.manager = {
         create: this.sinon.stub().callsArgWith(1, new Error(), []),
       };
 
       this.app = express();
       this.app.use(require('body-parser')());
+
+      this.errorHandler = function(err, req, res, next) {
+        ctx.error = err;
+        res.send(500);
+      };
     });
 
     describe('create', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).create);
+        this.app.use(this.errorHandler);
         request(this.app)
         .post('/')
         .expect(500)
