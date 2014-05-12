@@ -129,12 +129,6 @@ describe('FoldersHandler', function() {
         });
       });
 
-      afterEach(function() {
-        delete this.manager;
-        delete this.user;
-        delete this.res;
-      });
-
       it('should return an HTTP 200', function() {
         expect(this.res.status).to.equal(200);
       });
