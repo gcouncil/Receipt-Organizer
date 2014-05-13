@@ -1,7 +1,7 @@
 <div class="container-fluid folder-organizer">
   <a ng-href="{{ $state.href($state.current, { folder: null }) }}">All Receipts</a>
   <ul>
-    <li>
+    <li class="review-folder">
       <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">
         <review-folder-tab review="expenses.review"></review-folder-tab>
       </a>

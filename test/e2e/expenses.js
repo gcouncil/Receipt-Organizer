@@ -163,7 +163,7 @@ describe('Batch delete', function() {
   });
 });
 
-describe('Review Now button', function() {
+describe('Review Folder', function() {
   context('with unreviewed expenses', function() {
     beforeEach(function() {
       var self = this;
@@ -179,46 +179,45 @@ describe('Review Now button', function() {
         self.factory.items.create({
           reviewed: true
         }, { user: user.id });
+        self.factory.folders.create({
+          name: 'EmptyFolder'
+        }, { user: user.id });
+
       });
       this.page.get('table');
-    });
-
-    it('should display the callout when unreviewed expenses are present', function() {
-      expect(this.page.expenseCallout.isPresent()).to.eventually.be.true;
     });
 
     it('should inform the user how many expenses require review', function() {
       expect(this.page.expenses.count()).to.eventually.equal(5);
-      expect(this.page.expenseCallout.getText()).to.eventually.contain('4 Expenses');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
     });
 
-    it('should allow the user to edit on Review button click', function() {
-      this.page.expenseReviewNowButton.click();
-      expect(this.page.receiptEditorForm.isPresent()).to.eventually.be.true;
-      expect(this.page.receiptEditor.getText()).to.eventually.contain('1 of 4');
-    });
-
-    it('should allow user to review all unreviewed expenses', function() {
-      var ctx = this;
-      this.page.expenseReviewNowButton.click();
-      _.times(3, function(i) {
-        ctx.page.receiptEditorNext.click();
-      });
-      this.page.receiptEditorSave.click();
-
+    it('should toggle the viewable receipts', function() {
       expect(this.page.expenses.count()).to.eventually.equal(5);
-      expect(this.page.expenseCallout.isPresent()).to.eventually.be.false;
-    });
-  });
-
-  context('without unreviewed expenses', function() {
-    beforeEach(function() {
-      this.page = new ExpensePage(this.factory);
-      this.page.get('table');
+      this.page.reviewFolder.click();
+      expect(this.page.expenses.count()).to.eventually.equal(4);
     });
 
-    it('should not display the callout', function() {
-      expect(this.page.expenseCallout.isPresent()).to.eventually.be.false;
+    it('should display correct total when navigating through folders', function() {
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      this.page.firstFolderInOrganizer.click();
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+    });
+
+    it('should update unreviewed total on delete', function() {
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      this.page.secondExpenseSelect.click();
+      this.page.expenseToolbarDelete.click();
+      this.page.expenseDeleteConfirmButton.click();
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (3)');
+    });
+
+    it('should update unreviewed total on setting reviewed receipt to unreviewed', function() {
+      this.page.firstExpenseSelect.click();
+      this.page.expenseToolbarEdit.click();
+      this.page.receiptEditorNeedsReview.click();
+      this.page.receiptEditorSave.click();
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (5)');
     });
   });
 });
