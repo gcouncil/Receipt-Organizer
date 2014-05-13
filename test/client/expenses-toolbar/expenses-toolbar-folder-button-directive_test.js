@@ -9,7 +9,7 @@ describe('expenses toolbar folder button directive', function() {
       query: ctx.sinon.stub()
     };
 
-    ctx.expenseStorage = {
+    ctx.itemStorage = {
       update: ctx.sinon.stub()
     };
 
@@ -35,7 +35,7 @@ describe('expenses toolbar folder button directive', function() {
 
     angular.mock.module('ngMock', 'epsonreceipts.expensesToolbar', {
       folderStorage: ctx.folderStorage,
-      expenseStorage: ctx.expenseStorage,
+      itemStorage: ctx.itemStorage,
       notify: ctx.notify,
       $dropdown: ctx.dropdown
     });
@@ -77,7 +77,7 @@ describe('expenses toolbar folder button directive', function() {
     it('should folder the expenses with the selected folder', function() {
       var ctx = this;
       ctx.scope.dropdown.$scope.folderExpenses({ name: 'folder1', id: 1 });
-      expect(ctx.expenseStorage.update).to.have.been.calledWith({ name: 'expense1', folders: [1] });
+      expect(ctx.itemStorage.update).to.have.been.calledWith({ name: 'expense1', folders: [1] });
       ctx.scope.$digest();
       expect(ctx.notify.success).to.have.been.calledWith('Added 1 expense to folder1');
     });
@@ -92,8 +92,8 @@ describe('expenses toolbar folder button directive', function() {
       ctx.compile();
 
       ctx.scope.dropdown.$scope.folderExpenses({ name: 'folder1', id: 1 });
-      expect(ctx.expenseStorage.update).not.to.have.been.calledWith({ name: 'expense2', folders: [1] });
-      expect(ctx.expenseStorage.update).not.to.have.been.calledWith({ name: 'expense2', folders: [1, 1] });
+      expect(ctx.itemStorage.update).not.to.have.been.calledWith({ name: 'expense2', folders: [1] });
+      expect(ctx.itemStorage.update).not.to.have.been.calledWith({ name: 'expense2', folders: [1, 1] });
       ctx.scope.$digest();
       expect(ctx.notify.success).not.to.have.been.called;
       expect(ctx.notify.error).to.have.been.calledWith('Selected expense already in folder1');

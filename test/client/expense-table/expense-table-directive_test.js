@@ -6,10 +6,10 @@ describe('expense table directive', function() {
 
   beforeEach(function() {
     var ctx = this;
-    ctx.expenseStorage = ctx.sinon.stub();
+    ctx.itemStorage = ctx.sinon.stub();
 
     angular.mock.module('ngMock', 'epsonreceipts.expenseTable', 'epsonreceipts.storage', {
-      expenseStorage: ctx.expenseStorage,
+      itemStorage: ctx.itemStorage,
       imageStorage: ctx.imageStorage,
       options: {}
     });

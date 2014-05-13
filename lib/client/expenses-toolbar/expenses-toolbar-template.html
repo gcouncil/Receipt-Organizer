@@ -1,7 +1,7 @@
 <div class="nav navbar-nav navbar-left navbar-form">
   <bulk-selection selection="expenses.selection"></bulk-selection>
   <button class="btn btn-default" title="Mark as Reviewed"
-    ng-click="$emit('expenses:reviewed', expenses.selection.selectedItems)"
+    ng-click="$emit('items:reviewed', expenses.selection.selectedItems)"
     ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-check"></i>
   </button>
@@ -9,12 +9,12 @@
     selection="expenses.selection">
   </expenses-toolbar-folder-button>
    <button class="btn btn-default" title="Edit"
-    ng-click="$emit('expenses:edit', expenses.selection.selectedItems)"
+    ng-click="$emit('items:edit', expenses.selection.selectedItems)"
     ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-edit"></i>
   </button>
   <button class="btn btn-default" title="Delete"
-    ng-click="$emit('expenses:destroy', expenses.selection.selectedItems)"
+    ng-click="$emit('items:destroy', expenses.selection.selectedItems)"
     ng-disabled="!expenses.selection.hasSelection()">
     <i class="fa fa-trash-o"></i>
   </button>

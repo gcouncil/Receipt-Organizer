@@ -29,7 +29,7 @@ describe('CRUD', function() {
     ]).done(function(results) {
       var user = results[0];
       var folders = _.map(results[1], 'id');
-      self.factory.expenses.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
     });
 
     this.page.get();
@@ -94,8 +94,8 @@ describe('filtering', function() {
       var user = results[0];
       var folder1 = _.map(results[1], 'id');
       var folder2 = _.map(results[2], 'id');
-      self.factory.expenses.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, folders: folder1 }, { user: user.id });
-      self.factory.expenses.create({ vendor: 'Xcel Energy', total: 74.64, folders: folder2 }, { user: user.id });
+      self.factory.items.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, folders: folder1 }, { user: user.id });
+      self.factory.items.create({ vendor: 'Xcel Energy', total: 74.64, folders: folder2 }, { user: user.id });
 
     });
 
@@ -154,8 +154,8 @@ describe('Multiple Foldering', function() {
     ]).done(function(results) {
       var user = results[0];
       var folders = _.map(results[1], 'id');
-      self.factory.expenses.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
-      self.factory.expenses.create({ vendor: 'Slow Right', total: 911.11, folders: folders }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
+      self.factory.items.create({ vendor: 'Slow Right', total: 911.11, folders: folders }, { user: user.id });
       self.factory.folders.create({ name: 'travel' }, { user: user.id });
     });
 

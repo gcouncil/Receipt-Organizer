@@ -6,7 +6,7 @@ describe('expense drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
 
-    ctx.expenseStorage = {
+    ctx.itemStorage = {
       fetch: ctx.sinon.stub(),
       update: ctx.sinon.stub()
     };
@@ -17,7 +17,7 @@ describe('expense drop zone directive', function() {
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.expenses.drop-zone', {
-      expenseStorage: ctx.expenseStorage,
+      itemStorage: ctx.itemStorage,
       notify: ctx.notify
     });
 
@@ -28,7 +28,7 @@ describe('expense drop zone directive', function() {
         ctx.element = $compile('<div expense-drop-zone folder="folder"></div>')(ctx.scope);
         ctx.scope.folder = { name: 'folder1', id: 1 };
         ctx.deferred = $q.defer();
-        ctx.expenseStorage.fetch.returns(ctx.deferred.promise);
+        ctx.itemStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });
@@ -195,7 +195,7 @@ describe('expense drop zone directive', function() {
 
       it('should not add the folder the expense', function() {
         var ctx = this;
-        expect(ctx.expenseStorage.fetch).not.to.have.been.called;
+        expect(ctx.itemStorage.fetch).not.to.have.been.called;
       });
     });
 
@@ -232,12 +232,12 @@ describe('expense drop zone directive', function() {
         it('should not update the expense if there is a duplicate', function() {
           var ctx = this;
           ctx.scope.$digest();
-          expect(ctx.expenseStorage.update).not.to.have.been.called;
+          expect(ctx.itemStorage.update).not.to.have.been.called;
         });
 
         it('should display duplicate message if there is no result', function() {
           var ctx = this;
-          ctx.expenseStorage.update.returns();
+          ctx.itemStorage.update.returns();
           ctx.scope.$digest();
           expect(ctx.notify.error).to.have.been.calledWith('Expense already in the folder1 folder!');
         });
@@ -265,7 +265,7 @@ describe('expense drop zone directive', function() {
 
         it('should display success message if there is a result', function() {
           var ctx = this;
-          ctx.expenseStorage.update.returns('EXPENSE');
+          ctx.itemStorage.update.returns('EXPENSE');
           ctx.scope.$digest();
           expect(ctx.notify.success).to.have.been.calledWith('Added your expense to the folder1 folder.');
         });
