@@ -1,6 +1,6 @@
 var express = require('express');
 
-var handler = require('epson-receipts/server/handlers/expenses-handler');
+var handler = require('epson-receipts/server/handlers/items-handler');
 var domain = require('epson-receipts/domain');
 
 var helpers = require('../test-helper');
@@ -15,14 +15,16 @@ function login(user) {
   };
 }
 
-describe('RecieptsHandler', function() {
+describe('ItemsHandler', function() {
   describe('server errors', function() {
     beforeEach(function() {
+      var ctx = this;
+
       this.manager = {
-        query: this.sinon.stub().callsArgWith(1, new Error(), []),
-        create: this.sinon.stub().callsArgWith(2, new Error(), []),
-        update: this.sinon.stub().callsArgWith(3, new Error(), []),
-        destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
+        query: this.sinon.stub().callsArgWith(1, new Error()),
+        create: this.sinon.stub().callsArgWith(2, new Error()),
+        update: this.sinon.stub().callsArgWith(3, new Error()),
+        destroy: this.sinon.stub().callsArgWith(2, new Error())
       };
 
       var user = {
@@ -34,11 +36,17 @@ describe('RecieptsHandler', function() {
       this.app = express();
       this.app.use(login(user));
       this.app.use(require('body-parser')());
+
+      this.errorHandler = function(err, req, res, next) {
+        ctx.error = err;
+        res.send(500);
+      };
     });
 
     describe('index', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).index);
+        this.app.use(this.errorHandler);
         request(this.app)
         .get('/')
         .expect(500)
@@ -51,6 +59,7 @@ describe('RecieptsHandler', function() {
     describe('create', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).create);
+        this.app.use(this.errorHandler);
         request(this.app)
         .post('/')
         .expect(500)
@@ -63,6 +72,7 @@ describe('RecieptsHandler', function() {
     describe('update', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).update);
+        this.app.use(this.errorHandler);
         request(this.app)
         .put('/UUID')
         .send({ name: 'Travel' })
@@ -76,6 +86,7 @@ describe('RecieptsHandler', function() {
     describe('destroy', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).destroy);
+        this.app.use(this.errorHandler);
         request(this.app)
         .delete('/UUID')
         .expect(500)
@@ -88,16 +99,14 @@ describe('RecieptsHandler', function() {
 
 
   describe('index', function() {
-    context('with existing expenses', function() {
+    context('with existing items', function() {
       beforeEach(function(done) {
         var self = this;
 
-
         var manager = {
           query: this.sinon.stub().callsArgWith(1, null, [
-            new domain.Expense({
-              vendor: 'Quick Left',
-              total: 100.42
+            new domain.Item({
+              vendor: 'test'
             })
           ])
         };
@@ -124,24 +133,23 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
-      it('should respond with an array of expenses', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 100.42);
+      it('should respond with an array of items', function() {
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
     });
   });
 
   describe('create', function() {
-    context('with a new expense', function() {
+    context('with a new item', function() {
       beforeEach(function(done) {
         var self = this;
 
         this.manager = {
           create: this.sinon.stub().callsArgWith(2, null, [
-            new domain.Expense({
-              vendor: 'Quick Left',
-              total: 12.00
+            new domain.Item({
+              vendor: 'test'
             })
           ])
         };
@@ -170,9 +178,9 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(201);
       });
 
-      it('should respond with the newly created expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 12.00);
+      it('should respond with the newly created item', function() {
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
       it('should pass the new attributes to the manager', function() {
@@ -186,16 +194,15 @@ describe('RecieptsHandler', function() {
   });
 
   describe('update', function() {
-    context('with existing expenses', function() {
+    context('with existing items', function() {
       beforeEach(function(done) {
         var self = this;
 
         this.manager = {
           update: this.sinon.stub().callsArgWith(3, null, [
-            new domain.Expense({
+            new domain.Item({
+              fields: [{ name: 'vendor', value: 'test' }],
               id: 1,
-              vendor: 'Quick Left',
-              total: 1.00
             })
           ])
         };
@@ -209,7 +216,7 @@ describe('RecieptsHandler', function() {
         var app = express();
         app.use(login(user));
         app.use(require('body-parser')());
-        app.use('/:expense', handler(this.manager).update);
+        app.use('/:item', handler(this.manager).update);
 
         request(app)
         .put('/UUID')
@@ -224,9 +231,9 @@ describe('RecieptsHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
-      it('should respond with the updated expense', function() {
-        expect(this.res.body).to.have.deep.property('[0].vendor', 'Quick Left');
-        expect(this.res.body).to.have.deep.property('[0].total', 1.00);
+      it('should respond with the updated item', function() {
+        expect(this.res.body).to.have.deep.property('[0].fields[0].name', 'vendor');
+        expect(this.res.body).to.have.deep.property('[0].fields[0].value', 'test');
       });
 
       it('should pass the new attributes to the manager', function() {
@@ -239,7 +246,7 @@ describe('RecieptsHandler', function() {
   });
 
   describe('destroy', function() {
-    context('with existing expenses', function() {
+    context('with existing items', function() {
       beforeEach(function(done) {
         var self = this;
 
@@ -256,7 +263,7 @@ describe('RecieptsHandler', function() {
         var app = express();
         app.use(login(user));
         app.use(require('body-parser')());
-        app.use('/:expense', handler(this.manager).destroy);
+        app.use('/:item', handler(this.manager).destroy);
 
         request(app)
         .del('/UUID')

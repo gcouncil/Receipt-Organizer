@@ -8,7 +8,7 @@ describe('Toggling the View', function() {
   beforeEach(function() {
     this.page = new ExpensePage(this.factory);
     browser.call(function(user) {
-      return this.factory.expenses.create({}, { user: user.id });
+      return this.factory.items.create({}, { user: user.id });
     }, this, this.page.user);
 
     this.page.get('table');
@@ -44,14 +44,14 @@ describe('Toggling the View', function() {
     //this.page = new ExpensePage(this.factory);
 
     //this.page.user.then(function(user) {
-      //self.factory.expenses.create({
+      //self.factory.items.create({
         //vendor: 'Quick Left',
         //total: 100.00
       //}, { user: user.id });
 
       //self.factory.images.create({}, { user: user.id}, function(image) {
 
-        //self.factory.expenses.create({
+        //self.factory.items.create({
           //vendor: 'Quick Right',
           //total: 100.01,
           //image: image.id
@@ -78,7 +78,7 @@ describe('Pagination', function() {
 
     this.page.user.then(function(user) {
       _.times(15, function(i) {
-        self.factory.expenses.create({
+        self.factory.items.create({
           vendor: 'Quick Left',
           total: 100.00 + i
         }, { user: user.id });
@@ -108,7 +108,7 @@ describe('Editing Expenses in Table View', function() {
     this.page = new ExpensePage(this.factory);
 
     this.page.user.then(function(user) {
-      self.factory.expenses.create({
+      self.factory.items.create({
         vendor: 'Walmart',
         city: 'Boulder',
         total: 10.00
@@ -139,7 +139,7 @@ describe('Editing Expenses in Table View', function() {
 
     // check database for the actual change
     var expenseQueryResults = browser.call(function(user) {
-      return self.factory.expenses.query({ user: user.id });
+      return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
     expect(expenseQueryResults).to.eventually.have.length(1);
@@ -157,7 +157,7 @@ describe('Batch delete', function() {
 
     this.page.user.then(function(user) {
       _.times(4, function(i) {
-        self.factory.expenses.create({
+        self.factory.items.create({
           vendor: 'Fake Expense Generator',
           total: 100.00 + i
         }, { user: user.id });

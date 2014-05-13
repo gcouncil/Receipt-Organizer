@@ -38,7 +38,7 @@ describe('Editing Expenses', function() {
     this.page = new ExpensePage(this.factory);
 
     this.page.user.then(function(user) {
-      self.factory.expenses.create({
+      self.factory.items.create({
         vendor: 'Walmart',
         city: 'Boulder',
         total: 10.00
@@ -54,6 +54,8 @@ describe('Editing Expenses', function() {
     var self = this;
 
     expect(this.page.expenses.count()).to.eventually.equal(1);
+
+    this.page.firstExpense.evaluate('expense');
     expect(this.page.firstExpense.evaluate('expense.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstExpense.$('.fa-edit').click();
@@ -67,7 +69,7 @@ describe('Editing Expenses', function() {
 
     // check database for the actual change
     var expenseQueryResults = browser.call(function(user) {
-      return self.factory.expenses.query({ user: user.id });
+      return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
     expect(expenseQueryResults).to.eventually.have.length(1);
@@ -86,7 +88,7 @@ describe('Deleting Expenses', function() {
         { total: 100.99 },
         { total: 2.99 }
       ], function(data) {
-        self.factory.expenses.create(data, {
+        self.factory.items.create(data, {
           user: user.id
         });
       });
@@ -119,7 +121,7 @@ describe('Batch delete', function() {
 
     this.page.user.then(function(user) {
       _.times(4, function(i) {
-        self.factory.expenses.create({
+        self.factory.items.create({
           vendor: 'Fake Expense Generator',
           total: 100.00 + i
         }, { user: user.id });
@@ -170,11 +172,11 @@ describe('Review Now button', function() {
 
       this.page.user.then(function(user) {
         _.times(4, function(i) {
-          self.factory.expenses.create({
+          self.factory.items.create({
             reviewed: false
           }, { user: user.id });
         });
-        self.factory.expenses.create({
+        self.factory.items.create({
           reviewed: true
         }, { user: user.id });
       });
@@ -236,10 +238,10 @@ describe('Scoping to the current user', function() {
     this.page = new ExpensePage(this.factory, user);
 
     user.then(function(user) {
-      self.factory.expenses.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
     });
     otherUser.then(function(otherUser) {
-      self.factory.expenses.create({ vendor: 'Microsoft', total: 200.00 }, { user: otherUser.id });
+      self.factory.items.create({ vendor: 'Microsoft', total: 200.00 }, { user: otherUser.id });
     });
 
     this.page.get();

@@ -19,6 +19,8 @@ describe('ImagesHandler', function() {
 
   describe('server errors', function() {
     beforeEach(function() {
+      var ctx = this;
+
       this.manager = {
         show: this.sinon.stub().callsArgWith(2, new Error(), []),
         showMetadata: this.sinon.stub().callsArgWith(2, new Error(), []),
@@ -36,11 +38,16 @@ describe('ImagesHandler', function() {
       this.app.use(login(user));
       this.app.use(require('body-parser')());
 
+      this.errorHandler = function(err, req, res, next) {
+        ctx.error = err;
+        res.send(500);
+      };
     });
 
     describe('show', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).show);
+        this.app.use(this.errorHandler);
         request(this.app)
         .get('/')
         .expect(500)
@@ -53,6 +60,7 @@ describe('ImagesHandler', function() {
     describe('showMetadata', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).showMetadata);
+        this.app.use(this.errorHandler);
         request(this.app)
         .get('/')
         .expect(500)
@@ -66,6 +74,7 @@ describe('ImagesHandler', function() {
     describe('create', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).create);
+        this.app.use(this.errorHandler);
         request(this.app)
         .post('/')
         .expect(500)
@@ -78,6 +87,7 @@ describe('ImagesHandler', function() {
     describe('destroy', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).destroy);
+        this.app.use(this.errorHandler);
         request(this.app)
         .delete('/UUID')
         .expect(500)

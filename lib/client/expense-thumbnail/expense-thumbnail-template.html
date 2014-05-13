@@ -3,15 +3,15 @@
     <is-selected selection="selection" selection-id="expense.id">
   </div>
   <div class="expense-thumbnail-title">
-    <span>Expense</span>
+    <span>{{ expense.type }}</span>
     <i class="fa fa-check-circle expense-thumbnail-reviewed-icon" ng-if="expense.reviewed" title="Reviewed"></i>
     <i class="fa fa-flag expense-thumbnail-unreviewed-icon" ng-if="!expense.reviewed" title="Needs Review"></i>
   </div>
 </label>
 <div class="expense-thumbnail-body">
   <div class="expense-thumbnail-actions">
-    <a ng-click="$emit('expenses:edit', expense)" href="#"><i class="fa fa-edit"></i></a>
-    <a ng-click="$emit('expenses:destroy', expense)" href="#"><i class="fa fa-trash-o"></i></a>
+    <a ng-click="$emit('items:edit', expense)" href="#"><i class="fa fa-edit"></i></a>
+    <a ng-click="$emit('items:destroy', expense)" href="#"><i class="fa fa-trash-o"></i></a>
   </div>
   <div class="expense-thumbnail-image-container">
     <img class="expense-thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">

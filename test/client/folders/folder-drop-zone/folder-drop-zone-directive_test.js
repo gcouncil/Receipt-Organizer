@@ -5,7 +5,7 @@ var $ = require('jquery');
 describe('folder drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
-    ctx.expenseStorage = {
+    ctx.itemStorage = {
       update: ctx.sinon.stub().returnsArg(0),
       fetch: ctx.sinon.stub()
     };
@@ -16,7 +16,7 @@ describe('folder drop zone directive', function() {
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.folders', {
-      expenseStorage: ctx.expenseStorage,
+      itemStorage: ctx.itemStorage,
       notify: ctx.notify
     });
 
@@ -30,7 +30,7 @@ describe('folder drop zone directive', function() {
           id: 1
         };
         ctx.deferred = $q.defer();
-        ctx.expenseStorage.fetch.returns(ctx.deferred.promise);
+        ctx.itemStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });
@@ -210,7 +210,7 @@ describe('folder drop zone directive', function() {
     it('should display duplicate message if there is no result', function() {
       var ctx = this;
       ctx.deferred.reject();
-      ctx.expenseStorage.update.returns(null);
+      ctx.itemStorage.update.returns(null);
       ctx.scope.$digest();
       expect(ctx.notify.error).to.have.been.called;
     });
@@ -225,7 +225,7 @@ describe('folder drop zone directive', function() {
         }
       });
 
-      ctx.expenseStorage.update.returns('EXPENSE');
+      ctx.itemStorage.update.returns('EXPENSE');
       ctx.scope.$digest();
       expect(ctx.notify.success).to.have.been.called;
     });

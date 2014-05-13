@@ -18,6 +18,7 @@ function login(user) {
 describe('FoldersHandler', function() {
   describe('server errors', function() {
     beforeEach(function() {
+      var ctx = this;
       this.manager = {
         query: this.sinon.stub().callsArgWith(1, new Error(), []),
         create: this.sinon.stub().callsArgWith(2, new Error(), []),
@@ -34,11 +35,17 @@ describe('FoldersHandler', function() {
       this.app = express();
       this.app.use(login(user));
       this.app.use(require('body-parser')());
+
+      this.errorHandler = function(err, req, res, next) {
+        ctx.error = err;
+        res.send(500);
+      };
     });
 
     describe('index', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).index);
+        this.app.use(this.errorHandler);
         request(this.app)
         .get('/')
         .expect(500)
@@ -51,6 +58,7 @@ describe('FoldersHandler', function() {
     describe('create', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).create);
+        this.app.use(this.errorHandler);
         request(this.app)
         .post('/')
         .expect(500)
@@ -63,6 +71,7 @@ describe('FoldersHandler', function() {
     describe('update', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).update);
+        this.app.use(this.errorHandler);
         request(this.app)
         .put('/UUID')
         .send({ name: 'Travel' })
@@ -76,6 +85,7 @@ describe('FoldersHandler', function() {
     describe('destroy', function() {
       it('should return a 500', function(done) {
         this.app.use(handler(this.manager).destroy);
+        this.app.use(this.errorHandler);
         request(this.app)
         .delete('/UUID')
         .expect(500)
