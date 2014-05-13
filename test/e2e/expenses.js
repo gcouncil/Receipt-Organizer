@@ -54,6 +54,8 @@ describe('Editing Expenses', function() {
     var self = this;
 
     expect(this.page.expenses.count()).to.eventually.equal(1);
+
+    this.page.firstExpense.evaluate('expense');
     expect(this.page.firstExpense.evaluate('expense.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstExpense.$('.fa-edit').click();

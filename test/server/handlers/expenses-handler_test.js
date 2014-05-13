@@ -106,7 +106,7 @@ describe('ExpensesHandler', function() {
         var manager = {
           query: this.sinon.stub().callsArgWith(1, null, [
             new domain.Expense({
-              fields: [{ name: 'vendor', value: 'test' }]
+              vendor: 'test'
             })
           ])
         };
@@ -149,7 +149,7 @@ describe('ExpensesHandler', function() {
         this.manager = {
           create: this.sinon.stub().callsArgWith(2, null, [
             new domain.Expense({
-              fields: [{ name: 'vendor', value: 'test' }]
+              vendor: 'test'
             })
           ])
         };
