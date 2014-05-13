@@ -5,10 +5,18 @@ describe('review controller', function() {
   beforeEach(function() {
     var self = this;
 
-    angular.mock.module('ngMock', 'epsonreceipts.review');
+    self.itemStorage = {
+      watch: self.sinon.stub().returns({
+        setFilter: self.sinon.stub()
+      }),
+      query: self.sinon.stub()
+    };
+
+    angular.mock.module('ngMock', 'epsonreceipts.review', {
+      itemStorage: self.itemStorage
+    });
     angular.mock.inject(function($rootScope, $controller) {
       self.scope = $rootScope.$new();
-
       self.reviewController = $controller('ReviewController', { $scope: self.scope });
       self.scope.$digest();
     });
@@ -16,23 +24,15 @@ describe('review controller', function() {
 
   describe('initialization', function() {
     it('has no items on initialization', function() {
-      expect(this.reviewController.allItems).to.be.empty;
       expect(this.reviewController.unreviewedItems).to.be.empty;
       expect(this.reviewController.unreviewedTally).to.equal(0);
     });
   });
 
-  describe('setItems', function() {
-    it('should add the items to itself', function() {
-      this.reviewController.setItems(['a', 'b']);
-      expect(this.reviewController.allItems.length).to.equal(2);
-    });
-
-    it('should update unreviewedItems and unreviewedTally', function() {
-      this.reviewController.setItems([{reviewed: true}, {reviewed: false}, {reviewed: false}]);
-      expect(this.reviewController.allItems.length).to.equal(3);
-      expect(this.reviewController.unreviewedItems.length).to.equal(2);
-      expect(this.reviewController.unreviewedTally).to.equal(2);
+  describe('query', function() {
+    it('fetches the items from item storage', function() {
+      var self = this;
+      expect(self.itemStorage.watch).to.have.been.calledWith(self.scope);
     });
   });
 });
