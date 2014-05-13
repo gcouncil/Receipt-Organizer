@@ -41,7 +41,8 @@ describe('CRUD', function() {
   });
 
   it('should display folders on the form', function() {
-    this.page.firstExpense.$('.fa-edit').click();
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
     expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
@@ -163,25 +164,31 @@ describe('Multiple Foldering', function() {
   });
 
   it('should folder multiple expenses', function() {
-    this.page.firstExpense.$('.fa-edit').click();
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.secondExpense.$('.fa-edit').click();
+    this.page.secondExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.firstExpense.$('[type="checkbox"]').click();
-    this.page.secondExpense.$('[type="checkbox"]').click();
     this.page.expenseToolbarFolder.click();
     expect($('.expense-dropdown').getText()).to.eventually.contain('travel');
     $('.expense-dropdown').element(by.linkText('travel')).click();
 
-    this.page.firstExpense.$('.fa-edit').click();
+    expect(this.page.firstExpense.isPresent()).to.eventually.be.true;
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
+
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.secondExpense.$('.fa-edit').click();
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.secondExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
+
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });

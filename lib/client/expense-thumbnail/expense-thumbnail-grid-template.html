@@ -1,1 +1,1 @@
-<expense-thumbnail expense="expense" selection="selection" ng-repeat="expense in expenses track by expense.id" draggable="true" draggable-item="{ type: 'expense', id: expense.id }" folder-drop-zone></expense-thumbnail>
+<expense-thumbnail expense="expense" selection="selection" ng-Dblclick= "$emit('items:edit', expense)" ng-repeat="expense in expenses track by expense.id" draggable="true" draggable-item="{ type: 'expense', id: expense.id }" folder-drop-zone></expense-thumbnail>

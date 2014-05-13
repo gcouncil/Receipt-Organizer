@@ -58,7 +58,9 @@ describe('Editing Expenses', function() {
     this.page.firstExpense.evaluate('expense');
     expect(this.page.firstExpense.evaluate('expense.vendor')).to.eventually.equal('Walmart');
 
-    this.page.firstExpense.$('.fa-edit').click();
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarEdit.click();
+
     var originalVendor = this.page.receiptEditorForm.element(by.model('expense.vendor'));
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
@@ -101,7 +103,8 @@ describe('Deleting Expenses', function() {
     var self = this;
     expect(this.page.expenses.count()).to.eventually.equal(3);
     var firstIdPromise = this.page.firstExpense.evaluate('expense.id');
-    this.page.firstExpense.$('.fa-trash-o').click();
+    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
+    this.page.expenseToolbarDelete.click();
     this.page.expenseDeleteConfirmButton.click();
     expect(this.page.expenses.count()).to.eventually.equal(2);
     browser.driver.call(function(firstId) {

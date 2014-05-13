@@ -9,10 +9,6 @@
   </div>
 </label>
 <div class="expense-thumbnail-body">
-  <div class="expense-thumbnail-actions">
-    <a ng-click="$emit('items:edit', expense)" href="#"><i class="fa fa-edit"></i></a>
-    <a ng-click="$emit('items:destroy', expense)" href="#"><i class="fa fa-trash-o"></i></a>
-  </div>
   <div class="expense-thumbnail-image-container">
     <img class="expense-thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
     <div class="expense-thumbnail-image-message">
