@@ -189,7 +189,7 @@ describe('Review Folder', function() {
 
     it('should inform the user how many expenses require review', function() {
       expect(this.page.expenses.count()).to.eventually.equal(5);
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
     });
 
     it('should toggle the viewable receipts', function() {
@@ -199,17 +199,17 @@ describe('Review Folder', function() {
     });
 
     it('should display correct total when navigating through folders', function() {
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
       this.page.firstFolderInOrganizer.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
     });
 
     it('should update unreviewed total on delete', function() {
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (4)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
       this.page.secondExpenseSelect.click();
       this.page.expenseToolbarDelete.click();
       this.page.expenseDeleteConfirmButton.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (3)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n3');
     });
 
     it('should update unreviewed total on setting reviewed receipt to unreviewed', function() {
@@ -217,7 +217,7 @@ describe('Review Folder', function() {
       this.page.expenseToolbarEdit.click();
       this.page.receiptEditorNeedsReview.click();
       this.page.receiptEditorSave.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed (5)');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n5');
     });
   });
 });
