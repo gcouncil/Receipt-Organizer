@@ -14,6 +14,8 @@ var sinon = require('sinon');
 
 beforeEach(function() {
   this.sinon = sinon.sandbox.create();
+  /* global window */
+  window.localStorage.setItem('clientId', '123');
 });
 
 afterEach(function() {
