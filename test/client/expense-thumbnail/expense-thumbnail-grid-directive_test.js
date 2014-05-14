@@ -14,7 +14,7 @@ describe('expense thumbnail grid directive', function() {
       setLimit: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.expenseThumbnail');
+    angular.mock.module('ngMock', 'epsonreceipts.expenseThumbnail', 'epsonreceipts.storage');
 
     angular.mock.inject(function($rootScope, $compile, $interval) {
       ctx.scope = $rootScope.$new();

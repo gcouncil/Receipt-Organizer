@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-var ExpensePage = require('./pages/expenses-page');
+var ExpensePage = require('./pages/items-page');
 
 describe('Manual Entry', function() {
   beforeEach(function() {
@@ -15,19 +15,19 @@ describe('Manual Entry', function() {
     expect(this.page.receiptEditorForm.isDisplayed()).to.eventually.be.true;
   });
 
-  it('should create a new expenses when the expense is saved with valid data', function() {
-    var totalEl = this.page.receiptEditorForm.element(by.model('expense.total'));
+  it('should create a new items when the item is saved with valid data', function() {
+    var totalEl = this.page.receiptEditorForm.element(by.model('item.total'));
     totalEl.clear();
     totalEl.sendKeys('39.99');
 
-    var categoryEl = this.page.receiptEditorForm.element(by.model('expense.category'));
+    var categoryEl = this.page.receiptEditorForm.element(by.model('item.category'));
     categoryEl.clear();
     categoryEl.sendKeys('Miscellaneous');
 
-    expect(this.page.expenses.count()).to.eventually.equal(0);
+    expect(this.page.items.count()).to.eventually.equal(0);
     this.page.receiptEditorSave.click();
-    expect(this.page.expenses.count()).to.eventually.equal(1);
-    expect(this.page.firstExpense.element(by.binding('expense.total')).getText()).to.eventually.equal('$39.99');
+    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.firstExpense.element(by.binding('item.total')).getText()).to.eventually.equal('$39.99');
   });
 });
 
@@ -50,32 +50,32 @@ describe('Editing Expenses', function() {
     this.page.get();
   });
 
-  it('should edit a expense with valid values', function() {
+  it('should edit a item with valid values', function() {
     var self = this;
 
-    expect(this.page.expenses.count()).to.eventually.equal(1);
+    expect(this.page.items.count()).to.eventually.equal(1);
 
-    this.page.firstExpense.evaluate('expense');
-    expect(this.page.firstExpense.evaluate('expense.vendor')).to.eventually.equal('Walmart');
+    this.page.firstExpense.evaluate('item');
+    expect(this.page.firstExpense.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
+    this.page.itemToolbarEdit.click();
 
-    var originalVendor = this.page.receiptEditorForm.element(by.model('expense.vendor'));
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
     this.page.receiptEditorSave.click();
 
-    expect(this.page.firstExpense.evaluate('expense.vendor')).to.eventually.equal('Whole Foods');
-    expect(this.page.expenses.count()).to.eventually.equal(1);
+    expect(this.page.firstExpense.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
+    expect(this.page.items.count()).to.eventually.equal(1);
 
     // check database for the actual change
-    var expenseQueryResults = browser.call(function(user) {
+    var itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
-    expect(expenseQueryResults).to.eventually.have.length(1);
-    expect(expenseQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+    expect(itemQueryResults).to.eventually.have.length(1);
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 });
 
@@ -99,17 +99,17 @@ describe('Deleting Expenses', function() {
     this.page.get();
   });
 
-  it('should remove expenses when delete button is clicked', function() {
+  it('should remove items when delete button is clicked', function() {
     var self = this;
-    expect(this.page.expenses.count()).to.eventually.equal(3);
-    var firstIdPromise = this.page.firstExpense.evaluate('expense.id');
+    expect(this.page.items.count()).to.eventually.equal(3);
+    var firstIdPromise = this.page.firstExpense.evaluate('item.id');
     this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarDelete.click();
-    this.page.expenseDeleteConfirmButton.click();
-    expect(this.page.expenses.count()).to.eventually.equal(2);
+    this.page.itemToolbarDelete.click();
+    this.page.itemDeleteConfirmButton.click();
+    expect(this.page.items.count()).to.eventually.equal(2);
     browser.driver.call(function(firstId) {
-      self.page.expenses.each(function(expense) {
-        expect(expense.evaluate('expense.id')).to.not.eventually.equal(firstId);
+      self.page.items.each(function(item) {
+        expect(item.evaluate('item.id')).to.not.eventually.equal(firstId);
       });
     }, null, firstIdPromise);
   });
@@ -134,40 +134,40 @@ describe('Batch delete', function() {
     this.page.get('table');
   });
 
-  it('should batch delete existing expenses from the thumbnail view', function() {
+  it('should batch delete existing items from the thumbnail view', function() {
     var self = this;
-    $('expense-view-toggle [title="Thumbnails"]').click();
+    $('item-view-toggle [title="Thumbnails"]').click();
 
-    var deleteButton = $('expenses-toolbar [title="Delete"]');
-    var firstIdPromise = this.page.firstExpense.evaluate('expense.id');
+    var deleteButton = $('items-toolbar [title="Delete"]');
+    var firstIdPromise = this.page.firstExpense.evaluate('item.id');
 
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
-    expect(this.page.expenses.count()).to.eventually.equal(4);
+    expect(this.page.items.count()).to.eventually.equal(4);
     this.page.firstExpense.$('[type=checkbox]').click();
     this.page.secondExpense.$('[type=checkbox]').click();
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal(null);
 
     deleteButton.click();
-    expect(this.page.expenseDeleteConfirmation.isDisplayed()).to.eventually.be.true;
+    expect(this.page.itemDeleteConfirmation.isDisplayed()).to.eventually.be.true;
     $('.modal-dialog').element(by.buttonText('Cancel')).click();
-    expect(this.page.expenses.count()).to.eventually.equal(4);
+    expect(this.page.items.count()).to.eventually.equal(4);
 
     deleteButton.click();
-    this.page.expenseDeleteConfirmButton.click();
-    expect(this.page.expenses.count()).to.eventually.equal(2);
+    this.page.itemDeleteConfirmButton.click();
+    expect(this.page.items.count()).to.eventually.equal(2);
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
 
-    // confirms that first expense is no longer present
+    // confirms that first item is no longer present
     browser.driver.call(function(firstId) {
-      self.page.expenses.each(function(expense) {
-        expect(expense.evaluate('expense.id')).to.not.eventually.equal(firstId);
+      self.page.items.each(function(item) {
+        expect(item.evaluate('item.id')).to.not.eventually.equal(firstId);
       });
     }, null, firstIdPromise);
   });
 });
 
 describe('Review Folder', function() {
-  context('with unreviewed expenses', function() {
+  context('with unreviewed items', function() {
     beforeEach(function() {
       var self = this;
 
@@ -190,15 +190,15 @@ describe('Review Folder', function() {
       this.page.get('table');
     });
 
-    it('should inform the user how many expenses require review', function() {
-      expect(this.page.expenses.count()).to.eventually.equal(5);
+    it('should inform the user how many items require review', function() {
+      expect(this.page.items.count()).to.eventually.equal(5);
       expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
     });
 
     it('should toggle the viewable receipts', function() {
-      expect(this.page.expenses.count()).to.eventually.equal(5);
+      expect(this.page.items.count()).to.eventually.equal(5);
       this.page.reviewFolder.click();
-      expect(this.page.expenses.count()).to.eventually.equal(4);
+      expect(this.page.items.count()).to.eventually.equal(4);
     });
 
     it('should display correct total when navigating through folders', function() {
@@ -210,14 +210,14 @@ describe('Review Folder', function() {
     it('should update unreviewed total on delete', function() {
       expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
       this.page.secondExpenseSelect.click();
-      this.page.expenseToolbarDelete.click();
-      this.page.expenseDeleteConfirmButton.click();
+      this.page.itemToolbarDelete.click();
+      this.page.itemDeleteConfirmButton.click();
       expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n3');
     });
 
     it('should update unreviewed total on setting reviewed receipt to unreviewed', function() {
       this.page.firstExpenseSelect.click();
-      this.page.expenseToolbarEdit.click();
+      this.page.itemToolbarEdit.click();
       this.page.receiptEditorNeedsReview.click();
       this.page.receiptEditorSave.click();
       expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n5');
@@ -249,10 +249,10 @@ describe('Scoping to the current user', function() {
     this.page.get();
   });
 
-  it('should only show the current users expenses', function() {
-    expect(this.page.expenses.count()).to.eventually.equal(1);
-    expect(this.page.firstExpense.element(by.binding('expense.total')).getText()).to.eventually.equal('$199.99');
-    expect(this.page.firstExpense.element(by.binding('expense.vendor')).getText()).to.eventually.equal('Quick Left');
+  it('should only show the current users items', function() {
+    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.firstExpense.element(by.binding('item.total')).getText()).to.eventually.equal('$199.99');
+    expect(this.page.firstExpense.element(by.binding('item.vendor')).getText()).to.eventually.equal('Quick Left');
   });
 });
 

@@ -1,4 +1,4 @@
-expense-thumbnail {
+thumbnail {
   position: relative;
   .flex-box(column);
 
@@ -13,32 +13,32 @@ expense-thumbnail {
   background: white;
 }
 
-.expense-thumbnail-reviewed-icon {
+.thumbnail-reviewed-icon {
   color: @brand-success;
 }
 
-.expense-thumbnail-unreviewed-icon {
+.thumbnail-unreviewed-icon {
   color: @brand-warning;
 }
 
-.expense-thumbnail-unreviewed {
+.thumbnail-unreviewed {
   border: solid 1px @brand-primary;
   box-shadow: 0 0 5px @brand-primary;
 }
 
-.expense-thumbnail-unreviewed  {
-  .expense-thumbnail-title > span {
+.thumbnail-unreviewed  {
+  .thumbnail-title > span {
     font-weight: bold;
   }
 }
 
-.expense-thumbnail-reviewed {
-  .expense-thumbnail-title > span {
+.thumbnail-reviewed {
+  .thumbnail-title > span {
     font-weight: normal;
   }
 }
 
-.expense-thumbnail-titlebar {
+.thumbnail-titlebar {
   .noflex(24px);
   padding: 0 6px;
   margin: 0;
@@ -46,7 +46,7 @@ expense-thumbnail {
   border-bottom: solid 1px black;
 }
 
-.expense-thumbnail-checkbox {
+.thumbnail-checkbox {
   float: left;
   & input[type="checkbox"] {
     padding: 0;
@@ -54,35 +54,35 @@ expense-thumbnail {
   }
 }
 
-.expense-thumbnail-actions {
+.thumbnail-actions {
   position: absolute;
   bottom: 6px;
   right: 6px;
 }
 
-.expense-thumbnail-title {
+.thumbnail-title {
   float: right;
 }
 
-.expense-thumbnail-body {
+.thumbnail-body {
   .flex-box(row);
   .flex;
 }
 
-.expense-thumbnail-image-container {
+.thumbnail-image-container {
   .noflex(120px);
   .flex-box(column);
 
   background: #999;
 }
 
-.expense-thumbnail-image {
+.thumbnail-image {
   .flex(0, 0, auto);
   width: 120px;
   height: auto;
 }
 
-.expense-thumbnail-image-message {
+.thumbnail-image-message {
   .flex();
   .flex-box(column);
   justify-content: center;
@@ -95,7 +95,7 @@ expense-thumbnail {
     height: auto;
   }
 }
-.expense-thumbnail-fields {
+.thumbnail-fields {
   .flex();
   .flex-box(column);
 
@@ -104,19 +104,19 @@ expense-thumbnail {
   font-size: 14px;
 }
 
-.expense-thumbnail-field {
+.thumbnail-field {
   .flex(1, 1, 2em);
   padding: 0.5em;
 
   border: none;
 }
 
-.expense-thumbnail-label {
+.thumbnail-label {
   font-weight: normal;
   font-size: 0.8em;
 }
 
-.expense-thumbnail-value {
+.thumbnail-value {
   font-weight: bold;
   font-size: 1em;
 }
