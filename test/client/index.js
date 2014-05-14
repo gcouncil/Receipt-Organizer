@@ -12,6 +12,7 @@ require('./expenses-toolbar');
 require('./expenses');
 require('./scanning');
 require('./folders');
+require('./reports');
 require('./storage');
 require('./support');
 require('./users');
