@@ -30,3 +30,9 @@ Run `grunt build`.
 Run `grunt test` to run all tests
 Or `grunt test --coverage` to generate coverage reports in the `coverage` folder.
 
+### Create Migrations
+
+Run `grunt migrate:make:NAME_OF_MIGRATION`.
+You will find your migration in the `migrations` folder in the main
+directory
+
