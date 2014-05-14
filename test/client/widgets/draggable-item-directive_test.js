@@ -17,7 +17,7 @@ describe('draggable item directive', function() {
 
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
-      ctx.scope.data = {type: 'expense', data: 'DATA'};
+      ctx.scope.data = {type: 'item', data: 'DATA'};
       ctx.compile = function() {
         ctx.element = $compile('<div draggable-item="{{ data }}"></div>')(ctx.scope);
         ctx.scope.$digest();
@@ -37,6 +37,6 @@ describe('draggable item directive', function() {
     var ctx = this;
     var e = $.Event('dragstart', ctx.event);
     $(ctx.element).trigger(e);
-    expect(e.dataTransfer.setData).to.have.been.calledWith('application/json+expense', JSON.stringify(ctx.scope.data));
+    expect(e.dataTransfer.setData).to.have.been.calledWith('application/json+item', JSON.stringify(ctx.scope.data));
   });
 });

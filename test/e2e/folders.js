@@ -3,7 +3,7 @@ var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 
-var ExpensePage = require('./pages/expenses-page');
+var ItemPage = require('./pages/items-page');
 
 describe('CRUD', function() {
   beforeEach(function() {
@@ -14,7 +14,7 @@ describe('CRUD', function() {
       password: 'password'
     });
 
-    this.page = new ExpensePage(this.factory, user);
+    this.page = new ItemPage(this.factory, user);
 
     var folders = user.then(function(user) {
       return Q.all([
@@ -41,9 +41,9 @@ describe('CRUD', function() {
   });
 
   it('should display folders on the form', function() {
-    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
-    expect(this.page.receiptEditorForm.element(by.tagName('option')).getText()).to.eventually.contain('materials');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    expect(this.page.receiptEditorForm.element(by.model('item.folders')).element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
   it('should be possible to create a new folder', function() {
@@ -72,7 +72,7 @@ describe('filtering', function() {
       password: 'password'
     });
 
-    this.page = new ExpensePage(this.factory, user);
+    this.page = new ItemPage(this.factory, user);
 
     var folder1 = user.then(function(user) {
       return Q.all([
@@ -106,25 +106,25 @@ describe('filtering', function() {
   function testFilteringByFolder(self) {
     expect(self.page.folderOrganizer.getText()).to.eventually.contain('utilities');
     expect(self.page.folderOrganizer.getText()).to.eventually.contain('rent');
-    expect(self.page.firstExpense.getText()).to.eventually.contain('Xcel Energy');
-    expect(self.page.secondExpense.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.secondItem.getText()).to.eventually.contain('Boulder Property Management');
 
     self.page.firstFolderInOrganizer.$('a').click();
 
-    expect(self.page.firstExpense.getText()).to.eventually.contain('Xcel Energy');
-    expect(self.page.expenses).to.eventually.have.length(1);
+    expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.items).to.eventually.have.length(1);
 
     self.page.secondFolderInOrganizer.$('a').click();
 
-    expect(self.page.firstExpense.getText()).to.eventually.contain('Boulder Property Management');
-    expect(self.page.expenses).to.eventually.have.length(1);
+    expect(self.page.firstItem.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.items).to.eventually.have.length(1);
   }
 
-  it('should filter expenses by folder on the thumbnail view', function() {
+  it('should filter items by folder on the thumbnail view', function() {
     testFilteringByFolder(this);
   });
 
-  it('should filter expenses by folder on the table view', function() {
+  it('should filter items by folder on the table view', function() {
     this.page.showTableButton.click();
     testFilteringByFolder(this);
   });
@@ -140,7 +140,7 @@ describe('Multiple Foldering', function() {
       password: 'password'
     });
 
-    this.page = new ExpensePage(this.factory, user);
+    this.page = new ItemPage(this.factory, user);
 
     var folders = user.then(function(user) {
       return Q.all([
@@ -163,31 +163,31 @@ describe('Multiple Foldering', function() {
     this.page.get();
   });
 
-  it('should folder multiple expenses', function() {
-    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
+  it('should folder multiple items', function() {
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.secondExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.expenseToolbarFolder.click();
-    expect($('.expense-dropdown').getText()).to.eventually.contain('travel');
-    $('.expense-dropdown').element(by.linkText('travel')).click();
+    this.page.itemToolbarFolder.click();
+    expect($('.item-dropdown').getText()).to.eventually.contain('travel');
+    $('.item-dropdown').element(by.linkText('travel')).click();
 
-    expect(this.page.firstExpense.isPresent()).to.eventually.be.true;
-    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
+    expect(this.page.firstItem.isPresent()).to.eventually.be.true;
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
 
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
-    this.page.firstExpense.$('input[type="checkbox"][selection]').click();
-    this.page.secondExpense.$('input[type="checkbox"][selection]').click();
-    this.page.expenseToolbarEdit.click();
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
 
     expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();

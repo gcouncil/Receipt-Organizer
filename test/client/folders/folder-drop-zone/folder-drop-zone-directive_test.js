@@ -24,9 +24,9 @@ describe('folder drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div folder-drop-zone expense="expense"></div>')(ctx.scope);
-        ctx.scope.expense = {
-          name: 'expense1',
+        ctx.element = $compile('<div folder-drop-zone item="item"></div>')(ctx.scope);
+        ctx.scope.item = {
+          name: 'item1',
           id: 1
         };
         ctx.deferred = $q.defer();
@@ -191,7 +191,7 @@ describe('folder drop zone directive', function() {
 
       ctx.event = {
         dataTransfer: {
-          types: ['application/json+expense'],
+          types: ['application/json+item'],
           dropEffect: 'copy',
           getData: ctx.sinon.stub().returns(ctx.data)
         },
