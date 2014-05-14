@@ -19,7 +19,14 @@ In order to save receipt images to S3, you'll need to add a local.js file to the
 ### Driver Installation for Local Development
 In order to import receipts or scan from a device, you'll need to install the Dynamic Web TWAIN Driver (currently using the trial version) and the Epson device drivers (for the DS-30 and DS-510 models). The files can be found in Slack at:
  - [Dynamic Web TWAIN Driver for Mac][2]
- - [Epson Device Driver for Mac][3]
+ - [Epson DS-30 Device Driver for Mac][3]
+ - [Epson DS-510 Device Driver for Mac][4]
+
+There may be some troubleshooting involved in getting the scanner working locally. Here are some steps to work through if you have installed the Epson driver and are not seeing the device in the Scan drop-down of the Epson Receipts app on your local dev machine.
+
+1. Fire up the app called **EPSON Scan Settings** and see if the scanner is detected in the list under *Select Scanner*. If it's in the list, make sure it is selected and click **Test**. It should return with a pop-up after the test saying *Scanner is Ready*. Now check your local EPSON deployment to see if the scanner is listed in the **Scan** dropdown menu.
+2. In Chrome, go to **Tools** > **Task Manager** and look for a task called *Plug-in: Dynamic Web TWAIN x.xx*. Select the task and click **End Process**. Now refresh your EPSON Receipts app and see if the scanner is listed in the **Scan** dropdown menu.
+3. If neither of the above solutions work, try restarting your machine.
 
 ### Watch / Development
 
@@ -48,4 +55,5 @@ directory
 
   [1]: https://files.slack.com/files-pri/T024Z5CQB-F029H7KFW/download/local.js
   [2]: https://files.slack.com/files-pri/T024Z5CQB-F0277QMBM/download/dynamicwebtwainmacedition.pkg
-  [3]: https://files.slack.com/files-pri/T024Z5CQB-F0277U7GH/download/epson16008.dmg
+  [3]: https://files.slack.com/files-pri/T024Z5CQB-F029ZFH8Y/download/epson15864.dmg
+  [4]: https://files.slack.com/files-pri/T024Z5CQB-F027899A2/download/epson15994.dmg
