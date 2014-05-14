@@ -31,7 +31,8 @@
     "boom": "^2.4.0",
     "base64-js": "0.0.6",
     "passport-http-bearer": "^1.0.1",
-    "sql": "^0.39.0"
+    "sql": "^0.39.0",
+    "elementtree": "^0.1.6"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
