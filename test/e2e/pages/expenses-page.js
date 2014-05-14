@@ -28,6 +28,7 @@ function ExpensePage(factory, user) {
   this.showTableButton = $('expense-view-toggle [title="Table"]');
 
   this.expenseToolbarEdit = $('expenses-toolbar [title="Edit"]');
+  this.expenseToolbarDelete = $('expenses-toolbar [title="Delete"]');
   this.expenseToolbarFolder = $('expenses-toolbar [title="Folder"]');
   this.expenseToolbarFolderDropdown = $('.expense-dropdown');
 
