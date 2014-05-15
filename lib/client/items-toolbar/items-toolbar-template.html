@@ -20,10 +20,13 @@
   </button>
   <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
 </div>
+<div class="nav navbar-nav navbar-center navbar-form">
+  <filter-by-date-button></filter-by-date-button>
+</div>
 <div class="nav navbar-nav navbar-right navbar-form">
   <er-pagination controller="items.pagination"></er-pagination>
 
-  <item-view-toggle></item-view-toggle>
+  <item-view-toggle selection="items.selection"></item-view-toggle>
 </div>
 
 <div class="folders-panel" ng-show="showingFolders">
