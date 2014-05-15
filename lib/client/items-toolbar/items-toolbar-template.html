@@ -13,6 +13,11 @@
     ng-disabled="!items.selection.hasSelection()">
     <i class="fa fa-edit"></i>
   </button>
+  <button class="btn btn-default" title="Create New Report"
+    ng-click="$emit('items:newReport', items.selection.selectedItems)"
+    ng-disabled="!items.selection.hasSelection()">
+    Create New Report
+  </button>
   <button class="btn btn-default" title="Delete"
     ng-click="$emit('items:destroy', items.selection.selectedItems)"
     ng-disabled="!items.selection.hasSelection()">
