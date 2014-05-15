@@ -6,10 +6,13 @@ module.exports = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_KEY
   },
-  storage: {
-    receiptBucket: 'epsonreceipts-' + env + '-images'
-  },
   database: {
     database: 'epson_receipts_' + env
+  },
+  formxtra: {
+    endpoint: 'http://54.187.18.38/FormXtraWeb/Service/'
+  },
+  storage: {
+    receiptBucket: 'epsonreceipts-' + env + '-images'
   }
 };

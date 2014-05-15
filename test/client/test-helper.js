@@ -15,7 +15,7 @@ var sinon = require('sinon');
 beforeEach(function() {
   this.sinon = sinon.sandbox.create();
   /* global window */
-  window.localStorage.setItem('clientId', '123');
+  window.localStorage.setItem('clientId', '[12, 12, 23, 45, 67, 78]');
 });
 
 afterEach(function() {

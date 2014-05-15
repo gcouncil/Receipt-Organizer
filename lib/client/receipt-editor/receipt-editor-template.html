@@ -3,8 +3,14 @@
     <form name="form" class="modal-content" ng-submit="save()">
       <div class="modal-body">
         <div class="receipt-editor-fields form-horizontal">
-          <select ng-model="item" ng-options="item.total | currency for item in items track by item.id"></select>
-          <a class="btn btn-primary" ng-click="split()">Split Expense</a>
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <select ng-model="item" ng-options="(item.type | titlecase) + ' - ' + (item.total | currency) for item in items track by item.id"> </select>
+              <a class="btn btn-primary btn-xs" ng-click="split()">Add Expense to Receipt</a>
+            </div>
+          </div>
+
+          <hr>
 
           <div class="form-group">
             <label class="col-xs-3 control-label">Date</label>
@@ -119,13 +125,13 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Folders</label>
             <div class="col-xs-9">
-              <expense-folders-input expense="item"></expense-folders-input>
+              <item-folders-input item="item"></item-folders-input>
             </div>
           </div>
 
         </div>
         <div class="receipt-editor-image">
-          <image-viewer image-loader="imageLoader">
+          <image-viewer image-loader="imageLoader" overlay="receipt.getAnswers()">
         </div>
       </div>
       <div class="modal-footer">
