@@ -15,7 +15,7 @@
     "body-parser": "^1.0.1",
     "errorhandler": "^1.0.0",
     "bookshelf": "^0.6.8",
-    "pg": "^3.0.3",
+    "pg": "^3.1.0",
     "knex": "^0.5.10",
     "morph": "^0.2.0",
     "config": "^0.4.35",
@@ -30,7 +30,9 @@
     "basic-auth": "0.0.1",
     "boom": "^2.4.0",
     "base64-js": "0.0.6",
-    "passport-http-bearer": "^1.0.1"
+    "passport-http-bearer": "^1.0.1",
+    "sql": "^0.39.0",
+    "elementtree": "^0.1.6"
   },
   "devDependencies": {
     "grunt": "^0.4.4",

@@ -67,9 +67,9 @@ describe('loginForm directive', function() {
       expect(ctx.notify.error).not.to.have.been.called;
     });
 
-    it('should redirect to the expenses thumbnails index', function() {
+    it('should redirect to the items thumbnails index', function() {
       var ctx = this;
-      expect(ctx.state).to.have.been.calledWith('expenses.thumbnails');
+      expect(ctx.state).to.have.been.calledWith('items.thumbnails');
     });
 
   });
