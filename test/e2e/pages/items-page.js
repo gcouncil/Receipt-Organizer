@@ -38,11 +38,15 @@ function ItemPage(factory, user) {
   this.itemToolbarDelete = $('items-toolbar [title="Delete"]');
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
+  this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
+
 
   this.folderOrganizer = $('.folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
   this.newFolder = $('.new-folder');
+
+  this.reportOrganizer = $('.report-organizer');
 
   this.reviewFolder = $('.review-folder');
 }
