@@ -51,23 +51,23 @@ describe('items toolbar date filter input directive', function() {
     ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: undefined, endDate: undefined });
+    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: '', endDate: '' });
   });
 
-  it('should clear the filter if there is only one date', function() {
+  it('should ilter if there is only one date', function() {
     var ctx = this;
     ctx.scope.startValue = new Date(1990);
     ctx.scope.endValue = '';
     ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: undefined, endDate: undefined });
+    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: ctx.scope.startValue, endDate: '' });
     ctx.scope.startValue = '';
     ctx.scope.endValue = new Date(2000);
     ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: undefined, endDate: undefined });
+    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: '', endDate: ctx.scope.endValue });
 
   });
 
