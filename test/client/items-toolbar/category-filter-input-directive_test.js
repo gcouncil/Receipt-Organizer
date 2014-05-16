@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('items toolbar category filter input', function() {
+describe('items toolbar category filter input', function() {
   beforeEach(function() {
     var ctx = this;
 
@@ -36,23 +36,23 @@ describe.only('items toolbar category filter input', function() {
     it('should set the filter if there is a category', function() {
       var ctx = this;
       ctx.scope.category = 'abc123';
-      ctx.element.find('button').click();
+      ctx.element.find('input[type="submit"]').click();
 
       ctx.scope.$digest();
-      expect(ctx.state.go).to.have.been.calledWith('/', { filter: ['category', 'abc123'] });
+      expect(ctx.state.go).to.have.been.calledWith('/', { category: 'abc123' });
     });
   });
 
   it('should clear the filter if there is no category', function() {
     var ctx = this;
     ctx.scope.category = '123abc';
-    ctx.element.find('button').click();
+    ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
     ctx.scope.category = undefined;
-    ctx.element.find('button').click();
+    ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { filter: undefined });
+    expect(ctx.state.go).to.have.been.calledWith('/', { category: undefined });
   });
 });

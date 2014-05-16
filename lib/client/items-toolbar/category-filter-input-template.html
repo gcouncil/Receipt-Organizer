@@ -1,7 +1,12 @@
-<form ng-submit="submit()">
-  <input ng-model="category" name="category-input"/>
-  <button class="btn btn-default">
-    Filter by Category
-    <span><i class="fa fa-tags"></i></span>
-  </button>
+<button class="btn btn-default" title="Category"
+  ng-click="toggleCategoryPanel()">
+  Filter by Category
+  <i class="fa fa-tags"></i>
+</button>
+
+<form ng-show="showCategoryPanel">
+  <div class="form-group">
+    <input ng-model="category" name="category-input" class="form-control"/>
+  </div>
+    <input type="submit" value="Filter" ng-click="submit()" class="btn btn-default" />
 </form>
