@@ -35,7 +35,7 @@ describe('items toolbar category filter input', function() {
   describe('form submission', function() {
     it('should set the filter if there is a category', function() {
       var ctx = this;
-      ctx.scope.category = 'abc123';
+      ctx.element.find('input[ng-model="category"]').val('abc123').change();
       ctx.element.find('input[type="submit"]').click();
 
       ctx.scope.$digest();
@@ -45,11 +45,11 @@ describe('items toolbar category filter input', function() {
 
   it('should clear the filter if there is no category', function() {
     var ctx = this;
-    ctx.scope.category = '123abc';
+    ctx.element.find('input[ng-model="category"]').val('abc123').change();
     ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
-    ctx.scope.category = undefined;
+    ctx.element.find('input[ng-model="category"]').val('').change();
     ctx.element.find('input[type="submit"]').click();
     ctx.scope.$digest();
 
