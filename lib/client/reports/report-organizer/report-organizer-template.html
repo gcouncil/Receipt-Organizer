@@ -1,5 +1,9 @@
 <div class="container-fluid report-organizer">
-  <ul>
-    <li ng-repeat="report in reports" report="report"> {{ report.name }}</li>
+  <all-reports-button></all-reports-button>
+  <ul class="report-list">
+    <li ng-repeat="report in reports" report="report">
+    <h5 class="list-group-item-heading">{{ report.name }}</h5>
+      <h6 class="list-group-item-text">{{ report.items.length }} items</h6>
+    </li>
   </ul>
 </div>
