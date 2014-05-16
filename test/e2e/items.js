@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var moment = require('moment');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
 var ItemPage = require('./pages/items-page');
@@ -262,8 +263,8 @@ describe('Filter by Date', function() {
 
     this.page = new ItemPage(this.factory);
 
-    self.ottsDate = new Date(2005, 1, 1, 1, 1, 1);
-    self.tensDate = new Date(2015, 1, 1, 1, 1, 1);
+    self.ottsDate = '01/01/2005';
+    self.tensDate = '01/01/2015';
 
     this.page.user.then(function(user) {
       _.times(2, function(i) {
@@ -298,14 +299,16 @@ describe('Filter by Date', function() {
     browser.driver.call(function() {
       self.page.items.each(function(item) {
         item.evaluate('item.date').then(function(strDate) {
-          expect(new Date(strDate)).to.deep.equal(self.ottsDate);
-          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(moment(strDate).format()).to.deep.equal(moment(self.ottsDate).format());
+          expect(moment(strDate).format()).to.not.deep.equal(moment(self.tensDate).format());
         });
       });
     });
 
     this.page.itemToolbarDate.click();
+    this.page.dateFilterInput.element(by.model('startValue')).clear();
     this.page.dateFilterInput.element(by.model('startValue')).sendKeys('');
+    this.page.dateFilterInput.element(by.model('endValue')).clear();
     this.page.dateFilterInput.element(by.model('endValue')).sendKeys('');
     this.page.dateFilterInput.$('input[type="submit"]').click();
 

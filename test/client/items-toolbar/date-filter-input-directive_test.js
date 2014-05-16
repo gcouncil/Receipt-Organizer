@@ -39,37 +39,38 @@ describe('items toolbar date filter input directive', function() {
   describe('form submission', function() {
     it('should set the filter if there are start and end dates', function() {
       var ctx = this;
-      ctx.scope.startValue = moment('Jan 1, 2000');
-      ctx.scope.endValue = moment('Jan 1, 2010');
+      ctx.element.find('input[ng-model="startValue"]').val('01/01/2000').change();
+      ctx.element.find('input[ng-model="endValue"]').val('01/01/2010').change();
       ctx.element.find('input[type="submit"]').click();
       ctx.scope.$digest();
-      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: moment(ctx.scope.startValue).format(), endDate: moment(ctx.scope.endValue).format() });
+      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: moment('Jan 1, 2000').format(), endDate: moment('Jan 1, 2010').format() });
     });
 
-    xit('should clear the filter if there are no dates', function() {
+    it('should clear the filter if there are no dates', function() {
       var ctx = this;
-      ctx.scope.startValue = '';
-      ctx.scope.endValue = '';
+      ctx.element.find('input[ng-model="startValue"]').val('').change();
+      ctx.element.find('input[ng-model="endValue"]').val('').change();
       ctx.element.find('input[type="submit"]').click();
       ctx.scope.$digest();
 
       expect(ctx.state.go).to.have.been.calledWith('/', { startDate: undefined, endDate: undefined });
     });
 
-    xit('should ilter if there is only one date', function() {
+    it('should filter if there is only one date', function() {
       var ctx = this;
-      ctx.scope.startValue = moment(2000).format();
-      ctx.scope.endValue = '';
+      ctx.element.find('input[ng-model="startValue"]').val('').change();
+      ctx.element.find('input[ng-model="endValue"]').val('01/01/2010').change();
       ctx.element.find('input[type="submit"]').click();
       ctx.scope.$digest();
 
-      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: ctx.scope.startValue, endDate: '' });
-      ctx.scope.startValue = '';
-      ctx.scope.endValue = moment(2000).format();
+      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: moment('').format(), endDate: moment('Jan 1, 2010').format() });
+
+      ctx.element.find('input[ng-model="startValue"]').val('01/01/2000').change();
+      ctx.element.find('input[ng-model="endValue"]').val('').change();
       ctx.element.find('input[type="submit"]').click();
       ctx.scope.$digest();
 
-      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: '', endDate: ctx.scope.endValue });
+      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: moment('Jan 1, 2000').format(), endDate: moment('').format() });
 
     });
   });
