@@ -38,6 +38,9 @@ function ItemPage(factory, user) {
   this.itemToolbarDelete = $('items-toolbar [title="Delete"]');
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
+  this.itemToolbarDate = $('items-toolbar [title="Date"]');
+
+  this.dateFilterInput = $('date-filter-input');
 
   this.folderOrganizer = $('.folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
