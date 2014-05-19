@@ -26,14 +26,13 @@ describe('report organizer directive', function() {
       };
     });
     ctx.compile();
+  });
 
-
-    afterEach(function() {
-      var ctx = this;
-      if (ctx.scope) {
-        ctx.scope.$destroy();
-      }
-    });
+  afterEach(function() {
+    var ctx = this;
+    if (ctx.scope) {
+      ctx.scope.$destroy();
+    }
   });
 
   it('should query reportStorage', function() {
