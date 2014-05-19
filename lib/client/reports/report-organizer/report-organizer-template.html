@@ -1,7 +1,7 @@
 <div class="container-fluid report-organizer">
   <all-reports-button></all-reports-button>
   <ul class="report-list">
-    <li ng-repeat="report in reports" report="report">
+    <li ng-repeat="report in reports" report="report" draggable="true" draggable-item="{ type: 'report', id: report.id, name: report.name }">
     <h5 class="list-group-item-heading">{{ report.name }}</h5>
       <h6 class="list-group-item-text">{{ report.items.length }} items</h6>
     </li>

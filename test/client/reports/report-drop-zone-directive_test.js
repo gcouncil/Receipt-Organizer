@@ -1,7 +1,8 @@
 var angular = require('angular');
 var expect = require('chai').expect;
+var $ = require('jquery');
 
-describe.only('report drop zone directive', function() {
+describe('report drop zone directive', function() {
   beforeEach(function() {
     var ctx = this;
 
@@ -15,7 +16,8 @@ describe.only('report drop zone directive', function() {
     };
 
     ctx.reportStorage = {
-      update: ctx.sinon.stub(),
+      fetch: ctx.sinon.stub(),
+      update: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.reports.report-drop-zone', {
@@ -28,8 +30,14 @@ describe.only('report drop zone directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div report-drop-zone report="report"></div>')(ctx.scope);
+        ctx.element = $compile('<div report-drop-zone item="item"></div>')(ctx.scope);
         ctx.scope.report = { name: 'The cost of tea in China', id: 1 };
+        ctx.scope.item = {
+          name: 'item1',
+          id: 1
+        };
+        ctx.deferred = $q.defer();
+        ctx.reportStorage.fetch.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });
@@ -49,7 +57,7 @@ describe.only('report drop zone directive', function() {
         var ctx = this;
         ctx.event = {
           dataTransfer: {
-            types: ['application/json+item']
+            types: ['application/json+report']
           },
           preventDefault: ctx.sinon.stub()
         };
@@ -65,6 +73,214 @@ describe.only('report drop zone directive', function() {
         it('should change the class', function() {
           var ctx = this;
           expect(ctx.element.hasClass('drop-active')).to.be.true;
+        });
+
+        it('should add copy drop effect', function() {
+          var ctx = this;
+          expect(ctx.event.dataTransfer.dropEffect).to.equal('copy');
+        });
+
+        it('should prevent default', function() {
+          var ctx = this;
+          expect(ctx.event.preventDefault).to.have.been.called;
+        });
+      });
+
+      context('dragover', function() {
+        beforeEach(function() {
+          var ctx = this;
+          var e = $.Event('dragover', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should change the class', function() {
+          var ctx = this;
+          expect(ctx.element.hasClass('drop-active')).to.be.true;
+        });
+
+        it('should add copy drop effect', function() {
+          var ctx = this;
+          expect(ctx.event.dataTransfer.dropEffect).to.equal('copy');
+        });
+
+        it('should prevent default', function() {
+          var ctx = this;
+          expect(ctx.event.preventDefault).to.have.been.called;
+        });
+      });
+    });
+
+    context('with invalid types', function() {
+      beforeEach(function() {
+        var ctx = this;
+        ctx.event = {
+          dataTransfer: {
+            types: ['application/json+image']
+          },
+          preventDefault: ctx.sinon.stub()
+        };
+      });
+
+      describe('dragenter', function() {
+        beforeEach(function() {
+          var ctx = this;
+          var e = $.Event('dragenter', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should not change the class', function() {
+          var ctx = this;
+          expect(ctx.element.hasClass('drop-active')).not.to.be.true;
+        });
+
+        it('should not add copy drop effect', function() {
+          var ctx = this;
+          expect(ctx.event.dataTransfer.dropEffect).to.be.undefined;
+        });
+
+        it('should not prevent default', function() {
+          var ctx = this;
+          expect(ctx.event.preventDefault).not.to.have.been.called;
+        });
+      });
+
+      describe('dragover', function() {
+        beforeEach(function() {
+          var ctx = this;
+          var e = $.Event('dragover', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should not change the class', function() {
+          var ctx = this;
+          expect(ctx.element.hasClass('drop-active')).not.to.be.true;
+        });
+
+        it('should not add copy drop effect', function() {
+          var ctx = this;
+          expect(ctx.event.dataTransfer.dropEffect).to.be.undefined;
+        });
+
+        it('should not prevent default', function() {
+          var ctx = this;
+          expect(ctx.event.preventDefault).not.to.have.been.called;
+        });
+      });
+    });
+
+    describe('drop events', function() {
+      context('with the wrong type of data', function() {
+        beforeEach(function() {
+          var ctx = this;
+          ctx.data = JSON.stringify({
+            type: 'image',
+            id: 5
+          });
+
+          ctx.event = {
+            dataTransfer: {
+              types: ['application/json+item'],
+              dropEffect: 'copy',
+              getData: ctx.sinon.stub().returns(ctx.data)
+            },
+            preventDefault: ctx.sinon.stub()
+          };
+
+          var e = $.Event('drop', ctx.event);
+          ctx.element.trigger(e);
+        });
+
+        it('should not add the item to the report', function() {
+          var ctx = this;
+          expect(ctx.reportStorage.fetch).not.to.have.been.called;
+          expect(ctx.reportStorage.update).not.to.have.been.called;
+        });
+      });
+
+      context('with correct data type', function() {
+        beforeEach(function() {
+          var ctx = this;
+          ctx.data = JSON.stringify({
+            type: 'report',
+            name: 'The cost of tea in China',
+            id: 6
+          });
+          ctx.event = {
+            dataTransfer: {
+              types: ['application/json+report'],
+              dropEffect: 'copy',
+              getData: ctx.sinon.stub().returns(ctx.data)
+            },
+            preventDefault: ctx.sinon.stub()
+          };
+        });
+
+        context('with a duplicate', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.resolve({
+              items: [1],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
+          });
+
+          it('should not update the report if there is a duplicate', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.reportStorage.update).not.to.have.been.called;
+          });
+
+          it('should display duplicate message if there is no result', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('Item already in the The cost of tea in China report!');
+          });
+        });
+
+        context('without errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.resolve({
+              items: [],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
+          });
+
+          it('should get the data from the event', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.event.dataTransfer.getData).to.have.been.called;
+          });
+
+          it('should display the success message if there is a result', function() {
+            var ctx = this;
+            ctx.reportStorage.update.returns('REPORT');
+            ctx.scope.$digest();
+            expect(ctx.notify.success).to.have.been.calledWith('Added your item to the The cost of tea in China report.');
+          });
+        });
+
+        context('with errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.reject();
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
+          });
+
+          it('should display errors', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your item to the The cost of tea in China report.');
+          });
         });
       });
     });
