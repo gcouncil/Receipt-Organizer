@@ -39,7 +39,7 @@ function ItemPage(factory, user) {
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
-
+  this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
 
   this.folderOrganizer = $('.folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
@@ -49,6 +49,8 @@ function ItemPage(factory, user) {
   this.reportOrganizer = $('.report-organizer');
 
   this.reviewFolder = $('.review-folder');
+
+  this.notify = $('notices');
 }
 
 module.exports = ItemPage;
