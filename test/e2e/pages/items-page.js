@@ -11,13 +11,16 @@ function ItemPage(factory, user) {
     helpers.loginUser(this.user);
   };
 
-  this.receiptEditor = $('.modal-dialog');
-  this.receiptEditorForm = $('.modal-dialog form');
+  this.receiptEditor = $('.receipt-editor-dialog');
+  this.receiptEditorForm = $('.receipt-editor-dialog form');
   this.receiptEditorSave = this.receiptEditor.element(by.buttonText('Done'));
   this.receiptEditorNext = this.receiptEditor.element(by.buttonText('Next'));
   this.receiptEditorFooter = this.receiptEditor.$('.modal-footer');
   this.receiptEditorNeedsReview = this.receiptEditorFooter.$('input[type="checkbox"]');
 
+  this.reportEditor = $('.report-editor-dialog');
+  this.reportEditorSave = this.reportEditor.element(by.buttonText('Save & Close'));
+  this.reportEditorCancel = this.reportEditor.element(by.buttonText('Cancel'));
 
   var itemRepeater = by.repeater('item in items track by item.id');
   this.items = element.all(itemRepeater);

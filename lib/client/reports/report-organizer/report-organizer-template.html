@@ -4,6 +4,7 @@
     <li ng-repeat="report in reports" report="report" draggable="true" draggable-item="{ type: 'report', id: report.id, name: report.name }" item-drop-zone>
     <h5 class="list-group-item-heading">{{ report.name }}</h5>
     <h6 class="list-group-item-text">{{ report.items.length }} <ng-pluralize count="report.items.length" when="{'1':'item', 'other': 'items'}"></ng-pluralize></h6>
+    <a ng-click="delete(report)"><span><i class="fa fa-trash-o"></i></span></a>
     </li>
   </ul>
 </div>

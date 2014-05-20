@@ -17,12 +17,19 @@
   color: pink;
 }
 
+.report-organizer a {
+  display: inline;
+  color: black;
+  text-decoration: none;
+}
+
+
 .report-list {
   margin-left: 10px;
 }
 
 .report-organizer li {
-  padding: 5px 0;
+  padding: 5px;
   background: white;
   margin: 0;
 
@@ -46,4 +53,40 @@
 all-reports-button h4 {
   color: black;
 }
+
+.modal-body ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.modal-sidebar {
+  background: #ddd;
+  height: 600px;
+  padding-right: 0;
+  padding-left: 15px;
+}
+
+.formatting-option-icons {
+  font-size: 1.75em;
+}
+
+.report-editor-dialog > {
+  user-select: none;
+
+  width: 992px;
+
+  .modal-body {
+    height: 600px;
+
+    padding: 0;
+
+    .flex-box();
+  }
+
+  .modal-header .col-xs-12 {
+    margin-bottom: 20px;
+  }
+}
+
 

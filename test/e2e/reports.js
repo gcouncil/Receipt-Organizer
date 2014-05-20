@@ -40,10 +40,16 @@ describe('Reports CRUD', function() {
     expect(this.page.reportOrganizer.getText()).to.eventually.contain('materials report');
   });
 
-  it('should be possible to create a new folder', function() {
-    this.page.firstItem.$('input[type="checkbox"][selection]').click();
-    this.page.itemToolbarCreateReport.click();
-    expect(this.page.reportOrganizer.getText()).to.eventually.contain('New Report');
+  context('create', function() {
+    it('should be created', function() {
+      this.page.firstItem.$('input[type="checkbox"][selection]').click();
+      this.page.itemToolbarCreateReport.click();
+      expect(this.page.reportEditor.isDisplayed()).to.eventually.be.true;
+      this.page.reportEditor.element(by.model('report.name')).sendKeys('New Report');
+      expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
+      this.page.reportEditorSave.click();
+      expect(this.page.reportOrganizer.getText()).to.eventually.contain('New Report');
+    });
   });
 });
 
