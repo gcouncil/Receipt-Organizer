@@ -19,13 +19,21 @@ function createUserAndReports(self) {
     ]);
   });
 
+  var items = user.then(function(user) {
+    return Q.all([
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id }),
+      self.factory.items.create({ vendor: 'Slow Right', total: 555.55 }, { user: user.id })
+    ]);
+  });
+
   Q.all([
     user,
-    reports
+    reports,
+    items
   ]).done(function(results) {
     var user = results[0];
-    self.factory.items.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
-    self.factory.items.create({ vendor: 'Slow Right', total: 555.55 }, { user: user.id });
+    var item = results[2][0];
+    self.factory.reports.create({ name: 'watergate', items: [item.id] }, { user: user.id });
   });
 
   self.page.get();
@@ -34,11 +42,6 @@ function createUserAndReports(self) {
 describe('Reports CRUD', function() {
   beforeEach(function() {
     createUserAndReports(this);
-  });
-
-  it('should display all of the user\'s reports in the report organizer bar', function() {
-    expect(this.page.reportOrganizer.getText()).to.eventually.contain('product development');
-    expect(this.page.reportOrganizer.getText()).to.eventually.contain('materials report');
   });
 
   context('create', function() {
@@ -86,5 +89,21 @@ describe('reports toolbar button', function() {
     element(by.linkText('product development')).click();
     expect(this.page.notify.getText()).to.eventually.equal('Added 1 item to product development');
     expect(this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).getText()).to.eventually.equal('product development\n1 item');
+  });
+});
+
+describe.only('reports sidebar', function() {
+  beforeEach(function() {
+    createUserAndReports(this);
+  });
+
+  it('should display all of the user\'s reports in the report organizer bar', function() {
+    expect(this.page.reportOrganizer.getText()).to.eventually.contain('product development');
+    expect(this.page.reportOrganizer.getText()).to.eventually.contain('materials report');
+  });
+
+  it('should open report editor on link click', function() {
+    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('.list-group-item-heading').click();
+    expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
   });
 });

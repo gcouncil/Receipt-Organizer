@@ -50,6 +50,7 @@ function ItemPage(factory, user) {
   this.newFolder = $('.new-folder');
 
   this.reportOrganizer = $('.report-organizer');
+  this.firstReportInOrganizer = this.reportOrganizer.element(by.repeater('report in reports').row(0));
 
   this.reviewFolder = $('.review-folder');
 
