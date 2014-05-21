@@ -1,18 +1,24 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('items toolbar category filter input', function() {
+describe.only('items toolbar category filter input', function() {
   beforeEach(function() {
     var ctx = this;
 
-    ctx.state = {
-      current: '/',
-      go: ctx.sinon.stub()
-    };
+    ctx.state = {};
+    ctx.stateParams = {};
+    ctx.itemStorage = {};
+    ctx.receiptEditor = {};
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemsToolbar', {
-      $state: ctx.state
-    });
+    angular.mock.module(
+      'ngMock',
+      'epsonreceipts.items.items-collection-scope',
+      'epsonreceipts.itemsToolbar',
+      { $state: ctx.state,
+        $stateParams: ctx.stateParams,
+        itemStorage: ctx.itemStorage,
+        receiptEditor: ctx.receiptEditor
+      });
 
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();

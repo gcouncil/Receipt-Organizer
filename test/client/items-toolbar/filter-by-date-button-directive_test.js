@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('items toolbar date filter input directive', function() {
+describe.skip('items toolbar date filter input directive', function() {
   beforeEach(function() {
     var ctx = this;
 
