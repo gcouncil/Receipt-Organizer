@@ -1,5 +1,5 @@
 require('./test-helper');
-require('./expenses');
-require('./expense-table');
-require('./tags');
+require('./items');
+require('./item-table');
+require('./folders');
 require('./users');

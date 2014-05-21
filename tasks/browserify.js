@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         grunt.log.ok('browserify ' + file.src);
         b.bundle(options, function(err, src) {
           if (err) {
-            grunt.log.warn(err);
+            grunt.log.warn(err.stack);
             grunt.log.warn('browserify failed, will retry in 10 seconds to check for new files');
             timeout = setTimeout(bundle, 10e3); // Retry in 10 seconds
           } else {

@@ -10,7 +10,7 @@ describe('image drop zone directive', function() {
       create: ctx.sinon.stub()
     };
 
-    ctx.expenseStorage = {
+    ctx.itemStorage = {
       create: ctx.sinon.stub()
     };
 
@@ -21,7 +21,7 @@ describe('image drop zone directive', function() {
 
     angular.mock.module('ngMock', 'epsonreceipts.images', {
       imageStorage: ctx.imageStorage,
-      expenseStorage: ctx.expenseStorage,
+      itemStorage: ctx.itemStorage,
       notify: ctx.notify
     });
 
@@ -34,9 +34,9 @@ describe('image drop zone directive', function() {
       };
 
       ctx.imageDeferred = $q.defer();
-      ctx.expenseDeferred = $q.defer();
+      ctx.itemDeferred = $q.defer();
       ctx.imageStorage.create.returns(ctx.imageDeferred.promise);
-      ctx.expenseStorage.create.returns(ctx.expenseDeferred.promise);
+      ctx.itemStorage.create.returns(ctx.itemDeferred.promise);
     });
 
     ctx.compile();
@@ -265,27 +265,27 @@ describe('image drop zone directive', function() {
         expect(ctx.imageStorage.create).to.have.been.called;
       });
 
-      it('should create a new expense', function() {
+      it('should create a new item', function() {
         var ctx = this;
         ctx.imageDeferred.resolve({ id: 'ID' });
         ctx.scope.$digest();
-        expect(ctx.expenseStorage.create).to.have.been.called;
+        expect(ctx.itemStorage.create).to.have.been.called;
       });
 
-      it('should notify the user of created expense', function() {
+      it('should notify the user of created item', function() {
         var ctx = this;
         ctx.imageDeferred.resolve({ id: 'ID' });
-        ctx.expenseDeferred.resolve(['EXPENSE']);
+        ctx.itemDeferred.resolve(['EXPENSE']);
         ctx.scope.$digest();
-        expect(ctx.notify.success).to.have.been.calledWith('Created 1 new expenses');
+        expect(ctx.notify.success).to.have.been.calledWith('Created 1 new items');
       });
 
       it('should display error message if there is a server error', function() {
         var ctx = this;
         ctx.imageDeferred.reject();
-        ctx.expenseDeferred.reject();
+        ctx.itemDeferred.reject();
         ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding expenses');
+        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding items');
       });
 
     });
@@ -317,27 +317,27 @@ describe('image drop zone directive', function() {
         expect(ctx.imageStorage.create).to.have.been.called;
       });
 
-      it('should create a new expense', function() {
+      it('should create a new item', function() {
         var ctx = this;
         ctx.imageDeferred.resolve({ id: 'ID' });
         ctx.scope.$digest();
-        expect(ctx.expenseStorage.create).to.have.been.called;
+        expect(ctx.itemStorage.create).to.have.been.called;
       });
 
-      it('should notify the user of created expense', function() {
+      it('should notify the user of created item', function() {
         var ctx = this;
         ctx.imageDeferred.resolve({ id: 'ID' });
-        ctx.expenseDeferred.resolve(['EXPENSE']);
+        ctx.itemDeferred.resolve(['EXPENSE']);
         ctx.scope.$digest();
-        expect(ctx.notify.success).to.have.been.calledWith('Created 1 new expenses');
+        expect(ctx.notify.success).to.have.been.calledWith('Created 1 new items');
       });
 
       it('should display error message if there is a server error', function() {
         var ctx = this;
         ctx.imageDeferred.reject();
-        ctx.expenseDeferred.reject();
+        ctx.itemDeferred.reject();
         ctx.scope.$digest();
-        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding expenses');
+        expect(ctx.notify.error).to.have.been.calledWith('An error occurred while adding items');
       });
     });
   });
