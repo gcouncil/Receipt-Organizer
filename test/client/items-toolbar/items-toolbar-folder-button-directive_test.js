@@ -72,7 +72,7 @@ describe('items toolbar folder button directive', function() {
     });
   });
 
-  describe('folderging items', function() {
+  describe('foldering items', function() {
 
     it('should folder the items with the selected folder', function() {
       var ctx = this;

@@ -20,6 +20,8 @@ describe('item events', function() {
       create: ctx.sinon.stub()
     };
 
+    ctx.reportEditor = ctx.sinon.stub();
+
     ctx.confirmation = ctx.sinon.stub();
 
     ctx.notify = {
@@ -33,7 +35,8 @@ describe('item events', function() {
       itemStorage: ctx.itemStorage,
       imageStorage: ctx.imageStorage,
       confirmation: ctx.confirmation,
-      notify: ctx.notify
+      notify: ctx.notify,
+      reportEditor: ctx.reportEditor
     });
 
     angular.mock.inject(function($rootScope, $q) {

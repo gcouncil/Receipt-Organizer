@@ -5,7 +5,7 @@ var expect = helpers.expect;
 
 var ItemPage = require('./pages/items-page');
 
-describe('CRUD', function() {
+describe('Folders CRUD', function() {
   beforeEach(function() {
     var self = this;
 
