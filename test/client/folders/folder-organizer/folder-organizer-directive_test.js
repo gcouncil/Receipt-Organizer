@@ -15,8 +15,13 @@ describe('folder organizer directive', function() {
       go: ctx.sinon.stub()
     };
 
+    ctx.itemStorage = {
+      watch: ctx.sinon.stub()
+    };
+
     angular.mock.module('ngMock', 'epsonreceipts.folders', {
       folderStorage: ctx.folderStorage,
+      itemStorage: ctx.itemStorage,
       $state: ctx.state
     });
 
