@@ -34,10 +34,17 @@ describe('item storage service', function() {
       Item: ctx.sinon.stub().returnsArg(0)
     };
 
+    ctx.offline = {
+      isOffline: function() {
+        return false;
+      }
+    };
+
     ctx.domain.Item.load = ctx.sinon.stub().returnsArg(0);
 
     angular.mock.module('epsonreceipts.storage', {
-      domain: ctx.domain
+      domain: ctx.domain,
+      offline: ctx.offline
     });
   });
 
