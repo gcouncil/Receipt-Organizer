@@ -92,7 +92,7 @@ describe('reports toolbar button', function() {
   });
 });
 
-describe.only('reports sidebar', function() {
+describe('reports sidebar', function() {
   beforeEach(function() {
     createUserAndReports(this);
   });

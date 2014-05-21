@@ -8,6 +8,8 @@ describe('report editor controller', function() {
       persist: ctx.sinon.stub()
     };
 
+    ctx.itemStorage = {};
+
     angular.mock.module('ngMock', 'epsonreceipts.reports', {
       reportStorage: ctx.reportStorage
     });
@@ -30,7 +32,8 @@ describe('report editor controller', function() {
       ctx.reportEditorController = $controller('ReportEditorController', {
         $scope: ctx.scope,
         deferred: ctx.deferred,
-        reportStorage: ctx.reportStorage
+        reportStorage: ctx.reportStorage,
+        itemStorage: ctx.itemStorage
       });
       ctx.scope.$digest();
     });
