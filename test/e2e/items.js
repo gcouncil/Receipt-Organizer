@@ -256,3 +256,53 @@ describe('Scoping to the current user', function() {
   });
 });
 
+describe('Filter by Category', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    this.page.user.then(function(user) {
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'Tax Item',
+          category: 'tax',
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'Meal Item',
+          category: 'meals',
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
+    this.page.get('thumbnail');
+  });
+
+  it('should filter visible items by category', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+    this.page.itemToolbarCategory.click();
+    this.page.categoryFilterInput.$('input[name="category-input"]').sendKeys('tax');
+    this.page.categoryFilterInput.$('input[type="submit"]').click();
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        expect(item.evaluate('item.category')).to.not.eventually.equal('meals');
+        expect(item.evaluate('item.category')).to.eventually.equal('tax');
+      });
+    });
+
+    this.page.itemToolbarCategory.click();
+    this.page.categoryFilterInput.$('input[name="category-input"]').sendKeys('');
+    this.page.categoryFilterInput.$('input[type="submit"]').click();
+    expect(this.page.items.count()).to.eventually.equal(4);
+  });
+});
+
+
