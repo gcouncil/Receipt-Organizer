@@ -1,5 +1,5 @@
 <div class="container-fluid folder-organizer">
-  <a ng-href="{{ $state.href($state.current, { folder: undefined, category: undefined }) }}">All Receipts</a>
+  <a ng-href="{{ $state.href($state.current, { folder: undefined, startDate: undefined, endDate: undefined, category: undefined }) }}">All Receipts</a>
   <ul>
     <li class="review-folder">
       <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">

@@ -306,3 +306,59 @@ describe('Filter by Category', function() {
 });
 
 
+describe('Filter by Date', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    self.ottsDate = new Date(2005, 1, 1, 1, 1, 1);
+    self.tensDate = new Date(2015, 1, 1, 1, 1, 1);
+
+    this.page.user.then(function(user) {
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'The 2000s',
+          date: self.ottsDate,
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'The 2010s',
+          date: self.tensDate,
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
+    this.page.get('thumbnail');
+  });
+
+  it('should filter visible items by date', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+    this.page.itemToolbarDate.click();
+    this.page.dateFilterInput.element(by.model('startValue')).sendKeys('01/01/00');
+    this.page.dateFilterInput.element(by.model('endValue')).sendKeys('01/01/10');
+    this.page.dateFilterInput.$('input[type="submit"]').click();
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+        });
+      });
+    });
+
+    this.page.itemToolbarDate.click();
+    this.page.dateFilterInput.element(by.model('startValue')).sendKeys('');
+    this.page.dateFilterInput.element(by.model('endValue')).sendKeys('');
+    this.page.dateFilterInput.$('input[type="submit"]').click();
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+  });
+});

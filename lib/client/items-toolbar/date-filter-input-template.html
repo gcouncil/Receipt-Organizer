@@ -1,0 +1,13 @@
+<button class="btn btn-default" title="Date"
+  ng-click="toggleDatePanel()">
+  Filter by Date
+  <i class="fa fa-calendar"></i>
+</button>
+
+<form ng-show="showDatePanel">
+  <label for-"start-date">Start Date</label>
+  <input bs-datepicker ng-model="startValue" name="start-date" class="form-control"/>
+  <label for-"end-date">End Date</label>
+  <input bs-datepicker ng-model="endValue" name="end-date" class="form-control"/>
+  <input type="submit" value="Filter" ng-click="submit()" class="btn btn-default">
+</form>
