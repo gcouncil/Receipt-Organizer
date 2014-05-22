@@ -53,7 +53,7 @@ describe('items toolbar category filter input', function() {
   describe('form submission', function() {
     beforeEach(function() {
       var ctx = this;
-      ctx.sinon.spy(ctx.itemsCollectionScope, 'setFilter');
+      ctx.sinon.spy(ctx.itemsCollectionScope, 'setQueryFilter');
     });
 
     it('should set the filter if there is a category', function() {
@@ -61,7 +61,7 @@ describe('items toolbar category filter input', function() {
       angular.element(ctx.element.find('select[name="category-filter"]')).val('Tax').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('category', 'Tax');
+      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('category', 'Tax');
     });
 
     it('should clear the filter if there is no category', function() {
@@ -69,7 +69,7 @@ describe('items toolbar category filter input', function() {
       angular.element(ctx.element.find('select[name="category-filter"]')).val('ALL').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('category', '');
+      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('category', '');
     });
   });
 });
