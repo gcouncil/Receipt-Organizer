@@ -8,7 +8,7 @@ describe('item table directive', function() {
     var ctx = this;
     ctx.itemStorage = ctx.sinon.stub();
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemTable', 'epsonreceipts.storage', {
+    angular.mock.module('ngMock', 'epsonreceipts.item-table', 'epsonreceipts.storage', {
       itemStorage: ctx.itemStorage,
       imageStorage: ctx.imageStorage,
       options: {}

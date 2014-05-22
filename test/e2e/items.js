@@ -266,14 +266,14 @@ describe('Filter by Category', function() {
       _.times(2, function(i) {
         self.factory.items.create({
           vendor: 'Tax Item',
-          category: 'tax',
+          category: 'Tax',
           total: 100.00 + i
         }, { user: user.id });
       });
       _.times(2, function(i) {
         self.factory.items.create({
-          vendor: 'Meal Item',
-          category: 'meals',
+          vendor: 'Office Expense',
+          category: 'Office Expenses',
           total: 100.00 + i
         }, { user: user.id });
       });
@@ -286,21 +286,24 @@ describe('Filter by Category', function() {
     var self = this;
 
     expect(this.page.items.count()).to.eventually.equal(4);
-    this.page.itemToolbarCategory.click();
-    this.page.categoryFilterInput.$('input[name="category-input"]').sendKeys('tax');
-    this.page.categoryFilterInput.$('input[type="submit"]').click();
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
 
     expect(this.page.items.count()).to.eventually.equal(2);
     browser.driver.call(function() {
       self.page.items.each(function(item) {
-        expect(item.evaluate('item.category')).to.not.eventually.equal('meals');
-        expect(item.evaluate('item.category')).to.eventually.equal('tax');
+        expect(item.evaluate('item.category')).to.not.eventually.equal('Office Expenses');
+        expect(item.evaluate('item.category')).to.eventually.equal('Tax');
       });
     });
+  });
 
-    this.page.itemToolbarCategory.click();
-    this.page.categoryFilterInput.$('input[name="category-input"]').sendKeys('');
-    this.page.categoryFilterInput.$('input[type="submit"]').click();
+  it('should clear the filters', function() {
+    expect(this.page.items.count()).to.eventually.equal(4);
+
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.itemToolbarReset.click();
     expect(this.page.items.count()).to.eventually.equal(4);
   });
 });
@@ -312,10 +315,17 @@ describe('Filter by Date', function() {
 
     this.page = new ItemPage(this.factory);
 
-    self.ottsDate = new Date(2005, 1, 1, 1, 1, 1);
-    self.tensDate = new Date(2015, 1, 1, 1, 1, 1);
+    self.ottsDate = new Date(2005, 0, 1, 1, 1, 1);
+    self.twentyTenDate = new Date(2010, 0, 1, 1, 1);
+    self.tensDate = new Date(2015, 0, 1, 1, 1, 1);
 
     this.page.user.then(function(user) {
+      self.factory.items.create({
+        vendor: '2010',
+        date: self.twentyTenDate,
+        total: 50.00
+      }, { user: user.id });
+
       _.times(2, function(i) {
         self.factory.items.create({
           vendor: 'The 2000s',
@@ -335,30 +345,73 @@ describe('Filter by Date', function() {
     this.page.get('thumbnail');
   });
 
-  it('should filter visible items by date', function() {
+  it('should filter visible items by start date', function() {
     var self = this;
 
-    expect(this.page.items.count()).to.eventually.equal(4);
-    this.page.itemToolbarDate.click();
-    this.page.dateFilterInput.element(by.model('startValue')).sendKeys('01/01/00');
-    this.page.dateFilterInput.element(by.model('endValue')).sendKeys('01/01/10');
-    this.page.dateFilterInput.$('input[type="submit"]').click();
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    // trigger blur
+    this.page.newFolder.click();
 
     expect(this.page.items.count()).to.eventually.equal(2);
     browser.driver.call(function() {
       self.page.items.each(function(item) {
         item.evaluate('item.date').then(function(strDate) {
-          expect(new Date(strDate)).to.deep.equal(self.ottsDate);
-          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.twentyTenDate);
         });
       });
     });
+  });
 
-    this.page.itemToolbarDate.click();
-    this.page.dateFilterInput.element(by.model('startValue')).sendKeys('');
-    this.page.dateFilterInput.element(by.model('endValue')).sendKeys('');
-    this.page.dateFilterInput.$('input[type="submit"]').click();
+  it('should filter visible items by end date', function() {
+    var self = this;
 
-    expect(this.page.items.count()).to.eventually.equal(4);
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="end-date"]').sendKeys('12/31/09');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.twentyTenDate);
+        });
+      });
+    });
+  });
+
+  it('should filter visible items by start and end date', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('12/31/09');
+    this.page.dateFilterInput.$('input[name="end-date"]').sendKeys('1/2/10');
+
+    expect(this.page.items.count()).to.eventually.equal(1);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.deep.equal(self.twentyTenDate);
+        });
+      });
+    });
+  });
+
+  it('should clear the filters', function() {
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.itemToolbarReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(5);
   });
 });

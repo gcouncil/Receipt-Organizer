@@ -33,7 +33,7 @@ describe('items toolbar folder button directive', function() {
       ]
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemsToolbar', {
+    angular.mock.module('ngMock', 'epsonreceipts.items-toolbar', {
       folderStorage: ctx.folderStorage,
       itemStorage: ctx.itemStorage,
       notify: ctx.notify,

@@ -40,8 +40,8 @@ function ItemPage(factory, user) {
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
   this.categoryFilterInput = $('category-filter-input');
-  this.itemToolbarDate = $('items-toolbar [title="Date"]');
   this.dateFilterInput = $('date-filter-input');
+  this.itemToolbarReset = $('items-toolbar .reset-nav li a');
 
   this.folderOrganizer = $('.folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));

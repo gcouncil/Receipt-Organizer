@@ -1,30 +1,42 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('items toolbar category filter input', function() {
+describe('items toolbar category filter input', function() {
   beforeEach(function() {
     var ctx = this;
 
-    ctx.state = {};
+    ctx.state = {
+      current: {
+        data: 'DATA'
+      }
+    };
     ctx.stateParams = {};
-    ctx.itemStorage = {};
     ctx.receiptEditor = {};
+
+    ctx.query = {
+      setFilter: ctx.sinon.stub()
+    };
+
+    ctx.itemStorage = {
+      watch: ctx.sinon.stub().returns(ctx.query)
+    };
 
     angular.mock.module(
       'ngMock',
       'epsonreceipts.items.items-collection-scope',
-      'epsonreceipts.itemsToolbar',
+      'epsonreceipts.items-toolbar',
       { $state: ctx.state,
         $stateParams: ctx.stateParams,
         itemStorage: ctx.itemStorage,
         receiptEditor: ctx.receiptEditor
       });
 
-    angular.mock.inject(function($rootScope, $compile) {
+    angular.mock.inject(function($rootScope, $compile, $controller) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<category-filter-input></category-filter-input>')(ctx.scope);
+        ctx.element = $compile('<div items-collection-scope><category-filter-input></category-filter-input></div>')(ctx.scope);
+        ctx.itemsCollectionScope = ctx.element.controller('itemsCollectionScope');
         ctx.scope.$digest();
       };
     });
@@ -39,26 +51,25 @@ describe.only('items toolbar category filter input', function() {
   });
 
   describe('form submission', function() {
+    beforeEach(function() {
+      var ctx = this;
+      ctx.sinon.spy(ctx.itemsCollectionScope, 'setFilter');
+    });
+
     it('should set the filter if there is a category', function() {
       var ctx = this;
-      ctx.element.find('input[ng-model="category"]').val('abc123').change();
-      ctx.element.find('input[type="submit"]').click();
+      angular.element(ctx.element.find('select[name="category-filter"]')).val('Tax').change();
 
       ctx.scope.$digest();
-      expect(ctx.state.go).to.have.been.calledWith('/', { category: 'abc123' });
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('category', 'Tax');
     });
-  });
 
-  it('should clear the filter if there is no category', function() {
-    var ctx = this;
-    ctx.element.find('input[ng-model="category"]').val('abc123').change();
-    ctx.element.find('input[type="submit"]').click();
-    ctx.scope.$digest();
+    it('should clear the filter if there is no category', function() {
+      var ctx = this;
+      angular.element(ctx.element.find('select[name="category-filter"]')).val('ALL').change();
 
-    ctx.element.find('input[ng-model="category"]').val('').change();
-    ctx.element.find('input[type="submit"]').click();
-    ctx.scope.$digest();
-
-    expect(ctx.state.go).to.have.been.calledWith('/', { category: undefined });
+      ctx.scope.$digest();
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('category', '');
+    });
   });
 });

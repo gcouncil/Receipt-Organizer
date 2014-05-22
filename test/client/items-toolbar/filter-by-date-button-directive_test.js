@@ -1,24 +1,42 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.skip('items toolbar date filter input directive', function() {
+describe('items toolbar date filter input directive', function() {
   beforeEach(function() {
     var ctx = this;
 
     ctx.state = {
-      current: '/',
-      go: ctx.sinon.stub()
+      current: {
+        data: 'DATA'
+      }
+    };
+    ctx.stateParams = {};
+    ctx.receiptEditor = {};
+
+    ctx.query = {
+      setFilter: ctx.sinon.stub()
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemsToolbar', {
-      $state: ctx.state
-    });
+    ctx.itemStorage = {
+      watch: ctx.sinon.stub().returns(ctx.query)
+    };
 
-    angular.mock.inject(function($rootScope, $compile) {
+    angular.mock.module(
+      'ngMock',
+      'epsonreceipts.items.items-collection-scope',
+      'epsonreceipts.items-toolbar',
+      { $state: ctx.state,
+        $stateParams: ctx.stateParams,
+        itemStorage: ctx.itemStorage,
+        receiptEditor: ctx.receiptEditor
+      });
+
+    angular.mock.inject(function($rootScope, $compile, $controller) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<date-filter-input></date-filter-input>')(ctx.scope);
+        ctx.element = $compile('<div items-collection-scope><date-filter-input></date-filter-input></div>')(ctx.scope);
+        ctx.itemsCollectionScope = ctx.element.controller('itemsCollectionScope');
         ctx.scope.$digest();
       };
     });
@@ -33,41 +51,42 @@ describe.skip('items toolbar date filter input directive', function() {
   });
 
   describe('form submission', function() {
-    it('should set the filter if there are start and end dates', function() {
+    beforeEach(function() {
       var ctx = this;
-      ctx.scope.startValue = new Date(1990);
-      ctx.scope.endValue = new Date(2000);
-      ctx.element.find('input[type="submit"]').click();
+      ctx.sinon.spy(ctx.itemsCollectionScope, 'setFilter');
+    });
+
+    it('should set the filter if there is a start date', function() {
+      var ctx = this;
+      angular.element(ctx.element.find('input[name="start-date"]')).val('1/1/01').change();
 
       ctx.scope.$digest();
-      expect(ctx.state.go).to.have.been.calledWith('/', { startDate: ctx.scope.startValue, endDate: ctx.scope.endValue });
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('startDate', '1/1/01');
     });
-  });
 
-  it('should clear the filter if there are no dates', function() {
-    var ctx = this;
-    ctx.scope.startValue = '';
-    ctx.scope.endValue = '';
-    ctx.element.find('input[type="submit"]').click();
-    ctx.scope.$digest();
+    it('should set the filter if there is a start date', function() {
+      var ctx = this;
+      angular.element(ctx.element.find('input[name="end-date"]')).val('1/1/02').change();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: '', endDate: '' });
-  });
+      ctx.scope.$digest();
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('endDate', '1/1/02');
+    });
 
-  it('should ilter if there is only one date', function() {
-    var ctx = this;
-    ctx.scope.startValue = new Date(1990);
-    ctx.scope.endValue = '';
-    ctx.element.find('input[type="submit"]').click();
-    ctx.scope.$digest();
+    it('should clear the filter if there is no start date', function() {
+      var ctx = this;
+      angular.element(ctx.element.find('input[name="start-date"]')).val('').change();
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: ctx.scope.startValue, endDate: '' });
-    ctx.scope.startValue = '';
-    ctx.scope.endValue = new Date(2000);
-    ctx.element.find('input[type="submit"]').click();
-    ctx.scope.$digest();
+      ctx.scope.$digest();
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('startDate', '');
+    });
 
-    expect(ctx.state.go).to.have.been.calledWith('/', { startDate: '', endDate: ctx.scope.endValue });
+    it('should clear the filter if there is no start date', function() {
+      var ctx = this;
+      angular.element(ctx.element.find('input[name="end-date"]')).val('').change();
+
+      ctx.scope.$digest();
+      expect(ctx.itemsCollectionScope.setFilter).to.have.been.calledWith('endDate', '');
+    });
 
   });
 

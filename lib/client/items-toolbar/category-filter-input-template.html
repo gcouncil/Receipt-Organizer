@@ -1,11 +1,10 @@
-<div class="nav navbar-nav navbar-center navbar-form">
+<div class="nav navbar-nav navbar-center navbar-form filter-nav">
   <form>
-    <label for="category-filter" class="filter-label">Filter By Category</label>
+    <label for="category-filter" class="filter-label">Category: </label>
 
     <select name="category-filter"
-      ng-model="category"
+      ng-model="items.filters.category"
       ng-options="option for (option, path) in options"
-      ng-change="submit()"
       class="form-control"
       >
       {{ option }}
