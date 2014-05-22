@@ -22,6 +22,13 @@
   </div>
   <div class="thumbnail-fields">
     <a href="#" ng-click="$emit('items:recognize', [item])">Recognize</a>
+  <div class="thumbnail-fields" ng-if="item.formxtraStatus === 'waiting'">
+    <p class="text-center">
+    Processing<br>
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+    </p>
+  </div>
+  <div class="thumbnail-fields" ng-if="item.formxtraStatus !== 'waiting'">
     <div class="thumbnail-field">
       <div class="thumbnail-label">Vendor:</div>
       <div class="thumbnail-value">{{ item.vendor }}</div>

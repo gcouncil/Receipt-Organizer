@@ -2,6 +2,7 @@ var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
+var moment = require('moment');
 
 var ItemPage = require('./pages/items-page');
 
@@ -29,7 +30,7 @@ describe('Folders CRUD', function() {
     ]).done(function(results) {
       var user = results[0];
       var folders = _.map(results[1], 'id');
-      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders, formxtraStatus: 'skipped' }, { user: user.id });
     });
 
     this.page.get();
@@ -95,9 +96,8 @@ describe('filtering', function() {
       var user = results[0];
       var folder1 = _.map(results[1], 'id');
       var folder2 = _.map(results[2], 'id');
-      self.factory.items.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, folders: folder1 }, { user: user.id });
-      self.factory.items.create({ vendor: 'Xcel Energy', total: 74.64, folders: folder2 }, { user: user.id });
-
+      self.factory.items.create({ vendor: 'Xcel Energy', total: 74.64, folders: folder2, formxtraStatus: 'skipped', date: new Date(2014, 0, 2) }, { user: user.id });
+      self.factory.items.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, folders: folder1, formxtraStatus: 'skipped', date: new Date(2014, 0, 1) }, { user: user.id });
     });
 
     this.page.get();
@@ -111,12 +111,12 @@ describe('filtering', function() {
 
     self.page.firstFolderInOrganizer.$('a').click();
 
-    expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
+    expect(self.page.firstItem.getText()).to.eventually.contain('Boulder Property Management');
     expect(self.page.items).to.eventually.have.length(1);
 
     self.page.secondFolderInOrganizer.$('a').click();
 
-    expect(self.page.firstItem.getText()).to.eventually.contain('Boulder Property Management');
+    expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
     expect(self.page.items).to.eventually.have.length(1);
   }
 
@@ -155,8 +155,8 @@ describe('Multiple Foldering', function() {
     ]).done(function(results) {
       var user = results[0];
       var folders = _.map(results[1], 'id');
-      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders }, { user: user.id });
-      self.factory.items.create({ vendor: 'Slow Right', total: 911.11, folders: folders }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders, formxtraStatus: 'skipped' }, { user: user.id });
+      self.factory.items.create({ vendor: 'Slow Right', total: 911.11, folders: folders, formxtraStatus: 'skipped' }, { user: user.id });
       self.factory.folders.create({ name: 'travel' }, { user: user.id });
     });
 
@@ -166,12 +166,12 @@ describe('Multiple Foldering', function() {
   it('should folder multiple items', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.itemToolbarFolder.click();
@@ -182,14 +182,14 @@ describe('Multiple Foldering', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.select2-search-choice').getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });
 

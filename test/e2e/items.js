@@ -41,7 +41,8 @@ describe('Editing Items', function() {
       self.factory.items.create({
         vendor: 'Walmart',
         city: 'Boulder',
-        total: 10.00
+        total: 10.00,
+        formxtraStatus: 'skipped'
       }, {
         user: user.id
       });
@@ -91,7 +92,8 @@ describe('Deleting Items', function() {
         { total: 2.99 }
       ], function(data) {
         self.factory.items.create(data, {
-          user: user.id
+          user: user.id,
+          formxtraStatus: 'skipped'
         });
       });
     });
@@ -126,7 +128,8 @@ describe('Batch delete', function() {
       _.times(4, function(i) {
         self.factory.items.create({
           vendor: 'Fake Item Generator',
-          total: 100.00 + i
+          total: 100.00 + i,
+          formxtraStatus: 'skipped'
         }, { user: user.id });
       });
     });
@@ -176,11 +179,13 @@ describe('Review Folder', function() {
       this.page.user.then(function(user) {
         _.times(4, function(i) {
           self.factory.items.create({
-            reviewed: false
+            reviewed: false,
+            formxtraStatus: 'skipped'
           }, { user: user.id });
         });
         self.factory.items.create({
-          reviewed: true
+          reviewed: true,
+          formxtraStatus: 'skipped'
         }, { user: user.id });
         self.factory.folders.create({
           name: 'EmptyFolder'
@@ -240,10 +245,10 @@ describe('Scoping to the current user', function() {
     this.page = new ItemPage(this.factory, user);
 
     user.then(function(user) {
-      self.factory.items.create({ vendor: 'Quick Left', total: 199.99 }, { user: user.id });
+      self.factory.items.create({ vendor: 'Quick Left', total: 199.99, formxtraStatus: 'skipped' }, { user: user.id });
     });
     otherUser.then(function(otherUser) {
-      self.factory.items.create({ vendor: 'Microsoft', total: 200.00 }, { user: otherUser.id });
+      self.factory.items.create({ vendor: 'Microsoft', total: 200.00, formxtraStatus: 'skipped' }, { user: otherUser.id });
     });
 
     this.page.get();
