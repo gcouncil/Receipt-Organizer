@@ -1,0 +1,93 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog report-editor-dialog">
+    <form name="form" class="modal-content" ng-submit="save()">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="modal-sidebar">
+            <div class="row">
+              <div class="col-xs-11 formatting-header">
+                <h3>Formatting Options</h3>
+              </div>
+
+              <div class="col-xs-12 formatting-option">
+                <div class="formatting-option-icons">
+                  <i class="fa fa-table"></i>
+                </div>
+                <input id="1001" type="radio" name="formatting-options" value="table-only">
+                <label for="1001">Table Only</label><br />
+              </div>
+
+              <div class="col-xs-12 formatting-option">
+                <div class="formatting-option-icons">
+                  <i class="fa fa-table"></i> +
+                  <i class="fa fa-file-text-o"></i>
+                </div>
+                <input id="1002" type="radio" name="formatting-options" value="table-with-images">
+                <label for="1002">Table With Images</label><br />
+              </div>
+
+              <div class="col-xs-12 formatting-option">
+                <div class="formatting-option-icons">
+                  <i class="fa fa-table"></i> +
+                  <i class="fa fa-list"></i>
+                </div>
+                <input id="1003" type="radio" name="formatting-options" value="images-with-itemization">
+                <label for="1003">Table With Itemization</label><br />
+              </div>
+
+              <div class="col-xs-12 formatting-option">
+                <div class="formatting-option-icons">
+                  <i class="fa fa-table"></i> +
+                  <i class="fa fa-file-text-o"></i> +
+                  <i class="fa fa-list"></i>
+                </div>
+                <input id="1004" type="radio" name="formatting-options" value="table-images-itemization">
+                <label for="1004">Table, Images, Itemization</label><br />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-8">
+          <div class="modal-header">
+            <div class="row">
+              <div class="col-xs-12">
+                <label for="report-name">Report Name: </label>
+                <input type="text" ng-model="report.name" name="report-name"/>
+                <button type="submit" class="btn btn-success" ng-disabled="items.length < 1">Save &amp; Close</button>
+                <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 modal-body-button-toggle">
+                  <button class="btn btn-primary" ng-disabled="true">Print</button>
+                  <button class="btn btn-primary" ng-disabled="true">Email</button>
+                  <button class="btn btn-primary" ng-disabled="true">Save as <span>PDF<i class="fa fa-caret-down"></i></span></button>
+                </div>
+                <div class="col-xs-12">
+                  <h4>{{ items.length }} Included
+                  <ng-pluralize count="items.length"
+                  when="{'1':'Item:', 'other':'Items:'}">
+                  </ng-pluralize></h4>
+                  <ul class="items-listing">
+                    <li ng-repeat="item in items" class="item-details col-xs-12">
+                    <hr />
+                    <div class="col-xs-2 col-xs-offset-1">{{ item.total | currency }}</div>
+                    <div class="col-xs-2">{{ item.vendor }}</div>
+                    <div class="col-xs-2">{{ item.date | date }}</div>
+                    <div class="col-xs-2">{{ item.type }}</div>
+                    <div class="col-xs-2"><a ng-click="remove(item)">Remove</a></div>
+                    </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

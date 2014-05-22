@@ -11,25 +11,42 @@ describe('item drop zone directive', function() {
       update: ctx.sinon.stub()
     };
 
+    ctx.reportStorage = {
+      fetch: ctx.sinon.stub(),
+      update: ctx.sinon.stub()
+    };
+
     ctx.notify = {
       success: ctx.sinon.stub(),
       error: ctx.sinon.stub()
     };
 
+    function Folder() {}
+    function Report() {}
+
     angular.mock.module('ngMock', 'epsonreceipts.items.drop-zone', {
       itemStorage: ctx.itemStorage,
+      reportStorage: ctx.reportStorage,
       notify: ctx.notify
     });
 
     angular.mock.inject(function($rootScope, $compile, $q) {
       ctx.scope = $rootScope.$new();
+      ctx.reportScope = $rootScope.$new();
 
       ctx.compile = function() {
         ctx.element = $compile('<div item-drop-zone folder="folder"></div>')(ctx.scope);
+        ctx.reportElement = $compile('<div item-drop-zone report="report"></div>')(ctx.reportScope);
         ctx.scope.folder = { name: 'folder1', id: 1 };
+        ctx.reportScope.report = { name: 'report1', id: 2 };
+        ctx.scope.folder.constructor = Folder;
+        ctx.reportScope.report.constructor = Report;
         ctx.deferred = $q.defer();
+        ctx.reportDeferred = $q.defer();
         ctx.itemStorage.fetch.returns(ctx.deferred.promise);
+        ctx.reportStorage.fetch.returns(ctx.reportDeferred.promise);
         ctx.scope.$digest();
+        ctx.reportScope.$digest();
       };
     });
     ctx.compile();
@@ -175,7 +192,7 @@ describe('item drop zone directive', function() {
 
         ctx.event = {
           dataTransfer: {
-            types: ['application/json+item'],
+            types: ['application/json+image'],
             dropEffect: 'copy',
             getData: ctx.sinon.stub().returns(ctx.data)
           },
@@ -191,11 +208,18 @@ describe('item drop zone directive', function() {
 
         var e = $.Event('drop', ctx.event);
         ctx.element.trigger(e);
+        ctx.reportElement.trigger(e);
       });
 
       it('should not add the folder the item', function() {
         var ctx = this;
         expect(ctx.itemStorage.fetch).not.to.have.been.called;
+        expect(ctx.itemStorage.update).not.to.have.been.called;
+      });
+
+      it('should not add the item to the report', function() {
+        var ctx = this;
+        expect(ctx.reportStorage.update).not.to.have.been.called;
       });
     });
 
@@ -216,73 +240,147 @@ describe('item drop zone directive', function() {
         };
       });
 
-      context('with a duplicate', function() {
-        beforeEach(function() {
-          var ctx = this;
-          ctx.deferred.resolve({
-            folders: [1],
-            clone: function() {
-              return angular.copy(this);
-            }
+      context('adding to report', function() {
+        context('with a duplicate', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.reportDeferred.resolve({
+              items: [2],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.reportElement.trigger(e);
           });
-          var e = $.Event('drop', ctx.event);
-          ctx.element.trigger(e);
+
+          it('should not update the item if there is a duplicate', function() {
+            var ctx = this;
+            ctx.reportScope.$digest();
+            expect(ctx.reportStorage.update).not.to.have.been.called;
+          });
+
+          it('should display duplicate message if there is no result', function() {
+            var ctx = this;
+            ctx.reportStorage.update.returns();
+            ctx.reportScope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('Item already in the report1 report!');
+          });
         });
 
-        it('should not update the item if there is a duplicate', function() {
-          var ctx = this;
-          ctx.scope.$digest();
-          expect(ctx.itemStorage.update).not.to.have.been.called;
+        context('without errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.reportDeferred.resolve({
+              items: [],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.reportElement.trigger(e);
+          });
+
+          it('should get the data from the event', function() {
+            var ctx = this;
+            ctx.reportScope.$digest();
+            expect(ctx.event.dataTransfer.getData).to.have.been.called;
+          });
+
+          it('should display success message if there is a result', function() {
+            var ctx = this;
+            ctx.reportStorage.update.returns('REPORT');
+            ctx.reportScope.$digest();
+            expect(ctx.notify.success).to.have.been.calledWith('Added your item to the report1 report.');
+          });
         });
 
-        it('should display duplicate message if there is no result', function() {
-          var ctx = this;
-          ctx.itemStorage.update.returns();
-          ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('Item already in the folder1 folder!');
+        context('with errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.reportDeferred.reject();
+            var e = $.Event('drop', ctx.event);
+            ctx.reportElement.trigger(e);
+          });
+
+          it('should display errors', function() {
+            var ctx = this;
+            ctx.reportScope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your item to the report1 report.');
+          });
         });
 
       });
 
-      context('without errors', function() {
-        beforeEach(function() {
-          var ctx = this;
-          ctx.deferred.resolve({
-            folders: [],
-            clone: function() {
-              return angular.copy(this);
-            }
+      context('adding to folder', function() {
+        context('with a duplicate', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.resolve({
+              folders: [1],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
           });
-          var e = $.Event('drop', ctx.event);
-          ctx.element.trigger(e);
+
+          it('should not update the item if there is a duplicate', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.itemStorage.update).not.to.have.been.called;
+          });
+
+          it('should display duplicate message if there is no result', function() {
+            var ctx = this;
+            ctx.itemStorage.update.returns();
+            ctx.scope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('Item already in the folder1 folder!');
+          });
+
         });
 
-        it('should get the data from the event', function() {
-          var ctx = this;
-          ctx.scope.$digest();
-          expect(ctx.event.dataTransfer.getData).to.have.been.called;
+        context('without errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.resolve({
+              folders: [],
+              clone: function() {
+                return angular.copy(this);
+              }
+            });
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
+          });
+
+          it('should get the data from the event', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.event.dataTransfer.getData).to.have.been.called;
+          });
+
+          it('should display success message if there is a result', function() {
+            var ctx = this;
+            ctx.itemStorage.update.returns('EXPENSE');
+            ctx.scope.$digest();
+            expect(ctx.notify.success).to.have.been.calledWith('Added your item to the folder1 folder.');
+          });
         });
 
-        it('should display success message if there is a result', function() {
-          var ctx = this;
-          ctx.itemStorage.update.returns('EXPENSE');
-          ctx.scope.$digest();
-          expect(ctx.notify.success).to.have.been.calledWith('Added your item to the folder1 folder.');
-        });
-      });
+        context('with errors', function() {
+          beforeEach(function() {
+            var ctx = this;
+            ctx.deferred.reject();
+            var e = $.Event('drop', ctx.event);
+            ctx.element.trigger(e);
+          });
 
-      context('with errors', function() {
-        beforeEach(function() {
-          var ctx = this;
-          ctx.deferred.reject();
-          var e = $.Event('drop', ctx.event);
-          ctx.element.trigger(e);
-        });
-
-        it('should display errors', function() {
-          var ctx = this;
-          ctx.scope.$digest();
-          expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your item to the folder1 folder.');
+          it('should display errors', function() {
+            var ctx = this;
+            ctx.scope.$digest();
+            expect(ctx.notify.error).to.have.been.calledWith('There was a problem adding your item to the folder1 folder.');
+          });
         });
       });
     });
