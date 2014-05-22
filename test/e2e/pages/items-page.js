@@ -42,8 +42,8 @@ function ItemPage(factory, user) {
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
-  this.categoryFilterInput = $('category-filter-input');
-  this.dateFilterInput = $('date-filter-input');
+  this.categoryFilterInput = $('category-filter');
+  this.dateFilterInput = $('date-filter');
   this.itemToolbarReset = $('items-toolbar .reset-nav li a');
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');

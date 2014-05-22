@@ -1,49 +1,51 @@
-<div class="nav navbar-nav navbar-left navbar-form">
-  <bulk-selection selection="items.selection"></bulk-selection>
-  <button class="btn btn-default" title="Mark as Reviewed"
-    ng-click="$emit('items:reviewed', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-check"></i>
-  </button>
-  <-folder-button
+<div>
+  <div class="nav navbar-nav navbar-left navbar-form">
+    <bulk-selection selection="items.selection"></bulk-selection>
+    <button class="btn btn-default" title="Mark as Reviewed"
+      ng-click="$emit('items:reviewed', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-check"></i>
+    </button>
+    <folder-button
     selection="items.selection">
-  </folder-button>
-   <button class="btn btn-default" title="Edit"
-    ng-click="$emit('items:edit', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-edit"></i>
-  </button>
-  <button class="btn btn-default" title="Create New Report"
-    ng-click="$emit('items:newReport', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    Create New Report
-  </button>
-  <update-report-button
+    </folder-button>
+    <button class="btn btn-default" title="Edit"
+      ng-click="$emit('items:edit', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-edit"></i>
+    </button>
+    <button class="btn btn-default" title="Create New Report"
+      ng-click="$emit('items:newReport', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      Create New Report
+    </button>
+    <update-report-button
     selection="items.selection">
-  </update-report-button>
-  <button class="btn btn-default" title="Delete"
-    ng-click="$emit('items:destroy', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-trash-o"></i>
-  </button>
-  <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
+    </update-report-button>
+    <button class="btn btn-default" title="Delete"
+      ng-click="$emit('items:destroy', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-trash-o"></i>
+    </button>
+    <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
+  </div>
+
+  <div class="nav navbar-nav navbar-right navbar-form">
+    <er-pagination controller="items.pagination"></er-pagination>
+    <item-view-toggle></item-view-toggle>
+  </div>
+
+  <div class="folders-panel" ng-show="showingFolders">
+    <ul>
+      <li ng-repeat="folder in folders"><a ng-click="addFolder()">{{ folder.name }}</a></li>
+    </ul>
+  </div>
 </div>
 
-<div class="nav navbar-nav navbar-center navbar-form">
-  <category-filter></category-filter>
-  <date-filter></date-filter>
-  <filter-reset></filter-reset>
+<div class="filters-nav">
+  <div class="nav navbar-nav navbar-center navbar-form">
+    <category-filter></category-filter>
+    <date-filter></date-filter>
+    <filter-reset></filter-reset>
+  </div>
 </div>
-
-<div class="nav navbar-nav navbar-right navbar-form">
-  <er-pagination controller="items.pagination"></er-pagination>
-
-  <item-view-toggle></item-view-toggle>
-</div>
-
-<div class="folders-panel" ng-show="showingFolders">
-  <ul>
-    <li ng-repeat="folder in folders"><a ng-click="addFolder()">{{ folder.name }}</a></li>
-  </ul>
-</div>
-
