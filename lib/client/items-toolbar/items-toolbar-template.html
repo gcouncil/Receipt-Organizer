@@ -5,9 +5,9 @@
     ng-disabled="!items.selection.hasSelection()">
     <i class="fa fa-check"></i>
   </button>
-  <items-toolbar-folder-button
+  <-folder-button
     selection="items.selection">
-  </items-toolbar-folder-button>
+  </folder-button>
    <button class="btn btn-default" title="Edit"
     ng-click="$emit('items:edit', items.selection.selectedItems)"
     ng-disabled="!items.selection.hasSelection()">
@@ -18,9 +18,9 @@
     ng-disabled="!items.selection.hasSelection()">
     Create New Report
   </button>
-  <items-toolbar-update-report-button
+  <update-report-button
     selection="items.selection">
-  </items-toolbar-update-report-button>
+  </update-report-button>
   <button class="btn btn-default" title="Delete"
     ng-click="$emit('items:destroy', items.selection.selectedItems)"
     ng-disabled="!items.selection.hasSelection()">
@@ -30,8 +30,8 @@
 </div>
 
 <div class="nav navbar-nav navbar-center navbar-form">
-  <category-filter-input></category-filter-input>
-  <date-filter-input></date-filter-input>
+  <category-filter></category-filter>
+  <date-filter></date-filter>
   <filter-reset></filter-reset>
 </div>
 

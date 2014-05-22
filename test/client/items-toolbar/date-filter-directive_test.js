@@ -35,7 +35,7 @@ describe('items toolbar date filter input directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div items-collection-scope><date-filter-input></date-filter-input></div>')(ctx.scope);
+        ctx.element = $compile('<div items-collection-scope><date-filter></date-filter></div>')(ctx.scope);
         ctx.itemsCollectionScope = ctx.element.controller('itemsCollectionScope');
         ctx.scope.$digest();
       };

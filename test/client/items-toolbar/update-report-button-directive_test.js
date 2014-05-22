@@ -45,7 +45,7 @@ describe('items toolbar update report button directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<items-toolbar-update-report-button selection="selection"></items-toolbar-update-report-button>')(ctx.scope);
+        ctx.element = $compile('<update-report-button selection="selection"></update-report-button>')(ctx.scope);
         ctx.scope.dropdown = ctx.dropdown();
         ctx.scope.selection = ctx.selection;
         ctx.scope.$digest();
