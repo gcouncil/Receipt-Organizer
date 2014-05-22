@@ -6,7 +6,7 @@ var moment = require('moment');
 
 var ItemPage = require('./pages/items-page');
 
-describe('CRUD', function() {
+describe('Folders CRUD', function() {
   beforeEach(function() {
     var self = this;
 
