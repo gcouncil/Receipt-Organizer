@@ -14,6 +14,7 @@ describe('toplevel layout directive', function() {
       ctx.scope = $rootScope.$new();
       $httpBackend.when('GET', '/api/items').respond([]);
       $httpBackend.when('GET', '/api/folders').respond([]);
+      $httpBackend.when('GET', '/api/reports').respond([]);
 
       ctx.compile = function() {
         ctx.element = $compile('<toplevel-layout></toplevel-layout>')(ctx.scope);
