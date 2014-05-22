@@ -35,7 +35,7 @@ describe('items toolbar category filter input', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<div items-collection-scope><category-filter-input></category-filter-input></div>')(ctx.scope);
+        ctx.element = $compile('<div items-collection-scope><category-filter></category-filter></div>')(ctx.scope);
         ctx.itemsCollectionScope = ctx.element.controller('itemsCollectionScope');
         ctx.scope.$digest();
       };

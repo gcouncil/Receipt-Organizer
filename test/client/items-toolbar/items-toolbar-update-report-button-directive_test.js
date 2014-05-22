@@ -34,7 +34,7 @@ describe('items toolbar update report button directive', function() {
       ]
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemsToolbar', {
+    angular.mock.module('ngMock', 'epsonreceipts.items-toolbar', {
       reportStorage: ctx.reportStorage,
       itemStorage: ctx.itemStorage,
       notify: ctx.notify,
@@ -86,11 +86,7 @@ describe('items toolbar update report button directive', function() {
 
     it('should not double folder items', function() {
       var ctx = this;
-      ctx.selection = {
-        selectedItems: [
-          { name: 'item2', id: 8 },
-        ]
-      };
+      ctx.selection.selectedItems = [ { name: 'item2', id: 8 } ];
       ctx.compile();
 
       ctx.scope.dropdown.$scope.addItemsToReport({ name: 'report2', id: 2, items: [8] });
