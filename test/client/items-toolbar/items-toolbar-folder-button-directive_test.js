@@ -72,7 +72,7 @@ describe('items toolbar folder button directive', function() {
     });
   });
 
-  describe('foldering items', function() {
+  describe('adding items to folders', function() {
 
     it('should folder the items with the selected folder', function() {
       var ctx = this;
@@ -84,11 +84,7 @@ describe('items toolbar folder button directive', function() {
 
     it('should not double folder items', function() {
       var ctx = this;
-      ctx.selection = {
-        selectedItems: [
-          { name: 'item2', folders: [1] },
-        ]
-      };
+      ctx.selection.selectedItems = [ { name: 'item2', folders: [1] } ];
       ctx.compile();
 
       ctx.scope.dropdown.$scope.folderItems({ name: 'folder1', id: 1 });
