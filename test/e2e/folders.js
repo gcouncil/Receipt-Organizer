@@ -2,7 +2,6 @@ var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
-var moment = require('moment');
 
 var ItemPage = require('./pages/items-page');
 

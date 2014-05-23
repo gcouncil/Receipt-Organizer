@@ -70,6 +70,28 @@ describe('confirmationInput directive', function() {
         expect(ctx.scope.form.$invalid).to.be.true;
       });
     });
+
+    context('when the original password is updated to not match', function() {
+      beforeEach(function() {
+        var ctx = this;
+        ctx.compile();
+        ctx.passwordController.$setViewValue('password');
+        ctx.passwordConfirmationController.$setViewValue('password');
+        ctx.scope.$digest();
+        ctx.passwordController.$setViewValue('wrong');
+        ctx.scope.$digest();
+      });
+
+      it('should show the field as invalid', function() {
+        var ctx = this;
+        expect(ctx.passwordConfirmationController.$invalid).to.be.true;
+      });
+
+      it('should show the form as invalid', function() {
+        var ctx = this;
+        expect(ctx.scope.form.$invalid).to.be.true;
+      });
+    });
   });
 });
 
