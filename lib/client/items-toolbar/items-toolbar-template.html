@@ -33,14 +33,14 @@
       </update-report-button>
     </div>
 
-    <button class="btn-link" ng-click="showFilters()">
+    <button class="btn-link filter-toolbar-button" ng-click="showFilters()">
       <i class="fa fa-search"></i>
       Filter
     </button>
   </div>
 
   <div class="nav navbar-nav navbar-right navbar-form">
-    <!-- <er-pagination controller="items.pagination"></er-pagination> -->
+     <er-pagination controller="items.pagination"></er-pagination>
     <item-view-toggle></item-view-toggle>
   </div>
 
@@ -52,11 +52,11 @@
 </div>
 
 <div>
-<div class="nav navbar-nav navbar-left filters-nav" ng-show="showingFilters">
-  <div class="nav navbar-nav navbar-center navbar-form">
-    <date-filter></date-filter>
-    <category-filter></category-filter>
-    <filter-reset showing-filters="showingFilters"></filter-reset>
+  <div class="nav navbar-nav navbar-left filters-nav" ng-show="showingFilters">
+    <div class="nav navbar-nav navbar-center navbar-form">
+      <date-filter></date-filter>
+      <category-filter></category-filter>
+      <filter-reset showing-filters="showingFilters"></filter-reset>
+    </div>
   </div>
-</div>
 </div>

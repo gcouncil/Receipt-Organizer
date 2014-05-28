@@ -27,7 +27,6 @@ function ItemPage(factory, user) {
   this.firstItem = element(itemRepeater.row(0));
   this.secondItem = element(itemRepeater.row(1));
 
-
   this.firstItemSelect = this.firstItem.$('input[type="checkbox"][selection]');
   this.secondItemSelect = this.secondItem.$('input[type="checkbox"][selection]');
 
@@ -42,9 +41,12 @@ function ItemPage(factory, user) {
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
+  this.filterToolbarButton = $('.filter-toolbar-button');
   this.categoryFilterInput = $('category-filter');
   this.dateFilterInput = $('date-filter');
+  this.filterReset = $('filter-reset a');
   this.itemToolbarReset = $('items-toolbar .reset-nav li a');
+  this.filtersNav = $('.filters-nav');
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
 

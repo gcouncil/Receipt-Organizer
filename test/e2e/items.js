@@ -285,6 +285,7 @@ describe('Filter by Category', function() {
     });
 
     this.page.get('thumbnail');
+    this.page.filterToolbarButton.click();
   });
 
   it('should filter visible items by category', function() {
@@ -311,8 +312,20 @@ describe('Filter by Category', function() {
     this.page.itemToolbarReset.click();
     expect(this.page.items.count()).to.eventually.equal(4);
   });
-});
 
+  it('should clear the filters with the filter-reset button', function() {
+    expect(this.page.items.count()).to.eventually.equal(4);
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.filterReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+    expect(this.page.filtersNav.isDisplayed()).to.eventually.equal.false;
+  });
+
+});
 
 describe('Filter by Date', function() {
   beforeEach(function() {
@@ -348,6 +361,7 @@ describe('Filter by Date', function() {
     });
 
     this.page.get('thumbnail');
+    this.page.filterToolbarButton.click();
   });
 
   it('should filter visible items by start date', function() {
@@ -409,7 +423,7 @@ describe('Filter by Date', function() {
     });
   });
 
-  it('should clear the filters', function() {
+  it('should clear the filters with empty field', function() {
     expect(this.page.items.count()).to.eventually.equal(5);
     this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
 
@@ -418,5 +432,17 @@ describe('Filter by Date', function() {
     this.page.itemToolbarReset.click();
 
     expect(this.page.items.count()).to.eventually.equal(5);
+  });
+
+  it('should clear the filters with the filter-reset button', function() {
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.filterReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+    expect(this.page.filtersNav.isDisplayed()).to.eventually.equal.false;
   });
 });
