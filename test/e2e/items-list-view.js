@@ -20,17 +20,17 @@ describe('Toggling the View', function() {
     // Ensure that table view is displayed
     this.page.showTableButton.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
-    expect($('item-table').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
     this.page.showThumbnailsButton.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
-    expect($('item-table').isPresent()).to.eventually.be.false;
+    expect($('items-list-view').isPresent()).to.eventually.be.false;
 
     // Make sure we can return to table view
     this.page.showTableButton.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
-    expect($('item-table').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
   });
 });
 
@@ -89,9 +89,9 @@ describe('Pagination', function() {
   });
 
   it('should contain existing items', function() {
-    expect($('item-table').isPresent()).to.eventually.be.true;
-    expect($('item-table').getText()).to.eventually.contain('114.00');
-    expect($('item-table').getText()).to.eventually.contain('106.00');
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').getText()).to.eventually.contain('114.00');
+    expect($('items-list-view').getText()).to.eventually.contain('106.00');
   });
 
   it('should display paginated results', function() {

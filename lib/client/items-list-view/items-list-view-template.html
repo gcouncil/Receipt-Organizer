@@ -1,5 +1,5 @@
-<div class="container-fluid item-table-container">
-  <table class="table table-condensed item-table">
+<div class="container-fluid items-list-view-container">
+  <table class="table table-condensed items-list-view">
     <thead>
       <tr>
         <th style="width: 45px;"></th>
@@ -27,7 +27,7 @@
         form-auto-save="update(item)"
         ng-repeat="item in items track by item.id"
         ng-init="item = item.clone()"
-        ng-class="{ 'item-table-row-reviewed': item.reviewed, 'item-table-row-unreviewed': !item.reviewed }">
+        ng-class="{ 'items-list-view-row-reviewed': item.reviewed, 'items-list-view-row-unreviewed': !item.reviewed }">
         <td>
           <is-selected selection="selection" selection-id="item.id"></is-selected>
           &nbsp;
@@ -96,5 +96,5 @@
     </tbody>
   </table>
 </div>
-<div class="item-table-sidebar">
+<div class="items-list-view-sidebar">
 </div>

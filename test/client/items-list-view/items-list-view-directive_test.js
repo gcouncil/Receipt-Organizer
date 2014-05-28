@@ -2,13 +2,13 @@ var angular = require('angular');
 var expect = require('chai').expect;
 var $ = require('jquery');
 
-describe('item table directive', function() {
+describe('items list view directive', function() {
 
   beforeEach(function() {
     var ctx = this;
     ctx.itemStorage = ctx.sinon.stub();
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemTable', 'epsonreceipts.storage', {
+    angular.mock.module('ngMock', 'epsonreceipts.itemsListView', 'epsonreceipts.storage', {
       itemStorage: ctx.itemStorage,
       imageStorage: ctx.imageStorage,
       options: {}
@@ -18,7 +18,7 @@ describe('item table directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<item-table items="items"></item-table>')(ctx.scope);
+        ctx.element = $compile('<items-list-view items="items"></items-list-view>')(ctx.scope);
         ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
         ctx.scope.items = [{
           vendor: 'a',

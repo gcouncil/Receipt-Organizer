@@ -1,14 +1,14 @@
-item-table {
+items-list-view {
   .flex-box();
   .flex();
   align-content: stretch;
 
-  .item-table-container {
+  .items-list-view-container {
     .flex();
     overflow: auto;
   }
 
-  table.item-table {
+  table.items-list-view {
     min-width: 1600px;
     table-layout: fixed;
 
@@ -31,7 +31,7 @@ item-table {
     }
   }
 
-  .item-table-sidebar {
+  .items-list-view-sidebar {
     .flex-box();
     .noflex(25px);
     align-content: stretch;
@@ -39,7 +39,7 @@ item-table {
   }
 }
 
-.item-table-row-unreviewed {
+.items-list-view-row-unreviewed {
   background: #def;
 
   &:hover {
@@ -47,7 +47,7 @@ item-table {
   }
 }
 
-.item-table-row-reviewed {
+.items-list-view-row-reviewed {
   &:hover {
     background: @gray-lighter;
   }
