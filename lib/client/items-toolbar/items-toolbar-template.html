@@ -1,37 +1,46 @@
 <div>
   <div class="nav navbar-nav navbar-left navbar-form">
     <bulk-selection selection="items.selection"></bulk-selection>
-    <button class="btn btn-default" title="Mark as Reviewed"
-      ng-click="$emit('items:reviewed', items.selection.selectedItems)"
-      ng-disabled="!items.selection.hasSelection()">
-      <i class="fa fa-check"></i>
-    </button>
-    <folder-button
-    selection="items.selection">
-    </folder-button>
-    <button class="btn btn-default" title="Edit"
-      ng-click="$emit('items:edit', items.selection.selectedItems)"
-      ng-disabled="!items.selection.hasSelection()">
-      <i class="fa fa-edit"></i>
-    </button>
+
     <button class="btn btn-default" title="Create New Report"
       ng-click="$emit('items:newReport', items.selection.selectedItems)"
       ng-disabled="!items.selection.hasSelection()">
-      Create New Report
+      <i class="fa fa-plus-circle"></i>
+      Create Report
     </button>
-    <update-report-button
-    selection="items.selection">
-    </update-report-button>
-    <button class="btn btn-default" title="Delete"
-      ng-click="$emit('items:destroy', items.selection.selectedItems)"
-      ng-disabled="!items.selection.hasSelection()">
-      <i class="fa fa-trash-o"></i>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-default" title="Edit"
+        ng-click="$emit('items:edit', items.selection.selectedItems)"
+        ng-disabled="!items.selection.hasSelection()">
+        <i class="fa fa-edit"></i>
+        Edit
+      </button>
+      <button type="button" class="btn btn-default" title="Delete"
+        ng-click="$emit('items:destroy', items.selection.selectedItems)"
+        ng-disabled="!items.selection.hasSelection()">
+        <i class="fa fa-trash-o"></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="btn-group">
+      <folder-button
+      selection="items.selection">
+      </folder-button>
+      <update-report-button
+      selection="items.selection">
+      </update-report-button>
+    </div>
+
+    <button class="btn-link" ng-click="showFilters()">
+      <i class="fa fa-search"></i>
+      Filter
     </button>
-    <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
   </div>
 
   <div class="nav navbar-nav navbar-right navbar-form">
-    <er-pagination controller="items.pagination"></er-pagination>
+    <!-- <er-pagination controller="items.pagination"></er-pagination> -->
     <item-view-toggle></item-view-toggle>
   </div>
 
@@ -42,10 +51,12 @@
   </div>
 </div>
 
-<div class="filters-nav">
+<div>
+<div class="nav navbar-nav navbar-left filters-nav" ng-show="showingFilters">
   <div class="nav navbar-nav navbar-center navbar-form">
-    <category-filter></category-filter>
     <date-filter></date-filter>
-    <filter-reset></filter-reset>
+    <category-filter></category-filter>
+    <filter-reset showing-filters="showingFilters"></filter-reset>
   </div>
+</div>
 </div>
