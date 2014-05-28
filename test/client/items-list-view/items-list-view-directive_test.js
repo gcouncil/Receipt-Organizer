@@ -7,9 +7,13 @@ describe('items list view directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.itemStorage = ctx.sinon.stub();
+    ctx.folderStorage = {
+      query: ctx.sinon.stub()
+    };
 
     angular.mock.module('ngMock', 'epsonreceipts.itemsListView', 'epsonreceipts.storage', {
       itemStorage: ctx.itemStorage,
+      folderStorage: ctx.folderStorage,
       imageStorage: ctx.imageStorage,
       options: {},
       titlecaseFilter: ctx.sinon.stub()

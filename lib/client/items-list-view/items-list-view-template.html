@@ -5,8 +5,8 @@
         <th style="width: 45px;"></th>
         <th>Vendor</th>
         <th>Total</th>
-        <th>Payment Type</th>
         <th>Category</th>
+        <th>Folders</th>
         <th>Date</th>
         <th>Item Type</th>
       </tr>
@@ -27,10 +27,10 @@
           <span>{{ item.total | currency }}</span>
         </td>
         <td>
-          <span>{{ item.paymentType }}</span>
+          <span>{{ item.category }}</span>
         </td>
         <td>
-          <span>{{ item.category }}</span>
+          <span>{{ getItemFolderNames(item) }}</span>
         </td>
         <td>
           <span>{{ item.date | date: 'shortDate' }}</span>
