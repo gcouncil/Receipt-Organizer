@@ -1,48 +1,56 @@
-items-list-view {
-  .flex-box();
-  .flex();
-  align-content: stretch;
+.items-list-view-container {
+  padding: 0px 45px;
 
-  .items-list-view-container {
-    .flex();
-    overflow: auto;
-  }
+  .items-list-view-row {
 
-  table.items-list-view {
-    min-width: 1600px;
-    table-layout: fixed;
-
-
-    > thead > tr > {
-      th {
-        padding: 3px (@padding-base-horizontal + 1px + 3px);
-      }
+    .items-list-view-item {
+      border: 1px solid rgb(35, 122, 251);
+      margin-top: 15px;
+      display: block;
+      display: flex;
     }
 
-    > tbody > tr > {
-      td > span.placeholder {
-        padding: @padding-base-horizontal + 1px;
-      }
-
-      td {
-        line-height: 34px;
-        padding: 3px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
-      }
+    .items-list-view-item.items-list-view-row-expense {
+      background: lightgrey;
+      border: 1px solid grey;
     }
-  }
 
-  .items-list-view-sidebar {
-    .flex-box();
-    .noflex(25px);
-    align-content: stretch;
-    overflow: hidden;
+    .items-list-view-item.items-list-view-row-unreviewed {
+      border: 2px solid rgb(230, 184, 79);
+    }
+
+    .list-view-data {
+      display: inline;
+      flex-basis: 16%;
+      line-height: 34px;
+      padding: 2px 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 90%;
+    }
+
+    .list-view-data-sm {
+      display: inline;
+      flex-basis: 8%;
+      line-height: 34px;
+      padding: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 90%;
+    }
+
+    .items-list-view-headers {
+      border: none;
+      color: grey;
+      font-size: 1.01em;
+    }
   }
 }
+
 .items-list-view-row-unreviewed {
   background: rgb(254, 241, 212);
   border: 2px solid rgb(230, 184, 79);
@@ -54,11 +62,5 @@ items-list-view {
   .list-item-review-status {
     background: rgb(230, 184, 79);
     font-size: 1.3em;
-  }
-}
-
-.items-list-view-row-reviewed {
-  &:hover {
-    background: @gray-lighter;
   }
 }

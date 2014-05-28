@@ -1,47 +1,30 @@
-<div class="container-fluid items-list-view-container">
-  <table class="table table-condensed items-list-view">
-    <thead>
-      <tr>
-        <th style="width: 45px;"></th>
-        <th>Vendor</th>
-        <th>Total</th>
-        <th>Category</th>
-        <th>Folders</th>
-        <th>Date</th>
-        <th>Item Type</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        ng-repeat="item in items track by item.id"
-        ng-init="item = item.clone()"
-        ng-class="{ 'items-list-view-row-reviewed': item.reviewed, 'items-list-view-row-unreviewed': !item.reviewed }">
-        <td>
-          <is-selected selection="selection" selection-id="item.id"></is-selected>
-          &nbsp;
-        </td>
-        <td>
-          <span>{{ item.vendor }}</span>
-        </td>
-        <td>
-          <span>{{ item.total | currency }}</span>
-        </td>
-        <td>
-          <span>{{ item.category }}</span>
-        </td>
-        <td>
-          <span>{{ getItemFolderNames(item) }}</span>
-        </td>
-        <td>
-          <span>{{ item.date | date: 'shortDate' }}</span>
-        </td>
-        <td class="list-item-review-status">
-          <span ng-if="!item.reviewed">Review? <i class="fa fa-times-circle"></i></span>
-          <span ng-if="item.reviewed">{{ item.type | titlecase }}</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="items-list-view-sidebar">
+<div class="items-list-view-container">
+  <div class="items-list-view-row">
+    <div class="items-list-view-item items-list-view-headers">
+      <div class="list-view-data-sm"></div>
+      <div class="list-view-data">Vendor</div>
+      <div class="list-view-data-sm">Total</div>
+      <div class="list-view-data">Category</div>
+      <div class="list-view-data">Folders</div>
+      <div class="list-view-data">Date</div>
+      <div class="list-view-data">Type</div>
+    </div>
+    <hr>
+    <div class="items-list-view-item"
+      ng-repeat="item in items track by item.id"
+      ng-class="{
+      'items-list-view-row-reviewed': item.reviewed,
+      'items-list-view-row-unreviewed': !item.reviewed,
+      'items-list-view-row-expense' : item.type === 'expense'
+      }">
+      <div class="list-view-data-sm"><is-selected selection="selection" selection-id="item.id"></is-selected></div>
+      <div class="list-view-data">{{ item.vendor }}</div>
+      <div class="list-view-data-sm">{{ item.total | currency }}</div>
+      <div class="list-view-data">{{ item.category }}</div>
+      <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
+      <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
+      <div ng-if="!item.reviewed" class="list-view-data">Review? <i class="fa fa-times-circle"></i></div>
+      <div ng-if="item.reviewed" class="list-view-data">{{ item.type | titlecase }}</div>
+    </div>
+  </div>
 </div>
