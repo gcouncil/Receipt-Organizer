@@ -11,12 +11,19 @@
 5. Run `createdb epson_receipts_development` and `createdb epson_receipts_test` to create databases
 6. Run `NODE_ENV=test grunt migrate` to migrate the test database and
    `grunt migrate` to migrate the development database.
+7. Setup AWS as described below
 
-### S3 Credentials for Local Development
-In order to save receipt images to S3, you'll need to add a local.js file to the config directory of your project. This file is (and should remain) excluded from git. The file can be found in Slack at:
+### AWS Credentials and Setup for Local Development
+
+Even during local development the app depends on S3 and SQS in order to store images and run the OCR. By default these resources will be named based on your local username in order to help prevent conflicts during development.
+
+In order to access AWS, you'll need to add a local.js file to the config directory of your project. This file is (and should remain) excluded from git. The file can be found in Slack at:
  - [local.js][1]
 
+Once you have configured access to AWS you will need to create the S3 bucket and SQS queue for your username. This can be done by running the command `grunt provision`.
+
 ### Driver Installation for Local Development
+
 In order to import receipts or scan from a device, you'll need to install the Dynamic Web TWAIN Driver (currently using the trial version) and the Epson device drivers (for the DS-30 and DS-510 models). The files can be found in Slack at:
  - [Dynamic Web TWAIN Driver for Mac][2]
  - [Epson DS-30 Device Driver for Mac][3]
