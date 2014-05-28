@@ -11,7 +11,8 @@ describe('items list view directive', function() {
     angular.mock.module('ngMock', 'epsonreceipts.itemsListView', 'epsonreceipts.storage', {
       itemStorage: ctx.itemStorage,
       imageStorage: ctx.imageStorage,
-      options: {}
+      options: {},
+      titlecaseFilter: ctx.sinon.stub()
     });
 
     angular.mock.inject(function($rootScope, $compile, $controller) {

@@ -38,12 +38,17 @@ items-list-view {
     overflow: hidden;
   }
 }
-
 .items-list-view-row-unreviewed {
-  background: #def;
+  background: rgb(254, 241, 212);
+  border: 2px solid rgb(230, 184, 79);
 
   &:hover {
     background: darken(#def, 5%);
+  }
+
+  .list-item-review-status {
+    background: rgb(230, 184, 79);
+    font-size: 1.3em;
   }
 }
 

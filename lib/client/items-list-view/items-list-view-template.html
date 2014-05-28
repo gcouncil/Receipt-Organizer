@@ -4,93 +4,40 @@
       <tr>
         <th style="width: 45px;"></th>
         <th>Vendor</th>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Payment Type</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Tax</th>
-        <th>Addn. Tax</th>
-        <th>Tip</th>
         <th>Total</th>
-        <th>Tax Category</th>
-        <th>Business Purpose</th>
-        <th>Reimbursable</th>
-        <th>Billable</th>
-        <th>Comments</th>
+        <th>Payment Type</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Item Type</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        ng-form
-        form-confirm-leave
-        form-auto-save="update(item)"
         ng-repeat="item in items track by item.id"
         ng-init="item = item.clone()"
         ng-class="{ 'items-list-view-row-reviewed': item.reviewed, 'items-list-view-row-unreviewed': !item.reviewed }">
         <td>
           <is-selected selection="selection" selection-id="item.id"></is-selected>
           &nbsp;
-          <i class="fa fa-check-circle item-thumbnail-reviewed-icon" ng-if="item.reviewed" title="Reviewed"></i>
-          <i class="fa fa-flag item-thumbnail-unreviewed-icon" ng-if="!item.reviewed" title="Needs Review"></i>
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.vendor }}</span>
-          <input class="form-control" type="text" ng-model="item.vendor">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.date | date: 'shortDate' }}</span>
-          <datepicker ng-model="item.date"></datepicker>
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.category }}</span>
-          <input class="form-control" type="text" ng-model="item.category">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.paymentType }}</span>
-          <input class="form-control" type="text" ng-model="item.paymentType">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.city }}</span>
-          <input class="form-control" type="text" ng-model="item.city">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.state }}</span>
-          <input class="form-control" type="text" ng-model="item.state">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.tax | currency }}</span>
-          <input class="form-control" type="currency" ng-model="item.tax">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.additionalTax | currency }}</span>
-          <input class="form-control" type="currency" ng-model="item.additionalTax">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.tip | currency }}</span>
-          <input class="form-control" type="currency" ng-model="item.tip">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.total | currency }}</span>
-          <input class="form-control" type="currency" ng-model="item.total">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.taxCategory }}</span>
-          <input class="form-control" type="text" ng-model="item.taxCategory">
-        </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.businessPurpose }}</span>
-          <input class="form-control" type="text" ng-model="item.businessPurpose">
         </td>
         <td>
-          <input type="checkbox" ng-model="item.reimbursable">
+          <span>{{ item.vendor }}</span>
         </td>
         <td>
-          <input type="checkbox" ng-model="item.billable">
+          <span>{{ item.total | currency }}</span>
         </td>
-        <td table-data-field form-group>
-          <span class="placeholder">{{ item.comments }}</span>
-          <textarea class="form-control" ng-model="item.comments"></textarea>
+        <td>
+          <span>{{ item.paymentType }}</span>
+        </td>
+        <td>
+          <span>{{ item.category }}</span>
+        </td>
+        <td>
+          <span>{{ item.date | date: 'shortDate' }}</span>
+        </td>
+        <td class="list-item-review-status">
+          <span ng-if="!item.reviewed">Review? <i class="fa fa-times-circle"></i></span>
+          <span ng-if="item.reviewed">{{ item.type | titlecase }}</span>
         </td>
       </tr>
     </tbody>
