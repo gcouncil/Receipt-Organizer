@@ -1,6 +1,6 @@
 module.exports = {
   aws: {
-    namespace: 'production'
+    namespace: 'production-'
   },
   database: {
     host: process.env.RDS_HOSTNAME,
