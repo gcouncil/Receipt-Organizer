@@ -6,8 +6,7 @@
     .items-list-view-item {
       border: 1px solid rgb(35, 122, 251);
       margin-top: 15px;
-      display: block;
-      display: flex;
+      .flex-box();
     }
 
     .items-list-view-item.items-list-view-row-expense {
@@ -20,27 +19,23 @@
     }
 
     .list-view-data {
+      .flex(1, 1, 75px);
       display: inline;
-      flex-basis: 16%;
       line-height: 34px;
       padding: 2px 10px;
       overflow: hidden;
       text-overflow: ellipsis;
-      -o-text-overflow: ellipsis;
       white-space: nowrap;
-      width: 90%;
     }
 
     .list-view-data-sm {
+      .flex(0.5, 0.5, 75px);
       display: inline;
-      flex-basis: 8%;
       line-height: 34px;
       padding: 3px;
       overflow: hidden;
       text-overflow: ellipsis;
-      -o-text-overflow: ellipsis;
       white-space: nowrap;
-      width: 90%;
     }
 
     .items-list-view-headers {
