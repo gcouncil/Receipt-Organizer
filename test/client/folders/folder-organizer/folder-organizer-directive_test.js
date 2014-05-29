@@ -82,7 +82,7 @@ describe('folder organizer directive', function() {
   it('should hide the edit panel', function() {
     var ctx = this;
     ctx.folder = { name: 'FOLDER', showEdit: true };
-    ctx.scope.hidePanel(ctx.folder);
+    ctx.scope.hideEditPanel(ctx.folder);
     ctx.scope.$digest();
     expect(ctx.folder.showEdit).to.be.false;
   });

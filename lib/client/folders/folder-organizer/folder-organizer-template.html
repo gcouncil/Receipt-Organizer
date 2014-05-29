@@ -15,11 +15,13 @@
         <span class='badge pull-right'> {{ itemCounts[folder.id] || 0 }}</span>
       </span>
       <form folder="folder" ng-show="folder.showEdit" ng-submit="update(folder)">
-        <input type="text" ng-model="folder.name" ng-blur="hidePanel(folder)">
+        <input type="text" ng-model="folder.name" ng-blur="hideEditPanel(folder)">
       </form>
       <folder-actions folder="folder"></folder-actions>
     </a>
   </li>
+  <li class="new-folder-list-item">
+    <new-folder></new-folder>
+  </li>
 </ul>
 
-<new-folder></new-folder>
