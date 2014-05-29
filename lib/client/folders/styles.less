@@ -1,24 +1,43 @@
 folder-organizer {
   .flex(1, 1, 100px);
   overflow: auto;
+}
 
-  li {
+.folder-organizer-list-item {
+  border: none;
+}
 
-    form {
-      display: inline;
+.folder-organizer-list-item a,
+.folder-organizer-list-item a:hover {
+  background: #444444 !important;
+  border: none;
+}
 
-      input {
-        color: black;
-        width: 70%;
-        margin-right: 0;
-        display: inline;
-      }
-    }
+.folder-organizer-list-item span,
+.folder-organizer-list-item i {
+  color: white;
+}
 
-    folder-organizer button {
-      float: right;
-    }
+.folder-organizer-list-item i {
+  margin-right: 5px;
+}
+
+.folder-organizer-list-item span {
+}
+
+.folder-organizer-list-item form {
+  display: inline;
+
+  input {
+    color: black;
+    width: 70%;
+    margin-right: 0;
+    display: inline;
   }
+}
+
+.folder-actions-button {
+  padding: 0 6px;
 }
 
 .new-folder-button {
@@ -26,8 +45,29 @@ folder-organizer {
   float: right;
 }
 
-.dropdown-menu li p {
+.dropdown-menu {
+  position: absolute;
+  top: 28px;
+  left: 13px !important;
+  background: white;
+}
+
+.dropdown-menu a {
+  background: white !important;
   color: black;
+  padding-left: 13px;
+  text-align: left;
+}
+
+.dropdown-menu a:hover {
+  background: #ddd !important;
+  color: black;
+  text-align: left;
+}
+
+.dropdown-menu li {
+  padding: 0;
+  margin: 0;
 }
 
 .badge-warning {
