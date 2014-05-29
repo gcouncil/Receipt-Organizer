@@ -39,7 +39,7 @@ function ItemPage(factory, user) {
 
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
-  this.filterToolbarButton = $('.filter-toolbar-button');
+  this.filterToolbarButton = $('items-toolbar').element(by.partialButtonText('Filter'));
   this.categoryFilterInput = $('category-filter');
   this.dateFilterInput = $('date-filter');
   this.filterReset = $('filter-reset button');
