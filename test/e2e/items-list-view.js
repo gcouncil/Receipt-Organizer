@@ -91,8 +91,14 @@ describe('Viewing Items in List View', function() {
       var folders = _.map(results[1], 'id');
       self.factory.items.create({
         vendor: 'Walmart',
-        city: 'Boulder',
-        total: 10.00,
+        total: 10.00
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
+        vendor: 'Kmart',
+        total: 12.00,
+        reviewed: true,
         folders: folders
       }, {
         user: user.id
@@ -106,6 +112,19 @@ describe('Viewing Items in List View', function() {
   it('should display a comma seperated, sorted list of folder names in the item view', function() {
     var self = this;
     expect(self.page.firstItem.getText()).to.eventually.contain('activities, rent, taxes');
+  });
+
+  it('should toggle item class on selection', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-selected');
+    self.page.firstItemSelect.click();
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-selected');
+  });
+
+  it('should toggle item class if item is unreviewed', function() {
+    var self = this;
+    expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
   });
 });
 
