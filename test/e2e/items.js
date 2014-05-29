@@ -261,3 +261,188 @@ describe('Scoping to the current user', function() {
   });
 });
 
+describe('Filter by Category', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    this.page.user.then(function(user) {
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'Tax Item',
+          category: 'Tax',
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'Office Expense',
+          category: 'Office Expenses',
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
+    this.page.get('thumbnail');
+    this.page.filterToolbarButton.click();
+  });
+
+  it('should filter visible items by category', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        expect(item.evaluate('item.category')).to.not.eventually.equal('Office Expenses');
+        expect(item.evaluate('item.category')).to.eventually.equal('Tax');
+      });
+    });
+  });
+
+  it('should clear the filters', function() {
+    expect(this.page.items.count()).to.eventually.equal(4);
+
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.itemToolbarReset.click();
+    expect(this.page.items.count()).to.eventually.equal(4);
+  });
+
+  it('should clear the filters with the filter-reset button', function() {
+    expect(this.page.items.count()).to.eventually.equal(4);
+    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.filterReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(4);
+    expect(this.page.filtersNav.isDisplayed()).to.eventually.equal.false;
+  });
+
+});
+
+describe('Filter by Date', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    self.ottsDate = new Date(2005, 0, 1, 1, 1, 1);
+    self.twentyTenDate = new Date(2010, 0, 1, 1, 1);
+    self.tensDate = new Date(2015, 0, 1, 1, 1, 1);
+
+    this.page.user.then(function(user) {
+      self.factory.items.create({
+        vendor: '2010',
+        date: self.twentyTenDate,
+        total: 50.00
+      }, { user: user.id });
+
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'The 2000s',
+          date: self.ottsDate,
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+      _.times(2, function(i) {
+        self.factory.items.create({
+          vendor: 'The 2010s',
+          date: self.tensDate,
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
+    this.page.get('thumbnail');
+    this.page.filterToolbarButton.click();
+  });
+
+  it('should filter visible items by start date', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    // trigger blur
+    this.page.newFolder.click();
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.twentyTenDate);
+        });
+      });
+    });
+  });
+
+  it('should filter visible items by end date', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="end-date"]').sendKeys('12/31/09');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.twentyTenDate);
+        });
+      });
+    });
+  });
+
+  it('should filter visible items by start and end date', function() {
+    var self = this;
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('12/31/09');
+    this.page.dateFilterInput.$('input[name="end-date"]').sendKeys('1/2/10');
+
+    expect(this.page.items.count()).to.eventually.equal(1);
+    browser.driver.call(function() {
+      self.page.items.each(function(item) {
+        item.evaluate('item.date').then(function(strDate) {
+          expect(new Date(strDate)).to.not.deep.equal(self.tensDate);
+          expect(new Date(strDate)).to.not.deep.equal(self.ottsDate);
+          expect(new Date(strDate)).to.deep.equal(self.twentyTenDate);
+        });
+      });
+    });
+  });
+
+  it('should clear the filters with empty field', function() {
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.itemToolbarReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+  });
+
+  it('should clear the filters with the filter-reset button', function() {
+    expect(this.page.items.count()).to.eventually.equal(5);
+    this.page.dateFilterInput.$('input[name="start-date"]').sendKeys('01/02/10');
+
+    expect(this.page.items.count()).to.eventually.equal(2);
+
+    this.page.filterReset.click();
+
+    expect(this.page.items.count()).to.eventually.equal(5);
+    expect(this.page.filtersNav.isDisplayed()).to.eventually.equal.false;
+  });
+});

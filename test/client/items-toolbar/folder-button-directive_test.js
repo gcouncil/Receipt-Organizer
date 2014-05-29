@@ -33,17 +33,18 @@ describe('items toolbar folder button directive', function() {
       ]
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.itemsToolbar', {
+    angular.mock.module('ngMock', 'epsonreceipts.items-toolbar', {
       folderStorage: ctx.folderStorage,
       itemStorage: ctx.itemStorage,
       notify: ctx.notify,
-      $dropdown: ctx.dropdown
+      $dropdown: ctx.dropdown,
+      uuid: {}
     });
     angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
-        ctx.element = $compile('<items-toolbar-folder-button selection="selection"></items-toolbar-folder-button>')(ctx.scope);
+        ctx.element = $compile('<folder-button selection="selection"></folder-button>')(ctx.scope);
         ctx.scope.dropdown = ctx.dropdown();
         ctx.scope.selection = ctx.selection;
         ctx.scope.$digest();

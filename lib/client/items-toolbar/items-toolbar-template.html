@@ -25,14 +25,29 @@
   </div>
 
   <div class="btn-group">
-    <items-toolbar-folder-button selection="items.selection">
-    </items-toolbar-folder-button>
-    <items-toolbar-update-report-button selection="items.selection">
-    </items-toolbar-update-report-button>
+    <folder-button selection="items.selection">
+    </folder-button>
+    <update-report-button selection="items.selection">
+    </update-report-button>
   </div>
 
+  <button class="btn-link filter-toolbar-button" ng-click="showFilters()">
+    <i class="fa fa-search"></i>
+    Filter
+  </button>
 </div>
 
 <div class="nav navbar-right navbar-form">
   <item-view-toggle></item-view-toggle>
+</div>
+
+<br>
+
+<div ng-show="showingFilters">
+  <div class="nav navbar-nav navbar-center navbar-form">
+    <date-filter></date-filter>
+    <category-filter></category-filter>
+    <filter-reset showing-filters="showingFilters"></filter-reset>
+    </div>
+  </div>
 </div>
