@@ -76,7 +76,7 @@ describe('filtering', function() {
 
     var folder1 = user.then(function(user) {
       return Q.all([
-        self.factory.folders.create({ name: 'rent'}, { user: user.id }),
+        self.factory.folders.create({ name: 'rent'}, { user: user.id })
       ]);
     });
 
@@ -123,8 +123,8 @@ describe('filtering', function() {
     testFilteringByFolder(this);
   });
 
-  it('should filter items by folder on the table view', function() {
-    this.page.itemToolbarTable.click();
+  it('should filter items by folder on the list view', function() {
+    this.page.itemToolbarList.click();
     testFilteringByFolder(this);
   });
 

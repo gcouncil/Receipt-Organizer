@@ -42,7 +42,7 @@ function ItemPage(factory, user) {
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
 
   this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
-  this.itemToolbarTable = $('items-toolbar [title="Table"]');
+  this.itemToolbarList = $('items-toolbar [title="List"]');
 
   this.folderOrganizer = $('folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
