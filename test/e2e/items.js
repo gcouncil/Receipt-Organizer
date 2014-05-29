@@ -134,12 +134,12 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should batch delete existing items from the thumbnail view', function() {
     var self = this;
-    $('item-view-toggle [title="Thumbnails"]').click();
+    this.page.itemToolbarThumbnails.click();
 
     var deleteButton = this.page.itemToolbarDelete;
     var firstIdPromise = this.page.firstItem.evaluate('item.id');
@@ -192,7 +192,7 @@ describe('Review Folder', function() {
         }, { user: user.id });
 
       });
-      this.page.get('table');
+      this.page.get('list');
     });
 
     it('should inform the user how many items require review', function() {

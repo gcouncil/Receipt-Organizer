@@ -1,3 +1,4 @@
+var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
@@ -11,64 +12,28 @@ describe('Toggling the View', function() {
       return this.factory.items.create({}, { user: user.id });
     }, this, this.page.user);
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
-  it('should should toggle from the table to the thumbnail view and back', function() {
+  it('should should toggle from the list to the thumbnail view and back', function() {
     expect(this.page.items.count()).to.eventually.equal(1);
 
-    // Ensure that table view is displayed
-    this.page.showTableButton.click();
+    // Ensure that list view is displayed
+    this.page.itemToolbarList.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
-    expect($('item-table').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
-    this.page.showThumbnailsButton.click();
+    this.page.itemToolbarThumbnails.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
-    expect($('item-table').isPresent()).to.eventually.be.false;
+    expect($('items-list-view').isPresent()).to.eventually.be.false;
 
-    // Make sure we can return to table view
-    this.page.showTableButton.click();
+    // Make sure we can return to list view
+    this.page.itemToolbarList.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
-    expect($('item-table').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
   });
 });
-
-//TODO Unable to test e2e due to image creation testing touching AWS
-//TODO UNCLE
-
-//describe.only('Image Viewing', function() {
-  //beforeEach(function() {
-    //var self = this;
-
-    //this.page = new ItemPage(this.factory);
-
-    //this.page.user.then(function(user) {
-      //self.factory.items.create({
-        //vendor: 'Quick Left',
-        //total: 100.00
-      //}, { user: user.id });
-
-      //self.factory.images.create({}, { user: user.id}, function(image) {
-
-        //self.factory.items.create({
-          //vendor: 'Quick Right',
-          //total: 100.01,
-          //image: image.id
-        //}, { user: user.id });
-
-      //});
-    //});
-
-    //this.page.get('table');
-  //});
-
-  //it('should not show an image', function() {
-    //var imageSvg = $('svg');
-    //expect(imageSvg.find('image').getAttribute('href')).to.eventually.be.null;
-  //});
-//});
-
 
 describe('Pagination', function() {
   beforeEach(function() {
@@ -85,13 +50,13 @@ describe('Pagination', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should contain existing items', function() {
-    expect($('item-table').isPresent()).to.eventually.be.true;
-    expect($('item-table').getText()).to.eventually.contain('114.00');
-    expect($('item-table').getText()).to.eventually.contain('106.00');
+    expect($('items-list-view').isPresent()).to.eventually.be.true;
+    expect($('items-list-view').getText()).to.eventually.contain('114.00');
+    expect($('items-list-view').getText()).to.eventually.contain('106.00');
   });
 
   it('should display paginated results', function() {
@@ -101,7 +66,69 @@ describe('Pagination', function() {
   });
 });
 
-describe('Editing Items in Table View', function() {
+describe('Viewing Items in List View', function() {
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test2@example.com',
+      password: 'password'
+    });
+
+    var folders = user.then(function(user) {
+      return Q.all([
+        self.factory.folders.create({ name: 'activities' }, { user: user.id }),
+        self.factory.folders.create({ name: 'taxes' }, { user: user.id }),
+        self.factory.folders.create({ name: 'rent' }, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      user,
+      folders
+    ]).done(function(results) {
+      var user = results[0];
+      var folders = _.map(results[1], 'id');
+      self.factory.items.create({
+        vendor: 'Walmart',
+        total: 10.00
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
+        vendor: 'Kmart',
+        total: 12.00,
+        reviewed: true,
+        folders: folders
+      }, {
+        user: user.id
+      });
+    });
+
+    this.page = new ItemPage(this.factory, user);
+    this.page.get('list');
+  });
+
+  it('should display a comma seperated, sorted list of folder names in the item view', function() {
+    var self = this;
+    expect(self.page.firstItem.getText()).to.eventually.contain('activities, rent, taxes');
+  });
+
+  it('should toggle item class on selection', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-selected');
+    self.page.firstItemSelect.click();
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-selected');
+  });
+
+  it('should toggle item class if item is unreviewed', function() {
+    var self = this;
+    expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+  });
+});
+
+describe('Editing Items from List View', function() {
   beforeEach(function() {
     var self = this;
 
@@ -117,7 +144,7 @@ describe('Editing Items in Table View', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should edit a item with valid values', function() {
@@ -164,7 +191,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should not show delete button without items selected', function() {
@@ -191,7 +218,7 @@ describe('Batch delete', function() {
     expect(deleteButton.isEnabled()).to.eventually.be.true;
   });
 
-  it('should batch delete existing items from the table view', function() {
+  it('should batch delete existing items from the list view', function() {
     var self = this;
 
     var deleteButton = this.page.itemToolbarDelete;

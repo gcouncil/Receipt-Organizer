@@ -1,6 +1,6 @@
 require('./test-helper');
 require('./items');
-require('./item-table');
+require('./items-list-view');
 require('./folders');
 require('./reports');
 require('./users');

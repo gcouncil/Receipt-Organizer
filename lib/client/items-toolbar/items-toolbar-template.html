@@ -38,9 +38,14 @@
     </button>
   </div>
 
-  <div class="nav navbar-right navbar-form">
-    <item-view-toggle></item-view-toggle>
-  </div>
+  <ul class="navbar-nav nav navbar-right">
+    <li ui-sref-active="active">
+      <a ui-sref="items.thumbnails" title="Thumbnails"><i class="fa fa-th"></i></a>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="items.list" title="List"><i class="fa fa-bars"></i></a>
+    </li>
+  </ul>
 </div>
 
 <div class="navbar navbar-filters" ng-show="showingFilters">
@@ -49,3 +54,4 @@
   <category-filter></category-filter>
   <filter-reset showing-filters="showingFilters"></filter-reset>
 </div>
+

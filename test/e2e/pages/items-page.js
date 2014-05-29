@@ -33,12 +33,10 @@ function ItemPage(factory, user) {
   this.itemDeleteConfirmation = $('.modal-dialog');
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
 
-  this.showThumbnailsButton = $('item-view-toggle [title="Thumbnails"]');
-  this.showTableButton = $('item-view-toggle [title="Table"]');
-
   this.itemToolbarEdit = $('items-toolbar').element(by.partialButtonText('Edit'));
   this.itemToolbarDelete = $('items-toolbar').element(by.partialButtonText('Delete'));
   this.itemToolbarFolder = $('items-toolbar').element(by.partialButtonText('Add to Folder'));
+
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
   this.filterToolbarButton = $('.filter-toolbar-button');
@@ -49,6 +47,9 @@ function ItemPage(factory, user) {
   this.filtersNav = $('.navbar-filters');
   this.itemToolbarCreateReport = $('items-toolbar').element(by.partialButtonText('Create Report'));
   this.itemToolbarUpdateReport = $('items-toolbar').element(by.partialButtonText('Add to Report'));
+
+  this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
+  this.itemToolbarList = $('items-toolbar [title="List"]');
 
   this.folderOrganizer = $('folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
