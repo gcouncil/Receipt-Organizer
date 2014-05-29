@@ -44,15 +44,15 @@ function ItemPage(factory, user) {
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
 
-  this.folderOrganizer = $('.folder-organizer');
+  this.folderOrganizer = $('folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
   this.newFolder = $('.new-folder');
 
-  this.reportOrganizer = $('.report-organizer');
+  this.reportOrganizer = $('report-organizer');
   this.firstReportInOrganizer = this.reportOrganizer.element(by.repeater('report in reports').row(0));
 
-  this.reviewFolder = $('.review-folder');
+  this.reviewFolder = $('review-folder-tab');
 
   this.notify = $('notices');
 }

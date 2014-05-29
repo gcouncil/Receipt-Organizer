@@ -77,7 +77,7 @@ describe('Pagination', function() {
     this.page = new ItemPage(this.factory);
 
     this.page.user.then(function(user) {
-      _.times(15, function(i) {
+      _.times(66, function(i) {
         self.factory.items.create({
           vendor: 'Quick Left',
           total: 100.00 + i
@@ -95,7 +95,7 @@ describe('Pagination', function() {
   });
 
   it('should display paginated results', function() {
-    expect(this.page.items.count()).to.eventually.equal(9);
+    expect(this.page.items.count()).to.eventually.equal(60);
     $('er-pagination .btn-group').element(by.buttonText('Next')).click();
     expect(this.page.items.count()).to.eventually.equal(6);
   });

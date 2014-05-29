@@ -5,10 +5,29 @@ toplevel-layout {
   height: 100%;
   width: 100%;
   min-width: 900px;
+  .flex-box(row);
+}
+
+.toplevel-layout-sidebar {
+  background: @gray;
+  color: #ccc;
+  .noflex();
   .flex-box(column);
 }
 
 .toplevel-layout-header {
+  .noflex();
+
+  .navbar;
+  .navbar-inverse;
+  .container-fluid;
+  margin: 0;
+
+  background: @gray-dark;
+  color: white;
+}
+
+.toplevel-layout-toolbar {
   .noflex();
 
   .navbar;
@@ -17,24 +36,18 @@ toplevel-layout {
   margin: 0;
 }
 
-.toplevel-layout-toolbar {
+.toplevel-layout-content {
+  .flex();
+  .flex-box(column);
+}
+
+.toplevel-layout-footer {
   .noflex();
 
   .navbar;
+  .navbar-default;
   .container-fluid;
   margin: 0;
-
-  box-shadow: 0 2px 6px -4px #999;
-}
-
-.toplevel-layout-content {
-  .flex();
-  .flex-box();
-}
-
-.toplevel-layout-sidebar {
-  color: #ccc;
-  .noflex();
 }
 
 .toplevel-layout-body {

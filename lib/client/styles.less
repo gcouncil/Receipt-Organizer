@@ -1,6 +1,11 @@
 @import "bootstrap";
 @import "font-awesome";
 
+@brand-primary: #1a78d6;
+@brand-warning: #e4b334;
+
+@navbar-border-radius: 0;
+
 @import (inline) "select2.css";
 @import (inline) "select2-bootstrap.css";
 @import (inline) "angular-motion.css";
@@ -35,4 +40,9 @@ ui-view {
   &:extend(.dropdown-menu > li > a);
 
   &:hover:extend(.dropdown-menu > li > a:hover) {};
+}
+
+.nav-dark {
+  // TODO: Implement real style
+  background: @gray-lighter;
 }

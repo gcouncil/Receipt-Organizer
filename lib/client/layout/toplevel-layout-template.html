@@ -1,4 +1,14 @@
-<div class="toplevel-layout-header">
+<div class="toplevel-layout-sidebar" style="width: 200px;">
+  <div style="margin: 2em auto;">
+    <scan-button></scan-button>
+  </div>
+
+  <folder-organizer></folder-organizer>
+  <report-organizer></report-organizer>
+</div>
+
+<div class="toplevel-layout-content" image-drop-zone>
+  <div class="toplevel-layout-header">
     <a class="navbar-brand">EPSON Receipts</a>
 
     <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">Request In Progress</p>
@@ -7,29 +17,21 @@
       <span>{{ currentUser.email }}</span>
       <logout-button></logout-button>
     </div>
-</div>
+  </div>
 
-<nav class="navbar toplevel-layout-toolbar">
-  <div class="container-fluid">
-    <div class="navbar-nav navbar-form" style="width:200px;">
-      <scan-button></scan-button>
+  <nav class="navbar toplevel-layout-toolbar">
+    <div class="container-fluid" ui-view="toolbar">
     </div>
-    <div ui-view="toolbar"></div>
-  </div>
-</nav>
-
-<div class="toplevel-layout-content" image-drop-zone>
-  <div class="toplevel-layout-sidebar" style="width: 200px;">
-    <folder-organizer></folder-organizer>
-    <new-folder></new-folder>
-    <report-organizer></report-organizer>
-  </div>
+  </nav>
 
   <div class="toplevel-layout-body">
     <notices></notices>
     <ui-view></ui-view>
   </div>
 
-  <div ui-view="sidebar" class="toplevel-layout-sidebar">
+  <div class="toplevel-layout-footer">
+    <div class="nav navbar-form">
+      <er-pagination controller="items.pagination"></er-pagination>
+    </div>
   </div>
 </div>

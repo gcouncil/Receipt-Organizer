@@ -88,7 +88,7 @@ describe('reports toolbar button', function() {
     this.page.itemToolbarUpdateReport.click();
     element(by.linkText('product development')).click();
     expect(this.page.notify.getText()).to.eventually.equal('Added 1 item to product development');
-    expect(this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).getText()).to.eventually.equal('product development\n1 item');
+    expect(this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).getText()).to.eventually.equal('product development 1');
   });
 });
 
@@ -103,7 +103,7 @@ describe('reports sidebar', function() {
   });
 
   it('should open report editor on link click', function() {
-    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('.list-group-item-heading').click();
+    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('a').click();
     expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
   });
 });
