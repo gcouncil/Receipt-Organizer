@@ -219,14 +219,6 @@ describe('Review Folder', function() {
       this.page.itemDeleteConfirmButton.click();
       expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 3');
     });
-
-    it('should update unreviewed total on setting reviewed receipt to unreviewed', function() {
-      this.page.firstItemSelect.click();
-      this.page.itemToolbarEdit.click();
-      this.page.receiptEditorNeedsReview.click();
-      this.page.receiptEditorSave.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 5');
-    });
   });
 });
 
