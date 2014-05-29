@@ -1,64 +1,73 @@
+items-list-view {
+  .flex-box();
+}
+
 .items-list-view-container {
-  padding: 0px 45px;
+  .flex();
+  .flex-box(column);
+
   overflow: hidden;
-  .items-list-view-row {
+}
 
-    .items-list-view-item {
-      border: 1px solid rgb(35, 122, 251);
-      margin-top: 15px;
-      .flex-box();
-    }
+.items-list-view-headers {
+  .flex-box();
+  .noflex();
+  padding: 5px (@grid-gutter-width / 2);
+  border-bottom: 1px solid @gray-lighter;
+  color: grey;
+  overflow: none;
+}
 
-    .items-list-view-item.items-list-view-row-expense {
-      background: lightgrey;
-      border: 1px solid grey;
-    }
+.items-list-view-body {
+  .flex();
+  padding: 0 (@grid-gutter-width / 2) 15px;
+  overflow: auto;
+}
 
-    .items-list-view-item.items-list-view-row-unreviewed {
-      border: 2px solid rgb(230, 184, 79);
-    }
+.items-list-view-item {
+  margin-top: 15px;
+  height: 38px;
+  .flex-box();
+  align-items: center;
 
-    .list-view-data {
-      .flex(1, 1, 75px);
-      display: inline;
-      line-height: 34px;
-      padding: 2px 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  background: @gray-lighter;
+  border: 1px solid @gray-light;
+}
 
-    .list-view-data-sm {
-      .flex(0.5, 0.5, 75px);
-      display: inline;
-      line-height: 34px;
-      padding: 3px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+.list-view-data {
+  .flex(1, 1, 75px);
+  display: inline;
+  padding: 2px 10px;
+  line-height: 34px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-    .items-list-view-headers {
-      border: none;
-      padding-bottom: 5px;
-      border-bottom: 1px solid grey;
-      color: grey;
-      font-size: 1.01em;
-      overflow: auto !important;
-    }
+.list-view-data-checkbox {
+  .list-view-data;
+
+  .noflex(28px);
+}
+
+.list-view-data-sm {
+  .list-view-data;
+
+  .flex(0.5, 0.5, 75px);
+}
+
+.items-list-view-item-selected {
+  background: white;
+  border: 2px solid @brand-primary;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.items-list-view-item-unreviewed {
+  background: @brand-warning-bg;
+  border: 2px solid @brand-warning;
+
+  .items-list-view-item-review-status {
+    background: @brand-warning;
   }
 }
 
-.items-list-view-row-unreviewed {
-  background: rgb(254, 241, 212);
-  border: 2px solid rgb(230, 184, 79);
-
-  &:hover {
-    background: darken(#def, 5%);
-  }
-
-  .list-item-review-status {
-    background: rgb(230, 184, 79);
-    font-size: 1.3em;
-  }
-}
