@@ -134,12 +134,12 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should batch delete existing items from the thumbnail view', function() {
     var self = this;
-    $('item-view-toggle [title="Thumbnails"]').click();
+    this.page.itemToolbarThumbnails.click();
 
     var deleteButton = $('items-toolbar [title="Delete"]');
     var firstIdPromise = this.page.firstItem.evaluate('item.id');
@@ -192,12 +192,12 @@ describe('Review Folder', function() {
         }, { user: user.id });
 
       });
-      this.page.get('table');
+      this.page.get('list');
     });
 
     it('should inform the user how many items require review', function() {
       expect(this.page.items.count()).to.eventually.equal(5);
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 4');
     });
 
     it('should toggle the viewable receipts', function() {
@@ -207,17 +207,17 @@ describe('Review Folder', function() {
     });
 
     it('should display correct total when navigating through folders', function() {
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 4');
       this.page.firstFolderInOrganizer.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 4');
     });
 
     it('should update unreviewed total on delete', function() {
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n4');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 4');
       this.page.secondItemSelect.click();
       this.page.itemToolbarDelete.click();
       this.page.itemDeleteConfirmButton.click();
-      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed\n3');
+      expect(this.page.reviewFolder.getText()).to.eventually.contain('Unreviewed 3');
     });
   });
 });

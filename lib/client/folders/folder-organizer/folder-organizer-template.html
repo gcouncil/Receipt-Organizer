@@ -1,17 +1,24 @@
-<div class="container-fluid folder-organizer">
-  <all-receipt-button></all-receipt-button>
-  <ul>
-    <li class="review-folder">
-      <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">
-        <review-folder-tab review="items.review"></review-folder-tab>
-      </a>
-    </li>
-    <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true" draggable-item="{ type: 'folder', id: folder.id, name: folder.name }">
-      <a ng-href="{{ $state.href($state.current, { folder: folder.id }) }}" ng-show="!folder.showEdit"><i class="fa fa-folder"></i> {{ folder.name }}</a>
+<ul class="nav nav-stacked nav-dark">
+  <li>
+    <all-receipt-button></all-receipt-button>
+  </li>
+  <li class="review-folder">
+    <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">
+      <review-folder-tab review="items.review"></review-folder-tab>
+    </a>
+  </li>
+  <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true">
+    <a ng-href="{{ $state.href($state.current, { folder: folder.id }) }}">
+      <span ng-show="!folder.showEdit">
+        <i class="fa fa-folder"></i>
+        {{ folder.name }}
+      </span>
       <form folder="folder" ng-show="folder.showEdit" ng-submit="update(folder)">
         <input type="text" ng-model="folder.name" ng-blur="noEdit(folder)">
       </form>
       <folder-actions folder="folder"></folder-actions>
-    </li>
-  </ul>
-</div>
+    </a>
+  </li>
+</ul>
+
+<new-folder></new-folder>

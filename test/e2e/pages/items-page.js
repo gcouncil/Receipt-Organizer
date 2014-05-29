@@ -34,9 +34,6 @@ function ItemPage(factory, user) {
   this.itemDeleteConfirmation = $('.modal-dialog');
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
 
-  this.showThumbnailsButton = $('item-view-toggle [title="Thumbnails"]');
-  this.showTableButton = $('item-view-toggle [title="Table"]');
-
   this.itemToolbarEdit = $('items-toolbar [title="Edit"]');
   this.itemToolbarDelete = $('items-toolbar [title="Delete"]');
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
@@ -44,15 +41,18 @@ function ItemPage(factory, user) {
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
 
-  this.folderOrganizer = $('.folder-organizer');
+  this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
+  this.itemToolbarList = $('items-toolbar [title="List"]');
+
+  this.folderOrganizer = $('folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
   this.newFolder = $('.new-folder');
 
-  this.reportOrganizer = $('.report-organizer');
+  this.reportOrganizer = $('report-organizer');
   this.firstReportInOrganizer = this.reportOrganizer.element(by.repeater('report in reports').row(0));
 
-  this.reviewFolder = $('.review-folder');
+  this.reviewFolder = $('review-folder-tab');
 
   this.notify = $('notices');
 }

@@ -6,7 +6,7 @@ require('./layout');
 require('./notify');
 require('./pagination');
 require('./review');
-require('./item-table');
+require('./items-list-view');
 require('./thumbnail');
 require('./items-toolbar');
 require('./items');
