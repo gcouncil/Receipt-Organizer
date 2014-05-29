@@ -1,38 +1,58 @@
-<div class="nav navbar-nav navbar-left navbar-form">
-  <bulk-selection selection="items.selection"></bulk-selection>
+<div class="navbar navbar-default">
+  <div class="container-fluid">
+    <bulk-selection selection="items.selection"></bulk-selection>
 
-  <button class="btn btn-primary" title="Create New Report"
-    ng-click="$emit('items:newReport', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-plus-circle"></i>
-    Create Report
-  </button>
-
-
-  <div class="btn-group">
-    <button class="btn btn-default" title="Edit"
-      ng-click="$emit('items:edit', items.selection.selectedItems)"
+    <button class="navbar-btn btn btn-primary"
+      ng-click="$emit('items:newReport', items.selection.selectedItems)"
       ng-disabled="!items.selection.hasSelection()">
-      <i class="fa fa-edit"></i>
-      Edit
+      <i class="fa fa-plus-circle"></i>
+      Create Report
     </button>
-    <button class="btn btn-default" title="Delete"
-      ng-click="$emit('items:destroy', items.selection.selectedItems)"
-      ng-disabled="!items.selection.hasSelection()">
-      <i class="fa fa-trash-o"></i>
-      Delete
+
+
+    <div class="navbar-btn btn-group">
+      <button class="btn btn-default"
+        ng-click="$emit('items:edit', items.selection.selectedItems)"
+        ng-disabled="!items.selection.hasSelection()">
+        <i class="fa fa-edit"></i>
+        Edit
+      </button>
+      <button class="btn btn-default"
+        ng-click="$emit('items:destroy', items.selection.selectedItems)"
+        ng-disabled="!items.selection.hasSelection()">
+        <i class="fa fa-trash-o"></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="navbar-btn btn-group">
+      <folder-button selection="items.selection">
+      </folder-button>
+      <update-report-button selection="items.selection">
+      </update-report-button>
+    </div>
+
+    <button class="navbar-btn btn btn-link" ng-click="showFilters()">
+      <i class="fa fa-search"></i>
+      Filter
     </button>
-  </div>
 
-  <div class="btn-group">
-    <items-toolbar-folder-button selection="items.selection">
-    </items-toolbar-folder-button>
-    <items-toolbar-update-report-button selection="items.selection">
-    </items-toolbar-update-report-button>
+    <ul class="nav navbar-nav navbar-right">
+      <li ui-sref-active="active">
+        <a ui-sref="items.thumbnails" title="Thumbnails"><i class="fa fa-th"></i></a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="items.list" title="List"><i class="fa fa-bars"></i></a>
+      </li>
+    </ul>
   </div>
-
 </div>
 
-<div class="nav navbar-right navbar-form">
-  <item-view-toggle></item-view-toggle>
+<div class="navbar navbar-filters" ng-show="showingFilters">
+  <div class="container-fluid">
+    <span class="navbar-brand">Filter</span>
+    <date-filter></date-filter>
+    <category-filter></category-filter>
+    <filter-reset showing-filters="showingFilters"></filter-reset>
+  </div>
 </div>

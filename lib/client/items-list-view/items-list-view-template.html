@@ -1,0 +1,28 @@
+<div class="items-list-view-container">
+  <div class="items-list-view-headers">
+    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data">Vendor</div>
+    <div class="list-view-data-sm">Total</div>
+    <div class="list-view-data">Category</div>
+    <div class="list-view-data">Folders</div>
+    <div class="list-view-data">Date</div>
+    <div class="list-view-data">Type</div>
+  </div>
+  <div class="items-list-view-body">
+    <div class="items-list-view-item"
+      ng-repeat="item in items track by item.id"
+      ng-class="{
+      'items-list-view-item-unreviewed': !item.reviewed,
+      'items-list-view-item-selected': selection.isSelected(item.id)
+      }">
+      <div class="list-view-data-checkbox"><is-selected selection="selection" selection-id="item.id"></is-selected></div>
+      <div class="list-view-data">{{ item.vendor }}</div>
+      <div class="list-view-data-sm">{{ item.total | currency }}</div>
+      <div class="list-view-data">{{ item.category }}</div>
+      <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
+      <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
+      <div ng-if="!item.reviewed" class="list-view-data items-list-view-item-review-status">Review? <i class="fa fa-times-circle"></i></div>
+      <div ng-if="item.reviewed" class="list-view-data">{{ item.type | titlecase }}</div>
+    </div>
+  </div>
+</div>

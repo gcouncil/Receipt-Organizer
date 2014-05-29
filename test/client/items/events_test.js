@@ -166,27 +166,4 @@ describe('item events', function() {
       expect(ctx.notify.error).to.have.been.calledWith('Error while importing images');
     });
   });
-
-  context('items:reviewed', function() {
-    beforeEach(function() {
-      var ctx = this;
-      ctx.items = [
-        { id: 1, reviewed: false },
-        { id: 2, reviewed: true }
-      ];
-      ctx.scope.$emit('items:reviewed', ctx.items);
-      ctx.scope.$digest();
-    });
-
-    it('should mark unreviewed items as reviewed', function() {
-      var ctx = this;
-      expect(ctx.items[0].reviewed).to.be.true;
-      expect(ctx.itemStorage.persist).to.have.been.calledWith(ctx.items[0]);
-    });
-
-    it('should update reviewed items', function() {
-      var ctx = this;
-      expect(ctx.itemStorage.persist).not.to.have.been.calledWith(ctx.items[1]);
-    });
-  });
 });
