@@ -1,14 +1,18 @@
-<ul class="nav nav-stacked nav-dark">
-  <li>
-    <all-receipt-button></all-receipt-button>
+<ul class="nav nav-stacked nav-sidebar">
+  <li class="primary" ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: null })">
+      Receipts
+    </a>
   </li>
-  <li class="review-folder folder-organizer-list-item">
-    <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">
+</ul>
+<ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
+  <li class="review-folder" ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: 'unreviewed' })">
       <review-folder-tab review="items.review"></review-folder-tab>
     </a>
   </li>
-  <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true">
-    <a ng-href="{{ $state.href($state.current, { folder: folder.id }) }}">
+  <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: folder.id })">
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>
         {{ folder.name }}
@@ -20,8 +24,6 @@
       <folder-actions folder="folder"></folder-actions>
     </a>
   </li>
-  <li class="new-folder-list-item">
-    <new-folder></new-folder>
-  </li>
 </ul>
 
+<new-folder></new-folder>

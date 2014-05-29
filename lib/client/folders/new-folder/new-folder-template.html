@@ -1,9 +1,7 @@
-<a ng-show="!creatingNew" ng-click="createNew()"><i class="fa fa-plus"></i> Create New Folder</a>
-<form name="new-folder-form" ng-if="creatingNew" class="new-folder" ng-submit="ok()">
-  <div class="col-xs-12">
-    <div class="input-group input-group-sm">
-      <input ng-model="newFolder" class="form-control">
-      <span class="input-group-btn"><button ng-click="ok()" class="btn btn-default"><i class="fa fa-plus"></i></button></span>
-    </div>
+<a class="btn btn-primary" ng-show="!creatingNew" ng-click="createNew()"><i class="fa fa-plus"></i> Create New Folder</a>
+<form ng-show="creatingNew" ng-submit="ok()">
+  <div class="input-group input-group-sm">
+    <input type="text" ng-model="newFolder" name="folder-name" class="form-control">
+    <span class="input-group-btn"><button ng-click="ok()" class="btn btn-default"><i class="fa fa-plus"></i></button></span>
   </div>
 </form>

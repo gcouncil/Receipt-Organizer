@@ -1,6 +1,6 @@
-<ul class="nav nav-stacked nav-dark">
-  <li>
-    <all-reports-button></all-reports-button>
+<ul class="nav nav-stacked nav-sidebar">
+  <li class="primary">
+    <a>Reports</a>
   </li>
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
     <a href="#" ng-click="$emit('items:editReport', report)">
