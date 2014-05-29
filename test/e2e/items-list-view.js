@@ -195,7 +195,7 @@ describe('Batch delete', function() {
   });
 
   it('should not show delete button without items selected', function() {
-    var deleteButton = $('items-toolbar [title="Delete"]');
+    var deleteButton = this.page.itemToolbarDelete;
 
     expect(deleteButton.isEnabled()).to.eventually.be.false;
 
@@ -221,7 +221,7 @@ describe('Batch delete', function() {
   it('should batch delete existing items from the list view', function() {
     var self = this;
 
-    var deleteButton = $('items-toolbar [title="Delete"]');
+    var deleteButton = this.page.itemToolbarDelete;
     var firstIdPromise = this.page.firstItem.evaluate('item.id');
 
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
