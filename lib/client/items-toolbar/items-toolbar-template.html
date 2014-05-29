@@ -1,42 +1,38 @@
 <div class="nav navbar-nav navbar-left navbar-form">
   <bulk-selection selection="items.selection"></bulk-selection>
-  <button class="btn btn-default" title="Mark as Reviewed"
-    ng-click="$emit('items:reviewed', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-check"></i>
-  </button>
-  <items-toolbar-folder-button
-    selection="items.selection">
-  </items-toolbar-folder-button>
-   <button class="btn btn-default" title="Edit"
-    ng-click="$emit('items:edit', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-edit"></i>
-  </button>
-  <button class="btn btn-default" title="Create New Report"
+
+  <button class="btn btn-primary" title="Create New Report"
     ng-click="$emit('items:newReport', items.selection.selectedItems)"
     ng-disabled="!items.selection.hasSelection()">
-    Create New Report
+    <i class="fa fa-plus-circle"></i>
+    Create Report
   </button>
-  <items-toolbar-update-report-button
-    selection="items.selection">
-  </items-toolbar-update-report-button>
-  <button class="btn btn-default" title="Delete"
-    ng-click="$emit('items:destroy', items.selection.selectedItems)"
-    ng-disabled="!items.selection.hasSelection()">
-    <i class="fa fa-trash-o"></i>
-  </button>
-  <button class="btn btn-default" title="Combine" disabled><i class="fa fa-link"></i></button>
-</div>
-<div class="nav navbar-nav navbar-right navbar-form">
-  <er-pagination controller="items.pagination"></er-pagination>
 
+
+  <div class="btn-group">
+    <button class="btn btn-default" title="Edit"
+      ng-click="$emit('items:edit', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-edit"></i>
+      Edit
+    </button>
+    <button class="btn btn-default" title="Delete"
+      ng-click="$emit('items:destroy', items.selection.selectedItems)"
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-trash-o"></i>
+      Delete
+    </button>
+  </div>
+
+  <div class="btn-group">
+    <items-toolbar-folder-button selection="items.selection">
+    </items-toolbar-folder-button>
+    <items-toolbar-update-report-button selection="items.selection">
+    </items-toolbar-update-report-button>
+  </div>
+
+</div>
+
+<div class="nav navbar-right navbar-form">
   <item-view-toggle></item-view-toggle>
 </div>
-
-<div class="folders-panel" ng-show="showingFolders">
-  <ul>
-    <li ng-repeat="folder in folders"><a ng-click="addFolder()">{{ folder.name }}</a></li>
-  </ul>
-</div>
-
