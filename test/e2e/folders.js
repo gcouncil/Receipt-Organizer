@@ -76,7 +76,7 @@ describe('filtering', function() {
 
     var folder1 = user.then(function(user) {
       return Q.all([
-        self.factory.folders.create({ name: 'rent'}, { user: user.id }),
+        self.factory.folders.create({ name: 'rent'}, { user: user.id })
       ]);
     });
 

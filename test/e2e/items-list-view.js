@@ -1,3 +1,4 @@
+var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
@@ -34,42 +35,6 @@ describe('Toggling the View', function() {
   });
 });
 
-//TODO Unable to test e2e due to image creation testing touching AWS
-//TODO UNCLE
-
-//describe.only('Image Viewing', function() {
-  //beforeEach(function() {
-    //var self = this;
-
-    //this.page = new ItemPage(this.factory);
-
-    //this.page.user.then(function(user) {
-      //self.factory.items.create({
-        //vendor: 'Quick Left',
-        //total: 100.00
-      //}, { user: user.id });
-
-      //self.factory.images.create({}, { user: user.id}, function(image) {
-
-        //self.factory.items.create({
-          //vendor: 'Quick Right',
-          //total: 100.01,
-          //image: image.id
-        //}, { user: user.id });
-
-      //});
-    //});
-
-    //this.page.get('table');
-  //});
-
-  //it('should not show an image', function() {
-    //var imageSvg = $('svg');
-    //expect(imageSvg.find('image').getAttribute('href')).to.eventually.be.null;
-  //});
-//});
-
-
 describe('Pagination', function() {
   beforeEach(function() {
     var self = this;
@@ -101,7 +66,50 @@ describe('Pagination', function() {
   });
 });
 
-describe('Editing Items in Table View', function() {
+describe('Viewing Items in List View', function() {
+  beforeEach(function() {
+    var self = this;
+
+    var user = this.factory.users.create({
+      email: 'test2@example.com',
+      password: 'password'
+    });
+
+    var folders = user.then(function(user) {
+      return Q.all([
+        self.factory.folders.create({ name: 'activities' }, { user: user.id }),
+        self.factory.folders.create({ name: 'taxes' }, { user: user.id }),
+        self.factory.folders.create({ name: 'rent' }, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      user,
+      folders
+    ]).done(function(results) {
+      var user = results[0];
+      var folders = _.map(results[1], 'id');
+      self.factory.items.create({
+        vendor: 'Walmart',
+        city: 'Boulder',
+        total: 10.00,
+        folders: folders
+      }, {
+        user: user.id
+      });
+    });
+
+    this.page = new ItemPage(this.factory, user);
+    this.page.get('table');
+  });
+
+  it('should display a comma seperated, sorted list of folder names in the item view', function() {
+    var self = this;
+    expect(self.page.firstItem.getText()).to.eventually.contain('activities, rent, taxes');
+  });
+});
+
+describe('Editing Items from List View', function() {
   beforeEach(function() {
     var self = this;
 
