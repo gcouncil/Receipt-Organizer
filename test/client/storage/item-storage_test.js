@@ -1,5 +1,6 @@
 var angular = require('angular');
 var expect = require('chai').expect;
+var moment = require('moment');
 
 function waitFor(promise, done) {
   function cb() {
@@ -76,14 +77,37 @@ describe('item storage service', function() {
   });
 
   describe('watch', function() {
-    beforeEach(seedItems);
+
+    beforeEach(function() {
+      var ctx = this;
+
+      ctx.items = [{
+        id: 1,
+        name: 'ITEM1',
+        createdAt: moment().subtract(0, 'days').toJSON()
+      }, {
+        id: 2,
+        name: 'ITEM2',
+        createdAt: moment().subtract(1, 'days').toJSON()
+      }];
+
+      angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
+        $httpBackend.expectGET('/api/items').respond(200, ctx.items);
+
+        itemStorage.load();
+
+        $httpBackend.flush();
+
+        $rootScope.$digest();
+      });
+    });
 
     it('should watch the item collection', function() {
       var ctx = this;
-      ctx.items = [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ];
+
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
-        $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ]);
+        $httpBackend.expectGET('/api/items').respond(200, ctx.items);
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).to.deep.equal(ctx.items);
@@ -96,14 +120,13 @@ describe('item storage service', function() {
 
     it('should filter the item collection', function() {
       var ctx = this;
-      ctx.items = [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ];
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
-        $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ]);
+        $httpBackend.expectGET('/api/items').respond(200, ctx.items);
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).not.to.deep.equal(ctx.items);
-          expect(result).to.deep.equal([ {id: 1, name: 'ITEM1' } ]);
+          expect(result).to.deep.equal([ {id: 1, name: 'ITEM1', createdAt: ctx.items[0].createdAt} ]);
         }).setFilter('isItem1', function(item) {
           return item.name === 'ITEM1';
         });
