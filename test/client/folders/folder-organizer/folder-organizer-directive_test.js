@@ -16,7 +16,8 @@ describe('folder organizer directive', function() {
     };
 
     ctx.itemStorage = {
-      watch: ctx.sinon.stub()
+      watch: ctx.sinon.stub(),
+      notify: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.folders', {
@@ -81,7 +82,7 @@ describe('folder organizer directive', function() {
   it('should hide the edit panel', function() {
     var ctx = this;
     ctx.folder = { name: 'FOLDER', showEdit: true };
-    ctx.scope.noEdit(ctx.folder);
+    ctx.scope.hidePanel(ctx.folder);
     ctx.scope.$digest();
     expect(ctx.folder.showEdit).to.be.false;
   });
