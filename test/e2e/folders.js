@@ -123,8 +123,8 @@ describe('filtering', function() {
     testFilteringByFolder(this);
   });
 
-  it('should filter items by folder on the table view', function() {
-    this.page.showTableButton.click();
+  it('should filter items by folder on the list view', function() {
+    this.page.showListButton.click();
     testFilteringByFolder(this);
   });
 

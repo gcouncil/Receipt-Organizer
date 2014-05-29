@@ -134,7 +134,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should batch delete existing items from the thumbnail view', function() {
@@ -192,7 +192,7 @@ describe('Review Folder', function() {
         }, { user: user.id });
 
       });
-      this.page.get('table');
+      this.page.get('list');
     });
 
     it('should inform the user how many items require review', function() {

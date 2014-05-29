@@ -1,6 +1,5 @@
 var angular = require('angular');
 var expect = require('chai').expect;
-var $ = require('jquery');
 
 describe('items list view directive', function() {
 
@@ -27,13 +26,12 @@ describe('items list view directive', function() {
           vendor: 'a',
           date: new Date(),
           category: 'b',
-          paymentType: 'c',
-          city: 'd'
+          paymentType: 'c'
         }];
         ctx.scope.$digest();
       };
     });
-
+    ctx.compile();
   });
 
   afterEach(function() {
@@ -41,5 +39,10 @@ describe('items list view directive', function() {
     if (ctx.scope) {
       ctx.scope.$destroy();
     }
+  });
+
+  it('should set items', function() {
+    var ctx = this;
+    expect(ctx.scope.items.length).to.equal(1);
   });
 });

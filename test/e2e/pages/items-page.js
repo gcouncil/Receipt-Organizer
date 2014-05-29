@@ -35,7 +35,7 @@ function ItemPage(factory, user) {
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
 
   this.showThumbnailsButton = $('item-view-toggle [title="Thumbnails"]');
-  this.showTableButton = $('item-view-toggle [title="Table"]');
+  this.showListButton = $('item-view-toggle [title="List"]');
 
   this.itemToolbarEdit = $('items-toolbar [title="Edit"]');
   this.itemToolbarDelete = $('items-toolbar [title="Delete"]');

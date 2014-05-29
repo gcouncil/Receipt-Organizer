@@ -12,14 +12,14 @@ describe('Toggling the View', function() {
       return this.factory.items.create({}, { user: user.id });
     }, this, this.page.user);
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
-  it('should should toggle from the table to the thumbnail view and back', function() {
+  it('should should toggle from the list to the thumbnail view and back', function() {
     expect(this.page.items.count()).to.eventually.equal(1);
 
-    // Ensure that table view is displayed
-    this.page.showTableButton.click();
+    // Ensure that list view is displayed
+    this.page.showListButton.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
 
@@ -28,8 +28,8 @@ describe('Toggling the View', function() {
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
     expect($('items-list-view').isPresent()).to.eventually.be.false;
 
-    // Make sure we can return to table view
-    this.page.showTableButton.click();
+    // Make sure we can return to list view
+    this.page.showListButton.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
   });
@@ -50,7 +50,7 @@ describe('Pagination', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should contain existing items', function() {
@@ -106,7 +106,7 @@ describe('Viewing Items in List View', function() {
     });
 
     this.page = new ItemPage(this.factory, user);
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should display a comma seperated, sorted list of folder names in the item view', function() {
@@ -144,7 +144,7 @@ describe('Editing Items from List View', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should edit a item with valid values', function() {
@@ -191,7 +191,7 @@ describe('Batch delete', function() {
       });
     });
 
-    this.page.get('table');
+    this.page.get('list');
   });
 
   it('should not show delete button without items selected', function() {
@@ -218,7 +218,7 @@ describe('Batch delete', function() {
     expect(deleteButton.isEnabled()).to.eventually.be.true;
   });
 
-  it('should batch delete existing items from the table view', function() {
+  it('should batch delete existing items from the list view', function() {
     var self = this;
 
     var deleteButton = $('items-toolbar [title="Delete"]');
