@@ -34,14 +34,6 @@ describe('items list view directive', function() {
       };
     });
 
-    ctx.compile();
-
-    ctx.event = {
-      target: ctx.element.find('td')[0],
-      which: 0,
-      preventDefault: ctx.sinon.stub(),
-    };
-
   });
 
   afterEach(function() {
