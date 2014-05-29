@@ -7,7 +7,7 @@
       <review-folder-tab review="items.review"></review-folder-tab>
     </a>
   </li>
-  <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true" draggable-item="{ type: 'folder', id: folder.id, name: folder.name }">
+  <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true">
     <a ng-href="{{ $state.href($state.current, { folder: folder.id }) }}">
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>

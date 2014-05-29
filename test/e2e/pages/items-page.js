@@ -34,15 +34,15 @@ function ItemPage(factory, user) {
   this.itemDeleteConfirmation = $('.modal-dialog');
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
 
-  this.showThumbnailsButton = $('item-view-toggle [title="Thumbnails"]');
-  this.showListButton = $('item-view-toggle [title="List"]');
-
   this.itemToolbarEdit = $('items-toolbar [title="Edit"]');
   this.itemToolbarDelete = $('items-toolbar [title="Delete"]');
   this.itemToolbarFolder = $('items-toolbar [title="Folder"]');
   this.itemToolbarFolderDropdown = $('.item-dropdown');
   this.itemToolbarCreateReport = $('items-toolbar [title="Create New Report"]');
   this.itemToolbarUpdateReport = $('items-toolbar [title="Report"]');
+
+  this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
+  this.itemToolbarList = $('items-toolbar [title="List"]');
 
   this.folderOrganizer = $('folder-organizer');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));

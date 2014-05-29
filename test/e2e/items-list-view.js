@@ -19,17 +19,17 @@ describe('Toggling the View', function() {
     expect(this.page.items.count()).to.eventually.equal(1);
 
     // Ensure that list view is displayed
-    this.page.showListButton.click();
+    this.page.itemToolbarList.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
-    this.page.showThumbnailsButton.click();
+    this.page.itemToolbarThumbnails.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
     expect($('items-list-view').isPresent()).to.eventually.be.false;
 
     // Make sure we can return to list view
-    this.page.showListButton.click();
+    this.page.itemToolbarList.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
   });

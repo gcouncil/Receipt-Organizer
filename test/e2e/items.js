@@ -139,7 +139,7 @@ describe('Batch delete', function() {
 
   it('should batch delete existing items from the thumbnail view', function() {
     var self = this;
-    $('item-view-toggle [title="Thumbnails"]').click();
+    this.page.itemToolbarThumbnails.click();
 
     var deleteButton = $('items-toolbar [title="Delete"]');
     var firstIdPromise = this.page.firstItem.evaluate('item.id');

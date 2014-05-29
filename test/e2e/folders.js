@@ -124,7 +124,7 @@ describe('filtering', function() {
   });
 
   it('should filter items by folder on the list view', function() {
-    this.page.showListButton.click();
+    this.page.itemToolbarList.click();
     testFilteringByFolder(this);
   });
 
