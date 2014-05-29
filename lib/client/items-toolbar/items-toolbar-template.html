@@ -2,7 +2,7 @@
   <div class="nav navbar-nav navbar-left navbar-form">
     <bulk-selection selection="items.selection"></bulk-selection>
 
-    <button class="btn btn-primary" title="Create New Report"
+    <button class="btn btn-primary"
       ng-click="$emit('items:newReport', items.selection.selectedItems)"
       ng-disabled="!items.selection.hasSelection()">
       <i class="fa fa-plus-circle"></i>
@@ -11,13 +11,13 @@
 
 
     <div class="btn-group">
-      <button class="btn btn-default" title="Edit"
+      <button class="btn btn-default"
         ng-click="$emit('items:edit', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-edit"></i>
         Edit
       </button>
-      <button class="btn btn-default" title="Delete"
+      <button class="btn btn-default"
         ng-click="$emit('items:destroy', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-trash-o"></i>

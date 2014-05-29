@@ -141,7 +141,7 @@ describe('Batch delete', function() {
     var self = this;
     $('item-view-toggle [title="Thumbnails"]').click();
 
-    var deleteButton = $('items-toolbar [title="Delete"]');
+    var deleteButton = this.page.itemToolbarDelete;
     var firstIdPromise = this.page.firstItem.evaluate('item.id');
 
     expect(deleteButton.getAttribute('disabled')).to.eventually.equal('true');
