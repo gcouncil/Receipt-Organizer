@@ -1,6 +1,6 @@
 .items-list-view-container {
   padding: 0px 45px;
-
+  overflow: hidden;
   .items-list-view-row {
 
     .items-list-view-item {
@@ -40,8 +40,11 @@
 
     .items-list-view-headers {
       border: none;
+      padding-bottom: 5px;
+      border-bottom: 1px solid grey;
       color: grey;
       font-size: 1.01em;
+      overflow: auto !important;
     }
   }
 }
