@@ -18,17 +18,17 @@ describe('Toggling the View', function() {
     expect(this.page.items.count()).to.eventually.equal(1);
 
     // Ensure that table view is displayed
-    this.page.showTableButton.click();
+    this.page.itemToolbarTable.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('item-table').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
-    this.page.showThumbnailsButton.click();
+    this.page.itemToolbarThumbnails.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
     expect($('item-table').isPresent()).to.eventually.be.false;
 
     // Make sure we can return to table view
-    this.page.showTableButton.click();
+    this.page.itemToolbarTable.click();
     expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
     expect($('item-table').isPresent()).to.eventually.be.true;
   });
