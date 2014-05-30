@@ -51,6 +51,11 @@ function ItemPage(factory, user) {
   this.itemToolbarUpdateReport = $('items-toolbar').element(by.partialButtonText('Add to Report'));
 
   this.vendorItemHeader = $('.items-list-view-headers').element(by.linkText('Vendor'));
+  this.totalItemHeader = $('.items-list-view-headers').element(by.linkText('Total'));
+  this.categoryItemHeader = $('.items-list-view-headers').element(by.linkText('Category'));
+  this.foldersItemHeader = $('.items-list-view-headers').element(by.linkText('Folders'));
+  this.dateItemHeader = $('.items-list-view-headers').element(by.linkText('Date'));
+  this.typeItemHeader = $('.items-list-view-headers').element(by.linkText('Type'));
 
   this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
   this.itemToolbarList = $('items-toolbar [title="List"]');

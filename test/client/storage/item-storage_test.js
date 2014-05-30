@@ -83,10 +83,12 @@ describe('item storage service', function() {
 
       ctx.items = [{
         id: 1,
+        vendor: 'CBS',
         name: 'ITEM1',
         createdAt: moment().subtract(0, 'days').toJSON()
       }, {
         id: 2,
+        vendor: 'ABC',
         name: 'ITEM2',
         createdAt: moment().subtract(1, 'days').toJSON()
       }];
@@ -126,10 +128,28 @@ describe('item storage service', function() {
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).not.to.deep.equal(ctx.items);
-          expect(result).to.deep.equal([ {id: 1, name: 'ITEM1', createdAt: ctx.items[0].createdAt} ]);
+          expect(result).to.deep.equal([ {id: 1, vendor: 'CBS', name: 'ITEM1', createdAt: ctx.items[0].createdAt} ]);
         }).setFilter('isItem1', function(item) {
           return item.name === 'ITEM1';
         });
+
+        $httpBackend.flush();
+        $rootScope.$digest();
+      });
+    });
+
+    it('should sort the item collection', function() {
+      var ctx = this;
+      angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
+        ctx.scope = $rootScope.$new();
+        $httpBackend.expectGET('/api/items').respond(200, ctx.items);
+
+        var query = itemStorage.watch(ctx.scope, function(result) {
+          ctx.result = result;
+        });
+
+        query.setSort('vendor');
+        expect(ctx.result).to.deep.equal(ctx.items.reverse());
 
         $httpBackend.flush();
         $rootScope.$digest();

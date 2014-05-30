@@ -1,12 +1,12 @@
 <div class="items-list-view-container">
   <div class="items-list-view-headers">
     <div class="list-view-data-checkbox"></div>
-    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}({ sort: 'vendor' })">Vendor</a></div>
-    <div class="list-view-data-sm"><a ui-sref="{{ $state.current.name }}({ sort: 'total' }) }}">Total</a></div>
-    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}({ sort: 'category' }) }}">Category</a></div>
-    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}({ sort: 'folders' }) }}">Folders</a></div>
-    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}({ sort: 'date' }) }}">Date</a></div>
-    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}({ sort: 'type' }) }}">Type</a></div>
+    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}(sortParams('vendor'))">Vendor</a></div>
+    <div class="list-view-data-sm"><a ui-sref="{{ $state.current.name }}(sortParams('total'))">Total</a></div>
+    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}(sortParams('category'))">Category</a></div>
+    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}(sortParams('folders'))">Folders</a></div>
+    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}(sortParams('date'))">Date</a></div>
+    <div class="list-view-data"><a ui-sref="{{ $state.current.name }}(sortParams('type'))">Type</a></div>
   </div>
   <div class="items-list-view-body">
     <div class="items-list-view-item"

@@ -252,43 +252,71 @@ describe('Batch delete', function() {
 
 });
 
-describe.only('sorting by header', function() {
+describe('sorting by header', function() {
   beforeEach(function() {
     var self = this;
 
-    this.page = new ItemPage(this.factory);
+    var user = this.factory.users.create({
+      email: 'test@example.com',
+      password: 'password'
+    });
 
-    this.page.user.then(function(user) {
+    this.page = new ItemPage(this.factory, user);
+
+    var folders = user.then(function(user) {
+      return Q.all([
+        self.factory.folders.create({ name: 'breakfast' }, { user: user.id }),
+        self.factory.folders.create({ name: 'dinner' }, { user: user.id }),
+        self.factory.folders.create({ name: 'fourthmeal' }, { user: user.id }),
+        self.factory.folders.create({ name: 'lunch' }, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      user,
+      folders
+    ]).done(function(results) {
+      var user = results[0];
+      self.folders = results[1];
+
       self.factory.items.create({
         vendor: 'Apple',
         total: 2,
         category: 'Fruit',
+        folders: [self.folders[1].id],
         date: moment().subtract(0, 'days').toJSON(),
-        type: 'receipt'
+        type: 'receipt',
+        reviewed: true
       }, { user: user.id });
 
       self.factory.items.create({
         vendor: 'Gummy Worms',
         total: 3,
         category: 'Candy',
+        folders: [self.folders[2].id],
         date: moment().subtract(1, 'days').toJSON(),
-        type: 'expense'
+        type: 'expense',
+        reviewed: true
       }, { user: user.id });
 
       self.factory.items.create({
         vendor: 'Chocolate',
         total: 5,
         category: 'Candy',
+        folders: [self.folders[0].id],
         date: moment().subtract(2, 'days').toJSON(),
-        type: 'expense'
+        type: 'expense',
+        reviewed: true
       }, { user: user.id });
 
       self.factory.items.create({
         vendor: 'Coffee',
         total: 1,
         category: 'Stimulants',
+        folders: [self.folders[3].id],
         date: moment().subtract(3, 'days').toJSON(),
-        type: 'receipt'
+        type: 'receipt',
+        reviewed: true
       }, { user: user.id });
     });
 
@@ -308,5 +336,74 @@ describe.only('sorting by header', function() {
     expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
     expect(this.page.thirdItem.getText()).to.eventually.contain('Coffee');
     expect(this.page.fourthItem.getText()).to.eventually.contain('Gummy Worms');
+    this.page.vendorItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Apple');
+
+  });
+
+  it('should sort by total', function() {
+    this.page.totalItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Chocolate');
+    this.page.totalItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+  });
+
+  it('should sort by category', function() {
+    this.page.categoryItemHeader.click();
+    // Items sharing a category are secondarily sorted by date, not vendor
+    // So Gummy Worms precede Chocolate
+    expect(this.page.firstItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+    this.page.categoryItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Gummy Worms');
+  });
+
+  it('should sort by folders', function() {
+    this.page.foldersItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+    this.page.foldersItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Chocolate');
+  });
+
+  it('should sort by type', function() {
+    this.page.typeItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+    this.page.typeItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Gummy Worms');
+  });
+
+  it('should sort by date ascending after another sort', function() {
+    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
+    this.page.dateItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Apple');
   });
 });
