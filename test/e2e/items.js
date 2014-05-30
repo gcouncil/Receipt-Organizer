@@ -78,6 +78,41 @@ describe('Editing Items', function() {
     expect(itemQueryResults).to.eventually.have.length(1);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
+
+  it('should mark an item as reviewed after it is edited', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorSave.click();
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+  });
+
+  it('should mark an item as reviewed if editing is cancelled without saving edits', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
+
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+
+    this.page.receiptEditorCancel.click();
+
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+
+    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
+
+    // check database for no actual change
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+  });
 });
 
 describe('Deleting Items', function() {
