@@ -2,6 +2,7 @@ var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
+var moment = require('moment');
 
 var ItemPage = require('./pages/items-page');
 
@@ -251,3 +252,61 @@ describe('Batch delete', function() {
 
 });
 
+describe.only('sorting by header', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    this.page.user.then(function(user) {
+      self.factory.items.create({
+        vendor: 'Apple',
+        total: 2,
+        category: 'Fruit',
+        date: moment().subtract(0, 'days').toJSON(),
+        type: 'receipt'
+      }, { user: user.id });
+
+      self.factory.items.create({
+        vendor: 'Gummy Worms',
+        total: 3,
+        category: 'Candy',
+        date: moment().subtract(1, 'days').toJSON(),
+        type: 'expense'
+      }, { user: user.id });
+
+      self.factory.items.create({
+        vendor: 'Chocolate',
+        total: 5,
+        category: 'Candy',
+        date: moment().subtract(2, 'days').toJSON(),
+        type: 'expense'
+      }, { user: user.id });
+
+      self.factory.items.create({
+        vendor: 'Coffee',
+        total: 1,
+        category: 'Stimulants',
+        date: moment().subtract(3, 'days').toJSON(),
+        type: 'receipt'
+      }, { user: user.id });
+    });
+
+    this.page.get('list');
+  });
+
+  it('should sort by date by default', function() {
+    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+  });
+
+  it('should sort by vendor', function() {
+    this.page.vendorItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Gummy Worms');
+  });
+});
