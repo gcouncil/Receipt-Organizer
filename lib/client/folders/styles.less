@@ -1,31 +1,21 @@
 folder-organizer {
+  .flex-box(column);
   .flex(1, 1, 100px);
-}
 
-folder-organizer button {
-  float: right;
-}
-
-folder-organizer li {
-  form {
-    display: inline;
-
-    input {
-      color: black;
-      width: 70%;
-      margin-right: 0;
-      display: inline;
-    }
+  ul {
+    .noflex();
+    overflow: hidden;
   }
-}
 
-.new-folder-button {
-  margin-top: 10px;
-  float: right;
-}
+  .nav-sidebar-scroll {
+    .flex();
+    overflow: auto;
+  }
 
-.dropdown-menu li p {
-  color: black;
+  new-folder {
+    .noflex();
+    > .btn { display: block }
+  }
 }
 
 .badge-warning {

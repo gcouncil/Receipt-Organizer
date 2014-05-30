@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 describe('new folder directive', function() {
   beforeEach(function() {
     var ctx = this;
+
     ctx.folderStorage = {
       create: ctx.sinon.stub()
     };
@@ -19,6 +20,7 @@ describe('new folder directive', function() {
         ctx.scope.$digest();
       };
     });
+
     ctx.compile();
   });
 
