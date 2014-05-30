@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                 CORSRules: [{
                   AllowedOrigins: ['*'],
                   AllowedMethods: ['GET'],
-                  AllowedHeaders: ['Authorization'],
+                  AllowedHeaders: ['Authorization', 'If-Modified-Since', 'Accept', 'Origin'],
                   MaxAgeSeconds: 3000
                 }]
               }
