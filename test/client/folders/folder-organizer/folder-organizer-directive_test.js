@@ -9,9 +9,12 @@ describe('folder organizer directive', function() {
       update: ctx.sinon.stub(),
       destroy: ctx.sinon.stub()
     };
+
     ctx.state = {
       state: 'STATE',
-      $current: ctx.sinon.stub(),
+      $current: {
+        name: ctx.sinon.stub()
+      },
       go: ctx.sinon.stub()
     };
 
@@ -67,7 +70,7 @@ describe('folder organizer directive', function() {
     var ctx = this;
     ctx.scope.filter('billable');
     ctx.scope.$digest();
-    expect(ctx.state.go).to.have.been.calledWith(ctx.state.$current, { folder: 'billable' });
+    expect(ctx.state.go).to.have.been.calledWith({name: ctx.state.$current.name}, { folder: 'billable' });
   });
 
   it('should update a folder and turn off the edit panel', function() {

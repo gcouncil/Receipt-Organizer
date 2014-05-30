@@ -4,21 +4,29 @@ var expect = require('chai').expect;
 describe('toplevel layout directive', function() {
   beforeEach(function() {
     var ctx = this;
+
     ctx.currentUser = {
       email: ctx.sinon.stub(),
       get: ctx.sinon.stub()
     };
-    angular.mock.module('ngMock', 'epsonreceipts', { currentUser: ctx.currentUser } );
+
+    ctx.state = {
+      current: {
+        name: ctx.sinon.stub()
+      }
+    };
+
+    angular.mock.module('ngMock', 'epsonreceipts.layout', {
+      currentUser: ctx.currentUser,
+      $state: ctx.state,
+      HttpBusyController: ctx.sinon.stub()
+    });
 
     angular.mock.inject(function($rootScope, $compile, $httpBackend) {
       ctx.scope = $rootScope.$new();
-      $httpBackend.when('GET', '/api/items').respond([]);
-      $httpBackend.when('GET', '/api/folders').respond([]);
-      $httpBackend.when('GET', '/api/reports').respond([]);
 
       ctx.compile = function() {
         ctx.element = $compile('<toplevel-layout></toplevel-layout>')(ctx.scope);
-        $httpBackend.flush();
         ctx.scope.$digest();
       };
 
@@ -28,6 +36,7 @@ describe('toplevel layout directive', function() {
 
       ctx.currentUser.get.returns(ctx.user);
     });
+
     ctx.compile();
   });
 
