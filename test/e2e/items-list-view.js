@@ -121,7 +121,7 @@ describe('Viewing Items in List View', function() {
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-selected');
   });
 
-  context.only('with unreviewed items', function() {
+  context('with unreviewed items', function() {
     it('should toggle item class if item is unreviewed', function() {
       var self = this;
       expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
