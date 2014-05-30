@@ -66,7 +66,7 @@ describe('Pagination', function() {
   });
 });
 
-describe('Viewing Items in List View', function() {
+describe.only('Viewing Items in List View', function() {
   beforeEach(function() {
     var self = this;
 
@@ -126,6 +126,12 @@ describe('Viewing Items in List View', function() {
     expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
     expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
   });
+
+  it('should display an unreviewed flag on unreviewed items', function() {
+    var self = this;
+    expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+    expect(self.page.firstItem.getText()).to.not.eventually.contain('Review?');
+  });
 });
 
 describe('Editing Items from List View', function() {
@@ -171,6 +177,24 @@ describe('Editing Items from List View', function() {
 
     expect(itemQueryResults).to.eventually.have.length(1);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+  });
+
+  it('should mark an item as reviewed after it is edited', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorSave.click();
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+  });
+
+  it('should not mark an item as reviewed if editing is cancelled', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorCancel.click();
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
   });
 
 });
