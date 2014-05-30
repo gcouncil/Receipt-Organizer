@@ -121,16 +121,25 @@ describe.only('Viewing Items in List View', function() {
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-selected');
   });
 
-  it('should toggle item class if item is unreviewed', function() {
-    var self = this;
-    expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
-    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
-  });
+  context.only('with unreviewed items', function() {
+    it('should toggle item class if item is unreviewed', function() {
+      var self = this;
+      expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+      expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+    });
 
-  it('should display an unreviewed flag on unreviewed items', function() {
-    var self = this;
-    expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
-    expect(self.page.firstItem.getText()).to.not.eventually.contain('Review?');
+    it('should display an unreviewed flag on unreviewed items', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      expect(self.page.firstItem.getText()).to.not.eventually.contain('Review?');
+    });
+
+    it('should have an x to dismiss the unreviewed flag', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      self.page.secondItem.element(by.buttonText('x')).click();
+      expect(self.page.secondItem.getText()).to.not.eventually.contain('Review?');
+    });
   });
 });
 
