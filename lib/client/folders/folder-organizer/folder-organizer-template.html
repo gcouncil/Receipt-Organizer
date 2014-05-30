@@ -1,20 +1,25 @@
-<ul class="nav nav-stacked nav-dark">
-  <li>
-    <all-receipt-button></all-receipt-button>
+<ul class="nav nav-stacked nav-sidebar">
+  <li class="primary" ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: null })">
+      Receipts
+    </a>
   </li>
-  <li class="review-folder">
-    <a ng-href="{{ $state.href($state.current, { folder: 'unreviewed' }) }}">
+</ul>
+<ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
+  <li class="review-folder" ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: 'unreviewed' })">
       <review-folder-tab review="items.review"></review-folder-tab>
     </a>
   </li>
-  <li ng-repeat="folder in folders" folder="folder" item-drop-zone draggable="true">
-    <a ng-href="{{ $state.href($state.current, { folder: folder.id }) }}">
+  <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
+    <a ui-sref="{{ $state.current.name }}({ folder: folder.id })">
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>
         {{ folder.name }}
+        <span class='badge pull-right'> {{ itemCounts[folder.id] || 0 }}</span>
       </span>
       <form folder="folder" ng-show="folder.showEdit" ng-submit="update(folder)">
-        <input type="text" ng-model="folder.name" ng-blur="noEdit(folder)">
+        <input type="text" ng-model="folder.name" ng-blur="hideEditPanel(folder)">
       </form>
       <folder-actions folder="folder"></folder-actions>
     </a>

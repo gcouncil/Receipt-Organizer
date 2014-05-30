@@ -47,17 +47,18 @@ describe('Folders CRUD', function() {
   });
 
   it('should be possible to create a new folder', function() {
+    this.page.newFolderLink.click();
     this.page.newFolder.element(by.model('newFolder')).sendKeys('write-offs');
-    this.page.newFolder.element(by.css('.fa-plus')).click();
+    this.page.newFolderSaveButton.click();
     expect(this.page.folderOrganizer.getText()).to.eventually.contain('write-offs');
   });
 
   it('should be possible to delete an existing folder', function() {
-    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.equal('materials');
+    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
     this.page.firstFolderInOrganizer.$('.fa-caret-down').click();
-    this.page.firstFolderInOrganizer.$('.fa-trash-o').click();
-    expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.equal('materials');
-    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.equal('product development');
+    this.page.firstFolderInOrganizer.element(by.linkText('Delete')).click();
+    expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
+    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
   });
 
 });
@@ -193,4 +194,61 @@ describe('Multiple Foldering', function() {
   });
 
 });
+
+describe('Review Folder', function() {
+  context('with unreviewed items', function() {
+    beforeEach(function() {
+      var self = this;
+
+      this.page = new ItemPage(this.factory);
+
+      this.page.user.then(function(user) {
+        _.times(4, function(i) {
+          self.factory.items.create({
+            reviewed: false,
+            formxtraStatus: 'skipped'
+          }, { user: user.id });
+        });
+        self.factory.items.create({
+          reviewed: true,
+          formxtraStatus: 'skipped'
+        }, { user: user.id });
+        self.factory.folders.create({
+          name: 'EmptyFolder'
+        }, { user: user.id });
+
+      });
+      this.page.get('list');
+    });
+
+    it('should inform the user how many items require review', function() {
+      expect(this.page.items.count()).to.eventually.equal(5);
+      expect(this.page.reviewFolder.getText()).to.eventually.match(/Unreviewed\s?4/);
+    });
+
+    it('should toggle the viewable receipts', function() {
+      expect(this.page.items.count()).to.eventually.equal(5);
+      this.page.reviewFolder.click();
+      expect(this.page.items.count()).to.eventually.equal(4);
+    });
+
+    it('should display correct total when navigating through folders', function() {
+      expect(this.page.reviewFolder.getText()).to.eventually.match(/Unreviewed\s?4/);
+      this.page.firstFolderInOrganizer.click();
+      expect(this.page.reviewFolder.getText()).to.eventually.match(/Unreviewed\s?4/);
+    });
+
+    it('should update unreviewed total on delete', function() {
+      expect(this.page.reviewFolder.getText()).to.eventually.match(/Unreviewed\s4/);
+      this.page.secondItemSelect.click();
+      this.page.itemToolbarDelete.click();
+      this.page.itemDeleteConfirmButton.click();
+      expect(this.page.reviewFolder.getText()).to.eventually.match(/Unreviewed\s3/);
+    });
+  });
+});
+
+
+
+
 

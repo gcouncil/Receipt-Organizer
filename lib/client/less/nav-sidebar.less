@@ -1,0 +1,39 @@
+.nav-sidebar {
+  > li {
+    margin-top: 0 !important;
+
+    > a {
+      color: white;
+      border-bottom: solid 1px @gray-light;
+      border-left: solid 4px transparent;
+
+      &:hover,
+      &:focus {
+        background-color: @gray-dark;
+      }
+    }
+
+    &.primary > a {
+      text-transform: uppercase;
+
+      background: @gray-dark;
+      border-bottom: solid 1px @gray-darker;
+
+      &:hover,
+      &:focus {
+        background-color: @gray-darker;
+      }
+    }
+
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: black;
+        background-color: white;
+        border-left: solid 4px @brand-primary;
+      }
+    }
+  }
+}
