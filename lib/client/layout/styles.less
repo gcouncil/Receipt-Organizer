@@ -5,12 +5,14 @@ toplevel-layout {
   height: 100%;
   width: 100%;
   min-width: 900px;
+  .noflex();
   .flex-box(row);
 }
 
 .toplevel-layout-sidebar {
   background: @gray;
   color: #ccc;
+  width: 200px;
   .noflex();
   .flex-box(column);
 }
@@ -50,7 +52,7 @@ toplevel-layout {
   .flex-box(column);
   overflow: auto;
 
-  > ui-view {
-    .flex;
-  }
+  // Coerce IE10 into the correct layout.
+  // 200px is the width of the sidebar
+  width: ~"calc(100vw - 200px)";
 }
