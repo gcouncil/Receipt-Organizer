@@ -32,6 +32,11 @@ ui-view {
   .flex-box(column);
   .flex();
   align-content: strech;
+  align-items: strech;
+
+  > * {
+    .flex(0, 1, auto);
+  }
 }
 
 .datepicker .btn-default {
@@ -42,4 +47,17 @@ ui-view {
   &:extend(.dropdown-menu > li > a);
 
   &:hover:extend(.dropdown-menu > li > a:hover) {};
+}
+
+.nav-dark {
+  // TODO: Implement real style
+  background: @gray-lighter;
+}
+
+.btn {
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    opacity: 0.45;
+  }
 }

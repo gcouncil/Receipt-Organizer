@@ -15,7 +15,8 @@ describe('authentication service', function() {
     it('should not set the Authorization header', function() {
       angular.mock.inject(function($rootScope, $httpBackend, $http) {
         $httpBackend.expectGET('/', {
-          Accept: 'application/json, text/plain, */*'
+          Accept: 'application/json, text/plain, */*',
+          'If-Modified-Since': '0'
         }).respond(200);
 
         $http.get('/');
@@ -55,7 +56,8 @@ describe('authentication service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, $http) {
         $httpBackend.expectGET('/', {
           Accept: 'application/json, text/plain, */*',
-          Authorization: 'Bearer TOKEN'
+          Authorization: 'Bearer TOKEN',
+          'If-Modified-Since': '0'
         }).respond(200);
 
         $http.get('/');
@@ -72,7 +74,8 @@ describe('authentication service', function() {
         angular.mock.inject(function($rootScope, $httpBackend, $http) {
           $httpBackend.expectGET('/', {
             Accept: 'application/json, text/plain, */*',
-            Authorization: 'Bearer TOKEN'
+            Authorization: 'Bearer TOKEN',
+            'If-Modified-Since': '0'
           }).respond(401);
 
           $http.get('/');
@@ -91,7 +94,8 @@ describe('authentication service', function() {
         angular.mock.inject(function($rootScope, $httpBackend, $http) {
           $httpBackend.expectGET('/', {
             Accept: 'application/json, text/plain, */*',
-            Authorization: 'Bearer TOKEN'
+            Authorization: 'Bearer TOKEN',
+            'If-Modified-Since': '0'
           }).respond(404);
 
           $http.get('/');
@@ -117,7 +121,8 @@ describe('authentication service', function() {
     it('should not set the header', function() {
       angular.mock.inject(function($rootScope, $httpBackend, $http) {
         $httpBackend.expectGET('/', {
-          Accept: 'application/json, text/plain, */*'
+          Accept: 'application/json, text/plain, */*',
+          'If-Modified-Since': '0'
         }).respond(200);
 
         $http.get('/');
