@@ -137,13 +137,13 @@ describe.only('Viewing Items in List View', function() {
     it('should have an x to dismiss the unreviewed flag', function() {
       var self = this;
       expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
-      self.page.secondItem.$('.review-flag').click();
+      self.page.secondItem.$('.dismiss').click();
       expect(self.page.secondItem.getText()).to.not.eventually.contain('Review?');
     });
 
     it('should change the item to reviewed in the database if the unreviewed flag is dismissed', function() {
       var self = this;
-      self.page.secondItem.$('.review-flag').click();
+      self.page.secondItem.$('.dismiss').click();
 
       var itemQueryResults = browser.call(function(user) {
         return self.factory.items.query({ user: user.id });
@@ -152,6 +152,13 @@ describe.only('Viewing Items in List View', function() {
       expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
       expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
       expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
+    });
+
+    it('should open the editor when singe clicking the review button', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      self.page.secondItem.element(by.partialButtonText('Review?')).click();
+      expect(self.page.receiptEditor).toBePresent;
     });
   });
 });

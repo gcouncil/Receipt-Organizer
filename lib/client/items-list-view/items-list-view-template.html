@@ -22,7 +22,7 @@
       <div class="list-view-data">{{ item.category }}</div>
       <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
-      <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status"><button class="review-flag" ng-click="$emit('items:edit', item)"> Review? </button> <button class="review-flag pull-right" ng-click=markReviewed(item)> <i class="fa fa-times-circle"></i> </button> </div>
+      <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status"><button class="review-flag review" ng-click="$emit('items:edit', item)"> Review? </button> <button class="review-flag dismiss pull-right" ng-click=markReviewed(item)> <i class="fa fa-times-circle"></i> </button> </div>
       <div ng-if="item.reviewed" class="list-view-data-sm">{{ item.type | titlecase }}</div>
     </div>
   </div>
