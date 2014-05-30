@@ -66,7 +66,7 @@ describe('Pagination', function() {
   });
 });
 
-describe.only('Viewing Items in List View', function() {
+describe('Viewing Items in List View', function() {
   beforeEach(function() {
     var self = this;
 
