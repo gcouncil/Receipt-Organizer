@@ -157,7 +157,7 @@ describe('Viewing Items in List View', function() {
     it('should open the editor when singe clicking the review button', function() {
       var self = this;
       expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
-      self.page.secondItem.element(by.partialButtonText('Review?')).click();
+      self.page.secondItem,$('.review').click();
       expect(self.page.receiptEditor).toBePresent;
     });
   });
