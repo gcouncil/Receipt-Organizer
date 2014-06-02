@@ -171,6 +171,13 @@ describe.only('Editing Items from List View', function() {
 
     this.page.user.then(function(user) {
       self.factory.items.create({
+        vendor: 'Target',
+        city: 'Boulder',
+        total: 8.00
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
         vendor: 'Kmart',
         total: 12.00
       }, {
@@ -184,14 +191,13 @@ describe.only('Editing Items from List View', function() {
         user: user.id
       });
     });
-
     this.page.get('list');
   });
 
   it('should edit a item with valid values', function() {
     var self = this;
 
-    expect(this.page.items.count()).to.eventually.equal(2);
+    expect(this.page.items.count()).to.eventually.equal(3);
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
@@ -203,14 +209,14 @@ describe.only('Editing Items from List View', function() {
     this.page.receiptEditorSave.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
-    expect(this.page.items.count()).to.eventually.equal(2);
+    expect(this.page.items.count()).to.eventually.equal(3);
 
     // check database for the actual change
     var itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
-    expect(itemQueryResults).to.eventually.have.length(2);
+    expect(itemQueryResults).to.eventually.have.length(3);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 
@@ -288,54 +294,6 @@ describe.only('Editing Items from List View', function() {
     expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
     expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
     expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', false);
-  });
-
-  xit('should not mark an item as reviewed if editing is cancelled', function() {
-    var self = this;
-
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
-
-    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
-
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
-    this.page.firstItem.$('input[type="checkbox"][selection]').click();
-    this.page.itemToolbarEdit.click();
-    this.page.receiptEditorCancel.click();
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
-
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
-
-    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
-  });
-
-  xit('should mark an item as reviewed if editing is cancelled without saving edits', function() {
-    var self = this;
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
-    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
-
-    this.page.firstItem.$('input[type="checkbox"][selection]').click();
-    this.page.itemToolbarEdit.click();
-
-    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
-    originalVendor.clear();
-    originalVendor.sendKeys('Whole Foods');
-
-    this.page.receiptEditorCancel.click();
-
-    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
-
-    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
-
-    // check database for no actual change
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
-
-    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
   });
 
 });
