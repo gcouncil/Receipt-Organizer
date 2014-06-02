@@ -121,10 +121,45 @@ describe('Viewing Items in List View', function() {
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-selected');
   });
 
-  it('should toggle item class if item is unreviewed', function() {
-    var self = this;
-    expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
-    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+  context('with unreviewed items', function() {
+    it('should toggle item class if item is unreviewed', function() {
+      var self = this;
+      expect(self.page.secondItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+      expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+    });
+
+    it('should display an unreviewed flag on unreviewed items', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      expect(self.page.firstItem.getText()).to.not.eventually.contain('Review?');
+    });
+
+    it('should have an x to dismiss the unreviewed flag', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      self.page.secondItem.$('.dismiss').click();
+      expect(self.page.secondItem.getText()).to.not.eventually.contain('Review?');
+    });
+
+    it('should change the item to reviewed in the database if the unreviewed flag is dismissed', function() {
+      var self = this;
+      self.page.secondItem.$('.dismiss').click();
+
+      var itemQueryResults = browser.call(function(user) {
+        return self.factory.items.query({ user: user.id });
+      }, null, this.page.user);
+
+      expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+      expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
+      expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
+    });
+
+    it('should open the editor when singe clicking the review button', function() {
+      var self = this;
+      expect(self.page.secondItem.getText()).to.eventually.contain('Review?');
+      self.page.secondItem,$('.review').click();
+      expect(self.page.receiptEditor).toBePresent;
+    });
   });
 });
 
@@ -171,6 +206,24 @@ describe('Editing Items from List View', function() {
 
     expect(itemQueryResults).to.eventually.have.length(1);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+  });
+
+  it('should mark an item as reviewed after it is edited', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorSave.click();
+    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+  });
+
+  it('should not mark an item as reviewed if editing is cancelled', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorCancel.click();
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
   });
 
 });
