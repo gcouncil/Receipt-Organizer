@@ -234,10 +234,6 @@ describe.only('Editing Items from List View', function() {
     this.page.receiptEditorSave.click();
     expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
 
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
-
     expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 
@@ -259,10 +255,6 @@ describe.only('Editing Items from List View', function() {
     this.page.receiptEditorNext.click();
     this.page.receiptEditorNext.click();
     this.page.receiptEditorSave.click();
-
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
 
     expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
     expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
@@ -286,10 +278,6 @@ describe.only('Editing Items from List View', function() {
     this.page.itemToolbarEdit.click();
     this.page.receiptEditorNext.click();
     this.page.receiptEditorSave.click();
-
-    var itemQueryResults = browser.call(function(user) {
-      return self.factory.items.query({ user: user.id });
-    }, null, this.page.user);
 
     expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
     expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
