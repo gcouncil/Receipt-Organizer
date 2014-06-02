@@ -99,7 +99,6 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
 
-
         itemStorage.load();
 
         $httpBackend.flush();
@@ -117,7 +116,6 @@ describe('item storage service', function() {
         $httpBackend.expectGET('/api/folders').respond(200, [ {id: 1, name: 'FOLDER1'}, {id: 2, name: 'FOLDER2'} ]);
 
         itemStorage.watch(ctx.scope, function(result) {
-          console.log(result, ctx.items);
           expect(result).to.deep.equal(ctx.items);
         });
 
