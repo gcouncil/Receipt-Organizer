@@ -9,7 +9,7 @@
     <div class="list-view-data">Type</div>
   </div>
   <div class="items-list-view-body">
-    <div class="items-list-view-item"
+    <label class="items-list-view-item"
       ng-repeat="item in items track by item.id"
       ng-class="{
       'items-list-view-item-unreviewed': !item.reviewed,
@@ -24,6 +24,6 @@
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
       <div ng-if="!item.reviewed" class="list-view-data items-list-view-item-review-status">Review? <i class="fa fa-times-circle"></i></div>
       <div ng-if="item.reviewed" class="list-view-data">{{ item.type | titlecase }}</div>
-    </div>
+    </label>
   </div>
 </div>

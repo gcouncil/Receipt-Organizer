@@ -251,3 +251,26 @@ describe('Batch delete', function() {
 
 });
 
+describe('click select', function() {
+  beforeEach(function() {
+    var self = this;
+
+    this.page = new ItemPage(this.factory);
+
+    this.page.user.then(function(user) {
+      _.times(4, function(i) {
+        self.factory.items.create({
+          vendor: 'Fake Item Generator',
+          total: 100.00 + i
+        }, { user: user.id });
+      });
+    });
+
+    this.page.get('list');
+  });
+
+  it('selects the item by clicking on its row', function() {
+    this.page.firstItem.click();
+    expect(this.page.firstItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
+  });
+});
