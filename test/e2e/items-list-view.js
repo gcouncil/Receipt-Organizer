@@ -273,4 +273,11 @@ describe('click select', function() {
     this.page.firstItem.click();
     expect(this.page.firstItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
   });
+
+  it('selects multiple items', function() {
+    this.page.firstItem.click();
+    this.page.secondItem.click();
+    expect(this.page.firstItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
+    expect(this.page.secondItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
+  });
 });
