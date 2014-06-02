@@ -2,6 +2,8 @@
   <li class="primary">
     <a>Reports</a>
   </li>
+</ul>
+<ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
     <a href="#" ng-click="$emit('items:editReport', report)">
       <i class="fa fa-file"></i>
