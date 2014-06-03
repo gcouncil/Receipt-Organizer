@@ -12,8 +12,11 @@ describe('folder organizer directive', function() {
 
     ctx.state = {
       state: 'STATE',
+      params: {
+        folder: 'FOLDER'
+      },
       $current: {
-        name: ctx.sinon.stub()
+        name: 'items.thumbnails'
       },
       go: ctx.sinon.stub()
     };
@@ -70,7 +73,7 @@ describe('folder organizer directive', function() {
     var ctx = this;
     ctx.scope.filter('billable');
     ctx.scope.$digest();
-    expect(ctx.state.go).to.have.been.calledWith({name: ctx.state.$current.name}, { folder: 'billable' });
+    expect(ctx.state.go).to.have.been.calledWith(ctx.state.$current.name, { folder: 'billable' });
   });
 
   it('should update a folder and turn off the edit panel', function() {

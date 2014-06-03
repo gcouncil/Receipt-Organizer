@@ -11,8 +11,8 @@
       <review-folder-tab review="items.review"></review-folder-tab>
     </a>
   </li>
-  <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
-    <a ui-sref="{{ $state.current.name }}({ folder: folder.id })">
+  <li ng-repeat="folder in folders" folder="folder" item-drop-zone ng-class="{ active: isActive(folder.id) }">
+  <a ng-click="filter(folder.id)" >
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>
         {{ folder.name }}
