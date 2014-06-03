@@ -257,6 +257,11 @@ describe('Editing Items from List View', function() {
     this.page.thirdItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
     this.page.receiptEditorNext.click();
+
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+
     this.page.receiptEditorNext.click();
     this.page.receiptEditorSave.click();
 

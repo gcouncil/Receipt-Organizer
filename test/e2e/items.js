@@ -3,7 +3,7 @@ var helpers = require('./test-helper');
 var expect = helpers.expect;
 var ItemPage = require('./pages/items-page');
 
-describe.only('Manual Entry', function() {
+describe('Manual Entry', function() {
   beforeEach(function() {
     this.page = new ItemPage(this.factory);
     this.page.get();
@@ -59,6 +59,12 @@ describe('Editing Items', function() {
     this.page.firstItem.evaluate('item');
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
@@ -71,27 +77,47 @@ describe('Editing Items', function() {
     expect(this.page.items.count()).to.eventually.equal(1);
 
     // check database for the actual change
-    var itemQueryResults = browser.call(function(user) {
+    itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
     expect(itemQueryResults).to.eventually.have.length(1);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 
   it('should mark an item as reviewed after it is edited', function() {
     var self = this;
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-unreviewed');
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
     this.page.receiptEditorSave.click();
-    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+    expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
+
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 
   it('should mark an item as reviewed if editing is cancelled without saving edits', function() {
     var self = this;
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-unreviewed');
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
@@ -102,16 +128,18 @@ describe('Editing Items', function() {
 
     this.page.receiptEditorCancel.click();
 
-    expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+    expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
     // check database for no actual change
-    var itemQueryResults = browser.call(function(user) {
+    itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
+    expect(itemQueryResults).to.eventually.have.length(1);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 });
 
