@@ -22,6 +22,7 @@ items-list-view {
   .flex();
   padding: 0 (@grid-gutter-width / 2) 15px;
   overflow: auto;
+  min-width: 500px;
 }
 
 .items-list-view-item {
@@ -55,6 +56,7 @@ items-list-view {
 
 .list-view-data-sm {
   .list-view-data;
+  min-width: 150px;
 
   .flex(0.5, 0.5, 75px);
 }
@@ -71,6 +73,14 @@ items-list-view {
 
   .items-list-view-item-review-status {
     background: @brand-warning;
+    font-size: large;
+
+    button {
+      background: inherit;
+      border: none;
+      box-shadow: none;
+      line-height: 28px;
+    }
   }
 }
 

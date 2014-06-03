@@ -1,8 +1,21 @@
 report-organizer {
+  .flex-box(column);
   .flex(1, 1, 100px);
+
+  ul {
+    .noflex();
+    overflow: hidden;
+  }
+
+  .nav-sidebar-scroll {
+    .flex();
+    overflow: auto;
+  }
 }
 
-// WHY ARE THESE NOT SCOPED?
+
+
+// TODO: WHY ARE THESE NOT SCOPED?
 .modal-header {
   height: 600px;
 }
