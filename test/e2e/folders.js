@@ -5,7 +5,7 @@ var expect = helpers.expect;
 
 var ItemPage = require('./pages/items-page');
 
-describe.only('Folders CRUD', function() {
+describe('Folders CRUD', function() {
   beforeEach(function() {
     var self = this;
 
@@ -35,25 +35,25 @@ describe.only('Folders CRUD', function() {
     this.page.get();
   });
 
-  xit('should display all of the user\'s folders in the folder organizer bar', function() {
+  it('should display all of the user\'s folders in the folder organizer bar', function() {
     expect(this.page.folderOrganizer.getText()).to.eventually.contain('product development');
     expect(this.page.folderOrganizer.getText()).to.eventually.contain('materials');
   });
 
-  xit('should display folders on the form', function() {
+  it('should display folders on the form', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
     expect(this.page.receiptEditorForm.element(by.model('item.folders')).element(by.tagName('option')).getText()).to.eventually.contain('materials');
   });
 
-  xit('should be possible to create a new folder', function() {
+  it('should be possible to create a new folder', function() {
     this.page.newFolderLink.click();
     this.page.newFolder.element(by.model('newFolder')).sendKeys('write-offs');
     this.page.newFolderSaveButton.click();
     expect(this.page.folderOrganizer.getText()).to.eventually.contain('write-offs');
   });
 
-  xit('should be possible to delete an existing folder', function() {
+  it('should be possible to delete an existing folder', function() {
     expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
     this.page.firstFolderInOrganizer.$('.fa-caret-down').click();
     this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
@@ -149,11 +149,11 @@ describe('filtering', function() {
     expect(self.page.items).to.eventually.have.length(1);
   }
 
-  xit('should filter items by folder on the thumbnail view', function() {
+  it('should filter items by folder on the thumbnail view', function() {
     testFilteringByFolder(this);
   });
 
-  xit('should filter items by folder on the list view', function() {
+  it('should filter items by folder on the list view', function() {
     this.page.itemToolbarList.click();
     testFilteringByFolder(this);
   });

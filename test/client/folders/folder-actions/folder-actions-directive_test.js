@@ -9,8 +9,16 @@ describe('folder actions directive', function() {
       destroy: ctx.sinon.stub()
     };
 
+    ctx.state = {
+      go: ctx.sinon.stub(),
+      $current: {
+        name: 'NAME'
+      }
+    };
+
     angular.mock.module('ngMock', 'epsonreceipts.folders', {
-      folderStorage: ctx.folderStorage
+      folderStorage: ctx.folderStorage,
+      $state: ctx.state
     });
 
     angular.mock.inject(function($rootScope, $compile, $dropdown) {
