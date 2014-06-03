@@ -39,6 +39,14 @@ describe('Editing Items', function() {
 
     this.page.user.then(function(user) {
       self.factory.items.create({
+        vendor: 'Target',
+        city: 'Boulder',
+        total: 12.00,
+        formxtraStatus: 'skipped'
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
         vendor: 'Walmart',
         city: 'Boulder',
         total: 10.00,
@@ -54,9 +62,8 @@ describe('Editing Items', function() {
   it('should edit a item with valid values', function() {
     var self = this;
 
-    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.items.count()).to.eventually.equal(2);
 
-    this.page.firstItem.evaluate('item');
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
@@ -68,14 +75,38 @@ describe('Editing Items', function() {
     this.page.receiptEditorSave.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
-    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.items.count()).to.eventually.equal(2);
 
     // check database for the actual change
     var itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
-    expect(itemQueryResults).to.eventually.have.length(1);
+    expect(itemQueryResults).to.eventually.have.length(2);
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+  });
+
+  it('should save all items that were edited after paginating', function() {
+    var self = this;
+
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
+
+    this.page.itemToolbarEdit.click();
+
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+
+    this.page.receiptEditorNext.click();
+    this.page.receiptEditorSave.click();
+
+    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 });
