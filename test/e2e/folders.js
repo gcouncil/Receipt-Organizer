@@ -56,7 +56,7 @@ describe('Folders CRUD', function() {
   it('should be possible to delete an existing folder', function() {
     expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
     this.page.firstFolderInOrganizer.$('.fa-caret-down').click();
-    this.page.firstFolderInOrganizer.element(by.linkText('Delete')).click();
+    this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
     expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
     expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
   });
