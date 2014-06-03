@@ -12,6 +12,9 @@ describe('folder organizer directive', function() {
 
     ctx.state = {
       state: 'STATE',
+      params: {
+        folder: 'FOLDER'
+      },
       $current: {
         name: 'items.thumbnails'
       },
