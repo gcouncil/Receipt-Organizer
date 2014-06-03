@@ -51,17 +51,12 @@ describe('items toolbar date filter input directive', function() {
   });
 
   describe('form submission', function() {
-    beforeEach(function() {
-      var ctx = this;
-      ctx.sinon.spy(ctx.itemsCollectionScope, 'setQueryFilter');
-    });
-
     it('should set the filter if there is a start date', function() {
       var ctx = this;
       angular.element(ctx.element.find('input[name="start-date"]')).val('1/1/01').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('startDate', '1/1/01');
+      expect(ctx.itemsCollectionScope.filters).to.have.property('startDate', '1/1/01');
     });
 
     it('should set the filter if there is a start date', function() {
@@ -69,7 +64,7 @@ describe('items toolbar date filter input directive', function() {
       angular.element(ctx.element.find('input[name="end-date"]')).val('1/1/02').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('endDate', '1/1/02');
+      expect(ctx.itemsCollectionScope.filters).to.have.property('endDate', '1/1/02');
     });
 
     it('should clear the filter if there is no start date', function() {
@@ -77,7 +72,7 @@ describe('items toolbar date filter input directive', function() {
       angular.element(ctx.element.find('input[name="start-date"]')).val('').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('startDate', '');
+      expect(ctx.itemsCollectionScope.filters).to.have.property('startDate', '');
     });
 
     it('should clear the filter if there is no start date', function() {
@@ -85,7 +80,7 @@ describe('items toolbar date filter input directive', function() {
       angular.element(ctx.element.find('input[name="end-date"]')).val('').change();
 
       ctx.scope.$digest();
-      expect(ctx.itemsCollectionScope.setQueryFilter).to.have.been.calledWith('endDate', '');
+      expect(ctx.itemsCollectionScope.filters).to.have.property('endDate', '');
     });
 
   });
