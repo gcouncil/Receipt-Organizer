@@ -3,7 +3,7 @@ var helpers = require('./test-helper');
 var expect = helpers.expect;
 var ItemPage = require('./pages/items-page');
 
-describe('Manual Entry', function() {
+describe.only('Manual Entry', function() {
   beforeEach(function() {
     this.page = new ItemPage(this.factory);
     this.page.get();
