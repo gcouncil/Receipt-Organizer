@@ -113,7 +113,6 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
-        $httpBackend.expectGET('/api/folders').respond(200, [ {id: 1, name: 'FOLDER1'}, {id: 2, name: 'FOLDER2'} ]);
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).to.deep.equal(ctx.items);
@@ -129,7 +128,6 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
-        $httpBackend.expectGET('/api/folders').respond(200, [ {id: 1, name: 'FOLDER1'}, {id: 2, name: 'FOLDER2'} ]);
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).not.to.deep.equal(ctx.items);
@@ -148,7 +146,6 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
-        $httpBackend.expectGET('/api/folders').respond(200, [ {id: 1, name: 'FOLDER1'}, {id: 2, name: 'FOLDER2'} ]);
 
         var query = itemStorage.watch(ctx.scope, function(result) {
           ctx.result = result;
