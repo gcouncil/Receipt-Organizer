@@ -5,11 +5,11 @@
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
-    <a>
-      <span ng-show="!report.showEdit" ng-click="$emit('items:editReport', report)">
+    <a ng-click="$emit('items:editReport', report)">
+      <span ng-show="!report.showEdit">
         <i class="fa fa-file"></i>
         {{ report.name }}
-        <span class="badge pull-right">{{ report.items.length }}</span>
+      eng-click="$emit('items:editReport', report)" <span class="badge pull-right">{{ report.items.length }}</span>
       </span>
 
       <form report="report" ng-show="report.showEdit" ng-submit="update(report)">
