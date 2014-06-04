@@ -7,7 +7,7 @@ function ItemPage(factory, user) {
   });
 
   this.get = function(view) {
-    browser.get(helpers.rootUrl + '#/items' + (view ? '/' + view : ''));
+    browser.get(helpers.rootUrl + '#/items' + (view ? '?view=' + view : ''));
     helpers.loginUser(this.user);
   };
 
