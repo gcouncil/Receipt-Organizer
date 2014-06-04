@@ -453,11 +453,8 @@ describe('sorting by header', function() {
   it('should sort by date descending, then ascending', function() {
     expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
     this.page.dateItemHeader.click();
-    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
-    this.page.dateItemHeader.click();
     expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
-    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
-    expect(this.page.thirdItem.getText()).to.eventually.contain('Gummy Worms');
-    expect(this.page.fourthItem.getText()).to.eventually.contain('Apple');
+    this.page.dateItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
   });
 });
