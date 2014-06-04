@@ -251,7 +251,7 @@ describe('Batch delete', function() {
 
 });
 
-describe('click select', function() {
+describe.only('click select', function() {
   beforeEach(function() {
     var self = this;
 
