@@ -13,12 +13,14 @@ describe('report actions directive', function() {
       reportStorage: ctx.reportStorage
     });
 
-    angular.mock.inject(function($rootScope, $compile, $dropdown) {
+    angular.mock.inject(function($rootScope, $compile, $dropdown, $q) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
         ctx.scope.report = { id: 1, name: 'REPORT1' };
         ctx.element = $compile('<report-actions report="report" class="dropdown"></report-actions>')(ctx.scope);
+        ctx.deferred = $q.defer();
+        ctx.reportStorage.destroy.returns(ctx.deferred.promise);
         ctx.scope.$digest();
       };
     });

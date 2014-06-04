@@ -9,7 +9,7 @@
       <span ng-show="!report.showEdit">
         <i class="fa fa-file"></i>
         {{ report.name }}
-      eng-click="$emit('items:editReport', report)" <span class="badge pull-right">{{ report.items.length }}</span>
+      <span class="badge pull-right">{{ report.items.length }}</span>
       </span>
 
       <form report="report" ng-show="report.showEdit" ng-submit="update(report)">
