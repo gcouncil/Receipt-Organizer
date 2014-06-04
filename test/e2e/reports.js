@@ -74,7 +74,7 @@ describe('Reports CRUD', function() {
     });
   });
 
-  context('edit', function() {
+  context('update', function() {
     it('should rename a report from the sidebar', function() {
       expect(this.page.firstReportInOrganizer.getText()).to.eventually.match(/watergate\s?1/);
       this.page.firstReportActionsLink.click();
@@ -86,7 +86,7 @@ describe('Reports CRUD', function() {
     });
   });
 
-  context('delete', function() {
+  context('destroy', function() {
     it('should delete a report from the sidebar', function() {
       expect(this.page.firstReportInOrganizer.getText()).to.eventually.match(/watergate\s?1/);
       this.page.firstReportActionsLink.click();

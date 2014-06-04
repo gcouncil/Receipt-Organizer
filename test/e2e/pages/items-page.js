@@ -53,7 +53,9 @@ function ItemPage(factory, user) {
   this.itemToolbarList = $('items-toolbar [title="List"]');
 
   this.folderOrganizer = $('folder-organizer');
+  this.folderActionsDropdown = $('.dropdown-menu');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
+  this.firstFolderActionsLink = this.firstFolderInOrganizer.$('.fa-caret-down');
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
   this.newFolder = $('new-folder');
   this.newFolderLink = $('new-folder a');

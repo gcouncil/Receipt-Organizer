@@ -53,9 +53,9 @@ describe('folder actions directive', function() {
     var ctx = this;
     var folder = ctx.element.isolateScope().dropdown.$scope.folder;
     expect(folder.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(folder);
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
     expect(folder.showEdit).to.be.true;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(folder);
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
     expect(folder.showEdit).to.be.true;
   });
 
@@ -63,7 +63,7 @@ describe('folder actions directive', function() {
     var ctx = this;
     var folder = ctx.element.isolateScope().dropdown.$scope.folder;
     expect(folder.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(folder);
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
     expect(folder.showEdit).to.be.true;
     ctx.element.isolateScope().dropdown.$scope.noEdit(folder);
     expect(folder.showEdit).to.be.false;
