@@ -7,6 +7,7 @@
     <div class="list-view-data">Folders</div>
     <div class="list-view-data">Date</div>
     <div class="list-view-data">Type</div>
+    <div class="list-view-data-edit"></div>
   </div>
   <div class="items-list-view-body">
     <label class="items-list-view-item"
@@ -14,8 +15,7 @@
       ng-class="{
       'items-list-view-item-unreviewed': !item.reviewed,
       'items-list-view-item-selected': selection.isSelected(item.id)
-      }"
-      ng-dblclick="$emit('items:edit', item)">
+      }">
       <div class="list-view-data-checkbox"><is-selected selection="selection" selection-id="item.id"></is-selected></div>
       <div class="list-view-data">{{ item.vendor }}</div>
       <div class="list-view-data-sm">{{ item.total | currency }}</div>
@@ -24,6 +24,7 @@
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
       <div ng-if="!item.reviewed" class="list-view-data items-list-view-item-review-status">Review? <i class="fa fa-times-circle"></i></div>
       <div ng-if="item.reviewed" class="list-view-data">{{ item.type | titlecase }}</div>
+      <a class="list-view-data-edit" ng-click="$emit('items:edit', item)"><i class="fa fa-edit"></i></a>
     </label>
   </div>
 </div>
