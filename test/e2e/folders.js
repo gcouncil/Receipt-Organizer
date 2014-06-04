@@ -248,7 +248,3 @@ describe('Review Folder', function() {
   });
 });
 
-
-
-
-

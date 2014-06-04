@@ -32,20 +32,6 @@ describe('folder actions directive', function() {
     }
   });
 
-  it('sets the dropdown', function() {
-    var ctx = this;
-    ctx.scope.$digest();
-    expect(ctx.element.isolateScope().dropdown).not.to.be.undefined;
-  });
-
-  it('destroys the dropdown on $destroy', function() {
-    var ctx = this;
-    ctx.sinon.spy(ctx.element.isolateScope().dropdown, 'destroy');
-    ctx.scope.$destroy();
-    ctx.scope.$digest();
-    expect(ctx.element.isolateScope().dropdown.destroy).to.have.been.called;
-  });
-
   it('sets the dropdown folder to the scopes folder', function() {
     var ctx = this;
     expect(ctx.element.isolateScope().dropdown.$scope.folder).to.equal(ctx.scope.folder);

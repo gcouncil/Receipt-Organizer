@@ -39,7 +39,7 @@ function createUserAndReports(self) {
   self.page.get();
 }
 
-describe.only('Reports CRUD', function() {
+describe('Reports CRUD', function() {
   beforeEach(function() {
     createUserAndReports(this);
   });
@@ -71,6 +71,18 @@ describe.only('Reports CRUD', function() {
       this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
       this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
       expect(this.page.reportEditorSave.getAttribute('disabled')).to.eventually.equal('true');
+    });
+  });
+
+  context('edit', function() {
+    it('should rename a report from the sidebar', function() {
+      expect(this.page.firstReportInOrganizer.getText()).to.eventually.match(/watergate\s?1/);
+      this.page.firstReportActionsLink.click();
+      this.page.reportActionsDropdown.element(by.linkText('Rename')).click();
+      this.page.firstReportInOrganizer.element(by.model('report.name')).clear();
+      this.page.firstReportInOrganizer.element(by.model('report.name')).sendKeys('firegate');
+      this.page.firstReportInOrganizer.$('form').submit();
+      expect(this.page.firstReportInOrganizer.getText()).to.eventually.match(/firegate\s?1/);
     });
   });
 
@@ -111,7 +123,7 @@ describe('reports sidebar', function() {
   });
 
   it('should open report editor on link click', function() {
-    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('a').click();
+    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('[ng-click="$emit(\'items:editReport\', report)"]').click();
     expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
   });
 });
