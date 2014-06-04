@@ -76,17 +76,9 @@ describe('folder organizer directive', function() {
   it('should update a folder and turn off the edit panel', function() {
     var ctx = this;
     ctx.folder = { name: 'FOLDER', showEdit: true };
-    ctx.scope.update(ctx.folder);
+    ctx.scope.updateFolder(ctx.folder);
     ctx.scope.$digest();
     expect(ctx.folderStorage.update).to.have.been.calledWith(ctx.folder);
-    expect(ctx.folder.showEdit).to.be.false;
-  });
-
-  it('should hide the edit panel', function() {
-    var ctx = this;
-    ctx.folder = { name: 'FOLDER', showEdit: true };
-    ctx.scope.hideEditPanel(ctx.folder);
-    ctx.scope.$digest();
     expect(ctx.folder.showEdit).to.be.false;
   });
 });

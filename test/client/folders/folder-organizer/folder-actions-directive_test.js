@@ -37,12 +37,6 @@ describe('folder actions directive', function() {
     expect(ctx.element.isolateScope().dropdown.$scope.folder).to.equal(ctx.scope.folder);
   });
 
-  it('updates folders in the dropdown', function() {
-    var ctx = this;
-    ctx.element.isolateScope().dropdown.$scope.update('FOLDER');
-    expect(ctx.folderStorage.update).to.have.been.calledWith('FOLDER');
-  });
-
   it('deletes folders in the dropdown', function() {
     var ctx = this;
     ctx.element.isolateScope().dropdown.$scope.delete('FOLDER');
@@ -70,5 +64,4 @@ describe('folder actions directive', function() {
     ctx.element.isolateScope().dropdown.$scope.noEdit(folder);
     expect(folder.showEdit).to.be.false;
   });
-
 });

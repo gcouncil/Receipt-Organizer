@@ -12,8 +12,8 @@
       <span class="badge pull-right">{{ report.items.length }}</span>
       </span>
 
-      <form report="report" ng-show="report.showEdit" ng-submit="update(report)">
-        <input type="text" ng-model="report.name" ng-blur="hideEditPanel(report)">
+      <form report="report" ng-show="report.showEdit" ng-submit="updateReport(report)">
+        <input type="text" ng-click="$event.stopPropagation()" ng-model="report.name" ng-blur="updateReport(report)">
       </form>
       <report-actions report="report"></report-actions>
     </a>
