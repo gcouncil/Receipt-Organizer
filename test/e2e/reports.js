@@ -39,7 +39,7 @@ function createUserAndReports(self) {
   self.page.get();
 }
 
-describe('Reports CRUD', function() {
+describe.only('Reports CRUD', function() {
   beforeEach(function() {
     createUserAndReports(this);
   });
@@ -72,7 +72,15 @@ describe('Reports CRUD', function() {
       this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
       expect(this.page.reportEditorSave.getAttribute('disabled')).to.eventually.equal('true');
     });
+  });
 
+  context('delete', function() {
+    it('should delete a report from the sidebar', function() {
+      expect(this.page.firstReportInOrganizer.getText()).to.eventually.match(/watergate\s?1/);
+      this.page.firstReportActionsLink.click();
+      this.page.reportActionsDropdown.element(by.linkText('Delete')).click();
+      expect(this.page.reportOrganizer.getText()).not.to.eventually.match(/watergate\s?1/);
+    });
   });
 });
 

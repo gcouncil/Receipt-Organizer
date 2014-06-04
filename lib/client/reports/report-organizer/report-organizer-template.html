@@ -5,12 +5,17 @@
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
-    <a href="#" ng-click="$emit('items:editReport', report)">
-      <i class="fa fa-file"></i>
-      {{ report.name }}
+    <a>
+      <span ng-show="!report.showEdit" ng-click="$emit('items:editReport', report)">
+        <i class="fa fa-file"></i>
+        {{ report.name }}
+        <span class="badge pull-right">{{ report.items.length }}</span>
+      </span>
 
-      <i ng-click="delete(report)"class="fa fa-trash-o"></i>
-      <span class="badge pull-right">{{ report.items.length }}</span>
+      <form report="report" ng-show="report.showEdit" ng-submit="update(report)">
+        <input style="color:black" type="text" ng-model="report.name" ng-blur="hideEditPanel(report)">
+      </form>
+      <report-actions report="report"></report-actions>
     </a>
   </li>
 </ul>
