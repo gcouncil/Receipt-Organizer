@@ -53,9 +53,9 @@ describe('report actions directive', function() {
     var ctx = this;
     var report = ctx.element.isolateScope().dropdown.$scope.report;
     expect(report.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(report);
+    ctx.element.isolateScope().dropdown.$scope.rename(report);
     expect(report.showEdit).to.be.true;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(report);
+    ctx.element.isolateScope().dropdown.$scope.rename(report);
     expect(report.showEdit).to.be.true;
   });
 
@@ -63,7 +63,7 @@ describe('report actions directive', function() {
     var ctx = this;
     var report = ctx.element.isolateScope().dropdown.$scope.report;
     expect(report.showEdit).to.be.false;
-    ctx.element.isolateScope().dropdown.$scope.startEdit(report);
+    ctx.element.isolateScope().dropdown.$scope.rename(report);
     expect(report.showEdit).to.be.true;
     ctx.element.isolateScope().dropdown.$scope.noEdit(report);
     expect(report.showEdit).to.be.false;
