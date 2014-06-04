@@ -1,0 +1,9 @@
+<span ng-hide="edit">
+  <i class="fa fa-folder"></i>
+  {{ folder.name }}
+  <span class="badge pull-right"> {{ count() }}</span>
+  <span class="caret" bs-dropdown="actions"></span>
+</span>
+<form ng-show="edit">
+  <input type="text" ng-model="folder.name" ng-blur="save()">
+</form>

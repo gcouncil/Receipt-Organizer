@@ -13,6 +13,8 @@
   </li>
   <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
     <a ui-sref="items({ folder: folder.id })">
+      <folder-organizer-entry folder="folder"></folder-organizer-entry>
+      <!--
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>
         {{ folder.name }}
@@ -22,6 +24,7 @@
         <input type="text" ng-model="folder.name" ng-blur="updateFolder(folder)">
       </form>
       <folder-actions folder="folder"></folder-actions>
+      -->
     </a>
   </li>
 </ul>
