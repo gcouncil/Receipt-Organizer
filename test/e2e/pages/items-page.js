@@ -27,6 +27,7 @@ function ItemPage(factory, user) {
   this.items = element.all(itemRepeater);
   this.firstItem = element(itemRepeater.row(0));
   this.secondItem = element(itemRepeater.row(1));
+  this.thirdItem = element(itemRepeater.row(2));
 
   this.firstItemSelect = this.firstItem.$('input[type="checkbox"][selection]');
   this.secondItemSelect = this.secondItem.$('input[type="checkbox"][selection]');
