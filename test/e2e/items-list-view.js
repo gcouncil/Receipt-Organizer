@@ -147,6 +147,11 @@ describe('Editing Items from List View', function() {
     this.page.get('list');
   });
 
+  it('clicking the row should open the receipt editor', function(){
+    this.page.firstItem.click();
+    expect(this.page.receiptEditorForm.isDisplayed()).to.eventually.be.true;
+  });
+
   it('should edit a item with valid values', function() {
     var self = this;
 
@@ -249,35 +254,4 @@ describe('Batch delete', function() {
     }, null, firstIdPromise);
   });
 
-});
-
-describe('click select', function() {
-  beforeEach(function() {
-    var self = this;
-
-    this.page = new ItemPage(this.factory);
-
-    this.page.user.then(function(user) {
-      _.times(4, function(i) {
-        self.factory.items.create({
-          vendor: 'Fake Item Generator',
-          total: 100.00 + i
-        }, { user: user.id });
-      });
-    });
-
-    this.page.get('list');
-  });
-
-  it('selects the item by clicking on its row', function() {
-    this.page.firstItem.click();
-    expect(this.page.firstItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
-  });
-
-  it('selects multiple items', function() {
-    this.page.firstItem.click();
-    this.page.secondItem.click();
-    expect(this.page.firstItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
-    expect(this.page.secondItem.$('input[type="checkbox"][selection]').isSelected()).to.eventually.be.true;
-  });
 });
