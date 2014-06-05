@@ -16,9 +16,9 @@
       'items-list-view-item-selected': selection.isSelected(item.id)
       }"
       ng-click="$emit('items:edit', item)">
-      <div class="list-view-data-checkbox">
-        <is-selected ng-click="$event.stopPropagation()"selection="selection" selection-id="item.id"></is-selected>
-      </div>
+      <label class="list-view-data-checkbox" ng-click="$event.stopPropagation()">
+        <is-selected selection="selection" selection-id="item.id"></is-selected>
+      </label>
       <div class="list-view-data">{{ item.vendor }}</div>
       <div class="list-view-data-sm">{{ item.total | currency }}</div>
       <div class="list-view-data">{{ item.category }}</div>
