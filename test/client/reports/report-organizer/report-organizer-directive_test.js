@@ -5,8 +5,10 @@ describe('report organizer directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.reportStorage = {
-      watch: ctx.sinon.stub(),
+      watch: ctx.sinon.stub().returns([{ id: 1, name: 'REPORT', items: [] }]),
+      destroy: ctx.sinon.stub
     };
+
     ctx.state = {
       state: 'STATE',
       $current: ctx.sinon.stub(),
@@ -42,5 +44,4 @@ describe('report organizer directive', function() {
     ctx.scope.$digest();
     expect(ctx.reportStorage.watch).to.have.been.called;
   });
-
 });
