@@ -54,7 +54,7 @@ describe('Sign up', function() {
 
     this.page.signupForm.element(by.buttonText('Sign Up!')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/items/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/items');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully signed up!');
 
@@ -86,7 +86,7 @@ describe('Log In', function() {
 
     this.page.loginForm.element(by.buttonText('Log In')).click();
     var redirect = browser.getCurrentUrl();
-    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/items/thumbnails');
+    expect(redirect).to.eventually.equal(helpers.rootUrl + '#/items');
 
     expect(this.page.flashDiv.getText()).to.eventually.contain('Successfully logged in.');
   });

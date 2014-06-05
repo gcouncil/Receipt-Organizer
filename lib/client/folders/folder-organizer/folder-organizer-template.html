@@ -1,18 +1,18 @@
 <ul class="nav nav-stacked nav-sidebar">
   <li class="primary" ui-sref-active="active">
-    <a ui-sref="{{ $state.current.name }}({ folder: null })">
+    <a ui-sref="items({ folder: null })">
       Receipts
     </a>
   </li>
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li class="review-folder" ui-sref-active="active">
-    <a ui-sref="{{ $state.current.name }}({ folder: 'unreviewed' })">
+    <a ui-sref="items({ folder: 'unreviewed' })">
       <review-folder-tab review="items.review"></review-folder-tab>
     </a>
   </li>
   <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
-    <a ui-sref="{{ $state.current.name }}({ folder: folder.id })">
+    <a ui-sref="items({ folder: folder.id })">
       <span ng-show="!folder.showEdit">
         <i class="fa fa-folder"></i>
         {{ folder.name }}

@@ -96,8 +96,26 @@ describe('filtering', function() {
       var user = results[0];
       var folder1 = _.map(results[1], 'id');
       var folder2 = _.map(results[2], 'id');
-      self.factory.items.create({ vendor: 'Xcel Energy', total: 74.64, folders: folder2, formxtraStatus: 'skipped', date: new Date(2014, 0, 2) }, { user: user.id });
-      self.factory.items.create({ vendor: 'Boulder Property Management, Inc.', total: 2000.00, folders: folder1, formxtraStatus: 'skipped', date: new Date(2014, 0, 1) }, { user: user.id });
+      self.factory.items.create({
+        vendor: 'Xcel Energy',
+        total: 74.64,
+        folders: folder2,
+        formxtraStatus: 'skipped',
+        reviewed: true,
+        date: new Date(2014, 0, 2)
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
+        vendor: 'Boulder Property Management, Inc.',
+        total: 2000.00,
+        folders: folder1,
+        formxtraStatus: 'skipped',
+        reviewed: true,
+        date: new Date(2014, 0, 1)
+      }, {
+        user: user.id
+      });
     });
 
     this.page.get();
@@ -120,13 +138,20 @@ describe('filtering', function() {
     expect(self.page.items).to.eventually.have.length(1);
   }
 
-  it('should filter items by folder on the thumbnail view', function() {
+  xit('should filter items by folder on the thumbnail view', function() {
     testFilteringByFolder(this);
   });
 
-  it('should filter items by folder on the list view', function() {
+  xit('should filter items by folder on the list view', function() {
     this.page.itemToolbarList.click();
     testFilteringByFolder(this);
+  });
+
+  it('should filter items after changing views and persist the view style', function() {
+    expect(this.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-reviewed');
+    this.page.itemToolbarList.click();
+    this.page.firstFolderInOrganizer.$('a').click();
+    expect(this.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item');
   });
 
 });

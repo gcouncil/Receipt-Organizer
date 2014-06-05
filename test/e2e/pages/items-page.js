@@ -7,7 +7,7 @@ function ItemPage(factory, user) {
   });
 
   this.get = function(view) {
-    browser.get(helpers.rootUrl + '#/items' + (view ? '/' + view : ''));
+    browser.get(helpers.rootUrl + '#/items' + (view ? '?view=' + view : ''));
     helpers.loginUser(this.user);
   };
 
@@ -64,6 +64,7 @@ function ItemPage(factory, user) {
   this.folderOrganizer = $('folder-organizer');
   this.folderActionsDropdown = $('.dropdown-menu');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
+  this.folderActionsDropdown = $('.dropdown-menu');
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
   this.newFolder= $('new-folder');
   this.newFolderLink = $('new-folder a');

@@ -69,7 +69,7 @@ describe('loginForm directive', function() {
 
     it('should redirect to the items thumbnails index', function() {
       var ctx = this;
-      expect(ctx.state).to.have.been.calledWith('items.thumbnails');
+      expect(ctx.state).to.have.been.calledWith('items');
     });
 
   });
