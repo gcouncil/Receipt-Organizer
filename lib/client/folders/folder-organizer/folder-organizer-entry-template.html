@@ -2,7 +2,7 @@
   <i class="fa fa-folder"></i>
   {{ folder.name }}
   <span class="badge pull-right"> {{ itemCount() }}</span>
-  <span class="caret" bs-dropdown="actions"></span>
+  <span class="caret" bs-dropdown="actions" data-container="body" ng-click="$event.stopPropagation(); $event.preventDefault()"></span>
 </span>
 <form ng-show="editFolder" ng-submit="saveFolder()">
   <input type="text" ng-model="folder.name" ng-blur="saveFolder()">
