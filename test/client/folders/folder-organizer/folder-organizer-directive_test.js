@@ -61,20 +61,4 @@ describe('folder organizer directive', function() {
     ctx.scope.$digest();
     expect(ctx.folderStorage.query).to.have.been.called;
   });
-
-  it('should delete a folder', function() {
-    var ctx = this;
-    ctx.scope.delete('FOLDER');
-    ctx.scope.$digest();
-    expect(ctx.folderStorage.destroy).to.have.been.calledWith('FOLDER');
-  });
-
-  it('should update a folder and turn off the edit panel', function() {
-    var ctx = this;
-    ctx.folder = { name: 'FOLDER', showEdit: true };
-    ctx.scope.updateFolder(ctx.folder);
-    ctx.scope.$digest();
-    expect(ctx.folderStorage.update).to.have.been.calledWith(ctx.folder);
-    expect(ctx.folder.showEdit).to.be.false;
-  });
 });

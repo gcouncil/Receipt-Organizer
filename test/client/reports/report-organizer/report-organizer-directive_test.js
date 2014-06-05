@@ -44,5 +44,4 @@ describe('report organizer directive', function() {
     ctx.scope.$digest();
     expect(ctx.reportStorage.watch).to.have.been.called;
   });
-
 });

@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('folder organizer entry directive', function() {
+describe.only('folder organizer entry directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.folderStorage = {
@@ -33,8 +33,9 @@ describe('folder organizer entry directive', function() {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
+        ctx.parentScope.folder = { id: 1, name: 'FOLDER1' };
         ctx.scope.folder = { id: 1, name: 'FOLDER1' };
-        ctx.parentElement = $compile('<folder-organizer></folder-organizer>')(ctx.parentScope);
+        ctx.parentElement = $compile('<folder-organizer folder="folder"></folder-organizer>')(ctx.parentScope);
         ctx.parentController = ctx.parentElement.controller('folderOrganizer');
         ctx.parentController.itemCounts = { 1: 1 };
         ctx.parentScope.$digest();
@@ -47,7 +48,6 @@ describe('folder organizer entry directive', function() {
       };
     });
     ctx.compile();
-    ctx.childScope = ctx.element.isolateScope();
   });
 
   afterEach(function() {
@@ -59,29 +59,30 @@ describe('folder organizer entry directive', function() {
 
   it('deletes folders in the dropdown', function() {
     var ctx = this;
-    ctx.childScope.deleteFolder();
-    expect(ctx.folderStorage.destroy).to.have.been.calledWith(ctx.scope.folder);
+    console.log(ctx.element.isolateScope());
+    ctx.element.isolateScope().deleteFolder();
+    expect(ctx.folderStorage.destroy).to.have.been.calledWith('FOLDER');
   });
 
-  it('sets the edit flag', function() {
+  xit('sets the edit flag', function() {
     var ctx = this;
-    expect(ctx.childScope.editFolder).to.be.false;
-    ctx.childScope.renameFolder();
-    expect(ctx.childScope.editFolder).to.be.true;
-    ctx.childScope.saveFolder();
-    expect(ctx.childScope.editFolder).to.be.false;
+    var folder = ctx.element.isolateScope().dropdown.$scope.folder;
+    expect(folder.showEdit).to.be.false;
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
+    expect(folder.showEdit).to.be.true;
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
+    expect(folder.showEdit).to.be.true;
   });
 
-  it('renames the folder', function() {
+  xit('turns editing off', function() {
     var ctx = this;
-    ctx.scope.folder.name = 'FOLDER_';
-    ctx.childScope.saveFolder();
-    expect(ctx.folderStorage.update).to.have.been.calledWith({ id: 1, name: 'FOLDER_' });
-  });
-
-  it('deletes the folder', function() {
-    var ctx = this;
-    ctx.childScope.deleteFolder();
-    expect(ctx.folderStorage.destroy).to.have.been.calledWith({ id: 1, name: 'FOLDER1' });
+    var folder = ctx.element.isolateScope().dropdown.$scope.folder;
+    expect(folder.showEdit).to.be.false;
+    ctx.element.isolateScope().dropdown.$scope.rename(folder);
+    expect(folder.showEdit).to.be.true;
+    ctx.element.isolateScope().dropdown.$scope.noEdit(folder);
+    expect(folder.showEdit).to.be.false;
+    ctx.element.isolateScope().dropdown.$scope.noEdit(folder);
+    expect(folder.showEdit).to.be.false;
   });
 });
