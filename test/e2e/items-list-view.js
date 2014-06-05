@@ -182,6 +182,11 @@ describe('Editing Items from List View', function() {
     this.page.get('list');
   });
 
+  it('clicking the row should open the receipt editor', function(){
+    this.page.firstItem.click();
+    expect(this.page.receiptEditorForm.isDisplayed()).to.eventually.be.true;
+  });
+
   it('should edit a item with valid values', function() {
     var self = this;
 

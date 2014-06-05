@@ -15,14 +15,16 @@
       'items-list-view-item-unreviewed': !item.reviewed,
       'items-list-view-item-selected': selection.isSelected(item.id)
       }"
-      ng-dblclick="$emit('items:edit', item)">
-      <div class="list-view-data-checkbox"><is-selected selection="selection" selection-id="item.id"></is-selected></div>
+      ng-click="$emit('items:edit', item)">
+      <div class="list-view-data-checkbox">
+        <is-selected ng-click="$event.stopPropagation()"selection="selection" selection-id="item.id"></is-selected>
+      </div>
       <div class="list-view-data">{{ item.vendor }}</div>
       <div class="list-view-data-sm">{{ item.total | currency }}</div>
       <div class="list-view-data">{{ item.category }}</div>
       <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
-      <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status" ng-click="$emit('items:edit', item)">
+      <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status">
         <span class="review-flag review">Review?</span>
         <button class="review-flag dismiss pull-right" ng-click="markReviewed(item); $event.stopPropagation()">
           <i class="fa fa-times-circle"></i>
