@@ -14,17 +14,6 @@
   <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
     <a ui-sref="items({ folder: folder.id })">
       <folder-organizer-entry folder="folder"></folder-organizer-entry>
-      <!--
-      <span ng-show="!folder.showEdit">
-        <i class="fa fa-folder"></i>
-        {{ folder.name }}
-        <span class='badge pull-right'> {{ itemCounts[folder.id] || 0 }}</span>
-      </span>
-      <form folder="folder" ng-show="folder.showEdit" ng-submit="updateFolder(folder)">
-        <input type="text" ng-model="folder.name" ng-blur="updateFolder(folder)">
-      </form>
-      <folder-actions folder="folder"></folder-actions>
-      -->
     </a>
   </li>
 </ul>

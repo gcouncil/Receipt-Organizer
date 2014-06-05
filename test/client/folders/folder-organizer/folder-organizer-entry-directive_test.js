@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('folder actions directive', function() {
+describe('folder organizer entry directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.folderStorage = {

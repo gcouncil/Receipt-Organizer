@@ -4,6 +4,6 @@
   <span class="badge pull-right"> {{ count() }}</span>
   <span class="caret" bs-dropdown="actions"></span>
 </span>
-<form ng-show="edit">
+<form ng-show="edit" ng-submit="save()">
   <input type="text" ng-model="folder.name" ng-blur="save()">
 </form>
