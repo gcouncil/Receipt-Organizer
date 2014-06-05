@@ -1,10 +1,8 @@
 <span ng-hide="editReport">
-  <a ng-click="$emit('items:editReport', report)">
-    <i class="fa fa-folder"></i>
-    {{ report.name }}
-    <span class="badge pull-right"> {{ reportCount() }}</span>
-  </a>
-  <span class="caret" bs-dropdown="actions" data-container="body" ng-click="$event.stopPropagation()"></span>
+  <i class="fa fa-folder"></i>
+  {{ report.name }}
+  <span class="badge pull-right"> {{ reportCount() }}</span>
+  <span class="caret" bs-dropdown="actions" data-container="body" ng-click="$event.stopPropagation(); $event.preventDefault()"></span>
 </span>
 <form ng-show="editReport" ng-submit="saveReport()">
   <input type="text" ng-model="report.name" ng-blur="saveReport()">

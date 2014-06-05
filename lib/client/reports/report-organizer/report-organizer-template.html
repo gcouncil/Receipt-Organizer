@@ -5,8 +5,8 @@
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
-  <a>
-    <report-organizer-entry report="report"></report-organizer-entry>
-  </a>
+    <a ng-click="$emit('items:editReport', report); $event.preventDefault()" href="#">
+      <report-organizer-entry report="report"></report-organizer-entry>
+    </a>
   </li>
 </ul>
