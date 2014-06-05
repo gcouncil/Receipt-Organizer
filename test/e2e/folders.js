@@ -72,7 +72,7 @@ describe('Folders CRUD', function() {
   context('destroy', function() {
     it('should be possible to delete an existing folder', function() {
       expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
-      this.page.firstFolderInOrganizer.$('.fa-caret-down').click();
+      this.page.firstFolderActionsLink.click();
       this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
       expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
       expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
@@ -235,7 +235,6 @@ describe('Multiple Foldering', function() {
     expect(this.page.receiptEditorForm.$('.select2-choices').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });
-
 });
 
 describe('Review Folder', function() {
