@@ -4,6 +4,6 @@
   <span class="badge pull-right"> {{ reportCount() }}</span>
   <span class="caret" bs-dropdown="actions" data-container="body" ng-click="$event.stopPropagation(); $event.preventDefault()"></span>
 </span>
-<form ng-show="editReport" ng-submit="saveReport()">
+<form ng-show="editReport" ng-submit="saveReport()" ng-click="$event.stopPropagation(); $event.preventDefault()">
   <input type="text" ng-model="report.name" ng-blur="saveReport()">
 </form>
