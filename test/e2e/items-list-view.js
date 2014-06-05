@@ -172,6 +172,19 @@ describe('Editing Items from List View', function() {
 
     this.page.user.then(function(user) {
       self.factory.items.create({
+        vendor: 'Target',
+        city: 'Boulder',
+        total: 8.00
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
+        vendor: 'Kmart',
+        total: 12.00
+      }, {
+        user: user.id
+      });
+      self.factory.items.create({
         vendor: 'Walmart',
         city: 'Boulder',
         total: 10.00
@@ -179,14 +192,18 @@ describe('Editing Items from List View', function() {
         user: user.id
       });
     });
-
     this.page.get('list');
+  });
+
+  it('clicking the row should open the receipt editor', function(){
+    this.page.firstItem.click();
+    expect(this.page.receiptEditorForm.isDisplayed()).to.eventually.be.true;
   });
 
   it('should edit a item with valid values', function() {
     var self = this;
 
-    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.items.count()).to.eventually.equal(3);
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
@@ -198,33 +215,96 @@ describe('Editing Items from List View', function() {
     this.page.receiptEditorSave.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
-    expect(this.page.items.count()).to.eventually.equal(1);
+    expect(this.page.items.count()).to.eventually.equal(3);
 
     // check database for the actual change
     var itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
-    expect(itemQueryResults).to.eventually.have.length(1);
+    expect(itemQueryResults).to.eventually.have.length(3);
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
   });
 
   it('should mark an item as reviewed after it is edited', function() {
     var self = this;
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
     this.page.receiptEditorSave.click();
     expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
+
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 
-  it('should not mark an item as reviewed if editing is cancelled', function() {
+  it('should mark multiple viewed items reviewed', function() {
     var self = this;
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+    expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', false);
+    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', false);
+
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
+    this.page.thirdItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    this.page.receiptEditorCancel.click();
-    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
+    this.page.receiptEditorNext.click();
+
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+
+    this.page.receiptEditorNext.click();
+    this.page.receiptEditorSave.click();
+
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
+    expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
+    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', true);
+  });
+
+  it('should only mark viewed items as reviewed', function() {
+    var self = this;
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+    expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', false);
+    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', false);
+
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
+    this.page.thirdItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorNext.click();
+    this.page.receiptEditorSave.click();
+
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
+    expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
+    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', true);
   });
 
 });
