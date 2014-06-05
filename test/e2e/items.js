@@ -66,6 +66,12 @@ describe('Editing Items', function() {
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
 
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
@@ -78,7 +84,7 @@ describe('Editing Items', function() {
     expect(this.page.items.count()).to.eventually.equal(2);
 
     // check database for the actual change
-    var itemQueryResults = browser.call(function(user) {
+    itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
     }, null, this.page.user);
 
@@ -108,6 +114,63 @@ describe('Editing Items', function() {
     }, null, this.page.user);
 
     expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Whole Foods');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
+  });
+
+  it('should mark an item as reviewed after it is edited', function() {
+    var self = this;
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-unreviewed');
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+    this.page.receiptEditorSave.click();
+    expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
+
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
+  });
+
+  it('should mark an item as reviewed if editing is cancelled without saving edits', function() {
+    var self = this;
+    expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-unreviewed');
+    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
+
+    var itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', false);
+
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarEdit.click();
+
+    var originalVendor = this.page.receiptEditorForm.element(by.model('item.vendor'));
+    originalVendor.clear();
+    originalVendor.sendKeys('Whole Foods');
+
+    this.page.receiptEditorCancel.click();
+
+    expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
+
+    expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Walmart');
+
+    // check database for no actual change
+    itemQueryResults = browser.call(function(user) {
+      return self.factory.items.query({ user: user.id });
+    }, null, this.page.user);
+
+    expect(itemQueryResults).to.eventually.have.length(2);
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].vendor','Walmart');
+    expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
   });
 });
 

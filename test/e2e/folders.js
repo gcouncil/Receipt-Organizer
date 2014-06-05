@@ -18,8 +18,8 @@ describe('Folders CRUD', function() {
 
     var folders = user.then(function(user) {
       return Q.all([
-        self.factory.folders.create({ name: 'product development'}, { user: user.id }),
-        self.factory.folders.create({ name: 'materials'}, { user: user.id })
+        self.factory.folders.create({ name: 'product development' }, { user: user.id }),
+        self.factory.folders.create({ name: 'materials' }, { user: user.id })
       ]);
     });
 
