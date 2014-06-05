@@ -14,7 +14,8 @@ describe('items toolbar category filter input', function() {
     ctx.receiptEditor = {};
 
     ctx.query = {
-      setFilter: ctx.sinon.stub()
+      setFilter: ctx.sinon.stub(),
+      setSort: ctx.sinon.stub()
     };
 
     ctx.itemStorage = {

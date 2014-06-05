@@ -32,7 +32,8 @@ describe('item storage service', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.domain = {
-      Item: ctx.sinon.stub().returnsArg(0)
+      Item: ctx.sinon.stub().returnsArg(0),
+      Folder: ctx.sinon.stub()
     };
 
     ctx.domain.Item.load = ctx.sinon.stub().returnsArg(0);
@@ -45,8 +46,8 @@ describe('item storage service', function() {
   describe('load', function() {
     it('should get the items from the server', function(done) {
       var ctx = this;
-      angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
-        $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ]);
+      angular.mock.inject(function($rootScope, $httpBackend, $q, itemStorage) {
+        $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1', folders: [1]}, {id: 2, name: 'ITEM2', folders: [2]} ]);
 
         var promise = itemStorage.load();
 
@@ -83,11 +84,15 @@ describe('item storage service', function() {
 
       ctx.items = [{
         id: 1,
+        vendor: 'CBS',
         name: 'ITEM1',
+        folders: [1],
         createdAt: moment().subtract(0, 'days').toJSON()
       }, {
         id: 2,
+        vendor: 'ABC',
         name: 'ITEM2',
+        folders: [2],
         createdAt: moment().subtract(1, 'days').toJSON()
       }];
 
@@ -128,10 +133,28 @@ describe('item storage service', function() {
 
         itemStorage.watch(ctx.scope, function(result) {
           expect(result).not.to.deep.equal(ctx.items);
-          expect(result).to.deep.equal([ {id: 1, name: 'ITEM1', createdAt: ctx.items[0].createdAt} ]);
+          expect(result).to.deep.equal([ {id: 1, vendor: 'CBS', name: 'ITEM1', folders: [1], createdAt: ctx.items[0].createdAt} ]);
         }).setFilter('isItem1', function(item) {
           return item.name === 'ITEM1';
         });
+
+        $httpBackend.flush();
+        $rootScope.$digest();
+      });
+    });
+
+    it('should sort the item collection', function() {
+      var ctx = this;
+      angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
+        ctx.scope = $rootScope.$new();
+        $httpBackend.expectGET('/api/items').respond(200, ctx.items);
+
+        var query = itemStorage.watch(ctx.scope, function(result) {
+          ctx.result = result;
+        });
+
+        query.setSort('vendor');
+        expect(ctx.result).to.deep.equal(ctx.items.reverse());
 
         $httpBackend.flush();
         $rootScope.$digest();

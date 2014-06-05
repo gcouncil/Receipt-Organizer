@@ -27,6 +27,8 @@ function ItemPage(factory, user) {
   this.items = element.all(itemRepeater);
   this.firstItem = element(itemRepeater.row(0));
   this.secondItem = element(itemRepeater.row(1));
+  this.thirdItem = element(itemRepeater.row(2));
+  this.fourthItem = element(itemRepeater.row(3));
 
   this.firstItemSelect = this.firstItem.$('input[type="checkbox"][selection]');
   this.secondItemSelect = this.secondItem.$('input[type="checkbox"][selection]');
@@ -48,6 +50,13 @@ function ItemPage(factory, user) {
   this.filtersNav = $('.navbar-filters');
   this.itemToolbarCreateReport = $('items-toolbar').element(by.partialButtonText('Create Report'));
   this.itemToolbarUpdateReport = $('items-toolbar').element(by.partialButtonText('Add to Report'));
+
+  this.vendorItemHeader = $('.items-list-view-headers').element(by.linkText('Vendor'));
+  this.totalItemHeader = $('.items-list-view-headers').element(by.linkText('Total'));
+  this.categoryItemHeader = $('.items-list-view-headers').element(by.linkText('Category'));
+  this.foldersItemHeader = $('.items-list-view-headers').element(by.linkText('Folders'));
+  this.dateItemHeader = $('.items-list-view-headers').element(by.linkText('Date'));
+  this.typeItemHeader = $('.items-list-view-headers').element(by.linkText('Type'));
 
   this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
   this.itemToolbarList = $('items-toolbar [title="List"]');
