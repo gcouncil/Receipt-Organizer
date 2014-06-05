@@ -1,12 +1,48 @@
 <div class="items-list-view-container">
   <div class="items-list-view-headers">
     <div class="list-view-data-checkbox"></div>
-    <div class="list-view-data">Vendor</div>
-    <div class="list-view-data-sm">Total</div>
-    <div class="list-view-data">Category</div>
-    <div class="list-view-data">Folders</div>
-    <div class="list-view-data">Date</div>
-    <div class="list-view-data-sm">Type</div>
+    <div class="list-view-data">
+      <a ui-sref="items(sortParams('vendor'))">
+        Vendor
+        <i class="fa fa-caret-down" ng-if="currentSort === 'vendor' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'vendor' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data-sm">
+      <a ui-sref="items(sortParams('total'))">
+        Total
+        <i class="fa fa-caret-down" ng-if="currentSort === 'total' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'total' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="items(sortParams('category'))">
+        Category
+        <i class="fa fa-caret-down" ng-if="currentSort === 'category' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'category' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="items(sortParams('folders'))">
+        Folders
+        <i class="fa fa-caret-down" ng-if="currentSort === 'folders' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'folders' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="items(sortParams('date'))">
+        Date
+        <i class="fa fa-caret-down" ng-if="currentSort === 'date' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'date' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data-sm">
+      <a ui-sref="items(sortParams('type'))">
+        Type
+        <i class="fa fa-caret-down" ng-if="currentSort === 'type' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'type' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
   </div>
   <div class="items-list-view-body">
     <div class="items-list-view-item"
