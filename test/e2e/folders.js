@@ -69,27 +69,41 @@ describe('Folders CRUD', function() {
     });
   });
 
-  context('destroy', function() {
-    it('should be possible to delete an existing folder', function() {
+  context.only('destroy', function() {
+    xit('should be possible to delete an existing folder', function() {
       expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
       this.page.firstFolderActionsLink.click();
       this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
       expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
       expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
     });
-  });
 
-  it('should redirect to the inbox on folder delete', function() {
-    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
-    this.page.firstFolderInOrganizer.$('.fa-caret-down').click();
-    expect(this.page.firstFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
-    expect(this.page.folderOrganizerInbox.getAttribute('class')).not.to.eventually.contain('active');
-    this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
-    expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
-    expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
-    expect(this.page.folderOrganizerInbox.getAttribute('class')).to.eventually.contain('active');
-  });
+    it('should redirect to the inbox on active folder delete', function() {
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
+      this.page.firstFolderInOrganizer.$('.folder-filter-link').click();
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      //this.page.firstFolderActionsLink.click();
+      //expect(this.page.folderOrganizerInbox.getAttribute('class')).not.to.eventually.contain('active');
+      //this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
+      //expect(this.page.folderOrganizerInbox.getAttribute('class')).to.eventually.contain('active');
+      //expect(this.page.firstFolderInOrganizer.getAttribute('class')).not.to.eventually.contain('active');
+      //expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
+      //expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
+    });
 
+    xit('should not redirect to the inbox on inactive folder delete', function() {
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
+      this.page.secondFolderInOrganizer.click();
+      this.page.firstFolderActionsLink.click();
+      expect(this.page.secondFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).not.to.eventually.contain('active');
+      this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
+      expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      expect(this.page.folderOrganizerInbox.getAttribute('class')).not.to.eventually.contain('active');
+    });
+  });
 });
 
 describe('filtering', function() {
