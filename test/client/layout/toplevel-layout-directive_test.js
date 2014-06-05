@@ -16,7 +16,7 @@ describe('toplevel layout directive', function() {
       }
     };
 
-    angular.mock.module('ngMock', 'epsonreceipts.layout', {
+    angular.mock.module('ngMock', 'epsonreceipts.items.items-collection-scope', 'epsonreceipts.layout', {
       currentUser: ctx.currentUser,
       $state: ctx.state,
       HttpBusyController: ctx.sinon.stub()
@@ -24,6 +24,9 @@ describe('toplevel layout directive', function() {
 
     angular.mock.inject(function($rootScope, $compile, $httpBackend) {
       ctx.scope = $rootScope.$new();
+      ctx.scope.items = {
+        on: ctx.sinon.stub()
+      };
 
       ctx.compile = function() {
         ctx.element = $compile('<toplevel-layout></toplevel-layout>')(ctx.scope);

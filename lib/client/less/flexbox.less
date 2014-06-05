@@ -10,3 +10,14 @@
 .noflex(@basis: auto) {
   .flex(0, 0, @basis);
 }
+
+.flex-container {
+  .flex-box(column);
+  .flex();
+  align-content: strech;
+  align-items: strech;
+
+  > * {
+    .flex(0, 1, auto);
+  }
+}
