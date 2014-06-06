@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <bulk-selection selection="items.selection"></bulk-selection>
 
-    <button class="navbar-btn btn btn-primary"
+    <button class="navbar-btn btn-group btn btn-primary"
       ng-click="$emit('items:newReport', items.selection.selectedItems)"
       ng-disabled="!items.selection.hasSelection()">
       <i class="fa fa-plus-circle"></i>
@@ -14,14 +14,17 @@
       <button class="btn btn-default"
         ng-click="$emit('items:edit', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
-        <i class="fa fa-edit"></i>
-        Edit
+        <i class="fa fa-pencil"></i>
+      </button>
+      <button class="btn btn-default"
+        ng-click=""
+        ng-disabled="!items.selection.hasSelection()">
+        <i class="fa fa-check"></i>
       </button>
       <button class="btn btn-default"
         ng-click="$emit('items:destroy', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-trash-o"></i>
-        Delete
       </button>
     </div>
 
@@ -32,17 +35,17 @@
       </update-report-button>
     </div>
 
-    <button class="navbar-btn btn btn-link" ng-click="showFilters()">
-      <i class="fa fa-search"></i>
-      Filter
-    </button>
-
     <ul class="nav navbar-nav navbar-right">
-      <li ui-sref-active="active">
-        <a ui-sref="items({ view: null })" title="Thumbnails"><i class="fa fa-th"></i></a>
+      <li>
+        <a ng-click="showFilters()" class="nav-filters-link">
+          Show Filters
+        </a>
       </li>
-      <li ui-sref-active="active">
-        <a ui-sref="items({ view: 'list' })" title="List"><i class="fa fa-bars"></i></a>
+      <li>
+        <a ui-sref="items({ view: 'list' })" ui-sref-active="active" title="List"><i class="fa fa-bars view-toggle-icon"></i></a>
+      </li>
+      <li>
+        <a ui-sref="items({ view: 'thumbnail' })" ui-sref-active="active" title="Thumbnails"><i class="fa fa-th-large view-toggle-icon"></i></a>
       </li>
     </ul>
   </div>
