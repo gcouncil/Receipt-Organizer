@@ -62,7 +62,7 @@ describe('Pagination', function() {
 
   it('should display paginated results', function() {
     expect(this.page.items.count()).to.eventually.equal(60);
-    $('er-pagination .btn-group').element(by.buttonText('Next')).click();
+    $('er-pagination .fa-caret-right').click();
     expect(this.page.items.count()).to.eventually.equal(6);
   });
 });
