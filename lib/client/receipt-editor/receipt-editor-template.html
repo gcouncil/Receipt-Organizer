@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-xs-12 text-center">
               <select ng-model="item" ng-options="(item.type | titlecase) + ' - ' + (item.total | currency) for item in items track by item.id"> </select>
-              <a class="btn btn-primary btn-xs" ng-click="split()">Add Expense to Receipt</a>
+              <a class="btn btn-primary btn-xs" ng-click="split()">Itemize {{ item.type === 'expense' ? 'Another' : '' }} Expense</a>
             </div>
           </div>
 

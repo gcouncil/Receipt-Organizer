@@ -3,7 +3,7 @@
     <is-selected selection="selection" selection-id="item.id">
   </div>
   <div class="thumbnail-title">
-    <span>{{ item.type }}</span>
+    <span>{{ displayType(item) }}</span>
     <i class="fa fa-check-circle thumbnail-reviewed-icon" ng-if="item.reviewed" title="Reviewed"></i>
     <i class="fa fa-flag thumbnail-unreviewed-icon" ng-if="!item.reviewed" title="Needs Review"></i>
   </div>
