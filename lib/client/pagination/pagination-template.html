@@ -1,7 +1,7 @@
-<button class="btn btn-link" ng-disabled="!pagination.hasPrevious" ng-click="pagination.previous()"><i class="fa fa-caret-left"></i></button>
+<button class="btn btn-link" ng-disabled="!pagination.hasPrevious" ng-click="pagination.previous()" title="Previous"><i class="fa fa-caret-left"></i></button>
 
 <span ng-if="pagination.total" class="pagination-text">
   Viewing {{ pagination.first }}-{{ pagination.last }} of {{ pagination.total }}
 </span>
 
-<button class="btn btn-link" ng-disabled="!pagination.hasNext" ng-click="pagination.next()"><i class="fa fa-caret-right"></i></button>
+<button class="btn btn-link" ng-disabled="!pagination.hasNext" ng-click="pagination.next()" title="Next"><i class="fa fa-caret-right"></i></button>

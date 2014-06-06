@@ -29,6 +29,7 @@ describe('Folders CRUD', function() {
     ]).done(function(results) {
       var user = results[0];
       var folders = _.map(results[1], 'id');
+      self.folders = results[1];
       self.factory.items.create({ vendor: 'Quick Left', total: 199.99, folders: folders, formxtraStatus: 'skipped' }, { user: user.id });
     });
 
@@ -53,7 +54,7 @@ describe('Folders CRUD', function() {
     it('should display folders in the receipt editor', function() {
       this.page.firstItem.$('input[type="checkbox"][selection]').click();
       this.page.itemToolbarEdit.click();
-      expect(this.page.receiptEditorForm.element(by.model('item.folders')).element(by.tagName('option')).getText()).to.eventually.contain('materials');
+      expect(this.page.receiptEditorForm.element(by.model('item.folders')).$('[value="' + this.folders[1].id + '"]').isSelected()).to.eventually.equal(true);
     });
   });
 
@@ -233,12 +234,12 @@ describe('Multiple Foldering', function() {
   it('should folder multiple items', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).not.to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).not.to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.itemToolbarFolder.click();
@@ -249,14 +250,14 @@ describe('Multiple Foldering', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.select2-choices').getText()).to.eventually.contain('travel');
+    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).to.eventually.contain('travel');
     this.page.receiptEditorSave.click();
   });
 });

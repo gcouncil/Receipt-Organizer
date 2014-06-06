@@ -125,7 +125,7 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Folders</label>
             <div class="col-xs-9">
-              <item-folders-input item="item"></item-folders-input>
+              <select selectize multiple selectize-options="folders" selectize-settings="{ labelField: 'name', searchField: 'name', valueField: 'id', sortField: 'name', dropdownParent: 'body', create: createFolder }" ng-model="item.folders"></select>
             </div>
           </div>
 
