@@ -18,8 +18,12 @@ describe('folder organizer entry directive', function() {
 
     ctx.state = {
       params: {
-        folder: 'FOLDER'
-      }
+        folder: 1
+      },
+      $current: {
+        name: 'THUMBNAILS'
+      },
+      go: ctx.sinon.stub()
     };
 
     angular.mock.module('ngMock', 'epsonreceipts.folders.folder-organizer', {
@@ -83,5 +87,23 @@ describe('folder organizer entry directive', function() {
     var ctx = this;
     ctx.childScope.deleteFolder();
     expect(ctx.folderStorage.destroy).to.have.been.calledWith({ id: 1, name: 'FOLDER1' });
+  });
+
+  it('redirects to inbox when deleting active folder', function() {
+    var ctx = this;
+    expect(ctx.scope.folder.id).to.equal(1);
+    ctx.childScope.deleteFolder();
+    ctx.childScope.$digest();
+    expect(ctx.state.go).to.have.been.calledWith('THUMBNAILS', { folder: null });
+  });
+
+  it('does not redirect to inbox when deleting inactive folder', function() {
+    var ctx = this;
+    ctx.scope.folder.id = 2;
+    ctx.childScope.$digest();
+    expect(ctx.scope.folder.id).to.equal(2);
+    ctx.childScope.deleteFolder();
+    ctx.childScope.$digest();
+    expect(ctx.state.go).not.to.have.been.calledWith('THUMBNAILS', { folder: null });
   });
 });

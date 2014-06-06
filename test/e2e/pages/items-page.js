@@ -65,8 +65,10 @@ function ItemPage(factory, user) {
   this.folderOrganizerInbox = $('folder-organizer li.primary');
   this.folderActionsDropdown = $('.dropdown-menu');
   this.firstFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(0));
+  this.firstFolderInOrganizerLink = this.firstFolderInOrganizer.$('i.fa-folder');
   this.firstFolderActionsLink = this.firstFolderInOrganizer.$('.caret');
   this.secondFolderInOrganizer = this.folderOrganizer.element(by.repeater('folder in folders').row(1));
+  this.secondFolderInOrganizerLink = this.secondFolderInOrganizer.$('i.fa-folder');
   this.newFolder = $('new-folder');
   this.newFolderLink = $('new-folder a');
   this.newFolderSaveButton = $('new-folder button');
