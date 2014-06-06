@@ -53,14 +53,6 @@ module.exports = function(grunt) {
         src: '*',
         dest: 'build/assets/fonts'
       }]
-    },
-    images: {
-      files: [{
-        expand: true,
-        cwd: './bower_components/select2',
-        src: ['*.png', '*.gif'],
-        dest: 'build/assets'
-      }]
     }
   });
 
@@ -78,7 +70,6 @@ module.exports = function(grunt) {
         paths: [
           './bower_components/bootstrap/less',
           './bower_components/font-awesome/less',
-          './bower_components/select2',
           './bower_components/angular-motion/dist',
           './bower_components/selectize/dist/less'
         ],
