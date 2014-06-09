@@ -121,11 +121,11 @@
           </div>
 
           <div class="form-grid-actions" ng-show="form.$dirty">
-            <button type="submit" class="btn btn-default" ng-click="revert()">
+            <button type="button" class="btn btn-default" ng-click="revert()">
               Discard Changes
             </button>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
               <i class="fa fa-check-circle"></i>
               Save Changes
             </button>
