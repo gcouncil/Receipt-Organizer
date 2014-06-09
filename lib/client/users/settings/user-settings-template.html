@@ -10,30 +10,16 @@
   <div ui-sref-active="active" ng-if="isCurrentPage('categories')">
     <form>
       <div class="form-group">
-        <div class="col-lg-6" ng-repeat="category in categories.firstHalfSet">
-          <div class="input-group">
-            <span class="input-group-addon">
-              <input type="checkbox" ng-checked="category.visible">
-            </span>
-            <input type="text" class="form-control" ng-value="category.name"/>
-          </div>
+        <div class="col-lg-6" ng-repeat="category in categories">
+          <input type="text" class="form-control settings-input" ng-value="category"/>
+          <span style="display:inline" ng-click="delete('categories', category)"><i class="fa fa-trash-o"></i></span>
         </div>
       </div>
+      <new-settings-input collection="categories"></new-settings-input>
       <div class="form-group">
-        <div class="col-lg-6" ng-repeat="category in categories.secondHalfSet">
-          <div class="input-group">
-            <span class="input-group-addon">
-              <input type="checkbox" ng-checked="category.visible">
-            </span>
-            <input type="text" class="form-control" ng-value="category.name"/>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12 text-center settings-edit-buttons">
           <button type="submit" class="btn btn-primary" ng-click="save()">Save Changes</button>
-          <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+          <button type="button" class="btn" ng-click="cancel()">Discard Changes</button>
         </div>
       </div>
 
@@ -42,25 +28,20 @@
 
   <div ui-sref-active="active" ng-if="isCurrentPage('form-fields')">
     <form>
-      <div class="form-group" ng-repeat="field in fields">
-        <div class="col-lg-12">
-          <div class="input-group">
-            <span class="input-group-addon">
-              <input type="checkbox" ng-checked="field.visible">
-            </span>
-            <input type="text" class="form-control" ng-value="field.name" placeholder="Custom Form Field {{ $index }}"/>
-          </div>
+      <div class="form-group">
+        <div class="col-lg-6" ng-repeat="field in fields">
+          <input type="text" class="form-control settings-input" ng-value="field"/>
+          <span style="display:inline" ng-click="delete('fields', field)"><i class="fa fa-trash-o"></i></span>
         </div>
       </div>
-
+      <new-settings-input collection="fields"></new-settings-input>
       <div class="form-group">
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12 text-center settings-edit-buttons">
           <button type="submit" class="btn btn-primary" ng-click="save()">Save Changes</button>
-          <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+          <button type="button" class="btn" ng-click="cancel()">Discard Changes</button>
         </div>
       </div>
 
     </form>
-
   </div>
 </div>
