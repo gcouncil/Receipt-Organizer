@@ -12,49 +12,49 @@
 
           <hr>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
             <label class="col-xs-3 control-label">Date</label>
             <div class="col-xs-9">
-              <input ng-model="item.date" class="form-control" bs-datepicker autoclose="true">
+              <input ng-model="item.date" class="form-control" bs-datepicker>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }">
             <label class="col-xs-3 control-label">Vendor Name</label>
             <div class="col-xs-9">
               <input ng-model="item.vendor" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
             <label class="col-xs-3 control-label">Payment Type</label>
             <div class="col-xs-9">
               <input ng-model="item.paymentType" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('category') }">
             <label class="col-xs-3 control-label">Category</label>
             <div class="col-xs-9">
               <input ng-model="item.category" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('city') }">
             <label class="col-xs-3 control-label">City</label>
             <div class="col-xs-9">
               <input ng-model="item.city" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('state') }">
             <label class="col-xs-3 control-label">State</label>
             <div class="col-xs-9">
               <input ng-model="item.state" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tax') }">
             <label class="col-xs-3 control-label">Tax</label>
             <div class="col-xs-9">
               <input type="currency" ng-model="item.tax" class="form-control">
@@ -62,42 +62,42 @@
           </div>
 
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('additionalTax') }">
             <label class="col-xs-3 control-label">Second Tax</label>
             <div class="col-xs-9">
               <input type="currency" ng-model="item.additionalTax" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('total') }">
             <label class="col-xs-3 control-label">Total</label>
             <div class="col-xs-9">
               <input type="currency" ng-model="item.total" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tip') }">
             <label class="col-xs-3 control-label">Tip</label>
             <div class="col-xs-9">
               <input type="currency" ng-model="item.tip" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('taxCategory') }">
             <label class="col-xs-3 control-label">Tax Category</label>
             <div class="col-xs-9">
               <input ng-model="item.taxCategory" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('businessPurpose') }">
             <label class="col-xs-3 control-label">Business Purpose</label>
             <div class="col-xs-9">
               <input ng-model="item.businessPurpose" class="form-control">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('reimbursable') }">
             <div class="col-xs-9 col-xs-offset-3">
               <label>
                 <input type="checkbox" ng-model="item.reimbursable">
@@ -106,7 +106,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('billable') }">
             <div class="col-xs-9 col-xs-offset-3">
               <label>
                 <input type="checkbox" ng-model="item.billable">
@@ -115,7 +115,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('comments') }">
             <label class="col-xs-3 control-label">Comments</label>
             <div class="col-xs-9">
               <textarea ng-model="item.comments" class="form-control"></textarea>
