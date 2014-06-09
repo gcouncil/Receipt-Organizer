@@ -12,15 +12,10 @@
     .flex-box();
   }
 
-  .modal-footer {
-    margin-top: 0;
+  .modal-footer, .modal-header {
+    margin: 0;
+    background: @gray-light;
   }
-}
-
-.receipt-editor-fields {
-  padding: @modal-inner-padding;
-  .noflex(400px);
-  overflow: scroll;
 }
 
 .receipt-editor-image {
@@ -30,6 +25,195 @@
   overflow: hidden;
 }
 
-.select2-search-field input {
-  width: 260px !important;
+.receipt-editor-fields {
+  .noflex(400px);
+  padding: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  border: solid 1px @gray-light;
+}
+
+.receipt-editor-info {
+  margin: 10px 0;
+  display: block;
+}
+
+.selectize-input .item-option {
+  display: block;
+  margin-right: 22px;
+}
+
+@form-gird-border: solid 1px @gray-light;
+
+.form-grid {
+  .flex-box(column);
+}
+
+.form-grid-cell {
+  .noflex;
+  position: relative;
+
+  margin: 0;
+  padding: 0;
+
+  border-bottom: @form-gird-border;
+  background: white;
+}
+
+.form-grid-cell-checkbox {
+  padding: @padding-base-vertical @padding-base-horizontal;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.form-grid-cell-custom {
+  padding: @padding-base-vertical @padding-base-horizontal;
+  font-weight: normal;
+  background: @gray-lighter;
+
+  .selectize-control {
+    width: 275px;
+    height: 34px;
+    display: inline-block;
+  }
+}
+
+.form-grid-group {
+  .noflex;
+  .flex-box(row);
+
+  > .form-grid-cell {
+    .flex(1, 1, 1px);
+
+    border-right: solid 1px @gray-light;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.form-grid-label {
+    position: absolute;
+    z-index: 1;
+
+    top: @padding-base-vertical;
+    left: @padding-base-horizontal;
+
+    font-size: 10px;
+    font-weight: normal;
+
+    color: @gray-light;
+}
+
+.form-grid-input {
+  height: 49px;
+  width: 100%;
+
+  margin: 0;
+  padding: (@padding-base-vertical * 2 + 10px)  @padding-base-horizontal @padding-base-vertical;
+
+  outline: none;
+  border: none;
+
+  &:focus {
+    .text-primary;
+    box-shadow: inset 0 0 3px @brand-info;
+  }
+
+  .has-warning > & {
+    .text-warning;
+    box-shadow: inset 0 0 3px @brand-warning;
+  }
+
+  .has-error > & {
+    .text-danger;
+    box-shadow: inset 0 0 3px @brand-danger;
+  }
+}
+
+
+/////
+
+.box-input-form {
+  .flex-box(column);
+}
+
+.box-input, .box-input-checkbox, .box-input-group, .box-input-other {
+  .noflex;
+  margin: 0;
+  padding: 0;
+  border-bottom: solid 1px @gray-light;
+}
+
+.box-input-checkbox {
+  padding: 6px;
+
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.box-input {
+  position: relative;
+  height: 49px;
+
+  > .box-input-label {
+    position: absolute;
+    z-index: 1;
+
+    top: 6px;
+    left: 12px;
+
+    font-size: 10px;
+    font-weight: normal;
+
+    color: @gray-light;
+  }
+
+  > .box-input-control {
+    width: 100%;
+    height: 100%;
+
+    padding: 22px 12px 6px;
+    border: none;
+    margin: 0;
+
+    outline: none;
+
+    &:focus {
+      box-shadow: inset 0 0 4px @brand-info;
+    }
+  }
+
+  &.has-warning {
+    > input {
+      box-shadow: inset 0 0 4px @brand-warning;
+    }
+  }
+
+  &.has-error {
+    > input {
+      box-shadow: inset 0 0 4px @brand-danger;
+    }
+  }
+}
+
+.box-input-group {
+  .flex-box(row);
+  border-bottom: none;
+
+  > .box-input, > .box-input-checkbox {
+    .flex(1, 1, 45px);
+
+    border-right: solid 1px @gray-light;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.box-input-other {
+  background: @gray-lighter;
 }

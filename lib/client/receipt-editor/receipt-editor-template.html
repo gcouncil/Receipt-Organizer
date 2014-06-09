@@ -1,156 +1,157 @@
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog receipt-editor-dialog">
     <form name="form" class="modal-content" ng-submit="save()">
+      <div class="modal-header">
+        <button type="button" class="btn btn-link" ng-disabled="form.$dirty" ng-click="close()"><i class="fa fa-times-circle"></i></button>
+        <span class="pull-right" ng-if="pagination.total > 1">Currently Viewing {{ pagination.first }} of {{ pagination.total }} Items</span>
+      </div>
       <div class="modal-body">
-        <div class="receipt-editor-fields form-horizontal">
-          <div class="row">
-            <div class="col-xs-12 text-center">
-              <select ng-model="item" ng-options="(item.type | titlecase) + ' - ' + (item.total | currency) for item in items track by item.id"> </select>
-              <a class="btn btn-primary btn-xs" ng-click="split()">Itemize {{ item.type === 'expense' ? 'Another' : '' }} Expense</a>
-            </div>
-          </div>
-
-          <hr>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
-            <label class="col-xs-3 control-label">Date</label>
-            <div class="col-xs-9">
-              <input ng-model="item.date" class="form-control" bs-datepicker>
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }">
-            <label class="col-xs-3 control-label">Vendor Name</label>
-            <div class="col-xs-9">
-              <input ng-model="item.vendor" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
-            <label class="col-xs-3 control-label">Payment Type</label>
-            <div class="col-xs-9">
-              <input ng-model="item.paymentType" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('category') }">
-            <label class="col-xs-3 control-label">Category</label>
-            <div class="col-xs-9">
-              <input ng-model="item.category" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('city') }">
-            <label class="col-xs-3 control-label">City</label>
-            <div class="col-xs-9">
-              <input ng-model="item.city" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('state') }">
-            <label class="col-xs-3 control-label">State</label>
-            <div class="col-xs-9">
-              <input ng-model="item.state" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tax') }">
-            <label class="col-xs-3 control-label">Tax</label>
-            <div class="col-xs-9">
-              <input type="currency" ng-model="item.tax" class="form-control">
-            </div>
-          </div>
-
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('additionalTax') }">
-            <label class="col-xs-3 control-label">Second Tax</label>
-            <div class="col-xs-9">
-              <input type="currency" ng-model="item.additionalTax" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('total') }">
-            <label class="col-xs-3 control-label">Total</label>
-            <div class="col-xs-9">
-              <input type="currency" ng-model="item.total" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tip') }">
-            <label class="col-xs-3 control-label">Tip</label>
-            <div class="col-xs-9">
-              <input type="currency" ng-model="item.tip" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('taxCategory') }">
-            <label class="col-xs-3 control-label">Tax Category</label>
-            <div class="col-xs-9">
-              <input ng-model="item.taxCategory" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('businessPurpose') }">
-            <label class="col-xs-3 control-label">Business Purpose</label>
-            <div class="col-xs-9">
-              <input ng-model="item.businessPurpose" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('reimbursable') }">
-            <div class="col-xs-9 col-xs-offset-3">
-              <label>
-                <input type="checkbox" ng-model="item.reimbursable">
-                Reimbursable
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('billable') }">
-            <div class="col-xs-9 col-xs-offset-3">
-              <label>
-                <input type="checkbox" ng-model="item.billable">
-                Billable
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{ 'has-warning': item.fieldIsLowConfidence('comments') }">
-            <label class="col-xs-3 control-label">Comments</label>
-            <div class="col-xs-9">
-              <textarea ng-model="item.comments" class="form-control"></textarea>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-xs-3 control-label">Folders</label>
-            <div class="col-xs-9">
-              <select selectize multiple selectize-options="folders" selectize-settings="{ labelField: 'name', searchField: 'name', valueField: 'id', sortField: 'name', dropdownParent: 'body', create: createFolder }" ng-model="item.folders"></select>
-            </div>
-          </div>
-
-        </div>
         <div class="receipt-editor-image">
           <image-viewer image-loader="imageLoader" overlay="item.getAnswers()">
         </div>
+
+        <div class="receipt-editor-fields form-grid form-inline">
+          <div class="form-grid-cell form-grid-cell-custom">
+            <h2 class="receipt-editor-info">
+              <span class="text-muted pull-left">{{ item.description }}</span>
+              <span class="pull-right">
+                <small class="text-primary">{{ item.total | currency }}</small>
+              </span>
+            </h2>
+          </div>
+
+
+          <label class="form-grid-cell form-grid-cell-custom form-group" ng-show="items.length > 1">
+            <span class="control-label">Viewing:</span>
+            <select selectize class="form-control"
+              ng-disabled="form.$dirty"
+              selectize-options="items"
+              selectize-settings="{ valueField: 'id', labelField: 'type', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
+              ng-model="itemId"
+              ng-change="selectItem(itemId)"
+              >
+            </select>
+          </label>
+
+          <label form-group class="form-grid-cell" 
+            ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }"
+            ng-if="item.type == 'expense'">
+            <span class="form-grid-label">Expense Name</span>
+            <input class="form-grid-input" ng-model="item.name">
+          </label>
+
+          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }">
+            <span class="form-grid-label">Vendor</span>
+            <input class="form-grid-input" ng-model="item.vendor">
+          </label>
+
+          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
+            <span class="form-grid-label">Date</span>
+            <input class="form-grid-input" ng-model="item.date" bs-datepicker>
+          </label>
+
+          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
+            <span class="form-grid-label">Payment Type</span>
+            <input class="form-grid-input" ng-model="item.paymentType">
+          </label>
+
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('city') }">
+              <span class="form-grid-label">City</span>
+              <input class="form-grid-input" ng-model="item.city">
+            </label>
+
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('state') }">
+              <span class="form-grid-label">State</span>
+              <input class="form-grid-input" ng-model="item.state">
+            </label>
+          </div>
+
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tax') }">
+              <span class="form-grid-label">Tax</span>
+              <input class="form-grid-input" type="currency" ng-model="item.tax">
+            </label>
+
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('additionalTax') }">
+              <span class="form-grid-label">Second Tax</span>
+              <input class="form-grid-input" type="currency" ng-model="item.additionalTax">
+            </label>
+          </div>
+
+          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('total') }">
+            <span class="form-grid-label">Total</span>
+            <input class="form-grid-input" type="currency" ng-model="item.total">
+          </label>
+
+          <label class="form-grid-cell form-grid-cell-custom form-group">
+            <span class="control-label">Folder:</span>
+            <select selectize multiple class="form-control"
+              selectize-options="folders" selectize-settings="{ labelField: 'name', searchField: 'name', valueField: 'id', sortField: 'name', dropdownParent: 'body', create: createFolder }"
+              ng-model="item.folders">
+            </select>
+          </label>
+
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell form-grid-cell-checkbox" ng-class="{ 'has-warning': item.fieldIsLowConfidence('reimbursable') }">
+              <input type="checkbox" ng-model="item.reimbursable">
+              Reimbursable
+            </label>
+
+            <label form-group class="form-grid-cell form-grid-cell-checkbox" ng-class="{ 'has-warning': item.fieldIsLowConfidence('billable') }">
+              <input type="checkbox" ng-model="item.billable">
+              Billable
+            </label>
+          </div>
+
+          <label class="form-grid-cell form-grid-cell-custom form-group">
+            <span class="control-label">Category:</span>
+            <select selectize class="form-control"
+              selectize-options="[{ text: 'Tax' }, { text: 'Entertainment' }]"
+              selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
+              ng-model="item.category">
+            </select>
+          </label>
+
+          <div class="form-grid-cell form-grid-cell-custom">
+            <a class="btn btn-default btn-block" ng-click="split()">
+              <i class="fa fa-plus"></i>
+              Itemize Expense
+            </a>
+          </div>
+
+          <div class="form-grid-actions" ng-show="form.$dirty">
+            <button type="submit" class="btn btn-default" ng-click="revert()">
+              Discard Changes
+            </button>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-check-circle"></i>
+              Save Changes
+            </button>
+          </div>
+        </div>
       </div>
+
       <div class="modal-footer">
-
-        <span ng-if="pagination.total > 1">{{ pagination.first }} of {{ pagination.total }}</span>
-
-        <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Done</button>
-        <button type="button" class="btn btn-default"
-          ng-if="pagination.total > 1"
-          ng-disabled="form.$invalid || !pagination.hasPrevious"
+        <button type="button" class="btn btn-default pull-left"
+          ng-disabled="form.$dirty || !pagination.hasPrevious"
           ng-click="pagination.previous()">
           Back
         </button>
-        <button type="button" class="btn btn-primary"
-          ng-if="pagination.total > 1"
-          ng-disabled="form.$invalid || !pagination.hasNext"
+
+        <button type="button" class="btn btn-success"
+          ng-if="pagination.hasNext"
+          ng-disabled="form.$dirty"
           ng-click="pagination.next()">
           Next
+        </button>
+
+        <button type="button" class="btn btn-success"
+          ng-if="!pagination.hasNext"
+          ng-disabled="form.$dirty"
+          ng-click="close()">
+          Done
         </button>
       </div>
     </div>
