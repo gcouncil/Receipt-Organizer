@@ -3,6 +3,7 @@
     <bulk-selection selection="items.selection"></bulk-selection>
 
     <button class="navbar-btn btn-group btn btn-primary"
+      title="Create"
       ng-click="$emit('items:newReport', items.selection.selectedItems)"
       ng-disabled="!items.selection.hasSelection()">
       <i class="fa fa-plus-circle"></i>
@@ -12,16 +13,18 @@
 
     <div class="navbar-btn btn-group">
       <button class="btn btn-default"
+        title="Edit"
         ng-click="$emit('items:edit', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-pencil"></i>
       </button>
       <button class="btn btn-default"
-        ng-click=""
+        title="Review"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-check"></i>
       </button>
       <button class="btn btn-default"
+        title="Delete"
         ng-click="$emit('items:destroy', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-trash-o"></i>

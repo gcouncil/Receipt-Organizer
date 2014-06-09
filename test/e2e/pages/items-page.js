@@ -36,20 +36,20 @@ function ItemPage(factory, user) {
   this.itemDeleteConfirmation = $('.modal-dialog');
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
 
-  this.itemToolbarEdit = $('items-toolbar').element(by.partialButtonText('Edit'));
-  this.itemToolbarDelete = $('items-toolbar').element(by.partialButtonText('Delete'));
-  this.itemToolbarFolder = $('items-toolbar').element(by.partialButtonText('Add to Folder'));
+  this.itemToolbarEdit = $('items-toolbar').$('[title="Edit"]');
+  this.itemToolbarDelete = $('items-toolbar').$('[title="Delete"]');
+  this.itemToolbarFolder = $('items-toolbar').$('[title="Folder"]');
+  this.itemToolbarCreateReport = $('items-toolbar').$('[title="Create"]');
+  this.itemToolbarUpdateReport = $('items-toolbar').$('[title="Update"]');
 
-  this.itemToolbarFolderDropdown = $('.item-dropdown');
+  this.itemToolbarFolderDropdown = $('.dropdown-menu');
   this.itemToolbarCategory = $('items-toolbar [title="Category"]');
-  this.filterToolbarButton = $('items-toolbar').element(by.partialButtonText('Filter'));
+  this.filterToolbarButton = $('items-toolbar').element(by.linkText('Show Filters'));
   this.categoryFilterInput = $('category-filter');
   this.dateFilterInput = $('date-filter');
   this.filterReset = $('filter-reset button');
   this.itemToolbarReset = $('items-toolbar filter-reset button');
   this.filtersNav = $('.navbar-filters');
-  this.itemToolbarCreateReport = $('items-toolbar').element(by.partialButtonText('Create Report'));
-  this.itemToolbarUpdateReport = $('items-toolbar').element(by.partialButtonText('Add to Report'));
 
   this.vendorItemHeader = $('.items-list-view-headers').element(by.linkText('Vendor'));
   this.totalItemHeader = $('.items-list-view-headers').element(by.linkText('Total'));
