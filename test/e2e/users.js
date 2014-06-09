@@ -32,7 +32,27 @@ function ItemPage(factory, user) {
     helpers.loginUser(this.user);
   };
 
-  this.logoutButton = element(by.buttonText('Log Out'));
+  this.logoutButton = element(by.linkText('Log Out'));
+  this.flashDiv = $('.alert');
+}
+
+function SettingsPage(factory, user) {
+  this.user = user ||  factory.users.create({
+    email: 'test@example.com',
+    password: 'password'
+  });
+
+  this.get = function() {
+    browser.get(helpers.rootUrl);
+    helpers.loginUser(this.user);
+    browser.get(helpers.rootUrl + '#/settings/categories');
+  };
+
+  this.categoryRepeater = by.repeater('category in categories');
+  this.categories = element.all(this.categoryRepeater);
+  this.firstCategory = element(this.categoryRepeater.row(0));
+  this.saveButton = element(by.buttonText('Save Changes'));
+  this.cancelButton = element(by.buttonText('Discard Changes'));
   this.flashDiv = $('.alert');
 }
 
@@ -106,3 +126,46 @@ describe('Log Out', function() {
   });
 });
 
+describe.only('User Settings', function() {
+  beforeEach(function() {
+    this.page = new SettingsPage(this.factory);
+    this.page.get();
+  });
+
+  context('categories', function() {
+    it('should create', function() {
+      element(by.model('newSetting')).sendKeys('New Category 1');
+      element(by.buttonText('+')).click();
+      expect(element(this.page.categoryRepeater.row(15)).$('input').getAttribute('value')).to.eventually.equal('New Category 1');
+    });
+
+    it('should edit', function() {
+      expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
+      this.page.firstCategory.$('input').clear();
+      this.page.firstCategory.$('input').sendKeys('Bearline');
+      this.page.saveButton.click();
+      expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Bearline');
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your categories preferences.');
+    });
+
+    it('should not edit on cancel', function() {
+      expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
+      this.page.firstCategory.$('input').clear();
+      this.page.firstCategory.$('input').sendKeys('Bearline');
+      this.page.cancelButton.click();
+      element(by.buttonText('Settings')).click();
+      expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Bearline');
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Your changes were cancelled.');
+    });
+
+    it('should delete', function() {
+      expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
+      this.page.firstCategory.$('.fa-trash-o').click();
+      expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Airline');
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Deleted the Airline category.');
+      this.page.categories.each(function(category) {
+        expect(category.$('input').getAttribute('value')).not.to.eventually.equal('Airline');
+      });
+    });
+  });
+});
