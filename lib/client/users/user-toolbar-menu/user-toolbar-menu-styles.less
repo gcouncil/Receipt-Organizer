@@ -1,7 +1,12 @@
 user-toolbar-menu > .navbar-nav > li {
-  border-right: 1px solid @gray;
+  margin: 10px 0;
+  &:last-of-type > a {
+    border-right: none;
+  }
   > a {
+    border-right: 1px solid @gray;
     color: white !important;
+    padding: 5px 10px;
     &:hover {
       cursor: pointer;
     }
