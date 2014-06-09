@@ -78,12 +78,36 @@ describe('Folders CRUD', function() {
       expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
       expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
     });
-  });
 
+    it('should redirect to the inbox on active folder delete', function() {
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
+      this.page.firstFolderInOrganizerLink.click();
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      this.page.firstFolderActionsLink.click();
+      expect(this.page.folderOrganizerInbox.getAttribute('class')).not.to.eventually.contain('active');
+      this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
+      expect(this.page.folderOrganizerInbox.getAttribute('class')).to.eventually.contain('active');
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).not.to.eventually.contain('active');
+      expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
+    });
+
+    it('should not redirect to the inbox on inactive folder delete', function() {
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/materials\s?1/);
+      this.page.secondFolderInOrganizer.click();
+      this.page.firstFolderActionsLink.click();
+      expect(this.page.secondFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).not.to.eventually.contain('active');
+      this.page.folderActionsDropdown.element(by.linkText('Delete')).click();
+      expect(this.page.firstFolderInOrganizer.getText()).not.to.eventually.match(/materials\s?1/);
+      expect(this.page.firstFolderInOrganizer.getText()).to.eventually.match(/product development\s?1/);
+      expect(this.page.firstFolderInOrganizer.getAttribute('class')).to.eventually.contain('active');
+      expect(this.page.folderOrganizerInbox.getAttribute('class')).not.to.eventually.contain('active');
+    });
+  });
 });
 
 describe('filtering', function() {
-
   beforeEach(function() {
     var self = this;
 
@@ -146,22 +170,22 @@ describe('filtering', function() {
     expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
     expect(self.page.secondItem.getText()).to.eventually.contain('Boulder Property Management');
 
-    self.page.firstFolderInOrganizer.$('a').click();
+    self.page.firstFolderInOrganizerLink.click();
 
     expect(self.page.firstItem.getText()).to.eventually.contain('Boulder Property Management');
     expect(self.page.items).to.eventually.have.length(1);
 
-    self.page.secondFolderInOrganizer.$('a').click();
+    self.page.secondFolderInOrganizerLink.click();
 
     expect(self.page.firstItem.getText()).to.eventually.contain('Xcel Energy');
     expect(self.page.items).to.eventually.have.length(1);
   }
 
-  xit('should filter items by folder on the thumbnail view', function() {
+  it('should filter items by folder on the thumbnail view', function() {
     testFilteringByFolder(this);
   });
 
-  xit('should filter items by folder on the list view', function() {
+  it('shoul class="folder-filter-link"d filter items by folder on the list view', function() {
     this.page.itemToolbarList.click();
     testFilteringByFolder(this);
   });
