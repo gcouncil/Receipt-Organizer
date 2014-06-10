@@ -1,4 +1,8 @@
 items-toolbar {
+  > .navbar {
+    padding: 10px 20px;
+  }
+
   date-filter-input input {
     width: 70px !important;
   }
@@ -10,4 +14,38 @@ items-toolbar {
   .control-label {
     font-size: @font-size-small;
   }
+}
+
+.view-toggle-icon {
+  font-size: 1.4em;
+}
+
+.active > .view-toggle-icon {
+  color: @brand-primary;
+}
+
+ul > li > .nav-filters-link {
+  font-size: 1.1em;
+  border-right: 1px solid @gray-light;
+  padding: 5px 15px;
+  margin: 10px 0;
+}
+
+.navbar-btn.btn-group {
+  margin-left: 20px;
+}
+
+.navbar-btn > .btn-primary,
+.navbar-btn > .btn-default {
+  background-color: @gray-light;
+  border-color: @gray;
+  color: white;
+}
+
+.navbar-btn.btn-group > button {
+  padding: 6px 20px;
+}
+
+.btn-transparent {
+  border: 1px solid @gray-light;
 }

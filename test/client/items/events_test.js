@@ -13,7 +13,8 @@ describe('item events', function() {
     ctx.itemStorage = {
       create: ctx.sinon.stub(),
       destroy: ctx.sinon.stub(),
-      persist: ctx.sinon.stub()
+      persist: ctx.sinon.stub(),
+      markReviewed: ctx.sinon.stub()
     };
 
     ctx.imageStorage = {
@@ -64,6 +65,15 @@ describe('item events', function() {
     it('should launch the receipt editor on items:edit', function() {
       var ctx = this;
       expect(ctx.receiptEditor).to.have.been.calledWith(ctx.items);
+    });
+  });
+
+  context('items:review', function(){
+    it('should call the item storage review method when calling items:review', function() {
+      var ctx = this;
+      ctx.scope.$emit('items:review', ctx.items);
+      expect(ctx.itemStorage.markReviewed).to.have.been.calledWith(ctx.items[0]);
+      expect(ctx.itemStorage.markReviewed).to.have.been.calledWith(ctx.items[1]);
     });
   });
 
