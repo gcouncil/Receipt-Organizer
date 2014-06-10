@@ -20,6 +20,7 @@
       </button>
       <button class="btn btn-default"
         title="Review"
+        ng-click="$emit('items:review', items.selection.selectedItems)"
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-check"></i>
       </button>
