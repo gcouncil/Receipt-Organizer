@@ -19,14 +19,28 @@ describe('new settings input', function() {
       go: ctx.sinon.stub()
     };
 
+    ctx.currentUser = {
+      get: ctx.sinon.stub().returns( { settings: { categories: ['category1'] } } ),
+      set: ctx.sinon.stub()
+    };
+
+    ctx.userStorage = {
+      create: ctx.sinon.stub(),
+      updateSettings: ctx.sinon.stub()
+    };
+
     angular.mock.module('ngMock', 'epsonreceipts.users.settings', {
       notify: ctx.notify,
-      $state: ctx.state
+      $state: ctx.state,
+      currentUser: ctx.currentUser,
+      userStorage: ctx.userStorage
     });
 
-    angular.mock.inject(function($rootScope, $compile) {
+    angular.mock.inject(function($rootScope, $compile, $q) {
       ctx.parentScope = $rootScope.$new();
       ctx.childScope = ctx.parentScope.$new();
+      //ctx.deferred = $q.defer();
+      //ctx.userStorage.updateSettings.returns(ctx.deferred.promise);
 
       ctx.compile = function() {
         ctx.parentElement = $compile('<user-settings></user-settings>')(ctx.parentScope);

@@ -20,9 +20,21 @@ describe('user settings directive', function() {
       go: ctx.sinon.stub()
     };
 
+    ctx.currentUser = {
+      get: ctx.sinon.stub().returns( { settings: { categories: ['category1'] } } ),
+      set: ctx.sinon.stub()
+    };
+
+    ctx.userStorage = {
+      create: ctx.sinon.stub(),
+      updateSettings: ctx.sinon.stub()
+    };
+
     angular.mock.module('ngMock', 'epsonreceipts.users.settings', {
       notify: ctx.notify,
-      $state: ctx.state
+      $state: ctx.state,
+      currentUser: ctx.currentUser,
+      userStorage: ctx.userStorage
     });
 
     angular.mock.inject(function($rootScope, $compile) {
