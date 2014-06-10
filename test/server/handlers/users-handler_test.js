@@ -1,4 +1,3 @@
-var express = require('express');
 
 var handler = require('epson-receipts/server/handlers/users-handler');
 var domain = require('epson-receipts/domain');
@@ -81,5 +80,9 @@ describe('UsersHandler', function() {
         expect(this.res.body).to.not.have.deep.property('[0].passwordHash');
       });
     });
+  });
+
+  describe('update settings', function() {
+
   });
 });
