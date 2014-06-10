@@ -68,7 +68,7 @@ describe('form field settings directive', function() {
     ];
     ctx.scope.$digest();
     ctx.deferred.resolve(ctx.user);
-    ctx.scope.save();
+    ctx.scope.saveFields();
     ctx.scope.$digest();
     expect(ctx.scope.fields).to.deep.equal(ctx.user.settings.fields);
     expect(ctx.notify.success).to.have.been.calledWith('Saved your form field preferences.');

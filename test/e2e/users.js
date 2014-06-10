@@ -42,18 +42,25 @@ function SettingsPage(factory, user) {
     password: 'password'
   });
 
-  this.get = function() {
+  this.get = function(subPage) {
+    subPage = subPage || 'categories';
     browser.get(helpers.rootUrl);
     helpers.loginUser(this.user);
-    browser.get(helpers.rootUrl + '#/settings/categories');
+    browser.get(helpers.rootUrl + '#/settings/' + subPage);
   };
 
   this.categoryRepeater = by.repeater('category in categories');
   this.categories = element.all(this.categoryRepeater);
   this.firstCategory = element(this.categoryRepeater.row(0));
+
+  this.formFieldRepeater = by.repeater('field in fields');
+  this.fields = element.all(this.formFieldRepeater);
+  this.firstField = element(this.formFieldRepeater.row(0));
+
   this.saveButton = element(by.buttonText('Save Changes'));
   this.cancelButton = element(by.buttonText('Discard Changes'));
   this.flashDiv = $('.alert');
+
 }
 
 describe('Sign up', function() {
@@ -127,14 +134,15 @@ describe('Log Out', function() {
 });
 
 describe('User Settings', function() {
-  beforeEach(function() {
-    this.page = new SettingsPage(this.factory);
-    this.page.get();
-  });
 
   context('categories', function() {
+    beforeEach(function() {
+      this.page = new SettingsPage(this.factory);
+      this.page.get();
+    });
+
     it('should create', function() {
-      element(by.model('newSetting')).sendKeys('New Category 1');
+      element(by.model('newCategory')).sendKeys('New Category 1');
       element(by.buttonText('+')).click();
       expect(element(this.page.categoryRepeater.row(15)).$('input').getAttribute('value')).to.eventually.equal('New Category 1');
     });
@@ -145,7 +153,7 @@ describe('User Settings', function() {
       this.page.firstCategory.$('input').sendKeys('Bearline');
       this.page.saveButton.click();
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Bearline');
-      expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your categories preferences.');
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your category preferences.');
     });
 
     it('should not edit on cancel', function() {
@@ -165,6 +173,42 @@ describe('User Settings', function() {
       expect(this.page.flashDiv.getText()).to.eventually.equal('Deleted the Airline category.');
       this.page.categories.each(function(category) {
         expect(category.$('input').getAttribute('value')).not.to.eventually.equal('Airline');
+      });
+    });
+  });
+
+  context('form fields', function() {
+    beforeEach(function() {
+      this.page = new SettingsPage(this.factory);
+      this.page.get('form-fields');
+    });
+
+    it('should update a field name', function() {
+      var self = this;
+      expect(this.page.firstField.element(by.model('field.name')).getAttribute('value')).to.eventually.equal('Custom Field 1');
+      this.page.firstField.element(by.model('field.name')).clear();
+      this.page.firstField.element(by.model('field.name')).sendKeys('Godzilla');
+      $('.fields-settings-save').click();
+
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your form field preferences.');
+      browser.driver.call(function() {
+        self.page.firstField.evaluate('field.name').then(function(name) {
+          expect(name).to.equal('Godzilla');
+        });
+      });
+    });
+
+    it('should update a field\'s visibility', function() {
+      var self = this;
+      expect(this.page.firstField.element(by.model('field.selected')).isSelected()).to.eventually.be.false;
+      this.page.firstField.element(by.model('field.selected')).click();
+      $('.fields-settings-save').click();
+
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your form field preferences.');
+      browser.driver.call(function() {
+        self.page.firstField.evaluate('field.selected').then(function(name) {
+          expect(name).to.be.true;
+        });
       });
     });
   });

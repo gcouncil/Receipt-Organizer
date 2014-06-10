@@ -81,7 +81,7 @@ describe('category settings directive', function() {
     ctx.user.settings.categories = [ 'category1', 'NEW CATEGORY' ];
     ctx.deferred.resolve(ctx.user);
     ctx.scope.$digest();
-    ctx.scope.save();
+    ctx.scope.saveCategories();
     ctx.scope.$digest();
     expect(ctx.scope.categories).to.deep.equal(ctx.user.settings.categories);
     expect(ctx.notify.success).to.have.been.calledWith('Saved your category preferences.');
