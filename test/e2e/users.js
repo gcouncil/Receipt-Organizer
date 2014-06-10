@@ -133,13 +133,13 @@ describe.only('User Settings', function() {
   });
 
   context('categories', function() {
-    it('should create', function() {
+    xit('should create', function() {
       element(by.model('newSetting')).sendKeys('New Category 1');
       element(by.buttonText('+')).click();
       expect(element(this.page.categoryRepeater.row(15)).$('input').getAttribute('value')).to.eventually.equal('New Category 1');
     });
 
-    it('should edit', function() {
+    xit('should edit', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
       this.page.firstCategory.$('input').clear();
       this.page.firstCategory.$('input').sendKeys('Bearline');
@@ -153,12 +153,12 @@ describe.only('User Settings', function() {
       this.page.firstCategory.$('input').clear();
       this.page.firstCategory.$('input').sendKeys('Bearline');
       this.page.cancelButton.click();
+      expect(this.page.flashDiv.getText()).to.eventually.equal('Your changes were cancelled.');
       element(by.buttonText('Settings')).click();
       expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Bearline');
-      expect(this.page.flashDiv.getText()).to.eventually.equal('Your changes were cancelled.');
     });
 
-    it('should delete', function() {
+    xit('should delete', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
       this.page.firstCategory.$('.fa-trash-o').click();
       expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Airline');
