@@ -18,7 +18,7 @@ describe('item thumbnail directive', function() {
       ctx.compile = function() {
         ctx.element = $compile('<thumbnail item="item"></thumbnail>')(ctx.scope);
         ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
-        ctx.scope.item = { reviewed: false };
+        ctx.scope.item = { reviewed: false, type: 'expense' };
         ctx.scope.$digest();
       };
     });
@@ -35,7 +35,6 @@ describe('item thumbnail directive', function() {
 
   it('should toggle reviewed status on the element when an item is reviewed', function() {
     var ctx = this;
-
     expect(ctx.element.hasClass('thumbnail-unreviewed')).to.be.true;
     expect(ctx.element.hasClass('thumbnail-reviewed')).to.be.false;
     ctx.scope.item.reviewed = true;
@@ -43,5 +42,4 @@ describe('item thumbnail directive', function() {
     expect(ctx.element.hasClass('thumbnail-unreviewed')).to.be.false;
     expect(ctx.element.hasClass('thumbnail-reviewed')).to.be.true;
   });
-
 });
