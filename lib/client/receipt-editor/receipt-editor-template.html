@@ -1,8 +1,8 @@
 <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog receipt-editor-dialog">
+  <div class="modal-dialog receipt-editor-dialog" ng-class="{ 'receipt-editor-dialog-highlight': !reviewed }">
     <form name="form" class="modal-content" ng-submit="save()">
       <div class="modal-header">
-        <button type="button" class="btn btn-link" ng-disabled="form.$dirty" ng-click="close()" title="Close"><i class="fa fa-times-circle"></i></button>
+        <button type="button" class="btn btn-plain" ng-disabled="form.$dirty" ng-click="close()" title="Close"><i class="fa fa-times-circle"></i></button>
         <span class="pull-right" ng-if="pagination.total > 1">Currently Viewing {{ pagination.first }} of {{ pagination.total }} Items</span>
       </div>
       <div class="modal-body">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="receipt-editor-fields form-grid form-inline">
-          <div class="form-grid-cell form-grid-cell-custom">
+          <div class="form-grid-cell form-grid-cell-info">
             <h2 class="receipt-editor-info">
               <span class="text-muted pull-left">{{ item.description }}</span>
               <span class="pull-right">
@@ -111,6 +111,11 @@
               selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
               ng-model="item.category">
             </select>
+          </label>
+
+          <label class="form-grid-cell form-grid-cell-custom form-group">
+            <span>Notes</span>
+            <textarea class="form-control" rows="1" ng-model="item.comments" elastic></textarea>
           </label>
 
           <div class="form-grid-cell form-grid-cell-custom">

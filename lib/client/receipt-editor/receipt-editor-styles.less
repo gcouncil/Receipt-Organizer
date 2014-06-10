@@ -1,3 +1,5 @@
+@receipt-editor-height: 700px;
+
 .receipt-editor-dialog > {
   user-select: none;
 
@@ -5,7 +7,7 @@
 
   .modal-body {
     width: 960px - 2px;
-    height: 600px;
+    height: @receipt-editor-height;
 
     padding: 0;
 
@@ -16,12 +18,31 @@
     margin: 0;
     background: @gray-light;
   }
+
+  .modal-header {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    border-bottom: solid 1px @gray;
+
+    .btn {
+      padding: 0;
+    }
+  }
+
+  .modal-footer {
+    border-top: solid 1px @gray;
+  }
+}
+
+.receipt-editor-dialog-highlight {
+  .modal-header, .modal-footer {
+    background: @brand-warning;
+  }
 }
 
 .receipt-editor-image {
   .flex;
   .flex-box;
-  height: 600px;
+  height: @receipt-editor-height;
   overflow: hidden;
 }
 
@@ -32,11 +53,13 @@
   overflow-x: hidden;
 
   border: solid 1px @gray-light;
+  border-top: none;
 }
 
 .receipt-editor-info {
   margin: 10px 0;
   display: block;
+  .clearfix;
 }
 
 .selectize-input .item-option {
@@ -76,10 +99,17 @@
 
   .selectize-control {
     width: 275px;
-    height: 34px;
     display: inline-block;
   }
 }
+
+.form-grid-cell-info {
+  padding: @form-grid-padding-vertical @form-grid-padding-horizontal;
+  font-weight: normal;
+  background: white;
+}
+
+
 
 .form-grid-group {
   .noflex;
