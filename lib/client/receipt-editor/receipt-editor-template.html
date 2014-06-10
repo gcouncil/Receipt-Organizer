@@ -15,7 +15,7 @@
             <h2 class="receipt-editor-info">
               <span class="text-muted pull-left">{{ item.description }}</span>
               <span class="pull-right">
-                <small class="text-primary">{{ item.total | currency }}</small>
+                <small class="text-primary">{{ item.total ? (item.total | currency) : '$--.--' }}</small>
               </span>
             </h2>
           </div>
@@ -26,14 +26,14 @@
             <select selectize class="form-control"
               ng-disabled="form.$dirty"
               selectize-options="items"
-              selectize-settings="{ valueField: 'id', labelField: 'type', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
+              selectize-settings="{ valueField: 'id', labelField: 'type', searchField: 'description', sortField: 'name', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
               ng-model="itemId"
               ng-change="selectItem(itemId)"
               >
             </select>
           </label>
 
-          <label form-group class="form-grid-cell" 
+          <label form-group class="form-grid-cell"
             ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }"
             ng-if="item.type == 'expense'">
             <span class="form-grid-label">Expense Name</span>
@@ -114,9 +114,11 @@
           </label>
 
           <div class="form-grid-cell form-grid-cell-custom">
-            <a class="btn btn-default btn-block" ng-click="split()">
+            <a class="btn btn-default btn-block"
+              ng-disabled="form.$dirty"
+              ng-click="split()">
               <i class="fa fa-plus"></i>
-              Itemize Expense
+              Itemize {{ items.length > 1 ? 'Another' : '' }} Expense
             </a>
           </div>
 
