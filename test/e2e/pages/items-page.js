@@ -13,11 +13,13 @@ function ItemPage(factory, user) {
 
   this.receiptEditor = $('.receipt-editor-dialog');
   this.receiptEditorForm = $('.receipt-editor-dialog form');
-  this.receiptEditorSave = this.receiptEditor.element(by.buttonText('Done'));
-  this.receiptEditorCancel = this.receiptEditor.element(by.buttonText('Cancel'));
+
+  this.receiptEditorSave = this.receiptEditor.element(by.partialButtonText('Save Changes'));
+  this.receiptEditorRevert = this.receiptEditor.element(by.partialButtonText('Discard Changes'));
   this.receiptEditorNext = this.receiptEditor.element(by.buttonText('Next'));
+  this.receiptEditorDone = this.receiptEditor.element(by.buttonText('Done'));
+  this.receiptEditorClose = this.receiptEditor.$('[title="Close"]');
   this.receiptEditorFooter = this.receiptEditor.$('.modal-footer');
-  this.receiptEditorNeedsReview = this.receiptEditorFooter.$('input[type="checkbox"]');
 
   this.reportEditor = $('.report-editor-dialog');
   this.reportEditorSave = this.reportEditor.element(by.buttonText('Save & Close'));

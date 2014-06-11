@@ -234,13 +234,16 @@ describe('Multiple Foldering', function() {
   it('should folder multiple items', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).not.to.eventually.contain('travel');
-    this.page.receiptEditorSave.click();
+
+    var folders = this.page.receiptEditorForm.element(by.model('item.folders')).element(by.xpath('..'));
+
+    expect(folders.getText()).not.to.eventually.contain('travel');
+    this.page.receiptEditorClose.click();
 
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).not.to.eventually.contain('travel');
-    this.page.receiptEditorSave.click();
+    expect(folders.getText()).not.to.eventually.contain('travel');
+    this.page.receiptEditorClose.click();
 
     this.page.itemToolbarFolder.click();
     expect($('.item-dropdown').getText()).to.eventually.contain('travel');
@@ -250,15 +253,17 @@ describe('Multiple Foldering', function() {
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).to.eventually.contain('travel');
-    this.page.receiptEditorSave.click();
+    browser.sleep(100);
+
+    expect(folders.getText()).to.eventually.contain('travel');
+    this.page.receiptEditorClose.click();
 
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
 
-    expect(this.page.receiptEditorForm.$('.selectize-input').getText()).to.eventually.contain('travel');
-    this.page.receiptEditorSave.click();
+    expect(folders.getText()).to.eventually.contain('travel');
+    this.page.receiptEditorClose.click();
   });
 });
 
