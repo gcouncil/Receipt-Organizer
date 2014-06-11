@@ -26,13 +26,13 @@
       ng-class="{
       'reports-list-view-report-selected': selection.isSelected(report.id)
       }"
-      ng-click="$emit('reports:edit', report)">
+      ng-click="$emit('reports:editReport', report)">
       <label class="list-view-data-checkbox" ng-click="$event.stopPropagation()">
         <is-selected selection="selection" selection-id="report.id"></is-selected>
       </label>
       <div class="list-view-data">{{ report.name }}</div>
       <div class="list-view-data-sm">{{ report.createdAt | date: 'shortDate' }}</div>
-      <div class="list-view-data-sm">{{ report.total | currency }}</div>
+      <div class="list-view-data-sm">{{ totalReport(report) | currency }}</div>
       <div class="list-view-data">$70.00</div>
       <div class="list-view-data-sm">{{ report.items.length }}</div>
       <div class="list-view-data">No</div>

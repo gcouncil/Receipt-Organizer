@@ -126,7 +126,7 @@ describe('reports sidebar', function() {
   });
 
   it('should open report editor on link click', function() {
-    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('[ng-click^="$emit(\'items:editReport\', report)"]').click();
+    this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('[ng-click^="$emit(\'reports:editReport\', report)"]').click();
     expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
   });
 });
