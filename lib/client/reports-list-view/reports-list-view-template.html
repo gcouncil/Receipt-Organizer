@@ -1,0 +1,41 @@
+<div class="reports-list-view-container">
+  <div class="reports-list-view-headers">
+    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data">
+      <p>Report Name</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p>Date Created</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p>Total Amount</p>
+    </div>
+    <div class="list-view-data">
+      <p>Total Requested</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p># of Items</p>
+    </div>
+    <div class="list-view-data">
+      <p>Reimbursed</p>
+    </div>
+  </div>
+  <div class="reports-list-view-body">
+    <div class="reports-list-view-item"
+      ng-repeat="report in reports track by report.id"
+      ng-class="{
+      'reports-list-view-report-selected': selection.isSelected(report.id)
+      }"
+      ng-click="$emit('reports:editReport', report)">
+      <label class="list-view-data-checkbox" ng-click="$event.stopPropagation()">
+        <is-selected selection="selection" selection-id="report.id"></is-selected>
+      </label>
+      <div class="list-view-data">{{ report.name }}</div>
+      <div class="list-view-data-sm">{{ report.createdAt | date: 'shortDate' }}</div>
+      <div class="list-view-data-sm">{{ totals[report.id] | currency }}</div>
+      <div class="list-view-data">$70.00</div>
+      <div class="list-view-data-sm">{{ report.items.length }}</div>
+      <div class="list-view-data">No</div>
+    </div>
+  </div>
+</div>

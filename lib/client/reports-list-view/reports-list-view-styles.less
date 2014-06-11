@@ -1,15 +1,15 @@
-items-list-view {
+reports-list-view {
   .flex-box();
 }
 
-.items-list-view-container {
+.reports-list-view-container {
   .flex();
   .flex-box(column);
 
   overflow: hidden;
 }
 
-.items-list-view-headers {
+.reports-list-view-headers {
   .flex-box();
   .noflex();
   padding: 5px (@grid-gutter-width / 2);
@@ -18,18 +18,18 @@ items-list-view {
   overflow: none;
 }
 
-.items-list-view-body {
+.reports-list-view-body {
   .flex();
   padding: 0 (@grid-gutter-width / 2) 15px;
   overflow: auto;
   min-width: 500px;
 }
 
-.items-list-view-item {
+.reports-list-view-item {
   margin-top: 15px;
   height: 38px;
   .flex-box();
-  align-items: center;
+  align-reports: center;
 
   cursor: pointer;
   user-select: none;
@@ -61,19 +61,17 @@ items-list-view {
   .flex(0.5, 0.5, 75px);
 }
 
-.items-list-view-item-selected {
+.reports-list-view-item-selected {
   background: white;
-  outline: 1px solid @brand-primary;
-  border-color: @brand-primary;
+  border: 2px solid @brand-primary;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
-.items-list-view-item-unreviewed {
+.reports-list-view-item-unreviewed {
   background: @brand-warning-bg;
-  outline: 1px solid @brand-warning;
-  border-color: @brand-warning;
+  border: 2px solid @brand-warning;
 
-  .items-list-view-item-review-status {
+  .reports-list-view-item-review-status {
     background: @brand-warning;
     font-size: large;
 

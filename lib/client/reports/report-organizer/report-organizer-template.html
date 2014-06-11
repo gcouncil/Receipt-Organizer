@@ -1,11 +1,11 @@
 <ul class="nav nav-stacked nav-sidebar">
-  <li class="primary">
-    <a>Reports</a>
+  <li ui-sref-active="active" class="primary">
+    <a ui-sref="reports">Reports</a>
   </li>
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
   <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
-    <a ng-click="$emit('items:editReport', report); $event.preventDefault()" href="#">
+    <a ng-click="$emit('reports:editReport', report); $event.preventDefault()" href="#">
       <report-organizer-entry report="report"></report-organizer-entry>
     </a>
   </li>

@@ -12,6 +12,7 @@ require('./items');
 require('./scanning');
 require('./folders');
 require('./reports');
+require('./reports-list-view');
 require('./storage');
 require('./support');
 require('./users');
