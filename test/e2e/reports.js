@@ -13,8 +13,10 @@ function createUserAndReports(self, PageType) {
 
   PageType = PageType || ItemPage;
 
+
   self.page = new PageType(self.factory, user);
 
+  console.log('page', self.page);
   var reports = user.then(function(user) {
     return Q.all([
       self.factory.reports.create({ name: 'product development'}, { user: user.id }),
@@ -131,14 +133,35 @@ describe('reports sidebar', function() {
   });
 });
 
-describe.only('reports index', function() {
+describe('reports index', function() {
   beforeEach(function() {
-    createUserAndReports(this);
-    this.page.get(this, ReportsPage);
+    createUserAndReports(this, ReportsPage);
   });
 
   it('should display all of the reports on the report index page', function() {
-    expect(this.page.firstReport.getText()).to.eventually.contain('product development');
-    //browser.sleep(10000);
+    expect(this.page.firstReport.getText()).to.eventually.contain('watergate');
+    expect(this.page.secondReport.getText()).to.eventually.contain('materials report');
+    expect(this.page.thirdReport.getText()).to.eventually.contain('product development');
+  });
+
+  it('should open the report editor on report click', function() {
+    this.page.firstReport.click();
+    expect(this.page.reportEditor.isDisplayed()).to.eventually.be.true;
+  });
+});
+
+describe('reports toolbar', function() {
+  beforeEach(function() {
+    createUserAndReports(this, ReportsPage);
+  });
+
+  it('should select all the items with the bulk selector', function() {
+    expect(this.page.firstReportSelect.isSelected()).to.eventually.be.false;
+    expect(this.page.secondReportSelect.isSelected()).to.eventually.be.false;
+    expect(this.page.thirdReportSelect.isSelected()).to.eventually.be.false;
+    this.page.bulkSelection.click();
+    expect(this.page.firstReportSelect.isSelected()).to.eventually.be.true;
+    expect(this.page.secondReportSelect.isSelected()).to.eventually.be.true;
+    expect(this.page.thirdReportSelect.isSelected()).to.eventually.be.true;
   });
 });
