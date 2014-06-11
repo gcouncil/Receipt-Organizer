@@ -2,6 +2,14 @@
   <div class="container-fluid">
     <bulk-selection selection="items.selection"></bulk-selection>
 
+    <button class="navbar-btn btn-group btn btn-primary"
+      title="Create"
+      ng-click=""
+      ng-disabled="!items.selection.hasSelection()">
+      <i class="fa fa-plus-circle"></i>
+      Export Report
+    </button>
+
     <div class="navbar-btn btn-group">
       <button class="btn btn-default"
         title="Review"

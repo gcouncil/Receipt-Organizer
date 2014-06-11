@@ -3,14 +3,17 @@ var helpers = require('./test-helper');
 var expect = helpers.expect;
 
 var ItemPage = require('./pages/items-page');
+var ReportsPage = require('./pages/reports-page');
 
-function createUserAndReports(self) {
+function createUserAndReports(self, PageType) {
   var user = self.factory.users.create({
     email: 'test@example.com',
     password: 'password'
   });
 
-  self.page = new ItemPage(self.factory, user);
+  PageType = PageType || ItemPage;
+
+  self.page = new PageType(self.factory, user);
 
   var reports = user.then(function(user) {
     return Q.all([
@@ -125,5 +128,17 @@ describe('reports sidebar', function() {
   it('should open report editor on link click', function() {
     this.page.reportOrganizer.element(by.repeater('report in reports').row(0)).$('[ng-click^="$emit(\'items:editReport\', report)"]').click();
     expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
+  });
+});
+
+describe.only('reports index', function() {
+  beforeEach(function() {
+    createUserAndReports(this);
+    this.page.get(this, ReportsPage);
+  });
+
+  it('should display all of the reports on the report index page', function() {
+    expect(this.page.firstReport.getText()).to.eventually.contain('product development');
+    //browser.sleep(10000);
   });
 });
