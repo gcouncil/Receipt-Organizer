@@ -74,7 +74,7 @@ describe('currencyInput directive', function() {
         ctx.scope.$digest();
       });
 
-      itShouldBeValid();
+      itShouldBeInvalid();
     });
 
     context('with a blank', function() {
@@ -130,7 +130,7 @@ describe('currencyInput directive', function() {
 
       it('should format the value with 2 decimal digits', function() {
         var ctx = this;
-        expect(ctx.ngModelController.$viewValue).to.equal('42.10');
+        expect(ctx.ngModelController.$viewValue).to.equal('$42.10');
       });
     });
 
@@ -182,7 +182,7 @@ describe('currencyInput directive', function() {
 
       it('should reformat the input value', function() {
         var ctx = this;
-        expect(ctx.element.val()).to.equal('42.00');
+        expect(ctx.element.val()).to.equal('$42.00');
       });
     });
 

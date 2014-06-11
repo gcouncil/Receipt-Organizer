@@ -30,6 +30,11 @@ describe('item events', function() {
       error: ctx.sinon.stub()
     };
 
+    var $q;
+    ctx.uuid = ctx.sinon.spy(function() {
+      return $q.when('UUID');
+    });
+
     angular.mock.module('ngMock', 'epsonreceipts.items', {
       domain: ctx.domain,
       receiptEditor: ctx.receiptEditor,
@@ -37,10 +42,12 @@ describe('item events', function() {
       imageStorage: ctx.imageStorage,
       confirmation: ctx.confirmation,
       notify: ctx.notify,
-      reportEditor: ctx.reportEditor
+      reportEditor: ctx.reportEditor,
+      uuid: ctx.uuid
     });
 
-    angular.mock.inject(function($rootScope, $q) {
+    angular.mock.inject(function($rootScope, _$q_) {
+      $q = _$q_;
       ctx.scope = $rootScope.$new();
       ctx.deferred = $q.defer();
       ctx.deferred2 = $q.defer();
