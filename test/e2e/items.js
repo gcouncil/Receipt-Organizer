@@ -20,12 +20,13 @@ describe('Manual Entry', function() {
     totalEl.clear();
     totalEl.sendKeys('39.99');
 
-    var categoryEl = this.page.receiptEditorForm.element(by.model('item.category'));
+    var categoryEl = this.page.receiptEditorForm.element(by.model('item.vendor'));
     categoryEl.clear();
-    categoryEl.sendKeys('Miscellaneous');
+    categoryEl.sendKeys('Testing');
 
     expect(this.page.items.count()).to.eventually.equal(0);
     this.page.receiptEditorSave.click();
+    this.page.receiptEditorDone.click();
     expect(this.page.items.count()).to.eventually.equal(1);
     expect(this.page.firstItem.element(by.binding('item.total')).getText()).to.eventually.equal('$39.99');
   });
@@ -79,6 +80,7 @@ describe('Editing Items', function() {
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
     this.page.receiptEditorSave.click();
+    this.page.receiptEditorClose.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
     expect(this.page.items.count()).to.eventually.equal(2);
@@ -104,8 +106,9 @@ describe('Editing Items', function() {
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
 
-    this.page.receiptEditorNext.click();
     this.page.receiptEditorSave.click();
+    this.page.receiptEditorNext.click();
+    this.page.receiptEditorClose.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
 
@@ -129,7 +132,7 @@ describe('Editing Items', function() {
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('thumbnail-unreviewed');
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    this.page.receiptEditorSave.click();
+    this.page.receiptEditorClose.click();
     expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
 
     itemQueryResults = browser.call(function(user) {
@@ -157,7 +160,8 @@ describe('Editing Items', function() {
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
 
-    this.page.receiptEditorCancel.click();
+    this.page.receiptEditorRevert.click();
+    this.page.receiptEditorClose.click();
 
     expect(self.page.firstItem.getAttribute('class')).not.to.eventually.contain('thumbnail-unreviewed');
 

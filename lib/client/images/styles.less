@@ -2,13 +2,13 @@ image-viewer {
   position: relative;
   display: block;
   .flex();
-  background: #000;
+  background: @gray-lighter;
 }
 
 .image-viewer-controls {
   position: absolute;
-  top: @modal-inner-padding;
-  right: @modal-inner-padding;
+  top: ~"calc(50% - 33px)"; // Height is 67px;
+  left: @modal-inner-padding * 2;
 }
 
 .image-viewer-message {
@@ -16,5 +16,4 @@ image-viewer {
   width: 100%;
 
   text-align: center;
-  color: #fff;
 }

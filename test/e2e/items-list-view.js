@@ -213,6 +213,7 @@ describe('Editing Items from List View', function() {
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
     this.page.receiptEditorSave.click();
+    this.page.receiptEditorClose.click();
 
     expect(this.page.firstItem.evaluate('item.vendor')).to.eventually.equal('Whole Foods');
     expect(this.page.items.count()).to.eventually.equal(3);
@@ -237,7 +238,7 @@ describe('Editing Items from List View', function() {
     expect(self.page.firstItem.getAttribute('class')).to.eventually.contain('items-list-view-item-unreviewed');
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
-    this.page.receiptEditorSave.click();
+    this.page.receiptEditorClose.click();
     expect(self.page.firstItem.getAttribute('class')).to.not.eventually.contain('items-list-view-item-unreviewed');
 
     itemQueryResults = browser.call(function(user) {
@@ -268,8 +269,9 @@ describe('Editing Items from List View', function() {
     originalVendor.clear();
     originalVendor.sendKeys('Whole Foods');
 
-    this.page.receiptEditorNext.click();
     this.page.receiptEditorSave.click();
+    this.page.receiptEditorNext.click();
+    this.page.receiptEditorClose.click();
 
     itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
@@ -296,7 +298,7 @@ describe('Editing Items from List View', function() {
     this.page.thirdItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarEdit.click();
     this.page.receiptEditorNext.click();
-    this.page.receiptEditorSave.click();
+    this.page.receiptEditorClose.click();
 
     itemQueryResults = browser.call(function(user) {
       return self.factory.items.query({ user: user.id });
@@ -304,7 +306,7 @@ describe('Editing Items from List View', function() {
 
     expect(itemQueryResults).to.eventually.have.deep.property('[0].reviewed', true);
     expect(itemQueryResults).to.eventually.have.deep.property('[1].reviewed', true);
-    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', true);
+    expect(itemQueryResults).to.eventually.have.deep.property('[2].reviewed', false);
   });
 
 });

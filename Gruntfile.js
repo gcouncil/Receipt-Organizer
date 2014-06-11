@@ -73,7 +73,6 @@ module.exports = function(grunt) {
           './bower_components/angular-motion/dist',
           './bower_components/selectize/dist/less'
         ],
-        dumpLineNumbers: debug ? 'all' : false,
         sourceMap: debug,
         outputSourceFiles: true
       }
