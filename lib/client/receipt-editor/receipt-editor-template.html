@@ -114,8 +114,11 @@
           </label>
 
           <label class="form-grid-cell form-grid-cell-custom form-group">
-            <span>Notes</span>
-            <textarea class="form-control" rows="1" ng-model="item.comments" elastic></textarea>
+            <span ng-click="showNotes = !showNotes">
+              <i class="fa" ng-class="{ 'fa-caret-right': !showNotes, 'fa-caret-down': showNotes }"></i>
+              Notes
+            </span>
+            <textarea class="form-control" rows="4" ng-model="item.comments" ng-show="showNotes" style="display: block; width: 100%;"></textarea>
           </label>
 
           <div class="form-grid-cell form-grid-cell-custom">
