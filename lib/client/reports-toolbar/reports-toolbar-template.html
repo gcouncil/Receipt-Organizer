@@ -1,11 +1,11 @@
 <div class="navbar navbar-default">
   <div class="container-fluid">
-    <bulk-selection selection="items.selection"></bulk-selection>
+    <bulk-selection selection="reports.selection"></bulk-selection>
 
     <button class="navbar-btn btn-group btn btn-primary"
       title="Create"
       ng-click=""
-      ng-disabled="!items.selection.hasSelection()">
+      ng-disabled="!reports.selection.hasSelection()">
       <i class="fa fa-plus-circle"></i>
       Export Report
     </button>
@@ -13,25 +13,16 @@
     <div class="navbar-btn btn-group">
       <button class="btn btn-default"
         title="Review"
-        ng-click="$emit('items:review', items.selection.selectedItems)"
-        ng-disabled="!items.selection.hasSelection()">
+        ng-click="$emit('reports:review', reports.selection.selectedreports)"
+        ng-disabled="!reports.selection.hasSelection()">
         <i class="fa fa-check"></i>
       </button>
       <button class="btn btn-default"
         title="Delete"
-        ng-click="$emit('items:destroy', items.selection.selectedItems)"
-        ng-disabled="!items.selection.hasSelection()">
+        ng-click="$emit('reports:destroy', reports.selection.selectedreports)"
+        ng-disabled="!reports.selection.hasSelection()">
         <i class="fa fa-trash-o"></i>
       </button>
     </div>
-  </div>
-</div>
-
-<div class="navbar navbar-filters" ng-show="showingFilters">
-  <div class="container-fluid">
-    <span class="navbar-brand">Filter</span>
-    <date-filter></date-filter>
-    <category-filter></category-filter>
-    <filter-reset showing-filters="showingFilters"></filter-reset>
   </div>
 </div>

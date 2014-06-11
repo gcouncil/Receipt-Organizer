@@ -20,68 +20,69 @@ report-organizer {
 }
 
 // TODO: WHY ARE THESE NOT SCOPED?
-.modal-header {
-  height: 600px;
-}
-
-.modal-body ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.modal-sidebar {
-  background: #ddd;
-  height: 600px;
-  padding-right: 0;
-  padding-left: 15px;
-}
-
-.modal-body-button-toggle {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.formatting-option {
-  margin-top: 20px;
-  font-size: 1.20em;
-}
-
-.formatting-option-icons {
-  font-size: 2.75em;
-}
-
-.report-editor-dialog > {
-  user-select: none;
-
-  width: 992px;
-
-  .modal-body {
+.report-dialog {
+  .modal-header {
     height: 600px;
-
-    padding: 0;
-
-    .flex-box();
   }
 
-}
+  .modal-body ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
 
-.items-listing {
-  overflow: auto;
-  height: 400px;
-}
+  .modal-sidebar {
+    background: #ddd;
+    height: 600px;
+    padding-right: 0;
+    padding-left: 15px;
+  }
 
-.all-reports {
-  background-color: #f7f7f9;
-  padding: 5px 0px 5px 5px;
-  margin-top: 10px;
-}
+  .modal-body-button-toggle {
+    margin-top: 20px;
+    text-align: center;
+  }
 
-.all-reports button {
-  background-color: #222020;
-}
+  .formatting-option {
+    margin-top: 20px;
+    font-size: 1.20em;
+  }
 
-.formatting-header {
-  border-bottom: 1px solid #ccc;
-}
+  .formatting-option-icons {
+    font-size: 2.75em;
+  }
 
+  .report-editor-dialog > {
+    user-select: none;
+
+    width: 992px;
+
+    .modal-body {
+      height: 600px;
+
+      padding: 0;
+
+      .flex-box();
+    }
+
+  }
+
+  .items-listing {
+    overflow: auto;
+    height: 400px;
+  }
+
+  .all-reports {
+    background-color: #f7f7f9;
+    padding: 5px 0px 5px 5px;
+    margin-top: 10px;
+  }
+
+  .all-reports button {
+    background-color: #222020;
+  }
+
+  .formatting-header {
+    border-bottom: 1px solid #ccc;
+  }
+}
