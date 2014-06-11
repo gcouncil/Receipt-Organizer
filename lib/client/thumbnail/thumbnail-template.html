@@ -1,47 +1,40 @@
-<label class="thumbnail-titlebar" ng-click="$event.stopPropagation()">
-  <div class="thumbnail-checkbox">
-    <is-selected selection="selection" selection-id="item.id">
-  </div>
-  <div class="thumbnail-title">
-    <span>{{ displayType(item) }}</span>
-    <i class="fa fa-check-circle thumbnail-reviewed-icon" ng-if="item.reviewed" title="Reviewed"></i>
-    <i class="fa fa-flag thumbnail-unreviewed-icon" ng-if="!item.reviewed" title="Needs Review"></i>
-  </div>
+<label class="thumbnail-checkbox" ng-click="$event.stopPropagation()">
+  <is-selected selection="selection" selection-id="item.id">
 </label>
-<div class="thumbnail-body">
-  <div class="thumbnail-image-container">
-    <img class="thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
-    <div class="thumbnail-image-message">
-      <div ng-show="imageLoader.loading">
-        Loading<br>
-        <i class="fa fa-spinner fa-spin fa-3x"></i>
-      </div>
-      <div ng-show="imageLoader.missing">No image.</div>
-      <div ng-show="imageLoader.error">Error!</div>
-    </div>
+<div class="thumbnail-ribbon" ng-show="item.type === 'expense'">
+  Itemized
+</div>
+<div class="thumbnail-image-container">
+  <img class="thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
+  <div class="thumbnail-image-message">
+    <i class="fa fa-spinner fa-spin fa-3x" ng-show="imageLoader.loading"></i>
+    <i class="fa fa-3x fa-picture-o" ng-show="imageLoader.missing"></i>
+    <i class="fa fa-3x fa-warning" ng-show="imageLoader.error"></i>
   </div>
-  <div class="thumbnail-fields" ng-if="item.formxtraStatus === 'waiting'">
-    <p class="text-center">
-    Processing<br>
-    <i class="fa fa-spinner fa-spin fa-3x"></i>
-    </p>
+</div>
+<div class="thumbnail-message" ng-if="item.formxtraStatus === 'waiting'">
+  <i class="fa fa-spinner fa-spin fa-3x"></i>
+</div>
+<div class="thumbnail-fields" ng-if="item.formxtraStatus !== 'waiting'">
+  <div class="thumbnail-field">
+    <div class="thumbnail-label">Vendor:</div>
+    <div class="thumbnail-value">{{ item.vendor }}</div>
   </div>
-  <div class="thumbnail-fields" ng-if="item.formxtraStatus !== 'waiting'">
-    <div class="thumbnail-field">
-      <div class="thumbnail-label">Vendor:</div>
-      <div class="thumbnail-value">{{ item.vendor }}</div>
-    </div>
-    <div class="thumbnail-field">
-      <div class="thumbnail-label">Date:</div>
-      <div class="thumbnail-value">{{ item.date | date }}</div>
-    </div>
-    <div class="thumbnail-field">
-      <div class="thumbnail-label">Total:</div>
-      <div class="thumbnail-value">{{ item.total | currency }}</div>
-    </div>
-    <div class="thumbnail-field">
-      <div class="thumbnail-label">Category:</div>
-      <div class="thumbnail-value">{{ item.category }}</div>
-    </div>
+  <div class="thumbnail-field">
+    <div class="thumbnail-label">Date:</div>
+    <div class="thumbnail-value">{{ item.date | date }}</div>
   </div>
+  <div class="thumbnail-field">
+    <div class="thumbnail-label">Total:</div>
+    <div class="thumbnail-value">{{ item.total | currency }}</div>
+  </div>
+  <div class="thumbnail-field">
+    <div class="thumbnail-label">Category:</div>
+    <div class="thumbnail-value">{{ item.category }}</div>
+  </div>
+</div>
+<div class="thumbnail-banner" ng-if="!item.reviewed">
+  Review
+
+  <span class="thumbnail-banner-action" ng-click="$emit('items:review', item); $event.stopPropagation()">Accept</span>
 </div>
