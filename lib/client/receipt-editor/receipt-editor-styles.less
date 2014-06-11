@@ -93,12 +93,20 @@
 }
 
 .form-grid-cell-custom {
+  line-height: 1;
+
   padding: @form-grid-padding-vertical @form-grid-padding-horizontal;
   font-weight: normal;
   background: @gray-lighter;
 
+  .form-grid-label {
+    display: block;
+    position: static;
+    margin-bottom: @form-grid-padding-vertical;
+  }
+
   .selectize-control {
-    width: 275px;
+    width: 100%;
     display: inline-block;
   }
 }
@@ -127,16 +135,16 @@
 }
 
 .form-grid-label {
-    position: absolute;
-    z-index: 1;
+  position: absolute;
+  z-index: 1;
 
-    top: @form-grid-padding-vertical;
-    left: @form-grid-padding-horizontal;
+  top: @form-grid-padding-vertical;
+  left: @form-grid-padding-horizontal;
 
-    font-size: 10px;
-    font-weight: normal;
+  font-size: 10px;
+  font-weight: normal;
 
-    color: @gray-light;
+  color: @gray-light;
 }
 
 .form-grid-cell {
