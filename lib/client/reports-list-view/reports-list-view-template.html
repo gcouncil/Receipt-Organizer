@@ -1,50 +1,25 @@
 <div class="reports-list-view-container">
   <div class="reports-list-view-headers">
     <div class="list-view-data-checkbox"></div>
-    <!--<div class="list-view-data">-->
-      <!--<a ui-sref="reports(sortParams('vendor'))">-->
-        <!--Vendor-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'vendor' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'vendor' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="list-view-data-sm">-->
-      <!--<a ui-sref="reports(sortParams('total'))">-->
-        <!--Total-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'total' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'total' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="list-view-data">-->
-      <!--<a ui-sref="reports(sortParams('category'))">-->
-        <!--Category-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'category' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'category' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="list-view-data">-->
-      <!--<a ui-sref="reports(sortParams('folders'))">-->
-        <!--Folders-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'folders' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'folders' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="list-view-data">-->
-      <!--<a ui-sref="reports(sortParams('date'))">-->
-        <!--Date-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'date' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'date' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="list-view-data-sm">-->
-      <!--<a ui-sref="reports(sortParams('type'))">-->
-        <!--Type-->
-        <!--<i class="fa fa-caret-down" ng-if="currentSort === 'type' && currentDirection === 'ASC'"></i>-->
-        <!--<i class="fa fa-caret-up" ng-if="currentSort === 'type' && currentDirection === 'DESC'"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-  <!--</div>-->
-  <h1>SUP</h1>{{ reports }}
+    <div class="list-view-data">
+      <p>Report Name</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p>Date Created</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p>Total Amount</p>
+    </div>
+    <div class="list-view-data">
+      <p>Total Reqested</p>
+    </div>
+    <div class="list-view-data-sm">
+      <p># of Items</p>
+    </div>
+    <div class="list-view-data">
+      <p>Reimbursed</p>
+    </div>
+  </div>
   <div class="reports-list-view-body">
     <div class="reports-list-view-item"
       ng-repeat="report in reports track by report.id"
@@ -56,11 +31,11 @@
         <is-selected selection="selection" selection-id="report.id"></is-selected>
       </label>
       <div class="list-view-data">{{ report.name }}</div>
+      <div class="list-view-data-sm">{{ report.createdAt | date: 'shortDate' }}</div>
       <div class="list-view-data-sm">{{ report.total | currency }}</div>
-      <div class="list-view-data">{{ "Multiple Types" }}</div>
-      <div class="list-view-data">{{( "Vacation, Family, Restaurant..." }}</div>
-      <div class="list-view-data">{{ report.createdAt | date: 'shortDate' }}</div>
-      <div class="list-view-data">{{ report.items.length }}</div>
+      <div class="list-view-data">$70.00</div>
+      <div class="list-view-data-sm">{{ report.items.length }}</div>
+      <div class="list-view-data">No</div>
     </div>
   </div>
 </div>
