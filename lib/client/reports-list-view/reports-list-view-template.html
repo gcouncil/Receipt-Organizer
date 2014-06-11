@@ -1,0 +1,72 @@
+<div class="reports-list-view-container">
+  <div class="reports-list-view-headers">
+    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data">
+      <a ui-sref="reports(sortParams('vendor'))">
+        Vendor
+        <i class="fa fa-caret-down" ng-if="currentSort === 'vendor' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'vendor' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data-sm">
+      <a ui-sref="reports(sortParams('total'))">
+        Total
+        <i class="fa fa-caret-down" ng-if="currentSort === 'total' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'total' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="reports(sortParams('category'))">
+        Category
+        <i class="fa fa-caret-down" ng-if="currentSort === 'category' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'category' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="reports(sortParams('folders'))">
+        Folders
+        <i class="fa fa-caret-down" ng-if="currentSort === 'folders' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'folders' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data">
+      <a ui-sref="reports(sortParams('date'))">
+        Date
+        <i class="fa fa-caret-down" ng-if="currentSort === 'date' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'date' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+    <div class="list-view-data-sm">
+      <a ui-sref="reports(sortParams('type'))">
+        Type
+        <i class="fa fa-caret-down" ng-if="currentSort === 'type' && currentDirection === 'ASC'"></i>
+        <i class="fa fa-caret-up" ng-if="currentSort === 'type' && currentDirection === 'DESC'"></i>
+      </a>
+    </div>
+  </div>
+  <div class="reports-list-view-body">
+    <div class="reports-list-view-item"
+      ng-repeat="item in items track by item.id"
+      ng-class="{
+      'items-list-view-item-unreviewed': !item.reviewed,
+      'items-list-view-item-selected': selection.isSelected(item.id)
+      }"
+      ng-click="$emit('items:edit', item)">
+      <label class="list-view-data-checkbox" ng-click="$event.stopPropagation()">
+        <is-selected selection="selection" selection-id="item.id"></is-selected>
+      </label>
+      <div class="list-view-data">{{ item.vendor }}</div>
+      <div class="list-view-data-sm">{{ item.total | currency }}</div>
+      <div class="list-view-data">{{ item.category }}</div>
+      <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
+      <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
+      <div ng-if="!item.reviewed" class="list-view-data-sm reports-list-view-item-review-status">
+        <span class="review-flag review">Review?</span>
+        <button class="review-flag dismiss pull-right" ng-click="markReviewed(item); $event.stopPropagation()">
+          <i class="fa fa-times-circle"></i>
+        </button>
+      </div>
+      <div ng-if="item.reviewed" class="list-view-data-sm">{{ item.type | titlecase }}</div>
+    </div>
+  </div>
+</div>
