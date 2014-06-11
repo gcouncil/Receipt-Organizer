@@ -34,7 +34,8 @@
     "elementtree": "^0.1.6",
     "event-source": "^0.1.1",
     "jquery": "^2.1.1",
-    "jquery-ui": "^1.10.5"
+    "jquery-ui": "^1.10.5",
+    "compression": "^1.0.6"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
