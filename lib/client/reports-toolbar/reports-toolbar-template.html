@@ -1,0 +1,28 @@
+<div class="navbar navbar-default">
+  <div class="container-fluid">
+    <bulk-selection selection="reports.selection"></bulk-selection>
+
+    <button class="navbar-btn btn-group btn btn-primary"
+      title="Create"
+      ng-click=""
+      ng-disabled="!reports.selection.hasSelection()">
+      <i class="fa fa-plus-circle"></i>
+      Export Report
+    </button>
+
+    <div class="navbar-btn btn-group">
+      <button class="btn btn-default"
+        title="Review"
+        ng-click="$emit('reports:review', reports.selection.selectedreports)"
+        ng-disabled="!reports.selection.hasSelection()">
+        <i class="fa fa-check"></i>
+      </button>
+      <button class="btn btn-default"
+        title="Delete"
+        ng-click="$emit('reports:destroy', reports.selection.selectedreports)"
+        ng-disabled="!reports.selection.hasSelection()">
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </div>
+  </div>
+</div>

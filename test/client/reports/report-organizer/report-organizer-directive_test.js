@@ -15,9 +15,12 @@ describe('report organizer directive', function() {
       go: ctx.sinon.stub()
     };
 
+    ctx.domain = {};
+
     angular.mock.module('ngMock', 'epsonreceipts.reports', {
       reportStorage: ctx.reportStorage,
-      $state: ctx.state
+      $state: ctx.state,
+      domain: ctx.domain
     });
 
     angular.mock.inject(function($rootScope, $compile) {
