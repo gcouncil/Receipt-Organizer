@@ -63,13 +63,15 @@ items-list-view {
 
 .items-list-view-item-selected {
   background: white;
-  border: 2px solid @brand-primary;
+  outline: 1px solid @brand-primary;
+  border-color: @brand-primary;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .items-list-view-item-unreviewed {
   background: @brand-warning-bg;
-  border: 2px solid @brand-warning;
+  outline: 1px solid @brand-warning;
+  border-color: @brand-warning;
 
   .items-list-view-item-review-status {
     background: @brand-warning;
