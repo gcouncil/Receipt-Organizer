@@ -151,6 +151,9 @@ thumbnail {
   position: absolute;
   bottom: 0;
   left: 0;
+  height: 22px;
+  line-height: 22px;
+  display: table;
 
   padding: @padding-base-vertical / 2 @padding-base-horizontal / 2;
 
@@ -165,8 +168,10 @@ thumbnail {
 }
 
 .thumbnail-banner-action {
-  display: block;
-  float: right;
+  font-size: 14px;
+  display: table-cell;
+  vertical-align: bottom;
+  text-align: right;
   text-decoration: underline;
 }
 
