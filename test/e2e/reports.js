@@ -44,7 +44,7 @@ function createUserAndReports(self, PageType) {
   self.page.get();
 }
 
-describe('Reports CRUD', function() {
+describe('items page', function() {
   beforeEach(function() {
     createUserAndReports(this);
   });
@@ -133,7 +133,7 @@ describe('reports sidebar', function() {
   });
 });
 
-describe('reports index', function() {
+describe('reports index page', function() {
   beforeEach(function() {
     createUserAndReports(this, ReportsPage);
   });
@@ -147,6 +147,16 @@ describe('reports index', function() {
   it('should open the report editor on report click', function() {
     this.page.firstReport.click();
     expect(this.page.reportEditor.isDisplayed()).to.eventually.be.true;
+  });
+
+  it('should delete multiple reports from selection', function() {
+    this.page.firstReportSelect.click();
+    this.page.secondReportSelect.click();
+    this.page.thirdReportSelect.click();
+    this.page.toolbarDelete.click();
+    expect(this.page.deleteConfirmation.getText()).to.eventually.contain('Are you sure you want to delete these 3 reports?');
+    this.page.reportDeleteConfirmButton.click();
+    expect(this.page.reports.count()).to.eventually.equal(0);
   });
 });
 

@@ -20,10 +20,13 @@ function ReportsPage(factory, user) {
   this.firstReportSelect = this.firstReport.$('input[type="checkbox"][selection]');
   this.secondReportSelect = this.secondReport.$('input[type="checkbox"][selection]');
   this.thirdReportSelect = this.thirdReport.$('input[type="checkbox"][selection]');
+
   this.bulkSelection = $('reports-toolbar').$('div[ng-click="selection.toggleFullSelection()"]');
+  this.toolbarDelete = $('reports-toolbar').$('[title="Delete"]');
+  this.deleteConfirmation = $('.modal-dialog');
+  this.reportDeleteConfirmButton = this.deleteConfirmation.element(by.buttonText('Delete'));
 
   this.reportEditor = $('.report-editor-dialog');
-
 }
 
 module.exports = ReportsPage;

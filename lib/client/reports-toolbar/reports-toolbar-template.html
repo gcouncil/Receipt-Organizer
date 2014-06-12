@@ -13,13 +13,13 @@
     <div class="navbar-btn btn-group">
       <button class="btn btn-default"
         title="Review"
-        ng-click="$emit('reports:review', reports.selection.selectedreports)"
+        ng-click="$emit('reports:review', reports.selection.selectedItems)"
         ng-disabled="!reports.selection.hasSelection()">
         <i class="fa fa-check"></i>
       </button>
       <button class="btn btn-default"
         title="Delete"
-        ng-click="$emit('reports:destroy', reports.selection.selectedreports)"
+        ng-click="$emit('reports:destroy', reports.selection.selectedItems)"
         ng-disabled="!reports.selection.hasSelection()">
         <i class="fa fa-trash-o"></i>
       </button>
