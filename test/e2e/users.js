@@ -194,9 +194,11 @@ describe.only('User Settings', function() {
       this.page.firstCategory.$('input').sendKeys('Bearline');
       this.page.saveButton.click();
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Bearline');
+
+      // go to items page
       browser.get(helpers.rootUrl + '/#/items');
       element(by.repeater('item in items track by item.id').row(0)).click();
-      expect($('[selectize]').getAttribute('selectize-options')).to.eventually.contain('Bearline');
+      expect($('.selectize-dropdown [data-value="Bearline"]').isElementPresent()).to.eventually.be.true;
     });
   });
 
