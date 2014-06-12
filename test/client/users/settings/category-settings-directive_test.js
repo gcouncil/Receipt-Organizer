@@ -111,6 +111,9 @@ describe('category settings directive', function() {
     ctx.scope.delete({ name: 'category1' });
     ctx.deferred.resolve(ctx.user);
     ctx.scope.$digest();
+    var categories = _.map(ctx.scope.categories, function(category) {
+      return _.omit(category, '$$hashKey');
+    });
     expect(ctx.scope.categories).to.be.empty;
     expect(ctx.notify.success).to.have.been.calledWith('Deleted the category1 category.');
   });
