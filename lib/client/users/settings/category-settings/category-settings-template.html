@@ -2,7 +2,7 @@
   <form>
     <div class="form-group">
       <div class="col-lg-6" ng-repeat="category in categories">
-        <input type="text" class="form-control settings-input" ng-model="category"/>
+        <input type="text" class="form-control settings-input" ng-model="category.name"/>
         <span ng-click="delete(category)"><i class="fa fa-trash-o"></i></span>
       </div>
     </div>

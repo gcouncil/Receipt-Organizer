@@ -145,7 +145,7 @@ describe('Log Out', function() {
   });
 });
 
-describe.only('User Settings', function() {
+describe('User Settings', function() {
 
   context('categories', function() {
     beforeEach(function() {
@@ -153,13 +153,13 @@ describe.only('User Settings', function() {
       this.page.get();
     });
 
-    xit('should create', function() {
+    it('should create', function() {
       element(by.model('newCategory')).sendKeys('New Category 1');
       element(by.buttonText('+')).click();
       expect(element(this.page.categoryRepeater.row(15)).$('input').getAttribute('value')).to.eventually.equal('New Category 1');
     });
 
-    xit('should edit', function() {
+    it('should edit', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
       this.page.firstCategory.$('input').clear();
       this.page.firstCategory.$('input').sendKeys('Bearline');
@@ -168,7 +168,7 @@ describe.only('User Settings', function() {
       expect(this.page.flashDiv.getText()).to.eventually.equal('Saved your category preferences.');
     });
 
-    xit('should not edit on cancel', function() {
+    it('should not edit on cancel', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
       this.page.firstCategory.$('input').clear();
       this.page.firstCategory.$('input').sendKeys('Bearline');
@@ -178,7 +178,7 @@ describe.only('User Settings', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Bearline');
     });
 
-    xit('should delete', function() {
+    it('should delete', function() {
       expect(this.page.firstCategory.$('input').getAttribute('value')).to.eventually.equal('Airline');
       this.page.firstCategory.$('.fa-trash-o').click();
       expect(this.page.firstCategory.$('input').getAttribute('value')).not.to.eventually.equal('Airline');
@@ -198,11 +198,11 @@ describe.only('User Settings', function() {
       // go to items page
       browser.get(helpers.rootUrl + '/#/items');
       element(by.repeater('item in items track by item.id').row(0)).click();
-      expect($('.selectize-dropdown [data-value="Bearline"]').isElementPresent()).to.eventually.be.true;
+      expect($('[data-value="Bearline"]').getInnerHtml()).to.eventually.contain('Bearline');
     });
   });
 
-  context.skip('form fields', function() {
+  context('form fields', function() {
     beforeEach(function() {
       this.page = new SettingsPage(this.factory);
       this.page.get('form-fields');
@@ -235,6 +235,17 @@ describe.only('User Settings', function() {
           expect(name).to.be.true;
         });
       });
+    });
+
+    it('should show the form fields in the receipt editor', function() {
+      expect(this.page.firstField.element(by.model('field.selected')).isSelected()).to.eventually.be.false;
+      this.page.firstField.element(by.model('field.selected')).click();
+      $('.fields-settings-save').click();
+
+      // go to items page
+      browser.get(helpers.rootUrl + '/#/items');
+      element(by.repeater('item in items track by item.id').row(0)).click();
+      expect(element(by.repeater('field in customFields').row(0)).$('span').getText()).to.eventually.equal('Custom Field 1');
     });
   });
 });
