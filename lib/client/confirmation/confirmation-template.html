@@ -2,6 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
+        <ng-if="custom">{{ custom }}</ng-if>
         <ng-pluralize count="count" when="when"></ng-pluralize>
       </div>
       <div class="modal-footer">

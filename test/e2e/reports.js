@@ -16,7 +16,6 @@ function createUserAndReports(self, PageType) {
 
   self.page = new PageType(self.factory, user);
 
-  console.log('page', self.page);
   var reports = user.then(function(user) {
     return Q.all([
       self.factory.reports.create({ name: 'product development'}, { user: user.id }),

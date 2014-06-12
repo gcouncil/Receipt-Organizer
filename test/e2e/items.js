@@ -1,3 +1,4 @@
+var Q = require('q');
 var _ = require('lodash');
 var helpers = require('./test-helper');
 var expect = helpers.expect;
@@ -181,39 +182,70 @@ describe('Editing Items', function() {
 describe('Deleting Items', function() {
   beforeEach(function() {
     var self = this;
+
     this.page = new ItemPage(this.factory);
 
-    this.page.user.then(function(user) {
-      _.each([
-        { total: 39.99 },
-        { total: 100.99 },
-        { total: 2.99 }
-      ], function(data) {
-        self.factory.items.create(data, {
-          user: user.id,
-          formxtraStatus: 'skipped'
-        });
-      });
+    var items = this.page.user.then(function(user) {
+      return Q.all([
+        self.factory.items.create({
+          vendor: 'Fake Item Generator',
+          total: 100.00,
+          formxtraStatus: 'skipped',
+          type: 'receipt'
+        }, { user: user.id })
+      ]);
+    });
+
+    Q.all([
+      this.page.user,
+      items
+    ]).done(function(results) {
+      var user = results[0];
+      self.item = results[1][0];
+      self.factory.reports.create({ name: 'watergate', items: [self.item.id] }, { user: user.id });
     });
 
     this.page.get();
   });
 
   it('should remove items when delete button is clicked', function() {
-    var self = this;
-    expect(this.page.items.count()).to.eventually.equal(3);
-    var firstIdPromise = this.page.firstItem.evaluate('item.id');
+    expect(this.page.items.count()).to.eventually.equal(1);
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarDelete.click();
     this.page.itemDeleteConfirmButton.click();
-    expect(this.page.items.count()).to.eventually.equal(2);
-    browser.driver.call(function(firstId) {
-      self.page.items.each(function(item) {
-        expect(item.evaluate('item.id')).to.not.eventually.equal(firstId);
-      });
-    }, null, firstIdPromise);
+    expect(this.page.items.count()).to.eventually.equal(0);
   });
 
+  it('should remove the items from reports', function() {
+    expect(this.page.firstReportInOrganizer.evaluate('report.items')).to.eventually.contain(this.item.id);
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarDelete.click();
+    expect(this.page.itemDeleteConfirmation.getText()).to.eventually.contain('The selected item is contained in 1 report. Are you sure you want to delete this item?');
+    this.page.itemDeleteConfirmButton.click();
+    expect(this.page.firstReportInOrganizer.evaluate('report.items')).not.to.eventually.contain(this.item.id);
+  });
+
+  it('should remove dependent expenses', function() {
+    this.page.firstItem.click();
+    element(by.partialLinkText('Itemize Expense')).click();
+    this.page.receiptEditorSave.click();
+    this.page.receiptEditorDone.click();
+    expect(this.page.items.count()).to.eventually.equal(2);
+    expect(this.page.firstItem.evaluate('item.total')).to.eventually.equal(100.00);
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarDelete.click();
+    expect(this.page.itemDeleteConfirmation.getText()).to.eventually.contain('The selected item has split expenses.');
+    this.page.itemDeleteConfirmButton.click();
+    expect(this.page.items.count()).to.eventually.equal(0);
+  });
+
+  it('should not remove items on delete cancel', function() {
+    expect(this.page.firstReportInOrganizer.evaluate('report.items')).to.eventually.contain(this.item.id);
+    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.itemToolbarDelete.click();
+    this.page.itemDeleteCancelButton.click();
+    expect(this.page.firstReportInOrganizer.evaluate('report.items')).to.eventually.contain(this.item.id);
+  });
 });
 
 describe('Batch delete', function() {
