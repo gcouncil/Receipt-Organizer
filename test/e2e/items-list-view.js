@@ -21,17 +21,17 @@ describe('Toggling the View', function() {
 
     // Ensure that list view is displayed
     this.page.itemToolbarList.click();
-    expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
+    expect($('thumbnail-grid').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
 
     // Switch to thumbnail view
     this.page.itemToolbarThumbnails.click();
-    expect($('.thumbnail-fields').isPresent()).to.eventually.be.true;
+    expect($('thumbnail-grid').isPresent()).to.eventually.be.true;
     expect($('items-list-view').isPresent()).to.eventually.be.false;
 
     // Make sure we can return to list view
     this.page.itemToolbarList.click();
-    expect($('.thumbnail-fields').isPresent()).to.eventually.be.false;
+    expect($('thumbnail-grid').isPresent()).to.eventually.be.false;
     expect($('items-list-view').isPresent()).to.eventually.be.true;
   });
 });
