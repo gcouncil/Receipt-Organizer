@@ -220,7 +220,7 @@ describe('Deleting Items', function() {
     expect(this.page.firstReportInOrganizer.evaluate('report.items')).to.eventually.contain(this.item.id);
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarDelete.click();
-    expect(this.page.itemDeleteConfirmation.getText()).to.eventually.contain('The selected item is contained in 1 report. Are you sure you want to delete this item?');
+    expect(this.page.itemDeleteConfirmation.getText()).to.eventually.contain('The selected item is contained in 1 report.\nAre you sure you want to delete this item?');
     this.page.itemDeleteConfirmButton.click();
     expect(this.page.firstReportInOrganizer.evaluate('report.items')).not.to.eventually.contain(this.item.id);
   });
