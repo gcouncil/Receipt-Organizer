@@ -40,13 +40,14 @@ describe('category settings directive', function() {
     });
 
     angular.mock.inject(function($rootScope, $compile, $q) {
-      ctx.scope = $rootScope.$new();
+      ctx.initScope = $rootScope.$new();
       ctx.deferred = $q.defer();
 
       ctx.compile = function() {
-        ctx.element = $compile('<category-settings></category-settings>')(ctx.scope);
+        ctx.element = $compile('<category-settings></category-settings>')(ctx.initScope);
         ctx.userStorage.updateSettings.returns(ctx.deferred.promise);
-        ctx.scope.$digest();
+        ctx.initScope.$digest();
+        ctx.scope = ctx.element.scope();
       };
     });
 
