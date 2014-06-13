@@ -132,14 +132,16 @@ describe('item storage service', function() {
         $httpBackend.whenGET('/api/folders').respond(200);
 
         itemStorage.watch(ctx.scope, function(result) {
-          expect(result).not.to.deep.equal(ctx.items);
-          expect(result).to.deep.equal([ {id: 1, vendor: 'CBS', name: 'ITEM1', folders: [1], createdAt: ctx.items[0].createdAt} ]);
+          ctx.result = result;
         }).setFilter('isItem1', function(item) {
           return item.name === 'ITEM1';
         });
 
         $httpBackend.flush();
         $rootScope.$digest();
+
+        expect(ctx.result).not.to.deep.equal(ctx.items);
+        expect(ctx.result).to.have.deep.members(ctx.items.slice(0, 1));
       });
     });
 
@@ -148,6 +150,7 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         ctx.scope = $rootScope.$new();
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
+        $httpBackend.whenGET('/api/folders').respond(200);
 
         var query = itemStorage.watch(ctx.scope, function(result) {
           ctx.result = result;
