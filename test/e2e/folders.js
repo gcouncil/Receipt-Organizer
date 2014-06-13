@@ -139,16 +139,7 @@ describe('filtering', function() {
       var user = results[0];
       var folder1 = _.map(results[1], 'id');
       var folder2 = _.map(results[2], 'id');
-      self.factory.items.create({
-        vendor: 'Xcel Energy',
-        total: 74.64,
-        folders: folder2,
-        formxtraStatus: 'skipped',
-        reviewed: true,
-        date: new Date(2014, 0, 2)
-      }, {
-        user: user.id
-      });
+
       self.factory.items.create({
         vendor: 'Boulder Property Management, Inc.',
         total: 2000.00,
@@ -156,6 +147,17 @@ describe('filtering', function() {
         formxtraStatus: 'skipped',
         reviewed: true,
         date: new Date(2014, 0, 1)
+      }, {
+        user: user.id
+      });
+
+      self.factory.items.create({
+        vendor: 'Xcel Energy',
+        total: 74.64,
+        folders: folder2,
+        formxtraStatus: 'skipped',
+        reviewed: true,
+        date: new Date(2014, 0, 2)
       }, {
         user: user.id
       });
@@ -185,7 +187,7 @@ describe('filtering', function() {
     testFilteringByFolder(this);
   });
 
-  it('shoul class="folder-filter-link"d filter items by folder on the list view', function() {
+  it('should filter items by folder on the list view', function() {
     this.page.itemToolbarList.click();
     testFilteringByFolder(this);
   });
