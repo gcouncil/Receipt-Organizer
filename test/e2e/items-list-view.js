@@ -91,13 +91,13 @@ describe('Viewing Items in List View', function() {
       var user = results[0];
       var folders = _.map(results[1], 'id');
       self.factory.items.create({
-        vendor: 'Walmart',
+        vendor: 'Kmart',
         total: 10.00
       }, {
         user: user.id
       });
       self.factory.items.create({
-        vendor: 'Kmart',
+        vendor: 'Walmart',
         total: 12.00,
         reviewed: true,
         folders: folders
@@ -458,11 +458,11 @@ describe('sorting by header', function() {
     this.page.get('list');
   });
 
-  it('should sort by date by default', function() {
-    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
-    expect(this.page.secondItem.getText()).to.eventually.contain('Gummy Worms');
-    expect(this.page.thirdItem.getText()).to.eventually.contain('Chocolate');
-    expect(this.page.fourthItem.getText()).to.eventually.contain('Coffee');
+  it('should sort by created at by default', function() {
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
+    expect(this.page.secondItem.getText()).to.eventually.contain('Chocolate');
+    expect(this.page.thirdItem.getText()).to.eventually.contain('Gummy Worms');
+    expect(this.page.fourthItem.getText()).to.eventually.contain('Apple');
   });
 
   it('should sort by vendor', function() {
@@ -532,11 +532,12 @@ describe('sorting by header', function() {
     expect(this.page.fourthItem.getText()).to.eventually.contain('Gummy Worms');
   });
 
-  it('should sort by date descending, then ascending', function() {
-    expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
+  it('should sort by date ascending, then descending', function() {
     this.page.dateItemHeader.click();
     expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
     this.page.dateItemHeader.click();
     expect(this.page.firstItem.getText()).to.eventually.contain('Apple');
+    this.page.dateItemHeader.click();
+    expect(this.page.firstItem.getText()).to.eventually.contain('Coffee');
   });
 });
