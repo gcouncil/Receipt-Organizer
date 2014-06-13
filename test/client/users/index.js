@@ -1,3 +1,4 @@
 require('./login');
-require('./logout');
+require('./settings');
 require('./signup');
+require('./user-toolbar-menu');
