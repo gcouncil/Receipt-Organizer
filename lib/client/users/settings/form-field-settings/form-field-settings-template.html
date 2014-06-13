@@ -1,0 +1,16 @@
+<div ui-sref-active="active" ng-show="isCurrentPage('form-fields')">
+  <form>
+    <div class="input-group col-lg-3 form-field-option" ng-repeat="field in fields">
+      <span class="input-group-addon"><input type="checkbox" ng-model="field.selected"/></span>
+      <input type="text" class="form-control" ng-model="field.name"/>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-12 text-center settings-edit-buttons">
+        <button class="btn btn-primary fields-settings-save" ng-click="saveFields()">Save Changes</button>
+        <button type="button" class="btn" ng-click="cancel()">Discard Changes</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+

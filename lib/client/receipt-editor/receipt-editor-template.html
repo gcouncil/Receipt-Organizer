@@ -84,6 +84,11 @@
             <input class="form-grid-input" type="currency" ng-model="item.total">
           </label>
 
+          <label form-group class="form-grid-cell" ng-repeat="field in customFields" ng-if="field.selected">
+            <span class="form-grid-label">{{ field.name }}</span>
+            <input class="form-grid-input" type="text" ng-model="item['user' + ($index + 1)]">
+          </label>
+
           <label class="form-grid-cell form-grid-cell-custom form-group">
             <span class="control-label">Folder:</span>
             <select selectize multiple class="form-control"
@@ -107,7 +112,7 @@
           <label class="form-grid-cell form-grid-cell-custom form-group">
             <span class="control-label">Category:</span>
             <select selectize class="form-control"
-              selectize-options="[{ text: 'Tax' }, { text: 'Entertainment' }]"
+              selectize-options="categories"
               selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
               ng-model="item.category">
             </select>

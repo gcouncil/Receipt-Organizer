@@ -140,8 +140,8 @@ describe('UsersHandler', function() {
 
       it('should respond with the updated user', function() {
         expect(this.res.body).to.have.deep.property('[0].email', 'blewis@example.com');
+        expect(this.res.body).to.have.deep.property('[0].settings');
         expect(this.res.body).to.not.have.deep.property('[0].passwordHash');
-        expect(this.res.body).to.not.have.deep.property('[0].settings');
       });
 
     });
