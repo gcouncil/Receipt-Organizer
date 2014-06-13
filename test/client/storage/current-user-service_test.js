@@ -21,7 +21,7 @@ describe('current user service', function() {
   it('sets the current user in the localStorageService', function() {
     angular.mock.inject(function(currentUser) {
       var userData = { email: 'USER' };
-      var user = (new domain.User(userData)).toJSON();
+      var user = new domain.User(userData);
       currentUser.set(userData);
       expect(currentUser.get()).to.deep.equal(user);
     });
