@@ -1,32 +1,29 @@
 var angular = require('angular');
 var expect = require('chai').expect;
+var domain = require('epson-receipts/domain');
 
 describe('current user service', function() {
   beforeEach(function() {
-    var ctx = this;
-    ctx.localStorageService = {
-      get: ctx.sinon.stub(),
-      add: ctx.sinon.stub()
-    };
+    angular.mock.module('epsonreceipts.storage', {});
+  });
 
-    angular.mock.module('epsonreceipts.storage', {
-      localStorageService: ctx.localStorageService
-    });
-
+  afterEach(function() {
+    /* global window */
+    window.localStorage.removeItem('currentUser');
   });
 
   it('gets the current user from the localStorageService', function() {
-    var ctx = this;
     angular.mock.inject(function(currentUser) {
-      expect(ctx.localStorageService.get).to.have.been.called;
+      expect(window.localStorage.getItem('currentUser')).to.equal(null);
     });
   });
 
   it('sets the current user in the localStorageService', function() {
-    var ctx = this;
     angular.mock.inject(function(currentUser) {
-      currentUser.set('USER');
-      expect(ctx.localStorageService.add).to.have.been.calledWith('currentUser', 'USER');
+      var userData = { email: 'USER' };
+      var user = new domain.User(userData);
+      currentUser.set(userData);
+      expect(currentUser.get()).to.deep.equal(user);
     });
   });
 });
