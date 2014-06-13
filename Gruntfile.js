@@ -71,7 +71,8 @@ module.exports = function(grunt) {
           './bower_components/bootstrap/less',
           './bower_components/font-awesome/less',
           './bower_components/angular-motion/dist',
-          './bower_components/selectize/dist/less'
+          './bower_components/selectize/dist/less',
+          './bower_components/animate.css'
         ],
         sourceMap: debug,
         outputSourceFiles: true
