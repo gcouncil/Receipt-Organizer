@@ -1,0 +1,42 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog report-exporter-dialog">
+    <form name="form" class="modal-content" ng-submit="save()">
+
+      <div class="modal-header">
+        <label for="report-name">{{ report.name }}</label>
+        <button type="button" class="btn btn-plain pull-right" ng-click="cancel()" title="Close"><i class="fa fa-times-circle"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="export-type-selection">
+          <input type="radio" name="exportType" value="download"/>
+          <i class="fa fa-download"></i>
+          <h3>Download</h3>
+        </div>
+        <div class="export-type-selection">
+          <input type="radio" name="exportType" value="email"/>
+          <i class="fa fa-envelope-o"></i>
+          <h3>Email</h3>
+        </div>
+        <div class="export-type-selection">
+          <input type="radio" name="exportType" value="print"/>
+          <i class="fa fa-print"></i>
+          <h3>Print</h3>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left"
+          ng-click="$emit('reports:editReport', report); cancel()">
+          Back
+        </button>
+
+        <button type="button" class="btn btn-success"
+          ng-click="save()">
+          Send
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

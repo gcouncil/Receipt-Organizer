@@ -56,15 +56,11 @@
                 <input type="text" ng-model="report.name" name="report-name"/>
                 <button type="submit" class="btn btn-success" ng-disabled="items.length < 1">Save &amp; Close</button>
                 <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary" ng-click="$emit('reports:exportReport', report)">Export</button>
               </div>
             </div>
             <div class="modal-body">
               <div class="row">
-                <div class="col-xs-12 modal-body-button-toggle">
-                  <button class="btn btn-primary" ng-disabled="true">Print</button>
-                  <button class="btn btn-primary" ng-disabled="true">Email</button>
-                  <button class="btn btn-primary" ng-disabled="true">Save as <span>PDF<i class="fa fa-caret-down"></i></span></button>
-                </div>
                 <div class="col-xs-12">
                   <h4>{{ items.length }} Included
                   <ng-pluralize count="items.length"
