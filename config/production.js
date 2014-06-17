@@ -1,6 +1,12 @@
+var config = require('config');
+
 module.exports = {
   aws: {
     namespace: 'production-'
+  },
+  nodeMailer: {
+    transport: 'SES',
+    defaultFromEmail: ''
   },
   database: {
     host: process.env.RDS_HOSTNAME,
