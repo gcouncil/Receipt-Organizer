@@ -7,3 +7,4 @@ tmp
 config/local.js
 /coverage
 /development_scripts
+.DS_Store
