@@ -66,7 +66,12 @@ describe('UsersHandler', function() {
 
         var app = express();
         app.use(require('body-parser')());
-        app.use(handler(this.manager).create);
+
+        this.mailer = {
+          sendSignupEmail: sinon.stub().callsArgWith(1, null)
+        };
+        
+        app.use(handler(this.manager, this.mailer).create);
 
         request(app)
         .post('/')
