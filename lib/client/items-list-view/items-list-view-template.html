@@ -62,7 +62,7 @@
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
       <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status">
         <span class="review-flag review">Review?</span>
-        <button class="review-flag dismiss pull-right" ng-click="markReviewed(item); $event.stopPropagation()">
+        <button class="review-flag dismiss pull-right" ng-click="$emit('items:review', [item]); $event.stopPropagation()">
           <i class="fa fa-times-circle"></i>
         </button>
       </div>

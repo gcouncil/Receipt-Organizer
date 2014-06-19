@@ -36,5 +36,5 @@
 <div class="thumbnail-banner" ng-if="!item.reviewed">
   Review
 
-  <span class="thumbnail-banner-action" ng-click="$emit('items:review', item); $event.stopPropagation()">Accept</span>
+  <span class="thumbnail-banner-action" ng-click="$emit('items:review', [item]); $event.stopPropagation()">Accept</span>
 </div>
