@@ -13,9 +13,12 @@ items-list-view {
   .flex-box();
   .noflex();
   padding: 5px (@grid-gutter-width / 2);
-  border-bottom: 1px solid @gray-lighter;
-  color: grey;
+  border-bottom: 2px solid @gray-lighter;
+  color: @gray;
   overflow: none;
+  a {
+    color: @gray;
+  }
 }
 
 .items-list-view-body {
@@ -26,8 +29,7 @@ items-list-view {
 }
 
 .items-list-view-item {
-  margin-top: 15px;
-  height: 38px;
+  margin:-1px 0;
   .flex-box();
   align-items: center;
 
@@ -36,22 +38,29 @@ items-list-view {
 
   background: @gray-lighter;
   border: 1px solid @gray-light;
+  &:first-child {
+    margin-top: 15px;
+  }
 }
 
 .list-view-data {
   .flex(1, 1, 75px);
   display: inline;
   padding: 2px 10px;
-  line-height: 34px;
+  line-height: 30px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
+  &:last-child {
+    text-align: right;
+  }
 }
 
 .list-view-data-checkbox {
   .list-view-data;
 
-  .noflex(28px);
+  .noflex(50px);
 }
 
 .list-view-data-sm {
@@ -64,24 +73,34 @@ items-list-view {
 .items-list-view-item-selected {
   background: white;
   outline: 1px solid @brand-primary;
-  border-color: @brand-primary;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  border: 0;
+  margin: 1px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .items-list-view-item-unreviewed {
   background: @brand-warning-bg;
-  outline: 1px solid @brand-warning;
-  border-color: @brand-warning;
+  outline: 1px solid @brand-warning-outline;
+  border: 0;
+  margin: 1px;
 
   .items-list-view-item-review-status {
     background: @brand-warning;
     font-size: large;
+    &:last-child {
+      text-align: left;
+    }
+
+    .review {
+      border-bottom: 1px solid #000;
+    }
 
     button {
       background: inherit;
       border: none;
       box-shadow: none;
-      line-height: 28px;
+      line-height: 30px;
+      font-size: 22px;
     }
   }
 }
