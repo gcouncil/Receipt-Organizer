@@ -33,6 +33,7 @@
     "passport-http": "^0.2.2",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
+    "pg-query-stream": "^0.6.0",
     "pg.js": "^3.3.0",
     "sql": "^0.39.0",
     "styliner": "^0.8.9",
