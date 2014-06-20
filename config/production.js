@@ -1,5 +1,3 @@
-var config = require('config');
-
 module.exports = {
   aws: {
     namespace: 'production-'
