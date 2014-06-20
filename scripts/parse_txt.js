@@ -16,13 +16,15 @@ table.forEach(function(line) {
     line: line.slice(63)
   };
 
-  if (values.type === 0 && values.rnum > 0) {
-    group = values;
-    
-    forms.push({
-      rnum: values.rnum,
-      name: values.name
-    });
+  if (values.type === 0) {
+    if (values.rnum > 0) {
+      group = values;
+      
+      forms.push({
+        rnum: values.rnum,
+        name: values.name
+      });
+    }
 
     return;
   }
