@@ -13,12 +13,16 @@ describe('item events', function() {
     ctx.confirmation = ctx.sinon.stub();
     ctx.pluralize = ctx.sinon.stub();
 
+    var $q;
+
     ctx.itemStorage = {
       create: ctx.sinon.stub(),
-      destroy: ctx.sinon.stub(),
+      destroy: ctx.sinon.spy(function() {
+        return $q.when(true);
+      }),
       persist: ctx.sinon.stub(),
       markReviewed: ctx.sinon.stub(),
-      fetchChildren: ctx.sinon.stub().returns([{ id: 1, type: 'receipt' }])
+      fetchChildren: ctx.sinon.stub().returns([{ id: 2, type: 'expense' }])
     };
 
     ctx.imageStorage = {
@@ -31,7 +35,6 @@ describe('item events', function() {
       error: ctx.sinon.stub()
     };
 
-    var $q;
     ctx.uuid = ctx.sinon.spy(function() {
       return $q.when('UUID');
     });
@@ -94,19 +97,20 @@ describe('item events', function() {
 
     it('should destroy one item', function() {
       var ctx = this;
-      ctx.scope.$emit('items:destroy', ctx.items[0]);
+      ctx.scope.$emit('items:destroy', { id: 1, type: 'receipt' });
       ctx.deferred.resolve();
       ctx.scope.$digest();
-      expect(ctx.itemStorage.destroy).to.have.been.calledWith('ITEM1');
+      expect(ctx.itemStorage.destroy).to.have.been.calledWith({ id: 1, type: 'receipt' });
     });
 
     it('should destroy multiple items', function() {
       var ctx = this;
-      ctx.scope.$emit('items:destroy', ctx.items);
+      ctx.scope.$emit('items:destroy', [{id: 1, type: 'receipt'}, { id: 3, type: 'receipt' }]);
       ctx.deferred.resolve();
       ctx.scope.$digest();
-      expect(ctx.itemStorage.destroy).to.have.been.calledWith('ITEM1');
+      expect(ctx.itemStorage.destroy).to.have.been.calledWith({ id: 2, type: 'expense'});
       expect(ctx.itemStorage.destroy).to.have.been.calledWith({ id: 1, type: 'receipt'});
+      expect(ctx.itemStorage.destroy).to.have.been.calledWith({ id: 3, type: 'receipt'});
     });
   });
 
