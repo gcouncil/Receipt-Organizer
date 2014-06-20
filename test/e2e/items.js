@@ -231,8 +231,7 @@ describe('Deleting Items', function() {
     this.page.receiptEditorSave.click();
     this.page.receiptEditorDone.click();
     expect(this.page.items.count()).to.eventually.equal(2);
-    expect(this.page.firstItem.evaluate('item.total')).to.eventually.equal(100.00);
-    this.page.firstItem.$('input[type="checkbox"][selection]').click();
+    this.page.secondItem.$('input[type="checkbox"][selection]').click();
     this.page.itemToolbarDelete.click();
     expect(this.page.itemDeleteConfirmation.getText()).to.eventually.contain('The selected item has split expenses.');
     this.page.itemDeleteConfirmButton.click();

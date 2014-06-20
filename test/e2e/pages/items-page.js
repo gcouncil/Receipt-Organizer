@@ -59,7 +59,7 @@ function ItemPage(factory, user) {
   this.categoryItemHeader = $('.items-list-view-headers').element(by.linkText('Category'));
   this.foldersItemHeader = $('.items-list-view-headers').element(by.linkText('Folders'));
   this.dateItemHeader = $('.items-list-view-headers').element(by.linkText('Date'));
-  this.typeItemHeader = $('.items-list-view-headers').element(by.linkText('Type'));
+  this.typeItemHeader = $('.items-list-view-headers').element(by.linkText('Item Type'));
 
   this.itemToolbarThumbnails = $('items-toolbar [title="Thumbnails"]');
   this.itemToolbarList = $('items-toolbar [title="List"]');

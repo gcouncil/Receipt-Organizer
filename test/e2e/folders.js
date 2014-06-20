@@ -248,8 +248,8 @@ describe('Multiple Foldering', function() {
     this.page.receiptEditorClose.click();
 
     this.page.itemToolbarFolder.click();
-    expect($('.item-dropdown').getText()).to.eventually.contain('travel');
-    $('.item-dropdown').element(by.linkText('travel')).click();
+    expect($('.dropdown-menu').getText()).to.eventually.contain('travel');
+    $('.dropdown-menu').element(by.linkText('travel')).click();
 
     expect(this.page.firstItem.isPresent()).to.eventually.be.true;
     this.page.firstItem.$('input[type="checkbox"][selection]').click();
