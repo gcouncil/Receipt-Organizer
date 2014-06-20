@@ -23,7 +23,7 @@
 
           <label class="form-grid-cell form-grid-cell-custom form-group" ng-show="items.length > 1">
             <span class="control-label">Viewing:</span>
-            <select selectize class="form-control"
+            <select selectize
               ng-disabled="form.$dirty"
               selectize-options="items"
               selectize-settings="{ valueField: 'id', labelField: 'type', searchField: 'description', sortField: 'name', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
@@ -33,27 +33,41 @@
             </select>
           </label>
 
-          <label form-group class="form-grid-cell"
-            ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }"
-            ng-if="item.type == 'expense'">
-            <span class="form-grid-label">Expense Name</span>
-            <input class="form-grid-input" ng-model="item.name">
-          </label>
 
-          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }">
-            <span class="form-grid-label">Vendor</span>
-            <input class="form-grid-input" ng-model="item.vendor">
-          </label>
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell">
+              <span class="form-grid-label">Name</span>
+              <input class="form-grid-input" ng-model="item.name">
+            </label>
 
-          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
-            <span class="form-grid-label">Date</span>
-            <input class="form-grid-input" ng-model="item.date" bs-datepicker>
-          </label>
+             <label form-group class="form-grid-cell" ng-class="">
+              <span class="form-grid-label">Amount Requested</span>
+              <input class="form-grid-input" type="currency" ng-model="item.totalRequested">
+            </label>
+          </div>
 
-          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
-            <span class="form-grid-label">Payment Type</span>
-            <input class="form-grid-input" ng-model="item.paymentType">
-          </label>
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('vendor') }">
+              <span class="form-grid-label">Vendor</span>
+              <input class="form-grid-input" ng-model="item.vendor">
+            </label>
+
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('total') }">
+              <span class="form-grid-label">Total</span>
+              <input class="form-grid-input" type="currency" ng-model="item.total">
+            </label>
+          </div>
+          <div class="form-grid-group">
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
+              <span class="form-grid-label">Date</span>
+              <input class="form-grid-input" ng-model="item.date" bs-datepicker>
+            </label>
+            
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
+              <span class="form-grid-label">Payment Type</span>
+              <input class="form-grid-input" ng-model="item.paymentType">
+            </label>
+          </div>
 
           <div class="form-grid-group">
             <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('city') }">
@@ -77,12 +91,13 @@
               <span class="form-grid-label">Second Tax</span>
               <input class="form-grid-input" type="currency" ng-model="item.additionalTax">
             </label>
+
+            <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('tip') }">
+              <span class="form-grid-label">Tip</span>
+              <input class="form-grid-input" type="currency" ng-model="item.tip">
+            </label>
           </div>
 
-          <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('total') }">
-            <span class="form-grid-label">Total</span>
-            <input class="form-grid-input" type="currency" ng-model="item.total">
-          </label>
 
           <label form-group class="form-grid-cell" ng-repeat="field in customFields" ng-if="field.selected">
             <span class="form-grid-label">{{ field.name }}</span>
@@ -90,7 +105,7 @@
           </label>
 
           <label class="form-grid-cell form-grid-cell-custom form-group">
-            <span class="control-label">Folder:</span>
+            <span class="control-label">Add to Folder:</span>
             <select selectize multiple class="form-control"
               selectize-options="folders" selectize-settings="{ labelField: 'name', searchField: 'name', valueField: 'id', sortField: 'name', dropdownParent: 'body', create: createFolder }"
               ng-model="item.folders">
@@ -109,20 +124,31 @@
             </label>
           </div>
 
-          <label class="form-grid-cell form-grid-cell-custom form-group">
-            <span class="control-label">Category:</span>
-            <select selectize class="form-control"
-              selectize-options="categories"
-              selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
-              ng-model="item.category">
-            </select>
-          </label>
+          <div class="form-grid-group">
+            <label class="form-grid-cell form-grid-cell-custom form-group">
+              <span class="control-label">Category:</span>
+              <select selectize class="form-control"
+                selectize-options="categories"
+                selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
+                ng-model="item.category">
+              </select>
+            </label>
+
+            <label class="form-grid-cell form-grid-cell-custom form-group">
+              <span class="control-label">Tax Category:</span>
+              <select selectize class="form-control"
+                selectize-options="taxCategories"
+                selectize-settings="{ optgroups: taxCategoryForms, valueField: 'rnum', labelField: 'name', optgroupField: 'form', optgroupLabelField: 'name', optgroupValueField: 'rnum', searchField: 'name', sortField: [{ field: 'form' }, { field: 'name' }], dropdownParent: 'body', maxItems: 1 }"
+                ng-model="item.taxcategory">
+              </select>
+            </label>
+          </div>
 
           <label class="form-grid-cell form-grid-cell-custom form-group">
             <span ng-click="showNotes = !showNotes">
-              <i class="fa" ng-class="{ 'fa-caret-right': !showNotes, 'fa-caret-down': showNotes }"></i>
-              Notes
-            </span>
+              <i class="fa note-caret" ng-class="{ 'fa-caret-right': !showNotes, 'fa-caret-down': showNotes }"></i>
+              Add a Note
+            </span> 
             <textarea class="form-control" rows="4" ng-model="item.comments" ng-show="showNotes" style="display: block; width: 100%;"></textarea>
           </label>
 

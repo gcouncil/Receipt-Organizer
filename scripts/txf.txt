@@ -1,0 +1,462 @@
+0 00   ""                             -   -   -   -            -
+0 256  "Form 1040"                    N   N   I   1            2011:1040
+2 257  "Other income-misc."           N   N   I   1            2011:1040:21
+2 258  "Sick pay or disab. pay"       N   N   I   1            2011:1040:7
+2 259  "Prizes, awards"               N   N   I   1            2011:1040:21
+2 261  "Alimony received"             N   N   I   1            2011:1040:11
+2 262  "IRA contribution self"        N   N   E   1            2011:1040:32
+2 481  "IRA contribution spouse"      N   N   E   1            2011:1040:32
+2 607  "Med savings contrib, self"    N   N   E   1            2011:1040:25
+2 608  "Med savings contrib, spouse"  N   N   E   1            2011:1040:25
+2 609  "SIMPLE contrib, self"         N   N   E   1            2011:1040:28
+2 610  "SIMPLE contrib, spouse"       N   N   E   1            2011:1040:28
+2 263  "Keogh deduction"              N   N   E   1            2011:1040:28
+2 516  "Keogh deduction, spouse"      N   N   E   1            2011:1040:28
+2 517  "SEP deduction"                N   N   E   1            2011:1040:28
+2 518  "SEP deduction, spouse"        N   N   E   1            2011:1040:28
+2 264  "Alimony paid"                 N   N   E   1            2011:1040:31a
+2 265  "Early withd penalty"          N   N   E   1            2011:1040:30
+2 266  "Soc. Sec. income"             N   N   I   1            2011:1040:20a
+2 611  "Fed tax w/h, Soc. Sec. inc."  N   N   E   1            2011:1040:61
+2 483  "Soc. Sec. income, spouse"     N   N   I   1            2011:1040:20a
+2 612  "Fed tax w/h,Soc. Sec.,spouse" N   N   E   1            2011:1040:61
+2 519  "RR retirement income"         N   N   I   1            2011:1040:20a
+2 613  "Fed tax w/h, RR retire inc."  N   N   E   1            2011:1040:61
+2 520  "RR retirement inc, spouse"    N   N   I   1            2011:1040:20a
+2 614  "Fed tax w/h,RR retire,spouse" N   N   E   1            2011:1040:61
+2 268  "Fed. estimated tax"           N   N   E   1            2011:1040:62
+2 521  "Fed est. tax, qrtrly"         N   N   E   6            2011:1040:62
+2 269  "Taxable fringe benefits"      N   N   I   1            2011:1040:7
+2 636  "Student loan interest"        N   N   E   1            2011:1040:33
+2 680  "Educator expenses,self"       N   N   E   1            2011:1040:23
+2 681  "Educator expenses,spouse"     N   N   E   1            2011:1040:23 
+0 00   ""                             -   -   -   -            -
+0 270  "Schedule A"                   N   N   I   1            2011:A
+2 271  "Subscriptions"                N   N   E   1            2011:A:21
+2 272  "Gambling losses"              N   N   E   1            2011:A:28
+2 273  "Medicine and drugs"           N   N   E   1            2011:A:1
+2 274  "Med. transport/lodging"       N   N   E   1            2011:A:1
+2 484  "Doctors, dentists, hosp."     N   N   E   1            2011:A:1
+2 275  "State taxes"                  N   N   E   1            2011:A:5
+2 544  "Local taxes"                  N   N   E   1            2011:A:5
+2 522  "State est. tax, qrtrly"       N   N   E   6            2011:A:5
+2 276  "Real estate tax"              N   N   E   1            2011:A:6
+2 535  "Personal property taxes"      N   N   E   1            2011:A:7
+2 277  "Other taxes"                  N   N   E   3            2011:A:8
+2 280  "Cash charity contributions"   N   N   E   1            2011:A:16
+2 485  "Non-cash charity contrib"     N   N   E   1            2011:A:17
+2 281  "Tax preparation fees"         N   N   E   1            2011:A:22
+2 282  "Investment man. fees"         N   N   E   1            2011:A:23
+2 283  "Home mortgage int. (1098)"    N   N   E   1            2011:A:10
+2 545  "Home mortgage int. (no 1098)" N   N   E   1            2011:A:11
+2 284  "Points paid"                  N   N   E   1            2011:A:12
+2 486  "Misc. (subject to 2%)"        N   N   E   1            2011:A:23
+2 523  "Misc. (not subject to 2%)"    N   N   E   1            2011:A:28
+0 00   ""                             -   -   -   -            -
+0 285  "Schedule B"                   N   N   I   1            2011:B
+2 286  "Total dividend income"        Y   A   I   3            2011:1040:9a
+2 683  "Qualified dividend"           Y   A   I   3            2011:1040:9b
+2 487  "Div inc., non-taxable"        Y   A   I   3            2011:1040:8b
+2 488  "Div inc., capital gain dist"  Y   A   I   3            2011:D:13
+2 615  "Fed tax w/h, dividend income" Y   A   E   3            2011:1040:61
+2 287  "Interest income"              Y   A   I   3            2011:B:1
+2 288  "US govt. interest"            Y   A   I   3            2011:B:1
+2 289  "State and mun. bond int."     Y   A   I   3            2011:B:1
+2 290  "TE priv. act. bond int"       Y   A   I   3            2011:B:1
+2 489  "Interest inc., non-taxable"   Y   A   I   3            2011:B:1
+2 490  "Int inc., fed-tax, state-non" Y   A   I   3            2011:B:1
+2 491  "Int inc., fed-non, state-tax" Y   A   I   3            2011:B:1
+2 492  "Int inc., orig issue disc"    Y   A   I   3            2011:B:1
+2 616  "Fed tax w/h, interest income" Y   A   E   3            2011:1040:61
+2 524  "Seller financed mtge int."    Y   A   I   3            2011:B:1
+0 00   ""                             -   -   -   -            -
+0 291  "Schedule C"                   Y   N   I   1            2011:C
+2 292  "Spouse"                       Y   N   S   0            2011:C
+2 293  "Gross receipts"               Y   N   I   1            2011:C:1
+2 294  "Meals and entertainment"      Y   N   E   1            2011:C:24b
+2 493  "Purchases, cost of goods"     Y   N   E   1            2011:C:36
+2 494  "Labor, cost of goods sold"    Y   N   E   1            2011:C:37
+2 495  "Materials, cost of goods"     Y   N   E   1            2011:C:38
+2 496  "Other costs, cost of goods"   Y   N   E   1            2011:C:39
+2 296  "Returns and allowances"       Y   N   E   1            2011:C:2
+2 297  "Wages paid"                   Y   N   E   1            2011:C:26
+2 298  "Legal and professional"       Y   N   E   1            2011:C:17
+2 299  "Rent on vehicles, mach, eq"   Y   N   E   1            2011:C:20a
+2 300  "Rent on other bus prop"       Y   N   E   1            2011:C:20b
+2 301  "Supplies"                     Y   N   E   1            2011:C:22
+2 302  "Other business expense"       Y   C   E   3            2011:C:27
+2 303  "Other business income"        Y   N   I   1            2011:C:6
+2 304  "Advertising"                  Y   N   E   1            2011:C:8
+2 305  "Bad debts"                    Y   N   E   1            2011:C:27
+2 306  "Car and truck expenses"       Y   N   E   1            2011:C:9
+2 307  "Commissions and fees"         Y   N   E   1            2011:C:10
+2 685  "Contract labor"               Y   N   E   1            2011:C:11
+2 308  "Employee benefits progs."     Y   N   E   1            2011:C:14
+2 309  "Depletion"                    Y   N   E   1            2011:C:12
+2 310  "Insurance (not health)"       Y   N   E   1            2011:C:15
+2 311  "Interest expense, mortgage"   Y   N   E   1            2011:C:16a
+2 312  "Interest expense, other"      Y   N   E   1            2011:C:16b
+2 313  "Office expense"               Y   N   E   1            2011:C:18
+2 314  "Pension and profit shrg"      Y   N   E   1            2011:C:19
+2 315  "Repairs and maintenance"      Y   N   E   1            2011:C:21
+2 316  "Taxes and licenses"           Y   N   E   1            2011:C:23
+2 317  "Travel"                       Y   N   E   1            2011:C:24a
+2 318  "Utilities"                    Y   N   E   1            2011:C:25
+2 319  "Principal business/prof"      Y   N   S   2            2011:C:A
+0 00   ""                             -   -   -   -            -
+0 497  "Schedule C-EZ"                Y   N   I   1            2011:CEZ
+2 498  "Spouse"                       Y   N   S   0            2011:CEZ
+2 499  "Gross receipts"               Y   N   I   1            2011:CEZ:1
+2 500  "Total expenses"               Y   N   E   1            2011:CEZ:2
+2 501  "Principal business/prof"      Y   N   S   2            2011:CEZ:A
+0 00   ""                             -   -   -   -            -
+0 320  "Schedule D"                   Y   N   I   1            2011:D
+2 321  "ST gain/loss 8949 Copy A"     Y   N   I   4            2011:D:1
+2 711  "ST gain/loss 8949 Copy B"     Y   N   I   4            2011:D:1
+2 712  "ST gain/loss 8949 copy C"     Y   N   I   4            2011:D:1
+2 323  "LT gain/loss 8949 Copy A"     Y   N   I   4            2011:D:8
+2 713  "LT gain/loss 8949 Copy B"     Y   N   I   4            2011:D:8
+2 714  "LT gain/loss 8949 Copy C"     Y   N   I   4            2011:D:8
+2 673  "Short/Long 8949 Copy A"       Y   N   I   4            2011:D
+2 715  "Short/Long 8949 Copy B"       Y   N   I   4            2011:D
+2 716  "Short/Long 8949 Copy C"       Y   N   I   4            2011:D
+2 682  "Wash Sale - 8949 Copy A"      Y   N   I   4            2011:D
+2 718  "Wash Sale - 8949 Copy B"      Y   N   I   4            2011:D
+2 321  "ST gain/loss 8949 Copy A"     Y   N   I   5            2011:D:1
+2 711  "ST gain/loss 8949 Copy B"     Y   N   I   5            2011:D:1
+2 712  "ST gain/loss 8949 copy C"     Y   N   I   5            2011:D:1
+2 323  "LT gain/loss 8949 Copy A"     Y   N   I   5            2011:D:8
+2 713  "LT gain/loss 8949 Copy B"     Y   N   I   5            2011:D:8
+2 714  "LT gain/loss 8949 Copy C"     Y   N   I   5            2011:D:8
+2 673  "Short/Long 8949 Copy A"       Y   N   I   5            2011:D
+2 715  "Short/Long 8949 Copy B"       Y   N   I   5            2011:D
+2 716  "Short/Long 8949 Copy C"       Y   N   I   5            2011:D
+2 682  "Wash Sale - 8949 Copy A"      Y   N   I   5            2011:D
+2 718  "Wash Sale - 8949 Copy B"      Y   N   I   5            2011:D
+2 644  "28% cap gain"                 Y   A   I   3            2011:D:18
+2 645  "Unrec sec 1250"               Y   A   I   3            2011:D:19
+2 646  "Sec 1202 gain"                Y   A   I   3            2011:D:8
+0 00   ""                             -   -   -   -            -
+0 325  "Schedule E"                   Y   N   I   1            2011:E
+2 326  "Rents received"               Y   N   I   1            2011:E:3
+2 327  "Royalties received"           Y   N   I   1            2011:E:4
+2 328  "Advertising"                  Y   N   E   1            2011:E:5
+2 329  "Auto and travel"              Y   N   E   1            2011:E:6
+2 330  "Cleaning and maintenance"     Y   N   E   1            2011:E:7
+2 331  "Commissions"                  Y   N   E   1            2011:E:8
+2 332  "Insurance"                    Y   N   E   1            2011:E:9
+2 333  "Legal and professional"       Y   N   E   1            2011:E:10
+2 502  "Management fees"              Y   N   E   1            2011:E:11
+2 334  "Mortgage interest exp"        Y   N   E   1            2011:E:12
+2 335  "Other interest expense"       Y   N   E   1            2011:E:13
+2 336  "Repairs"                      Y   N   E   1            2011:E:14
+2 337  "Supplies"                     Y   N   E   1            2011:E:15
+2 338  "Taxes"                        Y   N   E   1            2011:E:16
+2 339  "Utilities"                    Y   N   E   1            2011:E:17
+2 341  "Other expenses"               Y   C   E   3            2011:E:18
+2 342  "Kind/location of property"    Y   N   S   2            2011:E:1
+0 00   ""                             -   -   -   -            -
+0 343  "Schedule F"                   Y   N   I   1            2011:F
+2 514  "Spouse"                       Y   N   S   0            2011:F
+2 543  "Car and truck expense"        Y   N   E   1            2011:F:12
+2 344  "Labor hired"                  Y   N   E   1            2011:F:24
+2 345  "Repairs and maintenance"      Y   N   E   1            2011:F:27
+2 346  "Interest expense-mort"        Y   N   E   1            2011:F:23a
+2 347  "Interest expense-other"       Y   N   E   1            2011:F:23b
+2 348  "Rent-land, animals"           Y   N   E   1            2011:F:26b
+2 349  "Rent-veh., mach., equip."     Y   N   E   1            2011:F:26a
+2 350  "Feed purchased"               Y   N   E   1            2011:F:18
+2 351  "Seed and plants purchased"    Y   N   E   1            2011:F:28
+2 352  "Fertilizers and lime"         Y   N   E   1            2011:F:19
+2 353  "Supplies purchased"           Y   N   E   1            2011:F:30
+2 355  "Vet, breeding and medicine"   Y   N   E   1            2011:F:33
+2 356  "Gasoline, fuel, oil"          Y   N   E   1            2011:F:21
+2 357  "Storage and warehousing"      Y   N   E   1            2011:F:29
+2 358  "Taxes"                        Y   N   E   1            2011:F:31
+2 359  "Insurance (not health)"       Y   N   E   1            2011:F:22
+2 360  "Utilities"                    Y   N   E   1            2011:F:32
+2 361  "Freight and trucking"         Y   N   E   1            2011:F:20
+2 362  "Conservation expense"         Y   N   E   1            2011:F:14
+2 363  "Pension and profit shrg"      Y   N   E   1            2011:F:25
+2 364  "Employee benefit prog."       Y   N   E   1            2011:F:17
+2 365  "Other farm expenses"          Y   C   E   3            2011:F:34
+2 366  "Chemicals"                    Y   N   E   1            2011:F:13
+2 367  "Custom hire (mach. work)"     Y   N   E   1            2011:F:15
+2 368  "Sales livestock/crops raised" Y   N   I   1            2011:F:4
+2 369  "Resales of livestock"         Y   N   I   1            2011:F:1
+2 370  "Custom hire (machine work)"   Y   N   I   1            2011:F:9
+2 371  "Coop. distributions"          Y   N   I   1            2011:F:5a
+2 372  "Agric. pgm payments"          Y   N   I   1            2011:F:6a
+2 373  "CCC loans-election"           Y   N   I   1            2011:F:7a
+2 374  "CCC loans-forfeited"          Y   N   I   1            2011:F:7b
+2 375  "Crop ins. proceeds-recd"      Y   N   I   1            2011:F:8a
+2 376  "Crop ins. proceeds-defd"      Y   N   I   1            2011:F:8d
+2 377  "Other farm income"            Y   N   I   1            2011:F:10
+2 378  "Cost livestock for resale"    Y   N   E   1            2011:F:2
+2 379  "Principal product"            Y   N   S   2            2011:F:A
+0 00   ""                             -   -   -   -            -
+0 565  "Schedule H"                   Y   N   I   1            2011:H
+2 567  "Cash wages paid"              Y   N   E   1            2011:H:1
+2 568  "Federal tax withheld"         Y   N   E   1            2011:H:5
+0 00   ""                             -   -   -   -            -
+0 380  "Form 2106"                    Y   N   I   1            2011:2106
+2 381  "Education expense"            Y   N   E   1            2011:2106:4
+2 382  "Automobile exp."              Y   N   E   1            2011:2106:1
+2 383  "Travel"                       Y   N   E   1            2011:2106:3
+2 384  "Local transportation"         Y   N   E   1            2011:2106:2
+2 385  "Other bus. exp."              Y   N   E   1            2011:2106:4
+2 386  "Meal and entertain. exp"      Y   N   E   1            2011:2106:5
+2 387  "Emp. expense reimb."          Y   N   I   1            2011:2106:7,A
+2 388  "Emp. meal exp reimb"          Y   N   I   1            2011:2106:7,B
+2 389  "Job seeking exp"              Y   N   E   1            2011:2106:4
+2 390  "Special clothing exp"         Y   N   E   1            2011:2106:4
+2 391  "Emp home office exp"          Y   N   E   1            2011:2106:4
+0 00   ""                             -   -   -   -            -
+0 392  "Home Sale Worksheets"         Y   N   I   1            2011:HomeWks
+2 393  "Selling price of old home"    Y   N   I   1            2011:HomeWks:1
+2 394  "Expense of sale"              Y   N   E   1            2011:HomeWks:2
+2 395  "Basis of home sold"           Y   N   E   1            2011:HomeWks:4
+2 398  "Date old home sold"           Y   N   S   2            2011:HomeWks
+0 00   ""                             -   -   -   -            -
+0 400  "Form 2441"                    N   N   I   1            2011:2441
+2 401  "Child care - day care"        N   N   E   1            2011:2441:1
+2 402  "Child care - household"       N   N   E   1            2011:2441:1
+0 00   ""                             -   -   -   -            -
+0 403  "Form 3903"                    Y   N   I   1            2011:3903
+2 526  "Spouse"                       Y   N   S   0            2011:3903
+2 406  "Trans./store hshld goods"     Y   N   E   1            2011:3903:1
+2 407  "Travel and lodging"           Y   N   E   1            2011:3903:2
+0 00   ""                             -   -   -   -            -
+0 503  "Form 4137"                    Y   N   I   1            2011:4137
+2 504  "Spouse"                       Y   N   S   0            2011:4137
+2 505  "Cash/charge tips received"    Y   N   I   1            2011:4137:1
+0 00   ""                             -   -   -   -            -
+0 412  "Form 4684"                    Y   N   I   1            2011:4684
+2 413  "Basis of casualty prop"       Y   N   E   1            2011:4684:2
+2 414  "Insurance/reimb"              Y   N   I   1            2011:4684:3
+2 415  "FMV before casualty"          Y   N   I   1            2011:4684:5
+2 416  "FMV after casualty"           Y   N   I   1            2011:4684:6
+2 417  "Description of property"      Y   N   S   2            2011:4684:1
+0 00   ""                             -   -   -   -            -
+0 418  "Form 4797"                    N   N   I   1            2011:4797
+2 419  "LT dep. loss - business"      N   N   E   5            2011:4797:2
+2 420  "LT dep. gain - business"      N   N   I   5            2011:4797:2
+2 421  "ST dep. prop. - business"     N   N   B   5            2011:4797:10
+2 422  "LT dep. loss - res. rent."    N   N   E   5            2011:4797:2
+2 423  "LT dep. gain - res. rent."    N   N   I   5            2011:4797:2
+2 424  "ST dep. prop. - res. rent."   N   N   B   5            2011:4797:10
+0 00   ""                             -   -   -   -            -
+0 569  "Form 4835"                    Y   N   I   1            2011:4835
+2 570  "Spouse"                       Y   N   S   0            2011:4835
+2 571  "Sale of livestock/produce"    Y   N   I   1            2011:4835:1
+2 572  "Total co-op distributions"    Y   N   I   1            2011:4835:2a
+2 573  "Agricultural program paymnts" Y   N   I   1            2011:4835:3a
+2 574  "CCC loans reported/election"  Y   N   I   1            2011:4835:4a
+2 575  "CCC loans forfeited/repaid"   Y   N   I   1            2011:4835:4b
+2 576  "Crop ins. proceeds rec'd"     Y   N   I   1            2011:4835:5a
+2 577  "Crop ins. proceeds deferred"  Y   N   I   1            2011:4835:5d
+2 578  "Other income"                 Y   N   I   1            2011:4835:6
+2 579  "Car and truck expenses"       Y   N   E   1            2011:4835:8
+2 580  "Chemicals"                    Y   N   E   1            2011:4835:9
+2 581  "Conservation expenses"        Y   N   E   1            2011:4835:10
+2 582  "Custom hire (machine work)"   Y   N   E   1            2011:4835:11
+2 583  "Employee benefit programs"    Y   N   E   1            2011:4835:13
+2 584  "Feed purchased"               Y   N   E   1            2011:4835:14
+2 585  "Fertilizers and lime"         Y   N   E   1            2011:4835:15
+2 586  "Freight and trucking"         Y   N   E   1            2011:4835:16
+2 587  "Gasoline, fuel, and oil"      Y   N   E   1            2011:4835:17
+2 588  "Insurance(other than health)" Y   N   E   1            2011:4835:18
+2 589  "Interest expense, mortgage"   Y   N   E   1            2011:4835:19a
+2 590  "Interest expense, other"      Y   N   E   1            2011:4835:19b
+2 591  "Labor hired"                  Y   N   E   1            2011:4835:20
+2 592  "Pension/profit-sharing plans" Y   N   E   1            2011:4835:21
+2 593  "Rent/lease vehicles, equip."  Y   N   E   1            2011:4835:22a
+2 594  "Rent/lease land, animals"     Y   N   E   1            2011:4835:22b
+2 595  "Repairs and maintenance"      Y   N   E   1            2011:4835:23
+2 596  "Seeds and plants purchased"   Y   N   E   1            2011:4835:24
+2 597  "Storage and warehousing"      Y   N   E   1            2011:4835:25
+2 598  "Supplies purchased"           Y   N   E   1            2011:4835:26
+2 599  "Taxes"                        Y   N   E   1            2011:4835:27
+2 600  "Utilities"                    Y   N   E   1            2011:4835:28
+2 601  "Vet, breeding, medicine"      Y   N   E   1            2011:4835:29
+2 602  "Other expenses"               Y   C   E   3            2011:4835:30
+0 00   ""                             -   -   -   -            -
+0 425  "Form 4952"                    N   N   I   1            2011:4952
+2 426  "Investment interest expense"  N   N   E   1            2011:4952:1
+0 00   ""                             -   -   -   -            -
+0 427  "Form 6252"                    Y   N   I   1            2011:6252
+2 428  "Selling price"                Y   N   I   1            2011:6252:5
+2 429  "Debt assumed by buyer"        Y   N   I   1            2011:6252:6
+2 430  "Basis of property sold"       Y   N   E   1            2011:6252:8
+2 431  "Depreciation allowed"         Y   N   I   1            2011:6252:9
+2 432  "Expenses of sale"             Y   N   E   1            2011:6252:11
+2 433  "Gross profit percentage"      Y   N   I   1            2011:6252:19
+2 434  "Payments recd this year"      Y   N   I   1            2011:6252:21
+2 435  "Payments recd prior years"    Y   N   I   1            2011:6252:23
+2 436  "Description of property"      Y   N   S   2            2011:6252:1
+0 00   ""                             -   -   -   -            -
+0 437  "Form 8606"                    Y   N   I   1            2011:8606
+2 515  "Spouse"                       Y   N   S   0            2011:8606
+2 438  "IRAs value at end of year"    Y   N   E   1            2011:8606:6
+2 439  "IRA contribs-nondeductible"   Y   N   E   1            2011:8606:1
+2 440  "IRA basis at beg of year"     Y   N   E   1            2011:8606:2
+0 00   ""                             -   -   -   -            -
+0 441  "Form 8815"                    N   N   I   1            2011:8815
+2 442  "Qual. higher ed. expenses"    N   N   E   1            2011:8815:2
+2 443  "Nontaxable ed. benefits"      N   N   I   1            2011:8815:3
+2 444  "EE US svgs bonds proceeds"    N   N   I   1            2011:8815:5
+2 445  "Post-89 EE bond face value"   N   N   I   1            2011:8815:6
+0 00   ""                             -   -   -   -            -
+0 536  "Form 8829"                    Y   N   I   1            2011:8829
+2 537  "Deductible mortgage interest" Y   N   E   1            2011:8829:10b
+2 538  "Real estate taxes"            Y   N   E   1            2011:8829:11b
+2 539  "Insurance"                    Y   N   E   1            2011:8829:17b
+2 540  "Repairs and maintenance"      Y   N   E   1            2011:8829:19b
+2 541  "Utilities"                    Y   N   E   1            2011:8829:20b
+2 542  "Other expenses"               Y   N   E   1            2011:8829:21b
+0 00   ""                             -   -   -   -            -
+0 617  "Form 8839"                    N   N   I   1            2011:8839
+2 618  "Adoption fees"                N   N   E   1            2011:8839:5
+2 619  "Court costs"                  N   N   E   1            2011:8839:5
+2 620  "Attorney fees"                N   N   E   1            2011:8839:5
+2 621  "Traveling expenses"           N   N   E   1            2011:8839:5
+2 622  "Other expenses"               N   N   E   1            2011:8839:5
+0 00   ""                             -   -   -   -            -
+0 639  "Form 8863"                    N   N   I   1            2011:8863
+2 637  "Hope cr. qual. expenses"      N   N   E   1            2011:8863:1c
+2 638  "Lifetime cr. qual. expenses"  N   N   E   1            2011:8863:3c
+0 00   ""                             -   -   -   -            -
+0 446  "Schedule K-1 Worksheet"       Y   N   I   1            2011:K1
+2 447  "Spouse"                       Y   N   S   0            2011:K1
+2 448  "Ordinary income/loss"         Y   N   B   1            2011:K1:1
+2 449  "Rental real est. inc/loss"    Y   N   B   1            2011:K1:2
+2 450  "Other rental income/loss"     Y   N   B   1            2011:K1:3
+2 451  "Interest income"              Y   N   I   1            2011:K1:5
+2 452  "Dividends"                    Y   N   I   1            2011:K1:6a
+2 527  "Royalties"                    Y   N   I   1            2011:K1:7
+2 453  "Net ST capital gain/loss"     Y   N   B   1            2011:K1:8
+2 454  "Net LT capital gain/loss"     Y   N   B   1            2011:K1:9a
+2 674  "28% rate gain(loss)"          Y   N   B   1            2011:K1:9b
+2 455  "Guaranteed payments"          Y   N   I   1            2011:K1:4
+2 456  "Net sec 1231 gain/loss"       Y   N   B   1            2011:K1:10
+2 676  "Other Income (loss)"          Y   N   B   1            2011:K1:11
+2 528  "Tax-exempt interest"          Y   N   I   1            2011:K1:18
+2 679  "Total Foreign Taxes"          Y   N   E   1            2011:K1:16
+2 457  "Partnership or S corp name"   Y   N   S   2            2011:K1:A
+0 00   ""                             -   -   -   -            -
+0 458  "W-2"                          Y   N   I   1            2011:W2
+2 460  "Salary"                       Y   N   I   1            2011:W2:1
+2 461  "Federal withholding"          Y   N   E   1            2011:W2:2
+2 462  "Soc Sec tax withholding"      Y   N   E   1            2011:W2:4
+2 463  "Local withholding"            Y   N   E   1            2011:W2:19
+2 480  "Medicare tax withholding"     Y   N   E   1            2011:W2:6
+2 464  "State withholding"            Y   N   E   1            2011:W2:17
+2 465  "Dependent care benefits"      Y   N   I   1            2011:W2:10
+2 267  "Moving exp. reimb."           Y   N   I   1            2011:W2:12
+2 466  "Payer"                        Y   N   S   2            2011:W2:c
+2 506  "Salary, spouse"               Y   N   I   1            2011:W2:1
+2 507  "Federal withholding,spouse"   Y   N   E   1            2011:W2:2
+2 508  "Soc Sec tax withhld, spouse"  Y   N   E   1            2011:W2:4
+2 509  "Local withholding, spouse"    Y   N   E   1            2011:W2:19
+2 510  "Medicare tax withhld, spouse" Y   N   E   1            2011:W2:6
+2 511  "State withholding, spouse"    Y   N   E   1            2011:W2:17
+2 512  "Dependent care ben., spouse"  Y   N   I   1            2011:W2:10
+2 546  "Moving exp. reimb., spouse"   Y   N   I   1            2011:W2:12
+2 513  "Payer, spouse"                Y   N   S   2            2011:W2:c
+0 00   ""                             -   -   -   -            -
+0 547  "W-2G"                         Y   N   I   1            2011:W-2G
+2 548  "Spouse"                       Y   N   S   0            2011:W-2G
+2 549  "Gross winnings"               Y   N   I   1            2011:W-2G:1
+2 550  "Federal tax withheld"         Y   N   E   1            2011:W-2G:2
+2 551  "State tax withheld"           Y   N   E   1            2011:W-2G:14
+2 552  "Payer"                        Y   N   S   2            2011:W-2G
+0 00   ""                             -   -   -   -            -
+0 553  "1099-MISC"                    Y   N   I   1            2011:1099-MISC
+2 554  "Spouse"                       Y   N   S   0            2011:1099-MISC
+2 555  "Rents"                        Y   N   I   1            2011:1099-MISC:1
+2 556  "Royalties"                    Y   N   I   1            2011:1099-MISC:2
+2 557  "Other income"                 Y   N   I   1            2011:1099-MISC:3
+2 558  "Federal tax withheld"         Y   N   E   1            2011:1099-MISC:4
+2 559  "Fishing boat proceeds"        Y   N   I   1            2011:1099-MISC:5
+2 560  "Medical/health payments"      Y   N   I   1            2011:1099-MISC:6
+2 561  "Nonemployee compensation"     Y   N   I   1            2011:1099-MISC:7
+2 562  "Crop insurance proceeds"      Y   N   I   1            2011:1099-MISC:10
+2 563  "State tax withheld"           Y   N   E   1            2011:1099-MISC:16
+2 564  "Payer"                        Y   N   S   2            2011:1099-MISC
+2 654  "State ID"                     Y   N   S   2            2011:1099-MISC:17
+2 674  "Substitute payments  "        Y   N   I   1            2011:1099-MISC:8
+2 675  "Gross proceeds to atty "      Y   N   I   1            2011:1099-MISC:14
+2 676  "Excess golden parachute"      Y   N   I   1            2011:1099-MISC:13
+0 00   ""                             -   -   -   -            -
+0 473  "1099R"                        Y   N   I   1            2011:1099R
+2 474  "Spouse"                       Y   N   S   0            2011:1099R
+2 475  "Pension total dist - gross"   Y   N   I   1            2011:1099R:1
+2 476  "Pension total dist - taxable" Y   N   I   1            2011:1099R:2a
+2 529  "Pension federal withholding"  Y   N   E   1            2011:1099R:4
+2 530  "Pension state withholding"    Y   N   E   1            2011:1099R:12
+2 531  "Pension local withholding"    Y   N   E   1            2011:1099R:15
+2 667  "Pension Distrib code 7A"      Y   N   S   2            2011:1099R:7a
+2 668  "Pension Distrib code 7b"      Y   N   S   2            2011:1099R:7b
+2 669  "Pension State ID"             Y   N   S   2            2011:1099R:13
+2 670  "Pension Tax. not determined"  Y   N   S   2            2011:1099R:2b
+2 671  "Pension Total distribution"   Y   N   S   2            2011:1099R:2b
+2 603  "Pension Payer"                Y   N   S   2            2011:1099R
+2 477  "IRA total dist - gross"       Y   N   I   1            2011:1099R:1
+2 478  "IRA total dist - taxable"     Y   N   I   1            2011:1099R:2a
+2 532  "IRA federal withholding"      Y   N   E   1            2011:1099R:4
+2 533  "IRA state withholding"        Y   N   E   1            2011:1099R:12
+2 534  "IRA local withholding"        Y   N   E   1            2011:1099R:15
+2 655  "IRA Distribution code 7A"     Y   N   S   2            2011:1099R:7a
+2 656  "IRA Distribution code 7b"     Y   N   S   2            2011:1099R:7b
+2 664  "IRA State ID"                 Y   N   S   2            2011:1099R:13
+2 665  "IRA Taxable not determined"   Y   N   S   2            2011:1099R:2b
+2 666  "IRA Total distribution"       Y   N   S   2            2011:1099R:2b
+2 604  "IRA Payer"                    Y   N   S   2            2011:1099R
+2 623  "SIMPLE total distrib-gross"   Y   N   I   1            2011:1099R:1
+2 624  "SIMPLE total distrib-taxable" Y   N   I   1            2011:1099R:2a
+2 625  "SIMPLE federal withholding"   Y   N   E   1            2011:1099R:4
+2 626  "SIMPLE state withholding"     Y   N   E   1            2011:1099R:12
+2 627  "SIMPLE local withholding"     Y   N   E   1            2011:1099R:15
+2 628  "SIMPLE Payer"                 Y   N   S   2            2011:1099R
+2 655  "Distribution code 7A"         Y   N   S   2            2011:1099R:7a
+2 656  "Distribution code 7b"         Y   N   S   2            2011:1099R:7b
+2 664  "State ID"                     Y   N   S   2            2011:1099R:13
+2 665  "Taxable not determined"       Y   N   S   2            2011:1099R:2b
+2 666  "Total distribution"           Y   N   S   2            2011:1099R:2b
+0 00   ""                             -   -   -   -            -
+0 629  "1099-SA"                      Y   N   I   1            2011:1099-SA
+2 630  "Spouse"                       Y   N   S   0            2011:1099-SA
+2 631  "gross distribution"           Y   N   I   1            2011:1099-SA:1
+2 632  "earnings-excess contrib"      Y   N   I   1            2011:1099-SA:2
+2 633  "Payer"                        Y   N   S   2            2011:1099-SA
+0 00   ""                             -   -   -   -            -
+0 634  "1099-G"                       Y   N   I   1            2011:1099-G
+2 635  "Spouse"                       Y   N   S   0            2011:1099-G
+2 479  "Unemployment comp"            Y   N   I   1            2011:1099-G:1
+2 605  "Unemployment comp repaid"     Y   N   E   1            2011:1040:19
+2 260  "State and local refunds"      y   N   I   1            2011:1099-G:2
+2 606  "Fed tax w/h,unemploymt comp"  Y   N   E   1            2011:1099-G:4
+0 00   ""                             -   -   -   -            -
+0 640  "1099 INT"                     N   N   I   1            2011:1099-INT
+2 641  "Foreign tax, int"             Y   A   E   3            2011:1099Int:6
+2 642  "Foreign country, int"         Y   A   S   2            2011:1099Int:7
+2 653  "Intestment expense, int"      Y   A   E   3            2011:1099Int:5
+0 00   ""                             -   -   -   -            -
+0 643  "1099 Div"                     N   N   I   1            2011:1099-DIV
+2 647  "NonTaxable distributions"     Y   A   I   3            2011:1099Div:3
+2 648  "Investment Expense, div"      Y   A   E   3            2011:1099Div:5
+2 649  "Foreign tax, div"             Y   A   E   3            2011:1099Div:6
+2 650  "Foreign country, div"         Y   A   S   2            2011:1099Div:7
+2 651  "Cash liquidation"             Y   A   I   3            2011:1099Div:8
+2 652  "Non-cash liquidation"         Y   A   I   3            2011:1099Div:9
+0 00   ""                             -   -   -   -            
+0 657  "1099 OID"                     N   N   I   1            2011:1099-OID
+2 658  "Other periodic int,OID"       Y   A   I   3            2011:1099OID:2
+2 659  "Early wdrawal pen, OID"       Y   A   E   3            2011:1099OID:3
+2 660  "Fed tax wheld, OID"           Y   A   E   3            2011:1099OID:4
+2 661  "Description"                  Y   A   S   2            2011:1099OID:5
+2 662  "OID, US treas obligl"         Y   A   I   3            2011:1099OID:6
+2 663  "Investment Expense, OID"      Y   A   E   3            2011:1099OID:7
+0 00   ""                             -   -   -   -            -
+0 678  "1099 Q"                       N   N   I   1            2011:1099-Q
+2 672  "Gross distribution"           Y   N   I   1            2011:1099-Q:1

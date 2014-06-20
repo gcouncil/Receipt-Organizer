@@ -46,6 +46,12 @@
   overflow: hidden;
 }
 
+.form-field-labels {
+  font-size: 10px;
+  font-weight: normal;
+  color: @gray-light;
+}
+
 .receipt-editor-fields {
   .noflex(400px);
   padding: 0;
@@ -54,6 +60,9 @@
 
   border: solid 1px @gray-light;
   border-width: 0 1px;
+  .control-label{
+    .form-field-labels
+  }
 }
 
 .receipt-editor-info {
@@ -98,7 +107,7 @@
   background: @gray-lighter;
 
   .selectize-control {
-    width: 275px;
+    width: 100%;
     display: inline-block;
   }
 }
@@ -132,11 +141,7 @@
 
     top: @form-grid-padding-vertical;
     left: @form-grid-padding-horizontal;
-
-    font-size: 10px;
-    font-weight: normal;
-
-    color: @gray-light;
+    .form-field-labels
 }
 
 .form-grid-cell {
@@ -303,4 +308,8 @@
 
 .box-input-other {
   background: @gray-lighter;
+}
+
+.note-caret {
+  min-width: 8px;
 }
