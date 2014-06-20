@@ -9,21 +9,22 @@ describe('item events', function() {
     };
 
     ctx.receiptEditor = ctx.sinon.stub();
+    ctx.reportEditor = ctx.sinon.stub();
+    ctx.confirmation = ctx.sinon.stub();
+    ctx.pluralize = ctx.sinon.stub();
 
     ctx.itemStorage = {
       create: ctx.sinon.stub(),
       destroy: ctx.sinon.stub(),
       persist: ctx.sinon.stub(),
-      markReviewed: ctx.sinon.stub()
+      markReviewed: ctx.sinon.stub(),
+      fetchChildren: ctx.sinon.stub().returns([{ id: 1, type: 'receipt' }])
     };
 
     ctx.imageStorage = {
       create: ctx.sinon.stub()
     };
 
-    ctx.reportEditor = ctx.sinon.stub();
-
-    ctx.confirmation = ctx.sinon.stub();
 
     ctx.notify = {
       success: ctx.sinon.stub(),
@@ -43,7 +44,8 @@ describe('item events', function() {
       confirmation: ctx.confirmation,
       notify: ctx.notify,
       reportEditor: ctx.reportEditor,
-      uuid: ctx.uuid
+      uuid: ctx.uuid,
+      erPluralize: ctx.pluralize
     });
 
     angular.mock.inject(function($rootScope, _$q_) {
@@ -95,15 +97,6 @@ describe('item events', function() {
       ctx.scope.$emit('items:destroy', ctx.items[0]);
       ctx.deferred.resolve();
       ctx.scope.$digest();
-      expect(ctx.confirmation).to.have.been.calledWith({
-        count: 1,
-        yes: 'Delete',
-        when: {
-          one: 'Are you sure you want to delete this item?',
-          other: 'Are you sure you want to delete these {} items?'
-        },
-        no: 'Cancel'
-      });
       expect(ctx.itemStorage.destroy).to.have.been.calledWith('ITEM1');
     });
 
@@ -112,17 +105,8 @@ describe('item events', function() {
       ctx.scope.$emit('items:destroy', ctx.items);
       ctx.deferred.resolve();
       ctx.scope.$digest();
-      expect(ctx.confirmation).to.have.been.calledWith({
-        count: 2,
-        yes: 'Delete',
-        when: {
-          one: 'Are you sure you want to delete this item?',
-          other: 'Are you sure you want to delete these {} items?'
-        },
-        no: 'Cancel'
-      });
       expect(ctx.itemStorage.destroy).to.have.been.calledWith('ITEM1');
-      expect(ctx.itemStorage.destroy).to.have.been.calledWith('ITEM2');
+      expect(ctx.itemStorage.destroy).to.have.been.calledWith({ id: 1, type: 'receipt'});
     });
   });
 

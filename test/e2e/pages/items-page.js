@@ -37,6 +37,7 @@ function ItemPage(factory, user) {
 
   this.itemDeleteConfirmation = $('.modal-dialog');
   this.itemDeleteConfirmButton = this.itemDeleteConfirmation.element(by.buttonText('Delete'));
+  this.itemDeleteCancelButton = this.itemDeleteConfirmation.element(by.buttonText('Cancel'));
 
   this.itemToolbarEdit = $('items-toolbar').$('[title="Edit"]');
   this.itemToolbarDelete = $('items-toolbar').$('[title="Delete"]');
