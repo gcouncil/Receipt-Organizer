@@ -101,7 +101,7 @@
     "ui-router": "./bower_components/angular-ui-router/release/angular-ui-router.js",
     "ui-utils": "./bower_components/angular-ui-utils/ui-utils.js",
     "d3": "./bower_components/d3/d3.js",
-    "dynamsoft": "./vendor/dynamsoft.webtwain.initiate.js",
+    "dynamsoft": "./vendor/dynamsoft/dynamsoft.webtwain.initiate.js",
     "angular-strap": "./bower_components/angular-strap/dist/angular-strap.tpl.js",
     "selectize": "./bower_components/selectize/dist/js/selectize.js",
     "sifter": "./bower_components/sifter/sifter.js",
