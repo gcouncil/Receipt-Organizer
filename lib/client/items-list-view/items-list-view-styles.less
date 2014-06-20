@@ -23,24 +23,25 @@ items-list-view {
 
 .items-list-view-body {
   .flex();
-  padding: 0 (@grid-gutter-width / 2) 15px;
+  padding: 15px (@grid-gutter-width / 2) 15px;
   overflow: auto;
   min-width: 500px;
 }
 
 .items-list-view-item {
-  margin:-1px 0;
+  position: relative;
+  z-index: 0;
+
   .flex-box();
   align-items: center;
+
+  margin-top: -1px;
 
   cursor: pointer;
   user-select: none;
 
   background: @gray-lighter;
   border: 1px solid @gray-light;
-  &:first-child {
-    margin-top: 15px;
-  }
 }
 
 .list-view-data {
@@ -71,18 +72,16 @@ items-list-view {
 }
 
 .items-list-view-item-selected {
+  z-index: 1;
   background: white;
-  outline: 1px solid @brand-primary;
-  border: 0;
-  margin: 1px;
+  border-color: @brand-primary;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .items-list-view-item-unreviewed {
+  z-index: 2;
   background: @brand-warning-bg;
-  outline: 1px solid @brand-warning-outline;
-  border: 0;
-  margin: 1px;
+  border-color: @brand-warning-outline;
 
   .items-list-view-item-review-status {
     background: @brand-warning;
