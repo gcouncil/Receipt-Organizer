@@ -1,6 +1,6 @@
 <div class="items-list-view-container">
   <div class="items-list-view-headers">
-    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data-checkbox">Sort:</div>
     <div class="list-view-data">
       <a ui-sref="items(sortParams('vendor'))">
         Vendor
@@ -38,7 +38,7 @@
     </div>
     <div class="list-view-data-sm">
       <a ui-sref="items(sortParams('type'))">
-        Type
+        Item Type
         <i class="fa fa-caret-down" ng-if="currentSort === 'type' && currentDirection === 'ASC'"></i>
         <i class="fa fa-caret-up" ng-if="currentSort === 'type' && currentDirection === 'DESC'"></i>
       </a>
@@ -63,7 +63,7 @@
       <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status">
         <span class="review-flag review">Review?</span>
         <button class="review-flag dismiss pull-right" ng-click="$emit('items:review', [item]); $event.stopPropagation()">
-          <i class="fa fa-times-circle"></i>
+          <i class="fa fa-check-circle"></i>
         </button>
       </div>
       <div ng-if="item.reviewed" class="list-view-data-sm">{{ item.type | titlecase }}</div>
