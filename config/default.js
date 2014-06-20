@@ -7,7 +7,7 @@ module.exports = {
     secretAccessKey: process.env.AWS_SECRET_KEY,
     namespace: (process.env.AWS_NAMESPACE || process.env.USER) + '-'
   },
-  nodemailer: {
+  nodeMailer: {
     transport: null,
     defaultFromEmail: ''
   },

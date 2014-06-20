@@ -18,7 +18,7 @@ function seedItems(done) {
   angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
     $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1'}, {id: 2, name: 'ITEM2'} ]);
 
-    var promise = itemStorage.load();
+    var promise = itemStorage.load(true);
 
     $httpBackend.flush();
 
@@ -49,7 +49,7 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, $q, itemStorage) {
         $httpBackend.expectGET('/api/items').respond(200, [ {id: 1, name: 'ITEM1', folders: [1]}, {id: 2, name: 'ITEM2', folders: [2]} ]);
 
-        var promise = itemStorage.load();
+        var promise = itemStorage.load(true);
 
         $httpBackend.flush();
         expect(ctx.domain.Item.load).to.have.been.calledTwice;
@@ -99,7 +99,7 @@ describe('item storage service', function() {
       angular.mock.inject(function($rootScope, $httpBackend, itemStorage) {
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
 
-        itemStorage.load();
+        itemStorage.load(true);
 
         $httpBackend.flush();
 
@@ -151,6 +151,8 @@ describe('item storage service', function() {
         ctx.scope = $rootScope.$new();
         $httpBackend.expectGET('/api/items').respond(200, ctx.items);
         $httpBackend.whenGET('/api/folders').respond(200);
+
+        itemStorage.load(true);
 
         var query = itemStorage.watch(ctx.scope, function(result) {
           ctx.result = result;
