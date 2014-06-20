@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><%= templateData.subject %></title>
+  <title><%- templateData.subject %></title>
   <style type="text/css">
     #outlook a {padding:0;}
     body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
@@ -107,21 +107,21 @@
   <tbody class="header">
     <tr>
       <td class="epson"> 
-        <img alt="epson" src="<%= templateData.siteUrl %>/img/email-logo.png" /> <span class="brand"><%= templateData.brand %></span> <%= templateData.productName %>
+        <img alt="epson" src="<%- templateData.siteUrl %>/img/email-logo.png" /> <span class="brand"><%- templateData.brand %></span> <%- templateData.productName %>
       </td>
     </tr>
   </tbody>
   <tbody class="email">
     <tr>
       <td class="content">
-        <%= content %>
+        <%- content %>
       </td>
     </tr>
   </tbody>
   <tbody class="footer">
     <tr>
       <td class="content">
-          Need help? Email us: <a href="mailto:<%= templateData.supportUrl %>" style="color: #666; text-decoration: underline;"><%= templateData.supportUrl %></a><br/>
+          Need help? Email us: <a href="mailto:<%- templateData.supportUrl %>" style="color: #666; text-decoration: underline;"><%- templateData.supportUrl %></a><br/>
         &copy; 2014 EPSON. All Rights Reserved.
       </td>
     </tr>
