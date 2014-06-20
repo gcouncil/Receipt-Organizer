@@ -66,7 +66,12 @@ describe('UsersHandler', function() {
 
         var app = express();
         app.use(require('body-parser')());
-        app.use(handler(this.manager).create);
+
+        this.mailer = {
+          sendSignupEmail: sinon.stub().callsArgWith(1, null)
+        };
+
+        app.use(handler(this.manager, this.mailer).create);
 
         request(app)
         .post('/')
@@ -86,6 +91,10 @@ describe('UsersHandler', function() {
 
       it('should create a user', function() {
         expect(this.manager.create).to.have.been.calledWith({ email: 'blewis@example.com', password: 'password' }, sinon.match.func);
+      });
+
+      it('should trigger a signup email', function() {
+        expect(this.mailer.sendSignupEmail).to.have.been.called;
       });
 
       it('should respond with the newly created user', function() {

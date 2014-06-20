@@ -7,6 +7,10 @@ module.exports = {
     secretAccessKey: process.env.AWS_SECRET_KEY,
     namespace: (process.env.AWS_NAMESPACE || process.env.USER) + '-'
   },
+  nodemailer: {
+    transport: null,
+    defaultFromEmail: ''
+  },
   database: {
     database: 'epson_receipts_' + env
   },
