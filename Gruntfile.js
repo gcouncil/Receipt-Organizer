@@ -53,9 +53,16 @@ module.exports = function(grunt) {
         src: '*',
         dest: 'build/assets/fonts'
       }]
+    },
+    dynamsoft: {
+      files: [{
+        expand: true,
+        cwd: './vendor/dynamsoft',
+        src: '*',
+        dest: 'build/assets/dynamsoft'
+      }]
     }
   });
-
 
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.config('less', {
@@ -134,16 +141,15 @@ module.exports = function(grunt) {
     }
   });
 
-
   // Uglify
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.config('uglify', {
     scripts: {
       src: 'build/assets/index.js',
-      dest: 'build/assets/index.min.js',
-      options: {
-        mangle: false
-      }
+      dest: 'build/assets/index.min.js'
+    },
+    options: {
+      mangle: false
     }
   });
 
@@ -203,7 +209,9 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('./tasks');
 
-  grunt.registerTask('build', ['copy', 'browserify:scripts', 'less', 'autoprefixer', 'uglify']);
+  var buildTasks = ['copy', 'browserify:scripts', 'less', 'autoprefixer'];
+  if (grunt.config('env.production')) { buildTasks.push('uglify'); }
+  grunt.registerTask('build', buildTasks);
 
   grunt.registerTask('test:client', ['browserify:test', 'karma:run']);
   grunt.registerTask('test:server', ['mochaTest:server']);

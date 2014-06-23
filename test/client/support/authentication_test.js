@@ -2,6 +2,24 @@ var angular = require('angular');
 var expect = require('chai').expect;
 
 describe('authentication service', function() {
+  beforeEach(function() {
+    var ctx = this;
+    ctx.currentUser = {
+      get: ctx.sinon.stub(),
+      set: ctx.sinon.stub()
+    };
+
+    ctx.state = {
+      go: ctx.sinon.stub()
+    };
+
+    angular.mock.module('epsonreceipts', {
+      currentUser: ctx.currentUser,
+      $state: ctx.state
+    });
+
+  });
+
   context('when skipping authorization', function() {
     beforeEach(function() {
       var ctx = this;
@@ -29,27 +47,14 @@ describe('authentication service', function() {
     });
   });
 
-  beforeEach(function() {
-    var ctx = this;
-    ctx.currentUser = {
-      get: ctx.sinon.stub(),
-      set: ctx.sinon.stub()
-    };
-
-    ctx.state = {
-      go: ctx.sinon.stub()
-    };
-
-    angular.mock.module('epsonreceipts', {
-      currentUser: ctx.currentUser,
-      $state: ctx.state
-    });
-  });
-
   context('with a user', function() {
     beforeEach(function() {
       var ctx = this;
       ctx.currentUser.get.returns({ token: 'TOKEN' });
+
+      angular.mock.inject(function($httpBackend) {
+        $httpBackend.whenGET('/api/items').respond(200, []);
+      });
     });
 
     it('should add an Authorization header with a bearer token', function() {

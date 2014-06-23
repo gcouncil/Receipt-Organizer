@@ -242,9 +242,12 @@ describe('User Settings', function() {
       this.page.firstField.element(by.model('field.selected')).click();
       $('.fields-settings-save').click();
 
+      browser.waitForAngular();
+
       // go to items page
       browser.get(helpers.rootUrl + '/#/items');
       element(by.repeater('item in items track by item.id').row(0)).click();
+
       expect(element(by.repeater('field in customFields').row(0)).$('span').getText()).to.eventually.equal('Custom Field 1');
     });
   });

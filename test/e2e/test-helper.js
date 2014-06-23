@@ -38,6 +38,12 @@ beforeEach(function() {
   });
 });
 
+afterEach(function() {
+  browser.executeScript(function() {
+    window.localStorage.clear();
+  });
+});
+
 module.exports = _.extend({
   rootUrl: 'http://localhost:9000/',
   expect: chai.expect,
