@@ -336,6 +336,11 @@ describe('Filter by Category', function() {
     this.page = new ItemPage(this.factory);
 
     this.page.user.then(function(user) {
+      user.settings.categories = [
+        {name:'Tax'},
+        {name:'Office Expenses'}
+      ];
+
       _.times(2, function(i) {
         self.factory.items.create({
           vendor: 'Tax Item',
@@ -360,7 +365,11 @@ describe('Filter by Category', function() {
     var self = this;
 
     expect(this.page.items.count()).to.eventually.equal(4);
-    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+
+    this.page.categoryFilterInput.$('.selectize-input input')
+      .sendKeys(protractor.Key.BACK_SPACE) //clear input
+      .sendKeys('Tax')
+      .sendKeys(protractor.Key.ENTER);
 
     expect(this.page.items.count()).to.eventually.equal(2);
     browser.driver.call(function() {
@@ -374,7 +383,11 @@ describe('Filter by Category', function() {
   it('should clear the filters', function() {
     expect(this.page.items.count()).to.eventually.equal(4);
 
-    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+    this.page.categoryFilterInput.$('.selectize-input input')
+      .sendKeys(protractor.Key.BACK_SPACE) //clear input
+      .sendKeys('Tax')
+      .sendKeys(protractor.Key.ENTER);
+
     expect(this.page.items.count()).to.eventually.equal(2);
 
     this.page.itemToolbarReset.click();
@@ -383,7 +396,11 @@ describe('Filter by Category', function() {
 
   it('should clear the filters with the filter-reset button', function() {
     expect(this.page.items.count()).to.eventually.equal(4);
-    this.page.categoryFilterInput.$('select[name="category-filter"]').sendKeys('Tax');
+        
+    this.page.categoryFilterInput.$('.selectize-input input')
+      .sendKeys(protractor.Key.BACK_SPACE) //clear input
+      .sendKeys('Tax')
+      .sendKeys(protractor.Key.ENTER);
 
     expect(this.page.items.count()).to.eventually.equal(2);
 
