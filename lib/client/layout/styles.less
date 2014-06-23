@@ -10,23 +10,34 @@ toplevel-layout {
 }
 
 .toplevel-layout-sidebar {
-  background: @gray;
-  color: #ccc;
+  background: @gray-lighter;
+  color: black;
+
   width: 200px;
   .noflex();
   .flex-box(column);
+}
+
+.toplevel-layout-scanbutton {
+  width: 100%;
+  height: 125px;
+  .flex-box();
+  justify-content: center;
+  align-items: center;
+
+  background: #b0d3f0;
 }
 
 .toplevel-layout-header {
   .noflex();
 
   .navbar;
-  .navbar-inverse;
+  .navbar-default;
   .container-fluid;
   margin: 0;
 
-  background: @gray-dark;
-  color: white;
+  background: white;
+
   .profile {
     text-decoration: underline;
   }

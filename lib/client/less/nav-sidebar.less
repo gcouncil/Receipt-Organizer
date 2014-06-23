@@ -2,43 +2,44 @@
   > li {
     margin-top: 0 !important;
 
+    border-bottom: solid 1px @gray-light;
+    &.primary:first-child { border-top: solid 1px @gray-light; }
+
     > a {
-      color: white;
-      border-bottom: solid 1px @gray-light;
+      color: @gray;
       border-left: solid 4px transparent;
 
       .btn-link {
-        color: white;
+        color: @gray;
       }
 
       &:hover,
       &:focus {
-        background-color: @gray-dark;
+        background-color: white;
       }
     }
 
     &.primary > a {
       text-transform: uppercase;
+      border-left: solid 4px @gray;
 
-      background: @gray-dark;
-      border-bottom: solid 1px @gray-darker;
+      background: @gray-light;
 
       &:hover,
       &:focus {
-        background-color: @gray-darker;
+        background-color: white;
       }
     }
 
     // Active state
     &.active > a {
       .btn-link {
-        color: black;
+        color: @gray;
       }
 
       &,
       &:hover,
       &:focus {
-        color: black;
         background-color: white;
         border-left: solid 4px @brand-primary;
       }
