@@ -1,7 +1,7 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe.only('items toolbar category filter input', function() {
+describe('items toolbar category filter input', function() {
   beforeEach(function() {
     var ctx = this;
 
