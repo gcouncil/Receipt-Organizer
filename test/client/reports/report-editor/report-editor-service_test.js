@@ -10,6 +10,8 @@ describe('report editor service', function() {
     ];
     ctx.report = { id: 7, items: [] };
 
+    ctx.report.clone = ctx.sinon.stub().returns(ctx.report);
+
     ctx.reportStorage = {};
     ctx.itemStorage = {};
 
@@ -23,7 +25,8 @@ describe('report editor service', function() {
     angular.mock.module('epsonreceipts.reports', {
       reportStorage: ctx.reportStorage,
       itemStorage: ctx.itemStorage,
-      $modal: ctx.modal
+      $modal: ctx.modal,
+      $stateParams: {}
     });
   });
 

@@ -100,6 +100,9 @@
 .form-grid-cell-checkbox {
   display: inline-block;
   padding: @form-grid-padding-vertical @form-grid-padding-horizontal;
+
+  line-height: 45px - (@form-grid-padding-vertical * 2);
+
   font-weight: normal;
   cursor: pointer;
 }
@@ -229,90 +232,6 @@
   padding: @form-grid-padding-vertical @form-grid-padding-horizontal;
   background: @state-info-bg;
   text-align: center;
-}
-
-/////
-
-.box-input-form {
-  .flex-box(column);
-}
-
-.box-input, .box-input-checkbox, .box-input-group, .box-input-other {
-  .noflex;
-  margin: 0;
-  padding: 0;
-  border-bottom: solid 1px @gray-light;
-}
-
-.box-input-checkbox {
-  padding: 6px;
-
-  font-weight: normal;
-  cursor: pointer;
-}
-
-.box-input {
-  position: relative;
-  height: 49px;
-
-  > .box-input-label {
-    position: absolute;
-    z-index: 1;
-
-    top: 6px;
-    left: 12px;
-
-    font-size: 10px;
-    font-weight: normal;
-
-    color: @gray-light;
-  }
-
-  > .box-input-control {
-    width: 100%;
-    height: 100%;
-
-    padding: 22px 12px 6px;
-    border: none;
-    margin: 0;
-
-    outline: none;
-
-    &:focus {
-      box-shadow: inset 0 0 4px @brand-info;
-    }
-  }
-
-  &.has-warning {
-    > input {
-      box-shadow: inset 0 0 4px @brand-warning;
-    }
-  }
-
-  &.has-error {
-    > input {
-      box-shadow: inset 0 0 4px @brand-danger;
-    }
-  }
-}
-
-.box-input-group {
-  .flex-box(row);
-  border-bottom: none;
-
-  > .box-input, > .box-input-checkbox {
-    .flex(1, 1, 45px);
-
-    border-right: solid 1px @gray-light;
-
-    &:last-child {
-      border-right: none;
-    }
-  }
-}
-
-.box-input-other {
-  background: @gray-lighter;
 }
 
 .note-caret {

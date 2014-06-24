@@ -22,8 +22,7 @@ function ItemPage(factory, user) {
   this.receiptEditorFooter = this.receiptEditor.$('.modal-footer');
 
   this.reportEditor = $('.report-editor-dialog');
-  this.reportEditorSave = this.reportEditor.element(by.buttonText('Save & Close'));
-  this.reportEditorCancel = this.reportEditor.element(by.buttonText('Cancel'));
+  this.reportEditorSave = this.reportEditor.element(by.buttonText('Save Changes'));
 
   var itemRepeater = by.repeater('item in items track by item.id');
   this.items = element.all(itemRepeater);
