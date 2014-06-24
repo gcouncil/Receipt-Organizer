@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-lg btn-success">Export</button>
+        <button type="button" ng-click="cancel(); $emit('reports:exportReport', report);" class="btn btn-lg btn-success">Export</button>
       </div>
     </div>
   </div>
