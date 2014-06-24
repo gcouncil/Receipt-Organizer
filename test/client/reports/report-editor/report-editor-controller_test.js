@@ -33,7 +33,8 @@ describe('report editor controller', function() {
         $scope: ctx.scope,
         deferred: ctx.deferred,
         reportStorage: ctx.reportStorage,
-        itemStorage: ctx.itemStorage
+        itemStorage: ctx.itemStorage,
+        $stateParams: {}
       });
       ctx.scope.$digest();
     });
@@ -66,7 +67,7 @@ describe('report editor controller', function() {
       ctx.scope.save();
       ctx.serverPromise.resolve();
       ctx.scope.$digest();
-      expect(ctx.reportStorage.persist).to.have.been.calledWith({ items: [1, 2] });
+      expect(ctx.reportStorage.persist).to.have.been.calledWith(ctx.scope.report);
       expect(ctx.deferred).to.have.been.resolved;
     });
 
@@ -76,7 +77,7 @@ describe('report editor controller', function() {
       ctx.scope.save();
       ctx.serverPromise.reject();
       ctx.scope.$digest();
-      expect(ctx.reportStorage.persist).to.have.been.calledWith({ items: [1, 2] });
+      expect(ctx.reportStorage.persist).to.have.been.calledWith(ctx.scope.report);
       expect(ctx.deferred.promise).to.have.been.rejected;
     });
 

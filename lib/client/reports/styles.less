@@ -26,20 +26,19 @@ report-organizer {
 
   width: 800px;
 
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-header, .modal-footer {
+    background: @gray-lighter;
+    border-color: @gray-light;
+  }
+
   .modal-header {
     position: relative;
-    padding-left: ~"calc(50% + 12px)";
 
-    > input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 50%;
-      padding-left: 52px;
-
-      border: none;
-    }
+    text-align: right;
   }
 
   .modal-body {
@@ -52,6 +51,20 @@ report-organizer {
 
   .modal-footer {
     margin: 0;
+  }
+}
+
+.report-editor-name {
+  float: left;
+  text-align: left;
+
+  font-size: 1.6em;
+
+  > input {
+    width: 175px;
+
+    background: none;
+    border: none;
   }
 }
 

@@ -2,42 +2,63 @@
   <div class="modal-dialog report-editor-dialog">
     <form name="form" class="modal-content" ng-submit="save()">
       <div class="modal-header">
-        <input type="text" ng-model="report.name"/>
-        <button type="button" class="btn btn-default">Delete Report</button>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">
-          <i class="fa fa-times-circle"></i>
+        <label class="report-editor-name">
+          <i class="fa fa-edit"></i>
+          <input type="text" ng-model="report.name"/>
+        </label>
+        <button type="button" class="btn btn-default" ng-click="destroy()">Delete Report</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="!items.length">Save Changes</button>
+        <button type="button" class="btn btn-plain" ng-click="cancel()">
+          <i class="fa fa-times-circle fa-lg"></i>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-grid report-editor-form">
           <div class="form-grid-group">
             <label form-group class="form-grid-cell">
-              <span class="form-grid-label">Date Range</span>
-              <span class="form-grid-input">{{ summary.since | date }} to {{ summary.until | date }}</span>
+              <span class="form-grid-label">Start Date</span>
+              <span class="form-grid-input">{{ summary.since | date }}</span>
             </label>
 
-             <label form-group class="form-grid-cell" ng-class="">
+            <label form-group class="form-grid-cell">
+              <span class="form-grid-label">End Date</span>
+              <span class="form-grid-input">{{ summary.until | date }}</span>
+            </label>
+
+            <label form-group class="form-grid-cell">
+              <span class="form-grid-label">Number of Items</span>
+              <span class="form-grid-input">{{ summary.count }}</span>
+            </label>
+
+            <label form-group class="form-grid-cell">
               <span class="form-grid-label">Items Total</span>
               <span class="form-grid-input">{{ summary.total | currency }}</span>
             </label>
-          </div>
 
-          <div class="form-grid-group">
+            <label form-group class="form-grid-cell" ng-class="">
+              <span class="form-grid-label">Total Requested</span>
+              <span class="form-grid-input">{{ summary.totalRequested | currency }}</span>
+            </label>
+
             <label form-group class="form-grid-cell">
-              <span class="form-grid-label">Number of Items</span>
-              <input class="form-grid-input" ng-model="summary.count" readonly>
-            </label>
-
-             <label form-group class="form-grid-cell form-grid-cell-checkbox" ng-class="">
-              <input type="checkbox" ng-model="report.reimbursed">
-              Reimbursed
+              <span class="form-grid-cell-checkbox">
+                <input type="checkbox" ng-model="report.reimbursed">
+                Reimbursed
+              </span>
             </label>
           </div>
+
+          <label class="form-grid-cell form-grid-cell-custom form-group">
+            <span ng-click="showNotes = !showNotes">
+              <i class="fa note-caret" ng-class="{ 'fa-caret-right': !showNotes, 'fa-caret-down': showNotes }"></i>
+              Add a Note
+            </span>
+            <textarea class="form-control" rows="3" ng-model="report.comments" ng-show="showNotes" style="display: block; width: 100%;"></textarea>
+          </label>
         </div>
         <div class="report-editor-toolbar navbar">
           <div class="container-fluid">
-            <button class="btn btn-default navbar-btn">Remove Item(s)</button>
+            <button type="button" class="btn btn-default navbar-btn" ng-click="remove(selection.selectedItems)">Remove Item(s)</button>
 
             <ul class="nav navbar-nav navbar-right">
               <li>

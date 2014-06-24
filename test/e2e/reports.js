@@ -43,7 +43,7 @@ function createUserAndReports(self, PageType) {
   self.page.get();
 }
 
-describe('items page', function() {
+describe('report editor', function() {
   beforeEach(function() {
     createUserAndReports(this);
   });
@@ -64,16 +64,18 @@ describe('items page', function() {
     });
 
     it('should remove items in the report editor', function() {
-      expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Slow Right');
-      expect(this.page.reportEditor.element(by.repeater('item in items').row(1)).getText()).to.eventually.contain('Quick Left');
-      this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
+      expect(this.page.reportEditor.element(by.repeater('item in items track by item.id').row(0)).getText()).to.eventually.contain('Slow Right');
+      expect(this.page.reportEditor.element(by.repeater('item in items track by item.id').row(1)).getText()).to.eventually.contain('Quick Left');
+      this.page.reportEditor.element(by.repeater('item in items track by item.id').row(0)).$('input[type="checkbox"]').click();
+      this.page.reportEditor.element(by.buttonText('Remove Item(s)')).click();
       expect(this.page.reportEditor.getText()).not.to.eventually.contain('Slow Right');
-      expect(this.page.reportEditor.element(by.repeater('item in items').row(0)).getText()).to.eventually.contain('Quick Left');
+      expect(this.page.reportEditor.element(by.repeater('item in items track by item.id').row(0)).getText()).to.eventually.contain('Quick Left');
     });
 
     it('should not be saveable without items', function() {
-      this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
-      this.page.reportEditor.element(by.repeater('item in items').row(0)).element(by.linkText('Remove')).click();
+      this.page.reportEditor.element(by.repeater('item in items track by item.id').row(0)).$('input[type="checkbox"]').click();
+      this.page.reportEditor.element(by.repeater('item in items track by item.id').row(1)).$('input[type="checkbox"]').click();
+      this.page.reportEditor.element(by.buttonText('Remove Item(s)')).click();
       expect(this.page.reportEditorSave.getAttribute('disabled')).to.eventually.equal('true');
     });
   });

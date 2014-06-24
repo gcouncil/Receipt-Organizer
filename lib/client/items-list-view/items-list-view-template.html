@@ -1,5 +1,5 @@
 <div class="items-list-view-container">
-  <div class="items-list-view-headers">
+  <div class="items-list-view-headers" ng-if="!options.viewOnly">
     <div class="list-view-data-checkbox">Sort:</div>
     <div class="list-view-data">
       <a ui-sref="items(sortParams('vendor'))">
@@ -42,6 +42,27 @@
         <i class="fa fa-caret-down" ng-if="currentSort === 'type' && currentDirection === 'ASC'"></i>
         <i class="fa fa-caret-up" ng-if="currentSort === 'type' && currentDirection === 'DESC'"></i>
       </a>
+    </div>
+  </div>
+    <div class="items-list-view-headers" ng-if="options.viewOnly">
+    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data">
+      Vendor
+    </div>
+    <div class="list-view-data-sm">
+      Total
+    </div>
+    <div class="list-view-data">
+      Category
+    </div>
+    <div class="list-view-data">
+      Folders
+    </div>
+    <div class="list-view-data">
+      Date
+    </div>
+    <div class="list-view-data-sm">
+      Item Type
     </div>
   </div>
   <div class="items-list-view-body">
