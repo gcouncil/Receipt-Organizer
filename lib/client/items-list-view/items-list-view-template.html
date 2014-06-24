@@ -1,6 +1,6 @@
 <div class="items-list-view-container">
   <div class="items-list-view-headers">
-    <div class="list-view-data-checkbox">Sort:</div>
+    <div class="list-view-data-checkbox">{{ options.viewOnly ? '' : 'Sort:' }}</div>
     <div class="list-view-data">
       <a ui-sref="items(sortParams('vendor'))">
         Vendor

@@ -3,10 +3,10 @@
     <form name="form" class="modal-content" ng-submit="save()">
       <div class="modal-header">
         <input type="text" ng-model="report.name"/>
-        <button type="button" class="btn btn-default">Delete Report</button>
+        <button type="button" class="btn btn-default" ng-click="destroy()">Delete Report</button>
         <button type="submit" class="btn btn-primary">Save Changes</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">
-          <i class="fa fa-times-circle"></i>
+        <button type="button" class="btn btn-plain" ng-click="cancel()">
+          <i class="fa fa-times-circle fa-lg"></i>
         </button>
       </div>
       <div class="modal-body">
@@ -26,18 +26,20 @@
           <div class="form-grid-group">
             <label form-group class="form-grid-cell">
               <span class="form-grid-label">Number of Items</span>
-              <input class="form-grid-input" ng-model="summary.count" readonly>
+              <span class="form-grid-input">{{ summary.count }}</span>
             </label>
 
-             <label form-group class="form-grid-cell form-grid-cell-checkbox" ng-class="">
-              <input type="checkbox" ng-model="report.reimbursed">
-              Reimbursed
+            <label form-group class="form-grid-cell">
+              <span class="form-grid-cell-checkbox">
+                <input type="checkbox" ng-model="report.reimbursed">
+                Reimbursed
+              </span>
             </label>
           </div>
         </div>
         <div class="report-editor-toolbar navbar">
           <div class="container-fluid">
-            <button class="btn btn-default navbar-btn">Remove Item(s)</button>
+            <button type="button" class="btn btn-default navbar-btn" ng-click="remove(selection.selectedItems)">Remove Item(s)</button>
 
             <ul class="nav navbar-nav navbar-right">
               <li>
