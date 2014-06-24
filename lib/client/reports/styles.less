@@ -19,70 +19,53 @@ report-organizer {
   }
 }
 
-// TODO: WHY ARE THESE NOT SCOPED?
-.report-dialog {
+.report-editor-dialog > {
+  user-select: none;
+
+  width: 800px;
+
   .modal-header {
-    height: 600px;
+    position: relative;
+    padding-left: ~"calc(50% + 12px)";
+
+    > input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 50%;
+      padding-left: 52px;
+
+      border: none;
+    }
   }
 
-  .modal-body ul {
-    list-style: none;
-    padding-left: 0;
+  .modal-body {
+    .flex-box(column);
+    height: 600px;
+    overflow: hidden;
+
+    padding: 0;
+  }
+
+  .modal-footer {
     margin: 0;
   }
+}
 
-  .modal-sidebar {
-    background: #ddd;
-    height: 600px;
-    padding-right: 0;
-    padding-left: 15px;
-  }
+.report-editor-content {
+  .flex();
+  .flex-box(column);
+  overflow: auto;
+}
 
-  .modal-body-button-toggle {
-    margin-top: 20px;
-    text-align: center;
-  }
+.report-editor-toolbar {
+  margin: 0;
+  border-bottom: solid 1px @gray-light;
+  overflow: hidden;
+}
 
-  .formatting-option {
-    margin-top: 20px;
-    font-size: 1.20em;
-  }
-
-  .formatting-option-icons {
-    font-size: 2.75em;
-  }
-
-  .report-editor-dialog > {
-    user-select: none;
-
-    width: 992px;
-
-    .modal-body {
-      height: 600px;
-
-      padding: 0;
-
-      .flex-box();
-    }
-
-  }
-
-  .items-listing {
-    overflow: auto;
-    height: 400px;
-  }
-
-  .all-reports {
-    background-color: #f7f7f9;
-    padding: 5px 0px 5px 5px;
-    margin-top: 10px;
-  }
-
-  .all-reports button {
-    background-color: #222020;
-  }
-
-  .formatting-header {
-    border-bottom: 1px solid #ccc;
-  }
+.report-editor-form {
+  .noflex();
+  overflow: hidden;
 }

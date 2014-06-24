@@ -33,7 +33,7 @@
     <div class="thumbnail-value">{{ item.category }}</div>
   </div>
 </div>
-<div class="thumbnail-banner" ng-if="!item.reviewed">
+<div class="thumbnail-banner" ng-if="!(item.reviewed || options.viewOnly)">
   Review
 
   <span class="thumbnail-banner-action" ng-click="$emit('items:review', [item]); $event.stopPropagation()">Accept</span>
