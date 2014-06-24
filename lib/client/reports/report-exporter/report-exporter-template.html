@@ -9,21 +9,16 @@
 
       <div class="modal-body">
         <div class="export-type-container">
-          <div class="export-type-selection">
+          <label class="export-type-selection">
             <input type="radio" ng-model="settings.exportType" value="download"/>
             <i class="fa fa-download"></i>
             <h3>Download</h3>
-          </div>
-          <div class="export-type-selection">
-            <input type="radio" ng-model="settings.exportType" value="email"/>
-            <i class="fa fa-envelope-o"></i>
-            <h3>Email</h3>
-          </div>
-          <div class="export-type-selection">
+          </label>
+          <label class="export-type-selection">
             <input type="radio" ng-model="settings.exportType" value="print"/>
             <i class="fa fa-print"></i>
             <h3>Print</h3>
-          </div>
+          </label>
         </div>
         <div class="file-extension-container">
           <label class="form-grid-group form-group">
@@ -36,30 +31,30 @@
           </label>
         </div>
         <div class="export-details-container">
-          <div class="export-details-selection" ng-class="{ active: isActive('table')}">
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
             <input type="radio" ng-model="settings.exportDetails" value="table"/>
             <i class="fa fa-table"></i>
             <h5>Table Only</h5>
-          </div>
-          <div class="export-details-selection" ng-class="{ active: isActive('table')}">
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
             <input type="radio" ng-model="settings.exportDetails" value="table&images"/>
             <i class="fa fa-table"></i>+
             <i class="fa fa-image"></i>
             <h5>Table & Images</h5>
-          </div>
-          <div class="export-details-selection" ng-class="{ active: isActive('table')}">
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
             <input type="radio" ng-model="settings.exportDetails" value="images&itemizations"/>
             <i class="fa fa-image"></i>+
             <i class="fa fa-list-ul"></i>
             <h5>Images & Itemizations</h5>
-          </div>
-          <div class="export-details-selection" ng-class="{ active: isActive('table')}">
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
             <input type="radio" ng-model="settings.exportDetails" value="table&images&itemizations"/>
             <i class="fa fa-table"></i>+
             <i class="fa fa-image"></i>+
             <i class="fa fa-list-ul"></i>
             <h5>Table, Images & Itemizations</h5>
-          </div>
+          </label>
         </div>
       </div>
 

@@ -7,7 +7,7 @@
 
   .modal-body {
     width: 960px - 2px;
-    height: @report-exporter-height;
+    height:auto;
 
     padding: 0;
 
@@ -66,6 +66,8 @@
 .export-type-selection {
   .flex(1,1, 1px);
 
+  height: 280px;
+
   padding: 20px;
   border-bottom: 1px solid @gray;
 
@@ -85,26 +87,31 @@
   }
 
   > i {
-    font-size: 6em;
+    font-size: 10em;
   }
 }
 
 .file-extension-container {
+  .flex-box();
+  align-items: center;
   padding: 15px 225px;
   border-bottom: 1px solid @gray;
+  height: 150px;
   > label {
+    .flex(1, 1, 1px);
     margin: 0;
   }
 }
 
 .export-details-container {
   .flex-box();
+  align-items: center;
   padding: 20px 0;
+  height: 150px;
 }
 
 .export-details-selection {
   .flex(1, 1, 1px);
-
   text-align: center;
 
   > input {
