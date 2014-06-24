@@ -159,10 +159,11 @@ describe('item storage service', function() {
         });
 
         query.setSort('vendor');
-        expect(ctx.result).to.deep.equal(ctx.items.reverse());
 
         $httpBackend.flush();
         $rootScope.$digest();
+
+        expect(ctx.result).to.deep.equal(ctx.items.reverse());
       });
 
     });
