@@ -25,30 +25,30 @@
             <span>File Type:</span>
             <select selectize class="form-control"
               selectize-options="settings.exportOptions"
-              selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
+              selectize-settings="{ valueField: 'value', dropdownParent: 'body', maxItems: 1 }"
               ng-model="settings.fileExtension">
             </select>
           </label>
         </div>
-        <div class="export-details-container">
+        <div class="export-details-container" ng-if="settings.fileExtension === 'pdf'">
           <label class="export-details-selection" ng-class="{ active: isActive('table')}">
             <input type="radio" ng-model="settings.exportDetails" value="table"/>
             <i class="fa fa-table"></i>
             <h5>Table Only</h5>
           </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+          <label class="export-details-selection" ng-class="{ active: isActive('table&images')}">
             <input type="radio" ng-model="settings.exportDetails" value="table&images"/>
             <i class="fa fa-table"></i>+
             <i class="fa fa-image"></i>
             <h5>Table & Images</h5>
           </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+          <label class="export-details-selection" ng-class="{ active: isActive('images&itemizations')}">
             <input type="radio" ng-model="settings.exportDetails" value="images&itemizations"/>
             <i class="fa fa-image"></i>+
             <i class="fa fa-list-ul"></i>
             <h5>Images & Itemizations</h5>
           </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+          <label class="export-details-selection" ng-class="{ active: isActive('table&images&itemizations')}">
             <input type="radio" ng-model="settings.exportDetails" value="table&images&itemizations"/>
             <i class="fa fa-table"></i>+
             <i class="fa fa-image"></i>+
