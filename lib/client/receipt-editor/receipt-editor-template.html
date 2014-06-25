@@ -62,7 +62,7 @@
               <span class="form-grid-label">Date</span>
               <input class="form-grid-input" ng-model="item.date" bs-datepicker>
             </label>
-            
+
             <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
               <span class="form-grid-label">Payment Type</span>
               <input class="form-grid-input" ng-model="item.paymentType">
@@ -148,7 +148,7 @@
             <span ng-click="showNotes = !showNotes">
               <i class="fa note-caret" ng-class="{ 'fa-caret-right': !showNotes, 'fa-caret-down': showNotes }"></i>
               Add a Note
-            </span> 
+            </span>
             <textarea class="form-control" rows="4" ng-model="item.comments" ng-show="showNotes" style="display: block; width: 100%;"></textarea>
           </label>
 

@@ -1,5 +1,5 @@
 <div class="items-list-view-container">
-  <div class="items-list-view-headers">
+  <div class="items-list-view-headers" ng-if="!options.viewOnly">
     <div class="list-view-data-checkbox">Sort:</div>
     <div class="list-view-data">
       <a ui-sref="items(sortParams('vendor'))">
@@ -44,6 +44,27 @@
       </a>
     </div>
   </div>
+    <div class="items-list-view-headers" ng-if="options.viewOnly">
+    <div class="list-view-data-checkbox"></div>
+    <div class="list-view-data">
+      Vendor
+    </div>
+    <div class="list-view-data-sm">
+      Total
+    </div>
+    <div class="list-view-data">
+      Category
+    </div>
+    <div class="list-view-data">
+      Folders
+    </div>
+    <div class="list-view-data">
+      Date
+    </div>
+    <div class="list-view-data-sm">
+      Item Type
+    </div>
+  </div>
   <div class="items-list-view-body">
     <div class="items-list-view-item"
       ng-repeat="item in items track by item.id"
@@ -51,7 +72,7 @@
       'items-list-view-item-unreviewed': !item.reviewed,
       'items-list-view-item-selected': selection.isSelected(item.id)
       }"
-      ng-click="$emit('items:edit', item)">
+      ng-click="options.viewOnly || $emit('items:edit', item)">
       <label class="list-view-data-checkbox" ng-click="$event.stopPropagation()">
         <is-selected selection="selection" selection-id="item.id"></is-selected>
       </label>
@@ -60,13 +81,13 @@
       <div class="list-view-data">{{ item.category }}</div>
       <div class="list-view-data">{{ getItemFolderNames(item) }}</div>
       <div class="list-view-data">{{ item.date | date: 'shortDate' }}</div>
-      <div ng-if="!item.reviewed" class="list-view-data-sm items-list-view-item-review-status">
+      <div ng-if="!(item.reviewed || options.viewOnly)" class="list-view-data-sm items-list-view-item-review-status">
         <span class="review-flag review">Review?</span>
         <button class="review-flag dismiss pull-right" ng-click="$emit('items:review', [item]); $event.stopPropagation()">
           <i class="fa fa-check-circle"></i>
         </button>
       </div>
-      <div ng-if="item.reviewed" class="list-view-data-sm">{{ item.type | titlecase }}</div>
+      <div ng-if="item.reviewed || options.viewOnly" class="list-view-data-sm">{{ item.type | titlecase }}</div>
     </div>
   </div>
 </div>

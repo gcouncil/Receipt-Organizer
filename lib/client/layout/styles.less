@@ -34,8 +34,20 @@ toplevel-layout {
   .navbar;
   .navbar-default;
   .container-fluid;
-  margin: 0;
+  
+  li {
+    &::after{
+      content: " | "
+    }
+    &:last-child::after{
+      content: ""
+    }
+    > a {
+      display: inline-block;
+    }
+  }
 
+  margin: 0;
   background: white;
 
   .profile {

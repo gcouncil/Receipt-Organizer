@@ -1,0 +1,75 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog report-export-dialog">
+    <form name="form" class="modal-content" ng-submit="save()">
+
+      <div class="modal-header">
+        <label for="report-name">{{ report.name }}</label>
+        <button type="button" class="btn btn-plain pull-right" ng-click="cancel()" title="Close"><i class="fa fa-times-circle"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="export-type-container">
+          <label class="export-type-selection">
+            <input type="radio" ng-model="settings.exportType" value="download"/>
+            <i class="fa fa-download"></i>
+            <h3>Download</h3>
+          </label>
+          <label class="export-type-selection">
+            <input type="radio" ng-model="settings.exportType" value="print"/>
+            <i class="fa fa-print"></i>
+            <h3>Print</h3>
+          </label>
+        </div>
+        <div class="file-extension-container">
+          <label class="form-grid-group form-group">
+            <span>File Type:</span>
+            <select selectize class="form-control"
+              selectize-options="settings.exportOptions"
+              selectize-settings="{ valueField: 'text', dropdownParent: 'body', maxItems: 1 }"
+              ng-model="settings.fileExtension">
+            </select>
+          </label>
+        </div>
+        <div class="export-details-container">
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+            <input type="radio" ng-model="settings.exportDetails" value="table"/>
+            <i class="fa fa-table"></i>
+            <h5>Table Only</h5>
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+            <input type="radio" ng-model="settings.exportDetails" value="table&images"/>
+            <i class="fa fa-table"></i>+
+            <i class="fa fa-image"></i>
+            <h5>Table & Images</h5>
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+            <input type="radio" ng-model="settings.exportDetails" value="images&itemizations"/>
+            <i class="fa fa-image"></i>+
+            <i class="fa fa-list-ul"></i>
+            <h5>Images & Itemizations</h5>
+          </label>
+          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+            <input type="radio" ng-model="settings.exportDetails" value="table&images&itemizations"/>
+            <i class="fa fa-table"></i>+
+            <i class="fa fa-image"></i>+
+            <i class="fa fa-list-ul"></i>
+            <h5>Table, Images & Itemizations</h5>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left"
+          ng-click="$emit('reports:editReport', report); cancel()">
+          Back
+        </button>
+
+        <button type="button" class="btn btn-success"
+          ng-click="save()">
+          Send
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
