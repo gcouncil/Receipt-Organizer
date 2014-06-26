@@ -8,18 +8,6 @@
       </div>
 
       <div class="modal-body">
-        <div class="export-type-container">
-          <label class="export-type-selection">
-            <input type="radio" ng-model="settings.exportType" value="download"/>
-            <i class="fa fa-download"></i>
-            <h3>Download</h3>
-          </label>
-          <label class="export-type-selection">
-            <input type="radio" ng-model="settings.exportType" value="print"/>
-            <i class="fa fa-print"></i>
-            <h3>Print</h3>
-          </label>
-        </div>
         <div class="file-extension-container">
           <label class="form-grid-group form-group">
             <span>File Type:</span>
@@ -65,9 +53,20 @@
         </button>
 
         <button type="button" class="btn btn-success"
-          ng-click="save()">
-          Send
+          ng-click="generate()"
+          ng-if="!processing"
+          >
+          {{ reportUrl ? 'Re-Generate' : 'Generate' }}
         </button>
+
+        <div ng-if="processing">
+          Generating Report <i class="fa fa-spin fa-spinner"></i>
+        </div>
+
+        <div class="btn-group" ng-if="reportUrl">
+          <a class="btn btn-primary" download ng-href="{{ reportUrl }}">Download</a>
+          <a class="btn btn-primary" target="_blank" ng-href="{{ reportUrl }}">Open</a>
+        </div>
       </div>
 
     </div>
