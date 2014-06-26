@@ -64,7 +64,7 @@
         </div>
 
         <div class="btn-group" ng-if="reportUrl">
-          <a class="btn btn-primary" download ng-href="{{ reportUrl }}">Download</a>
+          <a class="btn btn-primary" download="{{ reportName }}" ng-href="{{ reportUrl }}">Download</a>
           <a class="btn btn-primary" target="_blank" ng-href="{{ reportUrl }}">Open</a>
         </div>
       </div>
