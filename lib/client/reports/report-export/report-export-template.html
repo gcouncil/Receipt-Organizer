@@ -8,73 +8,118 @@
       </div>
 
       <div class="modal-body">
-        <div class="file-extension-container">
-          <label class="form-grid-group form-group">
-            <span>File Type:</span>
-            <select selectize class="form-control"
-              selectize-options="settings.exportOptions"
-              selectize-settings="{ valueField: 'value', dropdownParent: 'body', maxItems: 1 }"
-              ng-model="settings.fileExtension">
-            </select>
-          </label>
-          <div class="export-group_by" ng-if="settings.fileExtension === 'pdf'">
-              <label>
-                Group By Category? 
-                <input type="checkbox" ng-model="settings.groupByCategory"/>
+        <div ng-if="!reportUrl" class="file-extension-container"  ng-model="settings.fileExtension" bs-radio-group>
+            <div class="btn-group btn-group-lg">
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="pdf">
+                <i class="fa fa-file-pdf-o"></i>
+                PDF
               </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="csv">
+                <i class="fa fa-file-text-o"></i>
+                CSV
+              </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="qif">
+                <i class="fa fa-file-text-o"></i>
+                Quicken (QIF)
+              </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="txf">
+                <i class="fa fa-file-text-o"></i>
+                Turbo Tax (TXF)
+              </label>
+            </div>
+            
+        </div>
+        <div ng-if="!reportUrl && settings.fileExtension === 'pdf'">
+          <div class="export-details-container">
+            <label class="export-details-selection" ng-class="{ active: isActive('table')}">
+              <input type="radio" ng-model="settings.exportDetails" value="table"/>
+              <i class="fa fa-table"></i>
+              <h5>Table Only</h5>
+            </label>
+            <label class="export-details-selection" ng-class="{ active: isActive('table&images')}">
+              <input type="radio" ng-model="settings.exportDetails" value="table&images"/>
+              <i class="fa fa-table"></i>+
+              <i class="fa fa-image"></i>
+              <h5>Table & Images</h5>
+            </label>
+            <label class="export-details-selection" ng-class="{ active: isActive('images&itemizations')}">
+              <input type="radio" ng-model="settings.exportDetails" value="images&itemizations"/>
+              <i class="fa fa-image"></i>+
+              <i class="fa fa-list-ul"></i>
+              <h5>Images & Itemizations</h5>
+            </label>
+            <label class="export-details-selection" ng-class="{ active: isActive('table&images&itemizations')}">
+              <input type="radio" ng-model="settings.exportDetails" value="table&images&itemizations"/>
+              <i class="fa fa-table"></i>+
+              <i class="fa fa-image"></i>+
+              <i class="fa fa-list-ul"></i>
+              <h5>Table, Images & Itemizations</h5>
+            </label>
           </div>
-        </div>
-        <div class="export-details-container" ng-if="settings.fileExtension === 'pdf'">
-          <label class="export-details-selection" ng-class="{ active: isActive('table')}">
-            <input type="radio" ng-model="settings.exportDetails" value="table"/>
-            <i class="fa fa-table"></i>
-            <h5>Table Only</h5>
-          </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('table&images')}">
-            <input type="radio" ng-model="settings.exportDetails" value="table&images"/>
-            <i class="fa fa-table"></i>+
-            <i class="fa fa-image"></i>
-            <h5>Table & Images</h5>
-          </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('images&itemizations')}">
-            <input type="radio" ng-model="settings.exportDetails" value="images&itemizations"/>
-            <i class="fa fa-image"></i>+
-            <i class="fa fa-list-ul"></i>
-            <h5>Images & Itemizations</h5>
-          </label>
-          <label class="export-details-selection" ng-class="{ active: isActive('table&images&itemizations')}">
-            <input type="radio" ng-model="settings.exportDetails" value="table&images&itemizations"/>
-            <i class="fa fa-table"></i>+
-            <i class="fa fa-image"></i>+
-            <i class="fa fa-list-ul"></i>
-            <h5>Table, Images & Itemizations</h5>
+          <label class="export-group-by">
+            <input type="checkbox" ng-model="settings.groupByCategory"/> Group By Category? 
           </label>
         </div>
+
+        <div ng-if="reportUrl" ng-switch="reportType" class="report-export-results">
+
+          <h2 ng-switch-default>
+            Export Ready:
+            <a download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}">
+              Download
+            </a>
+          </h2>
+
+          <iframe id="report-iframe" ng-src="{{ reportUrl }}" ng-switch-when="pdf">
+          </iframe>
+        </div>
+
       </div>
 
       <div class="modal-footer">
-        <center class="text-danger" ng-if="message">{{ message }}</center>
 
         <button type="button" class="btn btn-default pull-left"
           ng-click="$emit('reports:editReport', report); cancel()">
           Back
         </button>
 
-        <button type="button" class="btn btn-success"
-          ng-click="generate()"
-          ng-if="!processing && (!reportUrl || form.$dirty)"
-          >
-          Generate
-        </button>
+        <div class="pull-right">
+          <button type="button" class="btn btn-success"
+            ng-click="generate()"
+            ng-if="!processing && (!reportUrl || form.$dirty)"
+            >
+            Generate
+          </button>
 
-        <div ng-if="processing">
-          Generating Report <i class="fa fa-spin fa-spinner"></i>
+          <div ng-if="processing">
+            Generating Report <i class="fa fa-spin fa-spinner"></i>
+          </div>
+
+          <div ng-show="reportUrl">
+            <a class="btn btn-danger" ng-click="reportUrl = null; message = null;">
+              Reset
+            </a>
+
+            <a class="btn btn-primary" download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}">
+              <i class="fa fa-download"></i>
+              Download
+            </a>
+
+            <a class="btn btn-primary" ng-click="print()" ng-if="reportType === 'pdf' && canPrint()">
+              <i class="fa fa-print"></i>
+              Print
+            </a>
+          </div>
         </div>
 
-        <a class="btn btn-primary" ng-if="reportUrl && form.$pristine" download="{{ reportName }}" ng-href="{{ reportUrl }}">
-          Download
-        </a>
-        </div>
+        <center class="text-danger" ng-if="message">{{ message }}</center>
       </div>
     </form>
   </div>
