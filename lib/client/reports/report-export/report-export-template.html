@@ -8,15 +8,32 @@
       </div>
 
       <div class="modal-body">
-        <div ng-if="!reportUrl" class="file-extension-container">
-          <label class="form-grid-group form-group">
-            <span>File Type:</span>
-            <select selectize class="form-control"
-              selectize-options="settings.exportOptions"
-              selectize-settings="{ valueField: 'value', dropdownParent: 'body', maxItems: 1 }"
-              ng-model="settings.fileExtension">
-            </select>
-          </label>
+        <div ng-if="!reportUrl" class="file-extension-container"  ng-model="settings.fileExtension" bs-radio-group>
+            <div class="btn-group btn-group-lg">
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="pdf">
+                <i class="fa fa-file-pdf-o"></i>
+                PDF
+              </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="csv">
+                <i class="fa fa-file-text-o"></i>
+                CSV
+              </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="qif">
+                <i class="fa fa-file-text-o"></i>
+                Quicken (QIF)
+              </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="txf">
+                <i class="fa fa-file-text-o"></i>
+                Turbo Tax (TXF)
+              </label>
+            </div>
         </div>
         <div class="export-details-container" ng-if="!reportUrl && settings.fileExtension === 'pdf'">
           <label class="export-details-selection" ng-class="{ active: isActive('table')}">

@@ -38,70 +38,13 @@
   }
 }
 
-.report-export-dialog-highlight {
-  .modal-header, .modal-footer {
-    background: @brand-warning;
-  }
-}
-
-.report-export-fields {
-  .noflex(400px);
-  padding: 0;
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  border: solid 1px @gray-light;
-  border-width: 0 1px;
-}
-
-.report-export-info {
-  margin: 10px 0;
-  display: block;
-  .clearfix;
-}
-
-.export-selection-container {
-  display: block;
-}
-
-.export-type-container {
-  .flex-box();
-}
-
-.export-type-selection {
-  .flex(1,1, 1px);
-
-  height: 280px;
-
-  padding: 20px;
-  margin: 0;
-
-  border-right: 1px solid @gray;
-  &:last-child {
-    border-right: none;
-  }
-
-  text-align: center;
-
-  > input {
-    display: block;
-    margin-bottom: 20px;
-  }
-
-  > i {
-    font-size: 10em;
-  }
-}
-
 .file-extension-container {
   .flex-box();
   align-items: center;
-  padding: 15px 225px;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
   height: 150px;
-  > label {
-    .flex(1, 1, 1px);
-    margin: 0;
-  }
 }
 
 .export-details-container {
