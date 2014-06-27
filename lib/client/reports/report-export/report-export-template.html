@@ -1,6 +1,6 @@
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog report-export-dialog">
-    <form name="form" class="modal-content" ng-submit="save()">
+    <form name="form" class="modal-content">
 
       <div class="modal-header">
         <label for="report-name">{{ report.name }}</label>
@@ -47,6 +47,8 @@
       </div>
 
       <div class="modal-footer">
+        <center class="text-danger" ng-if="message">{{ message }}</center>
+
         <button type="button" class="btn btn-default pull-left"
           ng-click="$emit('reports:editReport', report); cancel()">
           Back
@@ -54,21 +56,20 @@
 
         <button type="button" class="btn btn-success"
           ng-click="generate()"
-          ng-if="!processing"
+          ng-if="!processing && (!reportUrl || form.$dirty)"
           >
-          {{ reportUrl ? 'Re-Generate' : 'Generate' }}
+          Generate
         </button>
 
         <div ng-if="processing">
           Generating Report <i class="fa fa-spin fa-spinner"></i>
         </div>
 
-        <div class="btn-group" ng-if="reportUrl">
-          <a class="btn btn-primary" download="{{ reportName }}" ng-href="{{ reportUrl }}">Download</a>
-          <a class="btn btn-primary" target="_blank" ng-href="{{ reportUrl }}">Open</a>
+        <a class="btn btn-primary" ng-if="reportUrl && form.$pristine" download="{{ reportName }}" ng-href="{{ reportUrl }}">
+          Download
+        </a>
         </div>
       </div>
-
-    </div>
+    </form>
   </div>
 </div>
