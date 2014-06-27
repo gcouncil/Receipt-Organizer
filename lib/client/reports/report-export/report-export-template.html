@@ -17,6 +17,12 @@
               ng-model="settings.fileExtension">
             </select>
           </label>
+          <div class="export-group_by" ng-if="settings.fileExtension === 'pdf'">
+              <label>
+                Group By Category? 
+                <input type="checkbox" ng-model="settings.groupByCategory"/>
+              </label>
+          </div>
         </div>
         <div class="export-details-container" ng-if="settings.fileExtension === 'pdf'">
           <label class="export-details-selection" ng-class="{ active: isActive('table')}">
