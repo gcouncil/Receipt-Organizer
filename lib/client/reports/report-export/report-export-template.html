@@ -17,6 +17,12 @@
               </label>
 
               <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="xlsx">
+                <i class="fa fa-file-excel-o"></i>
+                Excel (XLSX)
+              </label>
+
+              <label class="btn btn-primary">
                 <input class="ng-hide" type="radio" value="csv">
                 <i class="fa fa-file-text-o"></i>
                 CSV
@@ -34,7 +40,6 @@
                 Turbo Tax (TXF)
               </label>
             </div>
-            
         </div>
         <div ng-if="!reportUrl && settings.fileExtension === 'pdf'">
           <div class="export-details-container">
