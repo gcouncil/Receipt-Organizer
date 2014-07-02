@@ -1,6 +1,7 @@
 {
   "extends": "../.jshintrc",
   "globals": {
+    "protractor": false,
     "before": false,
     "after": false,
     "beforeEach": false,
