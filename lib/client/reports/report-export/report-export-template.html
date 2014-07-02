@@ -77,7 +77,7 @@
 
           <h2 ng-switch-default>
             Export Ready:
-            <a download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}">
+            <a download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}" ng-if="!roundtrip">
               Download
             </a>
           </h2>

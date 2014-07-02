@@ -6,7 +6,7 @@ var instrumenter = new istanbul.Instrumenter();
 module.exports = function(file) {
   file = require('fs').realpathSync(file);
   file = require('path').relative(process.cwd(), file);
-  var instrument = /^lib/.test(file);
+  var instrument = /^lib.*\.js$/.test(file);
   var buffers = [];
 
   function write(buffer) {
