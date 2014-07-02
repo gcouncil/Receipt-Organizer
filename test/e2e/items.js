@@ -396,7 +396,7 @@ describe('Filter by Category', function() {
 
   it('should clear the filters with the filter-reset button', function() {
     expect(this.page.items.count()).to.eventually.equal(4);
-        
+
     this.page.categoryFilterInput.$('.selectize-input input')
       .sendKeys(protractor.Key.BACK_SPACE) //clear input
       .sendKeys('Tax')
