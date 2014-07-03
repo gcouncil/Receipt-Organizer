@@ -45,6 +45,6 @@ afterEach(function() {
 });
 
 module.exports = _.extend({
-  rootUrl: 'http://localhost:9000/',
+  rootUrl: 'http://localhost:9000/app/',
   expect: chai.expect,
 }, require('./support/authenticate-user'));
