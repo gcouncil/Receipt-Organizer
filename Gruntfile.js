@@ -33,7 +33,8 @@ module.exports = function(grunt) {
   grunt.config('copy', {
     html: {
       files: [
-        { src: 'lib/client/index.html', dest: 'build/index.html' }
+        { src: 'lib/client/index.html', dest: 'build/app/index.html' },
+        { src: 'lib/static/index.html', dest: 'build/index.html' }
       ],
       options: {
         process: function(content, path) {
@@ -61,6 +62,14 @@ module.exports = function(grunt) {
         src: '*',
         dest: 'build/assets/dynamsoft'
       }]
+    },
+    staticImages: {
+      files: [{
+        expand: true,
+        cwd: './lib/static/img',
+        src: '*',
+        dest: 'build/assets/img'
+      }]
     }
   });
 
@@ -84,6 +93,22 @@ module.exports = function(grunt) {
         sourceMap: debug,
         outputSourceFiles: true
       }
+    },
+    staticStyles: {
+      files: [{
+        src: [
+          'lib/static/styles.less'
+        ],
+        dest: 'tmp/assets/static-styles.css'
+      }],
+      options: {
+        paths: [
+          './bower_components/bootstrap/less',
+          './bower_components/font-awesome/less'
+        ],
+        sourceMap: debug,
+        outputSourceFiles: true
+      }
     }
   });
 
@@ -92,6 +117,10 @@ module.exports = function(grunt) {
     styles: {
       src: 'tmp/assets/styles.css',
       dest: 'build/assets/styles.css'
+    },
+    staticStyles: {
+      src: 'tmp/assets/static-styles.css',
+      dest: 'build/assets/static-styles.css'
     }
   });
 
@@ -182,11 +211,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.config('watch', {
     html: {
-      files: ['lib/client/index.html'],
+      files: ['lib/client/index.html', 'lib/static/index.html'],
       tasks: ['copy:html']
     },
     less: {
-      files: ['lib/client/**/*.less'],
+      files: ['lib/client/**/*.less', 'lib/static/**/*.less'],
       tasks: ['less', 'autoprefixer']
     },
     jshint: {

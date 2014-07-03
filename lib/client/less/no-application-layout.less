@@ -1,0 +1,90 @@
+.no-app-layout {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-width: 320px;
+  .btn {
+    border-radius:0;
+  }
+
+  .jumbotron { 
+    font-size: 12px;
+    background-color: #005495;
+    color: #fff;
+    padding: 20px;
+
+    .epson-logo { 
+      font-size: 25px;
+      height: 100px;
+      text-align: center;
+      color: #b0d3f0;
+      text-decoration: none;
+      
+      i{
+        color: #fff;
+        margin: 0 10px 0 0;
+      }
+
+      .brand {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .hero {
+    text-align: center;
+    position: relative;
+    top: -70px;
+    background: #fff;
+    border: 3px solid #93a1c0;
+    padding: 20px 20px 0;
+
+    .form-horizontal .form-group {
+      margin: 0 0 30px 0;
+    }
+
+    h2{
+      font-weight: lighter;
+      margin: 0 0 20px 0;
+    }
+
+    .page-name {
+      font-size: 40px;
+    }
+
+    .free-trial {
+      margin: 0 auto 20px;
+      text-align: center;
+    }
+
+    img{
+      margin: 0 auto;
+    }
+
+    form {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .jumbotron {
+      .btn{
+        padding: 3px;
+        font-size: 12px;
+      }
+
+      .epson-logo {
+        font-size: 20px;
+        height: 70px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero h2{
+      font-size: 60px;
+    }
+    .free-trial{
+      font-size: 40px;
+    }
+  }
+}
