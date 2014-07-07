@@ -35,7 +35,6 @@
         var user = JSON.parse(window.localStorage.getItem('currentUser'));
 
         if (user.token) {
-          console.log('OK');
           var button = document.body.querySelector('#login-btn');
 
           button.innerHTML = 'Go to App';
