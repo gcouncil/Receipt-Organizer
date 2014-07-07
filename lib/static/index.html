@@ -17,7 +17,7 @@
               <a href="/" class="epson-logo pull-left"><i class="fa fa-file-text-o"></i><span class="brand">Epson</span> Receipts</a>
             </div>
             <div class="col-md-6">
-              <a href="/app/#/login" type="button" class="btn btn-warning pull-right">Log In</a>
+              <a id="login-btn" href="/app/#/login" type="button" class="btn btn-warning pull-right">Log In</a>
             </div>
           </div>
         </div>
@@ -30,5 +30,18 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      try {
+        var user = JSON.parse(window.localStorage.getItem('currentUser'));
+
+        if (user.token) {
+          console.log('OK');
+          var button = document.body.querySelector('#login-btn');
+
+          button.innerHTML = 'Go to App';
+          button.href = '/app';
+        }
+      } catch(e) {}
+    </script>
   </body>
 </html>
