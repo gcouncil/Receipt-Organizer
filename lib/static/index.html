@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <title>EPSON Receipts</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/static-styles.css" />
+  </head>
+  <body>
+    <div class="no-app-layout">
+      <header class="jumbotron">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="/" class="epson-logo pull-left"><i class="fa fa-file-text-o"></i><span class="brand">Epson</span> Receipts</a>
+            </div>
+            <div class="col-md-6">
+              <a id="login-btn" href="/app/#/login" type="button" class="btn btn-warning pull-right">Log In</a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="container">
+        <div class="hero">
+            <h2>Organize Your Life.</h2>
+              <a href="/app/#/signup" class="btn btn-primary btn-lg free-trial">Start A Free Trial</a>
+            <img alt="application preview" class="img-responsive" src="/assets/img/epsonreceipts-440x1000.png"/>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      try {
+        var user = JSON.parse(window.localStorage.getItem('currentUser'));
+
+        if (user.token) {
+          console.log('OK');
+          var button = document.body.querySelector('#login-btn');
+
+          button.innerHTML = 'Go to App';
+          button.href = '/app';
+        }
+      } catch(e) {}
+    </script>
+  </body>
+</html>

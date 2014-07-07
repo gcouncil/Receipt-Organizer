@@ -1,19 +1,33 @@
-<div class="login-form-container">
-  <h1>Log In</h1>
-  <form class="form-horizontal" name="form" ng-submit="submit()">
-    <div class="form-group">
-      <label class="control-label">Email</label>
-      <input ng-model="user.email" type="email" class="form-control" required>
+<div class="no-app-layout">
+  <header class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <a href="/" class="epson-logo pull-left"><i class="fa fa-file-text-o"></i><span class="brand">Epson</span> Receipts</a>
+        </div>
+        <div class="col-md-6">
+          <a href="/app/#/signup" type="button" class="btn btn-warning pull-right">Sign Up</a>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="control-label">Password</label>
-      <input ng-model="user.password" type="password" class="form-control" required>
+  </header>
+
+  <div class="login-form-container container">
+    <div class="hero">
+        <h2 class="page-name">Log In</h2>
+        <form class="form-horizontal" name="form" ng-submit="submit()">
+          <div class="form-group">
+            <label class="control-label">Email</label>
+            <input ng-model="user.email" type="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Password</label>
+            <input ng-model="user.password" type="password" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-success" ng-disabled="form.$invalid" value="Log In">
+          </div>
+        </form>
     </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-success" ng-disabled="form.$invalid" value="Log In">
-    </div>
-  </form>
-</div>
-<div class="signup-link-container">
-  <a href="#/signup">Sign up for a new account</a>
+  </div>
 </div>
