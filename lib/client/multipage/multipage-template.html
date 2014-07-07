@@ -1,0 +1,24 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog multipage-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        Multi-Page Receipt
+      </div>
+      <div class="modal-body">
+        <div class="image-list" ui-sortable ng-model="images">
+          <div ng-repeat="image in images track by image.id" style="float: left;">
+            <div ng-controller="ImageLoaderController as imageLoader" ng-init="index = $index;"?>
+              <img ng-src="{{ imageLoader.image.url }}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="scan()">Scan Page</button>
+        <button class="btn btn-primary" ng-click="import()">Import Page</button>
+        <button class="btn btn-grey" ng-click="save()">All Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
