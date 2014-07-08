@@ -39,6 +39,12 @@
                 <i class="fa fa-file-text-o"></i>
                 Turbo Tax (TXF)
               </label>
+
+              <label class="btn btn-primary">
+                <input class="ng-hide" type="radio" value="iif">
+                <i class="fa fa-file-text-o"></i>
+                QuickBooks (IIF)
+              </label>
             </div>
         </div>
         <div ng-if="!reportUrl && settings.fileExtension === 'pdf'">
@@ -71,6 +77,22 @@
           <label class="export-group-by">
             <input type="checkbox" ng-model="settings.groupByCategory"/> Group By Category?
           </label>
+        </div>
+
+        <div ng-if="!reportUrl && settings.fileExtension === 'iif'" class="form-horizontal">
+          <p class="help-block text-center">These account names must match existing QuickBooks accounts exactly, otherwise new Bank accounts will be created.</p>
+          <div class="form-group col-xs-6">
+            <label for="creditAccount" class="control-label col-xs-6">Credit Account</label>
+            <div class="col-xs-6">
+              <input class="form-control" type="text" ng-model="settings.creditAccount"/>
+            </div>
+          </div>
+          <div class="form-group col-xs-6">
+            <label for="creditAccount" class="control-label col-xs-6">Debit Account</label>
+            <div class="col-xs-6">
+              <input class="form-control" type="text" ng-model="settings.debitAccount"/>
+            </div>
+          </div>
         </div>
 
         <div ng-if="reportUrl" ng-switch="reportType" class="report-export-results">
