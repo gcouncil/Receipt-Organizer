@@ -96,7 +96,7 @@
     "d3": "d3",
     "dynamsoft": "Dynamsoft",
     "angular-strap": {
-      "depends": "./bower_components/angular-strap/dist/angular-strap.js"
+      "depends": "./vendor/angular-strap/angular-strap.js"
     }
   },
   "browser": {
@@ -104,7 +104,7 @@
     "angular-animate": "./bower_components/angular-animate/angular-animate.js",
     "angular-mocks": "./bower_components/angular-mocks/angular-mocks.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
-    "angular-strap": "./bower_components/angular-strap/dist/angular-strap.tpl.js",
+    "angular-strap": "./vendor/angular-strap/angular-strap.tpl.js",
     "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft/dynamsoft.webtwain.initiate.js",
     "microplugin": "./bower_components/microplugin/src/microplugin.js",
