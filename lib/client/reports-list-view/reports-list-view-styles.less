@@ -1,86 +1,42 @@
+@import "../items-list-view/items-list-view-styles";
+
 reports-list-view {
   .flex-box();
 }
 
 .reports-list-view-container {
-  .flex();
-  .flex-box(column);
-
-  overflow: hidden;
+  .items-list-view-container;
 }
 
 .reports-list-view-headers {
-  .flex-box();
-  .noflex();
-  padding: 5px (@grid-gutter-width / 2);
-  border-bottom: 1px solid @gray-lighter;
-  color: grey;
-  overflow: none;
+  .items-list-view-headers;
 }
 
 .reports-list-view-body {
-  .flex();
-  padding: 0 (@grid-gutter-width / 2) 15px;
-  overflow: auto;
-  min-width: 500px;
+  .items-list-view-body;
 }
 
 .reports-list-view-item {
-  margin-top: 15px;
-  height: 38px;
-  .flex-box();
-  align-reports: center;
-
-  cursor: pointer;
-  user-select: none;
-
-  background: @gray-lighter;
-  border: 1px solid @gray-light;
+  .items-list-view-item;
 }
 
 .list-view-data {
-  .flex(1, 1, 75px);
-  display: inline;
-  padding: 2px 10px;
-  line-height: 34px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  .list-view-data;
 }
 
 .list-view-data-checkbox {
-  .list-view-data;
-
-  .noflex(28px);
+  .list-view-data-checkbox;
 }
 
 .list-view-data-sm {
-  .list-view-data;
-  min-width: 150px;
-
-  .flex(0.5, 0.5, 75px);
+  .list-view-data-sm;
 }
 
 .reports-list-view-item-selected {
-  background: white;
-  border: 2px solid @brand-primary;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  .items-list-view-item-selected;
 }
 
 .reports-list-view-item-unreviewed {
-  background: @brand-warning-bg;
-  border: 2px solid @brand-warning;
-
-  .reports-list-view-item-review-status {
-    background: @brand-warning;
-    font-size: large;
-
-    button {
-      background: inherit;
-      border: none;
-      box-shadow: none;
-      line-height: 28px;
-    }
-  }
+  .items-list-view-item-unreviewed;
 }
 
