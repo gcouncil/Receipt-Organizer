@@ -12,12 +12,11 @@ describe('item thumbnail directive', function() {
       options: {}
     });
 
-    angular.mock.inject(function($rootScope, $compile, $controller) {
+    angular.mock.inject(function($rootScope, $compile) {
       ctx.scope = $rootScope.$new();
 
       ctx.compile = function() {
         ctx.element = $compile('<thumbnail item="item"></thumbnail>')(ctx.scope);
-        ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope});
         ctx.scope.item = { reviewed: false, type: 'expense' };
         ctx.scope.$digest();
       };

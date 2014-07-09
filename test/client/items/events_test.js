@@ -152,7 +152,7 @@ describe('item events', function() {
         var ctx = this;
         expect(ctx.imageStorage.create).to.have.been.calledWith(ctx.blobs[0]);
         expect(ctx.imageStorage.create).to.have.been.calledWith(ctx.blobs[1]);
-        expect(ctx.itemStorage.create).to.have.been.calledWith({ image: ctx.image.id });
+        expect(ctx.itemStorage.create).to.have.been.calledWith({ images: [ctx.image.id] });
         expect(ctx.notify.success).to.have.been.calledWith('2 Image(s) added');
       });
 

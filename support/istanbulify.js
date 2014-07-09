@@ -18,7 +18,7 @@ module.exports = function(file) {
   function end() {
     if (instrument) {
       var src = Buffer.concat(buffers);
-      var dest = instrumenter.instrumentSync(src, file);
+      var dest = instrumenter.instrumentSync(src.toString('utf-8'), file);
       this.queue(dest);
     }
 

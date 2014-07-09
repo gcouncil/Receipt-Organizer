@@ -4,18 +4,21 @@
       <div class="modal-header">
         Multi-Page Receipt
       </div>
-      <div class="modal-body">
-        <div class="image-list" ui-sortable ng-model="images">
-          <div ng-repeat="image in images track by image.id" style="float: left;">
-            <div ng-controller="ImageLoaderController as imageLoader" ng-init="index = $index;"?>
-              <img ng-src="{{ imageLoader.image.url }}">
+      <div class="modal-body" style="overflow-x: scroll">
+        <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder' }" ng-model="item.images" ng-style="{ width: 220 * item.images.length }">
+          <div ng-repeat="imageId in item.images track by imageId" class="image-entry">
+            <div class="image-wrapper" load-image index="{{ $index }}">
+              <img class="image-img" ng-src="{{ image.url }}">
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" ng-click="scan()">Scan Page</button>
-        <button class="btn btn-primary" ng-click="import()">Import Page</button>
+        <label>
+          <span class="btn btn-primary">Import Page</span>
+          <input type="file" ng-model="files" ng-change="import()" ng-hide="true" multiple>
+        </label>
         <button class="btn btn-grey" ng-click="save()">All Done</button>
       </div>
     </div>

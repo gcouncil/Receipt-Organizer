@@ -6,7 +6,7 @@
         <span class="pull-right" ng-if="pagination.total > 1">Currently Viewing {{ pagination.first }} of {{ pagination.total }} Items</span>
       </div>
       <div class="modal-body">
-        <div class="receipt-editor-image">
+        <div class="receipt-editor-image" load-image item="receipt">
           <image-viewer image-loader="imageLoader" overlay="item.getAnswers()">
         </div>
 
@@ -20,19 +20,17 @@
             </h2>
           </div>
 
-
           <label class="form-grid-cell form-grid-cell-custom form-group" ng-show="items.length > 1">
             <span class="control-label">Viewing:</span>
             <select selectize
               ng-disabled="form.$dirty"
               selectize-options="items"
-              selectize-settings="{ valueField: 'id', labelField: 'type', searchField: 'description', sortField: 'name', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
+              selectize-settings="{ valueField: 'id', labelField: 'description', searchField: 'description', sortField: 'name', dropdownParent: 'body', maxItems: 1, render: { item: renderItemOption, option: renderItemOption } }"
               ng-model="itemId"
               ng-change="selectItem(itemId)"
               >
             </select>
           </label>
-
 
           <div class="form-grid-group">
             <label form-group class="form-grid-cell">
@@ -97,7 +95,6 @@
               <input class="form-grid-input" type="currency" ng-model="item.tip">
             </label>
           </div>
-
 
           <label form-group class="form-grid-cell" ng-repeat="field in customFields" ng-if="field.selected">
             <span class="form-grid-label">{{ field.name }}</span>

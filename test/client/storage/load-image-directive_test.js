@@ -1,30 +1,26 @@
 var angular = require('angular');
 var expect = require('chai').expect;
 
-describe('image loader controller', function() {
+describe('load image directive', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.imageStorage = {
       fetch: ctx.sinon.stub()
     };
 
-    ctx.options = {
-      item: 'item'
-    };
-
     angular.mock.module('ngMock', 'epsonreceipts.storage', {
-      imageStorage: ctx.imageStorage,
-      options: ctx.options
+      imageStorage: ctx.imageStorage
     });
 
-    angular.mock.inject(function($rootScope, $q, $controller) {
+    angular.mock.inject(function($rootScope, $q, $compile) {
       ctx.scope = $rootScope.$new();
+      ctx.scope.index = 0;
       ctx.scope.item = {
-        image: ''
+        images: []
       };
       ctx.deferred = $q.defer();
 
-      ctx.imageLoaderController = $controller('ImageLoaderController', { $scope: ctx.scope });
+      ctx.element = $compile('<div load-image index="{{ index }}"/>')(ctx.scope);
       ctx.scope.$digest();
     });
   });
@@ -39,12 +35,12 @@ describe('image loader controller', function() {
   describe('initialization', function() {
     it('should start with loading false', function() {
       var ctx = this;
-      expect(ctx.imageLoaderController.loading).to.be.false;
+      expect(ctx.scope.imageLoader.loading).to.be.false;
     });
 
     it('should have a promise', function() {
       var ctx = this;
-      expect(ctx.imageLoaderController.promise).to.be.rejected;
+      expect(ctx.scope.imageLoader.promise).to.be.rejected;
     });
   });
 
@@ -53,28 +49,28 @@ describe('image loader controller', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.imageStorage.fetch.returns(ctx.deferred.promise);
-        ctx.scope.item.image = null;
+        ctx.scope.item.images = [];
         ctx.scope.$digest();
       });
 
       it('should set loading to false', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.loading).to.be.false;
+        expect(ctx.scope.imageLoader.loading).to.be.false;
       });
 
       it('should set missing to true', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.missing).to.be.true;
+        expect(ctx.scope.imageLoader.missing).to.be.true;
       });
 
       it('should not set an error', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.error).to.be.undefined;
+        expect(ctx.scope.imageLoader.error).to.be.undefined;
       });
 
       it('should not have an image yet', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.image).to.be.undefined;
+        expect(ctx.scope.imageLoader.image).to.be.undefined;
       });
 
     });
@@ -83,28 +79,28 @@ describe('image loader controller', function() {
       beforeEach(function() {
         var ctx = this;
         ctx.imageStorage.fetch.returns(ctx.deferred.promise);
-        ctx.scope.item.image = 'IMAGE';
+        ctx.scope.item.images = ['IMAGE'];
         ctx.scope.$digest();
       });
 
       it('should set loading to true', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.loading).to.be.true;
+        expect(ctx.scope.imageLoader.loading).to.be.true;
       });
 
       it('should set missing to false', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.missing).to.be.false;
+        expect(ctx.scope.imageLoader.missing).to.be.false;
       });
 
       it('should not set an error', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.error).to.be.undefined;
+        expect(ctx.scope.imageLoader.error).to.be.undefined;
       });
 
       it('should not have an image yet', function() {
         var ctx = this;
-        expect(ctx.imageLoaderController.image).to.be.undefined;
+        expect(ctx.scope.imageLoader.image).to.be.undefined;
       });
 
       context('after server response', function() {
@@ -117,22 +113,22 @@ describe('image loader controller', function() {
 
           it('should set loading to false', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.loading).to.be.false;
+            expect(ctx.scope.imageLoader.loading).to.be.false;
           });
 
           it('should set missing to false', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.missing).to.be.false;
+            expect(ctx.scope.imageLoader.missing).to.be.false;
           });
 
           it('should not have an image yet', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.image).to.be.undefined;
+            expect(ctx.scope.imageLoader.image).to.be.undefined;
           });
 
           it('should give back the error', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.error).to.be.an.instanceof(Error);
+            expect(ctx.scope.imageLoader.error).to.be.an.instanceof(Error);
           });
         });
 
@@ -149,23 +145,23 @@ describe('image loader controller', function() {
 
           it('should set loading to false', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.loading).to.be.false;
+            expect(ctx.scope.imageLoader.loading).to.be.false;
           });
 
           it('should set missing to false', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.missing).to.be.false;
+            expect(ctx.scope.imageLoader.missing).to.be.false;
           });
 
           it('should give back the image', function() {
             var ctx = this;
 
-            expect(ctx.imageLoaderController.image.blob).to.equal(ctx.blob);
+            expect(ctx.scope.imageLoader.image.blob).to.equal(ctx.blob);
           });
 
           it('should not have an error', function() {
             var ctx = this;
-            expect(ctx.imageLoaderController.error).to.be.undefined;
+            expect(ctx.scope.imageLoader.error).to.be.undefined;
           });
         });
       });
