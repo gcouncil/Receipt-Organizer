@@ -4,9 +4,10 @@
       <div class="modal-header">
         Multi-Page Receipt
       </div>
-      <div class="modal-body" style="overflow-x: scroll">
-        <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder' }" ng-model="item.images" ng-style="{ width: 220 * item.images.length }">
+      <div class="modal-body" style="overflow-x: scroll" image-drop-zone drop-handler="drop($images)">
+        <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder' }" ng-model="item.images" ng-style="{ width: 220 * item.images.length, height: 350 }">
           <div ng-repeat="imageId in item.images track by imageId" class="image-entry">
+            <i class="fa fa-times-circle" ng-click="remove($index)"></i>
             <div class="image-wrapper" load-image index="{{ $index }}">
               <img class="image-img" ng-src="{{ image.url }}">
             </div>
