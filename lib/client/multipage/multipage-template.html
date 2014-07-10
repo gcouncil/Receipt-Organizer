@@ -5,9 +5,9 @@
         Multi-Page Receipt
       </div>
       <div class="modal-body" style="overflow-x: scroll" image-drop-zone drop-handler="drop($images)">
-        <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder' }" ng-model="item.images" ng-style="{ width: 220 * item.images.length, height: 350 }">
+        <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder' }" ng-model="item.images" ng-style="{ width: 212 * item.images.length, height: 312 }">
           <div ng-repeat="imageId in item.images track by imageId" class="image-entry">
-            <i class="fa fa-times-circle" ng-click="remove($index)"></i>
+            <i class="fa fa-times-circle image-remove" ng-click="remove($index)"></i>
             <div class="image-wrapper" load-image index="{{ $index }}">
               <img class="image-img" ng-src="{{ image.url }}">
             </div>
@@ -20,7 +20,7 @@
           <span class="btn btn-primary">Import Page</span>
           <input type="file" ng-model="files" ng-change="import()" ng-hide="true" multiple>
         </label>
-        <button class="btn btn-grey" ng-click="save()">All Done</button>
+        <button class="btn btn-grey" ng-click="save()">{{ item.images.length > 0 ? 'All Done' : 'Cancel' }}</button>
       </div>
     </div>
   </div>

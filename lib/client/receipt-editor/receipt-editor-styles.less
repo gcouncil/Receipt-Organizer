@@ -41,9 +41,19 @@
 
 .receipt-editor-image {
   .flex;
-  .flex-box;
+  .flex-box(column);
+  position: relative;
   height: @receipt-editor-height;
   overflow: hidden;
+}
+
+.receipt-editor-image-pagination {
+  .noflex;
+
+  border-top: solid 1px @gray-light;
+
+  text-align: center;
+  line-height: 2;
 }
 
 .form-field-labels {
