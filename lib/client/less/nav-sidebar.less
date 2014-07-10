@@ -3,11 +3,14 @@
     margin-top: 0 !important;
 
     border-bottom: solid 1px @gray-light;
-    &.primary:first-child { border-top: solid 1px @gray-light; }
+    &.primary:first-child {
+      border-top: solid 1px @gray-light;
+    }
 
     > a {
       color: @gray;
       border-left: solid 4px transparent;
+      padding: 4px 15px;
 
       .btn-link {
         color: @gray;
@@ -22,8 +25,8 @@
     &.primary > a {
       text-transform: uppercase;
       border-left: solid 4px @gray;
-
-      background: @gray-light;
+      padding: 10px 15px;
+      font-weight: bold;
 
       &:hover,
       &:focus {
