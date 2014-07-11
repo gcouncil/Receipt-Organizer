@@ -11,6 +11,9 @@
     <i class="fa fa-3x fa-picture-o" ng-show="imageLoader.missing"></i>
     <i class="fa fa-3x fa-warning" ng-show="imageLoader.error"></i>
   </div>
+  <div class="thumbnail-image-indicator" ng-if="item.images.length > 1">
+    {{ item.images.length }} <i class="fa fa-file"></i>
+  </div>
 </div>
 <div class="thumbnail-message" ng-if="item.formxtraStatus === 'waiting'">
   <i class="fa fa-spinner fa-spin fa-3x"></i>
