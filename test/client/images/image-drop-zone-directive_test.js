@@ -49,46 +49,35 @@ describe('image drop zone directive', function() {
     }
   });
 
-  describe('dragenter dragover behavior', function() {
+  describe('dragover behavior', function() {
 
     beforeEach(function() {
       var ctx = this;
       ctx.typesEvent1 = {
         dataTransfer: {
           types: ['image/jpeg']
-        },
-        preventDefault: ctx.sinon.stub()
-      };
-
-      ctx.typesEvent2 = {
-        dataTransfer: {
-          types: ['Files']
-        },
-        preventDefault: ctx.sinon.stub()
+        }
       };
 
       ctx.filesEvent = {
         dataTransfer: {
-          types: [],
+          types: ['Files'],
           files: [ { type: 'image/jpeg' } ]
-        },
-        preventDefault: ctx.sinon.stub()
+        }
       };
 
       ctx.itemsEvent = {
         dataTransfer: {
           types: [],
           items: [ { type: 'image/jpeg' } ]
-        },
-        preventDefault: ctx.sinon.stub()
+        }
       };
 
       ctx.errorEvent = {
         dataTransfer: {
           types: [],
           items: []
-        },
-        preventDefault: ctx.sinon.stub()
+        }
       };
     });
 
@@ -97,52 +86,7 @@ describe('image drop zone directive', function() {
         var ctx = this;
         var e = $.Event('dragover', ctx.errorEvent);
         $(ctx.element).trigger(e);
-        expect(ctx.errorEvent.dataTransfer.dropEffect).to.be.undefined;
-        expect(ctx.errorEvent.preventDefault).not.to.have.been.called;
-      });
-
-      it('dragenter should not work if the types are wrong', function() {
-        var ctx = this;
-        var e = $.Event('dragenter', ctx.errorEvent);
-        $(ctx.element).trigger(e);
-        expect(ctx.errorEvent.dataTransfer.dropEffect).to.be.undefined;
-        expect(ctx.errorEvent.preventDefault).not.to.have.been.called;
-      });
-
-    });
-
-    context('setting dropeffect and preventDefault on dragenter', function() {
-      it('should work with a types event', function() {
-        var ctx = this;
-        var e = $.Event('dragenter', ctx.typesEvent1);
-        $(ctx.element).trigger(e);
-        expect(ctx.typesEvent1.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.typesEvent1.preventDefault).to.have.been.called;
-      });
-
-      it('should work with another kind of types event', function() {
-        var ctx = this;
-        var e = $.Event('dragenter', ctx.typesEvent2);
-        $(ctx.element).trigger(e);
-        expect(ctx.typesEvent2.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.typesEvent2.preventDefault).to.have.been.called;
-      });
-
-
-      it('should work with a files event', function() {
-        var ctx = this;
-        var e = $.Event('dragenter', ctx.filesEvent);
-        $(ctx.element).trigger(e);
-        expect(ctx.filesEvent.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.filesEvent.preventDefault).to.have.been.called;
-      });
-
-      it('should work with an items event', function() {
-        var ctx = this;
-        var e = $.Event('dragenter', ctx.itemsEvent);
-        $(ctx.element).trigger(e);
-        expect(ctx.itemsEvent.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.itemsEvent.preventDefault).to.have.been.called;
+        expect(e.dataTransfer.dropEffect).to.equal('none');
       });
     });
 
@@ -151,16 +95,7 @@ describe('image drop zone directive', function() {
         var ctx = this;
         var e = $.Event('dragover', ctx.typesEvent1);
         $(ctx.element).trigger(e);
-        expect(ctx.typesEvent1.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.typesEvent1.preventDefault).to.have.been.called;
-      });
-
-      it('should work with another kind of types event', function() {
-        var ctx = this;
-        var e = $.Event('dragover', ctx.typesEvent2);
-        $(ctx.element).trigger(e);
-        expect(ctx.typesEvent2.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.typesEvent2.preventDefault).to.have.been.called;
+        expect(e.dataTransfer.dropEffect).to.equal('copy');
       });
 
 
@@ -168,16 +103,14 @@ describe('image drop zone directive', function() {
         var ctx = this;
         var e = $.Event('dragover', ctx.filesEvent);
         $(ctx.element).trigger(e);
-        expect(ctx.filesEvent.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.filesEvent.preventDefault).to.have.been.called;
+        expect(e.dataTransfer.dropEffect).to.equal('copy');
       });
 
       it('should work with an items event', function() {
         var ctx = this;
         var e = $.Event('dragover', ctx.itemsEvent);
         $(ctx.element).trigger(e);
-        expect(ctx.itemsEvent.dataTransfer.dropEffect).to.equal('copy');
-        expect(ctx.itemsEvent.preventDefault).to.have.been.called;
+        expect(e.dataTransfer.dropEffect).to.equal('copy');
       });
     });
 
@@ -197,8 +130,7 @@ describe('image drop zone directive', function() {
         };
 
         var e = $.Event('drop', ctx.event);
-        $(ctx.element).trigger(e);
-        expect(ctx.event.preventDefault).not.to.have.been.called;
+        $('.dnd-overlay').trigger(e);
       });
 
       it('should not prevent default if there are not jpeg items or files', function() {
@@ -212,8 +144,7 @@ describe('image drop zone directive', function() {
         };
 
         var e = $.Event('drop', ctx.event);
-        $(ctx.element).trigger(e);
-        expect(ctx.event.preventDefault).not.to.have.been.called;
+        $('.dnd-overlay').trigger(e);
       });
 
       it('should not create the images if there are not files', function() {
@@ -227,7 +158,7 @@ describe('image drop zone directive', function() {
         };
 
         var e = $.Event('drop', ctx.event);
-        $(ctx.element).trigger(e);
+        $('.dnd-overlay').trigger(e);
         expect(ctx.imageStorage.create).not.to.have.been.called;
       });
     });
@@ -240,17 +171,11 @@ describe('image drop zone directive', function() {
           dataTransfer: {
             types: ['image/jpeg'],
             items: [ {type: 'image/jpeg', getAsFile: ctx.getAsFile} ]
-          },
-          preventDefault: ctx.sinon.stub()
+          }
         };
 
         var e = $.Event('drop', ctx.event);
-        $(ctx.element).trigger(e);
-      });
-
-      it('should prevent default', function() {
-        var ctx = this;
-        expect(ctx.event.preventDefault).to.have.been.called;
+        $('.dnd-overlay').trigger(e);
       });
 
       it('should getAsFile', function() {
@@ -297,17 +222,12 @@ describe('image drop zone directive', function() {
           dataTransfer: {
             types: ['image/jpeg'],
             files: [ {type: 'image/jpeg'} ]
-          },
-          preventDefault: ctx.sinon.stub()
+          }
         };
 
         var e = $.Event('drop', ctx.event);
-        $(ctx.element).trigger(e);
-      });
-
-      it('should prevent default', function() {
-        var ctx = this;
-        expect(ctx.event.preventDefault).to.have.been.called;
+        $('.dnd-overlay').trigger(e);
+        ctx.scope.$digest();
       });
 
       it('should create a new image', function() {

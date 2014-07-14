@@ -1,5 +1,4 @@
 require('./current-user-service_test');
-require('./load-image-directive_test');
 require('./image-storage_test');
 require('./item-storage_test');
 require('./session-storage_test');

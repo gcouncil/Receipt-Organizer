@@ -6,8 +6,8 @@
         <span class="pull-right" ng-if="pagination.total > 1">Currently Viewing {{ pagination.first }} of {{ pagination.total }} Items</span>
       </div>
       <div class="modal-body">
-        <div class="receipt-editor-image" load-image index="{{ page }}" item="receipt">
-          <image-viewer image-loader="imageLoader" overlay="item.getAnswers(page)"></image-viewer>
+        <div class="receipt-editor-image">
+          <image-viewer image="{{ receipt | itemImageUrl:page }}" overlay="item.getAnswers(page)"></image-viewer>
           <div class="receipt-editor-image-pagination" ng-if="receipt.images.length > 1">
             <a ng-click="prevPage()">&laquo; Previous</a>
             <span>{{ page + 1 }} / {{ receipt.images.length }}</span>

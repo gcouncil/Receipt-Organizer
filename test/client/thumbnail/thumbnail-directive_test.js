@@ -5,7 +5,9 @@ describe('item thumbnail directive', function() {
 
   beforeEach(function() {
     var ctx = this;
-    ctx.imageStorage = ctx.sinon.stub();
+    ctx.imageStorage = {
+      imgSrc: ctx.sinon.stub()
+    };
 
     angular.mock.module('ngMock', 'epsonreceipts.thumbnail', 'epsonreceipts.storage', {
       imageStorage: ctx.imageStorage,
@@ -17,7 +19,7 @@ describe('item thumbnail directive', function() {
 
       ctx.compile = function() {
         ctx.element = $compile('<thumbnail item="item"></thumbnail>')(ctx.scope);
-        ctx.scope.item = { reviewed: false, type: 'expense' };
+        ctx.scope.item = { reviewed: false, type: 'expense', images: [] };
         ctx.scope.$digest();
       };
     });

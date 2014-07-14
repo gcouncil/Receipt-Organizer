@@ -25,7 +25,8 @@ describe('ImagesHandler', function() {
         show: this.sinon.stub().callsArgWith(2, new Error(), []),
         showMetadata: this.sinon.stub().callsArgWith(2, new Error(), []),
         create: this.sinon.stub().callsArgWith(4, new Error(), []),
-        destroy: this.sinon.stub().callsArgWith(2, new Error(), [])
+        destroy: this.sinon.stub().callsArgWith(2, new Error(), []),
+        imageBuffer: this.sinon.stub().callsArgWith(2, new Error())
       };
 
       var user = {
@@ -105,7 +106,7 @@ describe('ImagesHandler', function() {
         var self = this;
 
         var manager = {
-          imageUrl: this.sinon.stub().callsArgWith(2, null, 'IMAGE_URL')
+          imageBuffer: this.sinon.stub().callsArgWith(2, null, '42', 'text/plain')
         };
 
         var user = {
@@ -131,8 +132,8 @@ describe('ImagesHandler', function() {
         expect(this.res.status).to.equal(200);
       });
 
-      it('should respond with an array of folders', function() {
-        expect(this.res.body).to.have.deep.property('url', 'IMAGE_URL');
+      it('should respond with data', function() {
+        expect(this.res.text).to.equal('42');
       });
 
     });

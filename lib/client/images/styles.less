@@ -1,12 +1,26 @@
 image-viewer {
   position: relative;
   display: block;
+  overflow: hidden;
   .flex();
   background: @gray-lighter;
+
+  > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  > img {
+    position: absolute;
+    visibility: hidden;
+    height: 0;
+  }
 }
 
 .image-viewer-controls {
   position: absolute;
+  z-index: 10;
   top: ~"calc(50% - 33px)"; // Height is 67px;
   left: @modal-inner-padding * 2;
 }
@@ -14,6 +28,8 @@ image-viewer {
 .image-viewer-message {
   position: absolute;
   width: 100%;
+  top: 0;
+  left: 0;
 
   text-align: center;
 }

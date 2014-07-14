@@ -52,34 +52,12 @@ describe('image storage service', function() {
       });
     });
 
-    it('should load the image from cache if it has already been fetched', function(done) {
-      var ctx = this;
-      ctx.image = { id: 2, type: 'jpeg', image: 'IMAGE' };
-
-      angular.mock.inject(function($rootScope, $q, $httpBackend, imageStorage) {
-        ctx.deferred = $q.defer();
-        ctx.uuid.returns(ctx.deferred.promise);
-        $httpBackend.expectPUT('/api/images/2').respond(200, ctx.image);
-        imageStorage.create(ctx.image);
-        ctx.deferred.resolve(2);
-
-        $httpBackend.flush();
-
-        var promise = imageStorage.fetch({ id: 2 });
-        expect(promise).to.eventually.equal(ctx.image).and.notify(done);
-
-        $rootScope.$digest();
-      });
-    });
-
     it('should request the image from the server if it has not already been fetched', function(done) {
       var ctx = this;
       ctx.image = { id: 3, type: 'jpeg', image: 'IMAGE' };
 
       angular.mock.inject(function($rootScope, $q, $httpBackend, imageStorage) {
-        $httpBackend.expectGET('/api/images/3').respond(200, { url: '/AWS' });
-        $httpBackend.expectGET('/AWS').respond(200, ctx.image);
-
+        $httpBackend.expectGET('/api/images/3').respond(200, ctx.image);
 
         var promise = imageStorage.fetch({ id: 3 });
         $httpBackend.flush();

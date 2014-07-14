@@ -4,8 +4,8 @@
 <div class="thumbnail-ribbon" ng-show="item.type === 'expense'">
   Itemized
 </div>
-<div class="thumbnail-image-container" load-image>
-  <img class="thumbnail-image" ng-src="{{ image.url }}" ng-show="image.url">
+<div class="thumbnail-image-container">
+  <img class="thumbnail-image" ng-src="{{ item | itemImageUrl }}" load-image>
   <div class="thumbnail-image-message">
     <i class="fa fa-spinner fa-spin fa-3x" ng-show="imageLoader.loading"></i>
     <i class="fa fa-3x fa-picture-o" ng-show="imageLoader.missing"></i>
