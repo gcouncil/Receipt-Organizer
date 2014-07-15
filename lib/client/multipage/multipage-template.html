@@ -8,8 +8,8 @@
         <div class="image-list" ui-sortable="{ axis: 'x', placeholder: 'image-placeholder', tolerance: 'pointer', start: fixSortable }" ng-model="item.images" ng-style="{ width: 212 * item.images.length, height: 312 }">
           <div ng-repeat="imageId in item.images track by imageId" class="image-entry">
             <i class="fa fa-times-circle image-remove" ng-click="remove($index)"></i>
-            <div class="image-wrapper" load-image index="{{ $index }}">
-              <img class="image-img" ng-src="{{ image.url }}">
+            <div class="image-wrapper">
+              <img class="image-img" ng-src="{{ item | itemImageUrl:$index }}">
             </div>
           </div>
         </div>
