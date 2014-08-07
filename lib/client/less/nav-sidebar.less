@@ -1,8 +1,23 @@
 .nav-sidebar {
+  .flex-box(column);
+
   > li {
+    .noflex();
+
     margin-top: 0 !important;
 
     border-bottom: solid 1px @gray-light;
+    border-right: solid 1px @gray-light;
+
+    &.spacer {
+      .flex();
+      border-bottom: none;
+    }
+
+    &.active {
+      border-right: none;
+    }
+
     &.primary:first-child {
       border-top: solid 1px @gray-light;
     }
