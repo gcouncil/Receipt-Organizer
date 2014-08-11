@@ -1,12 +1,12 @@
 <!doctype html>
-<html>
+<html manifest="/appcache.manifest">
   <head>
     <title>Receipt Pro</title>
     <link rel="stylesheet" href="/assets/styles.css" />
     <% if (env.production) { %>
     <script src="/assets/index.min.js"></script>
     <% } else { %>
-    <script src="/assets/index.js"></script>
+    <script src="/assets/index.min.js"></script>
     <% } %>
   </head>
   <body ng-app="epsonreceipts">

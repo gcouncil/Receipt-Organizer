@@ -11,6 +11,10 @@
   <div class="toplevel-layout-header">
     <a class="navbar-brand">Receipt Pro</a>
 
+    <p class="navbar-text" ng-show="storageEvents.state === 'offline'">
+      Offline!
+    </p>
+
     <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">
       <i class="fa fa-refresh fa-spin"></i>
       Request In Progress

@@ -34,7 +34,8 @@ module.exports = function(grunt) {
     html: {
       files: [
         { src: 'lib/client/index.html', dest: 'build/app/index.html' },
-        { src: 'lib/static/index.html', dest: 'build/index.html' }
+        { src: 'lib/static/index.html', dest: 'build/index.html' },
+        { src: 'lib/client/appcache.manifest', dest: 'build/appcache.manifest' }
       ],
       options: {
         process: function(content, path) {
