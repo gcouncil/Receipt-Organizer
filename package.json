@@ -97,7 +97,8 @@
     "dynamsoft": "Dynamsoft",
     "angular-strap": {
       "depends": "./vendor/angular-strap/angular-strap.js"
-    }
+    },
+    "indexeddb-shim": "indexedDB"
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js",
@@ -107,6 +108,7 @@
     "angular-strap": "./vendor/angular-strap/angular-strap.tpl.js",
     "d3": "./bower_components/d3/d3.js",
     "dynamsoft": "./vendor/dynamsoft/dynamsoft.webtwain.initiate.js",
+    "indexeddb-shim": "./bower_components/IndexedDBShim/dist/IndexedDBShim.js",
     "jquery": "./bower_components/jquery/dist/jquery.js",
     "jquery-ui": "./bower_components/jquery-ui/jquery-ui.js",
     "microplugin": "./bower_components/microplugin/src/microplugin.js",
