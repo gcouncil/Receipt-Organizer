@@ -1,9 +1,7 @@
-<small>Scanner: {{ twain.driver || 'None' }}</small>
-
 <div class="btn-group btn-group-lg">
   <button type="button" class="btn btn-primary" ng-click="twain.scan()" ng-disabled="!twain.driver" style="width: 125px">
     <i class="fa fa-spinner fa-spin" ng-show="scannerBusy"></i>
-    Scan
+    Scan 
   </button>
   <button type="button" class="btn btn-primary" ng-click="dropdown.toggle()">
     <span class="caret"></span>
@@ -11,8 +9,4 @@
   </button>
 </div>
 
-<label ng-click="$event.stopPropagation()" class="btn btn-link btn-xs">
-  Import
-  <input type="file" multiple ng-hide="true" ng-model="files" ng-change="$emit('items:newimages', files); $hide()">
-</label>
-<a class="btn btn-link btn-xs" ng-click="$emit('items:new')">Manual Entry</a>
+<small>Scanner: {{ twain.driver || 'None' }}</small>
