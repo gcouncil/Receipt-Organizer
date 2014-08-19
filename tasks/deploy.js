@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
         grunt.file.mkdir('tmp');
 
-        var cmd = 'git ls-files | zip -X -y -r tmp/deploy.zip -@ .ebextensions build/index.html build/assets node_modules/epson-receipts';
+        var cmd = 'git ls-files | zip -X -y -r tmp/deploy.zip -@ .ebextensions build/index.html build/app build/assets node_modules/epson-receipts';
         var child = spawn('sh', ['-c', cmd], { stdio: ['ignore', 'ignore', process.stderr] });
         child.on('close', function(code) {
           if (code !== 0) { return callback('Zip process exitied with code: ' + code); }
