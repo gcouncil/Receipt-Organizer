@@ -15,7 +15,7 @@ module.exports = {
     database: 'epson_receipts_' + env
   },
   formxtra: {
-    endpoint: 'http://54.186.139.13/FormXtraWeb/Service/'
+    endpoint: 'http://'+ process.env.FORM_XTRA_IP +'/FormXtraWeb/Service/'
   },
   storage: {
     receiptBucket: 'epsonreceipts-images'
