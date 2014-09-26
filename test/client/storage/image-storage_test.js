@@ -12,7 +12,10 @@ describe('image storage service', function() {
 
     angular.mock.module('epsonreceipts.storage', {
       uuid: ctx.uuid,
-      domain: ctx.domain
+      domain: ctx.domain,
+      currentUser: {
+        get: ctx.sinon.stub().returns({ token: 'TOKEN' })
+      }
     });
   });
 
@@ -57,7 +60,7 @@ describe('image storage service', function() {
       ctx.image = { id: 3, type: 'jpeg', image: 'IMAGE' };
 
       angular.mock.inject(function($rootScope, $q, $httpBackend, imageStorage) {
-        $httpBackend.expectGET('/api/images/3').respond(200, ctx.image);
+        $httpBackend.expectGET('/api/images/3?access_token=TOKEN').respond(200, ctx.image);
 
         var promise = imageStorage.fetch({ id: 3 });
         $httpBackend.flush();
