@@ -63,7 +63,7 @@
           <div class="form-grid-group">
             <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('date') }">
               <span class="form-grid-label">Date</span>
-              <input class="form-grid-input" ng-model="item.date" bs-datepicker>
+              <input class="form-grid-input" ng-model="item.date" bs-datepicker data-date-type="string" data-model-date-format="yyyy-MM-dd">
             </label>
 
             <label form-group class="form-grid-cell" ng-class="{ 'has-warning': item.fieldIsLowConfidence('paymentType') }">
