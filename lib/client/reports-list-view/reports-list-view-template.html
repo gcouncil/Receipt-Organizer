@@ -32,10 +32,10 @@
       </label>
       <div class="list-view-data">{{ report.name }}</div>
       <div class="list-view-data-sm">{{ report.createdAt | date: 'shortDate' }}</div>
-      <div class="list-view-data-sm">{{ totals[report.id] | currency }}</div>
-      <div class="list-view-data">$70.00</div>
+      <div class="list-view-data-sm">{{ totals[report.id].total | currency }}</div>
+      <div class="list-view-data">{{ totals[report.id].requested | currency }}</div>
       <div class="list-view-data-sm">{{ report.items.length }}</div>
-      <div class="list-view-data">No</div>
+      <div class="list-view-data">{{ report.reimbursed ? 'Yes' : 'No' }}</div>
     </div>
   </div>
 </div>
