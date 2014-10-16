@@ -35,7 +35,6 @@ describe('folder storage service', function() {
         var result = folderStorage.query({});
         $httpBackend.flush();
 
-        expect(ctx.domain.Folder).to.have.been.called.withNew;
         expect(result).to.eventually.deep.equal(ctx.folders).and.notify(done);
 
         $rootScope.$digest();
@@ -48,7 +47,6 @@ describe('folder storage service', function() {
         $httpBackend.expectGET('/api/folders').respond(200, ctx.folders);
 
         folderStorage.query({}, function(folders) {
-          expect(ctx.domain.Folder).to.have.been.called.withNew;
           expect(folders).to.deep.equal(ctx.folders);
         });
 
@@ -59,7 +57,7 @@ describe('folder storage service', function() {
   });
 
   describe('create', function() {
-    it('should notify queries of create', function() {
+    it('should notify queries of create', function(done) {
       var ctx = this;
       ctx.folder = { id: 3, name: 'FOLDER3' };
       var folders;
@@ -77,20 +75,20 @@ describe('folder storage service', function() {
         folders.push(ctx.folder);
 
         $httpBackend.expectPOST('/api/folders').respond(201, ctx.folder);
-        $httpBackend.expectGET('/api/folders').respond(200, folders);
 
-        folderStorage.create(ctx.folder);
+        var promise = folderStorage.create(ctx.folder);
 
         $httpBackend.flush();
         $rootScope.$digest();
 
         expect(folders).to.contain(ctx.folder);
+        expect(promise).to.notify(done);
       });
     });
   });
 
   describe('update', function() {
-    it('should notify queries of update', function() {
+    it('should notify queries of update', function(done) {
       var ctx = this;
       ctx.folder = { id: 1, name: 'FOLDER1.1' };
       var folders;
@@ -108,20 +106,20 @@ describe('folder storage service', function() {
         folders.push(ctx.folder);
 
         $httpBackend.expectPUT('/api/folders/1').respond(200, ctx.folder);
-        $httpBackend.expectGET('/api/folders').respond(200, folders);
 
-        folderStorage.update(ctx.folder);
+        var promise = folderStorage.update(ctx.folder);
 
         $httpBackend.flush();
         $rootScope.$digest();
 
         expect(folders).to.contain(ctx.folder);
+        expect(promise).to.notify(done);
       });
     });
   });
 
   describe('destroy', function() {
-    it('should notify queries of destroy', function() {
+    it('should notify queries of destroy', function(done) {
       var ctx = this;
       ctx.folder = { id: 1, name: 'FOLDER1' };
       var folders;
@@ -140,14 +138,14 @@ describe('folder storage service', function() {
         folders.splice(folderIndex, 1);
 
         $httpBackend.expectDELETE('/api/folders/1').respond(200);
-        $httpBackend.expectGET('/api/folders').respond(200, folders);
 
-        folderStorage.destroy(ctx.folder);
+        var promise = folderStorage.destroy(ctx.folder);
 
         $httpBackend.flush();
         $rootScope.$digest();
 
         expect(folders).not.to.contain(ctx.folder);
+        expect(promise).to.notify(done);
       });
     });
   });
