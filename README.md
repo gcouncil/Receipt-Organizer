@@ -1,4 +1,4 @@
-# EPSON Receipts
+# Receipt Pro
 
 ## Setup
 
@@ -32,7 +32,7 @@ In order to import receipts or scan from a device, you'll need to install the Dy
 There may be some troubleshooting involved in getting the scanner working locally. Here are some steps to work through if you have installed the Epson driver and are not seeing the device in the Scan drop-down of the Epson Receipts app on your local dev machine.
 
 1. Fire up the app called **EPSON Scan Settings** and see if the scanner is detected in the list under *Select Scanner*. If it's in the list, make sure it is selected and click **Test**. It should return with a pop-up after the test saying *Scanner is Ready*. Now check your local EPSON deployment to see if the scanner is listed in the **Scan** dropdown menu.
-2. In Chrome, go to **Tools** > **Task Manager** and look for a task called *Plug-in: Dynamic Web TWAIN x.xx*. Select the task and click **End Process**. Now refresh your EPSON Receipts app and see if the scanner is listed in the **Scan** dropdown menu.
+2. In Chrome, go to **Tools** > **Task Manager** and look for a task called *Plug-in: Dynamic Web TWAIN x.xx*. Select the task and click **End Process**. Now refresh your Receipt Pro app and see if the scanner is listed in the **Scan** dropdown menu.
 3. If neither of the above solutions work, try restarting your machine.
 
 ### Watch / Development
