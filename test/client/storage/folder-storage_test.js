@@ -2,15 +2,22 @@ var angular = require('angular');
 var expect = require('chai').expect;
 
 describe('folder storage service', function() {
-
   beforeEach(function() {
     var ctx = this;
     ctx.domain = {
       Folder: ctx.sinon.stub().returnsArg(0)
     };
+    ctx.currentUser = {
+      get: ctx.sinon.stub().returns({ id: 'USER' })
+    };
 
     angular.mock.module('epsonreceipts.storage', {
-      domain: ctx.domain
+      domain: ctx.domain,
+      currentUser: ctx.currentUser
+    });
+
+    angular.mock.inject(function(offlineStorage) {
+      ctx.sinon.stub(offlineStorage, 'isOffline').returns(false);
     });
   });
 
@@ -27,11 +34,11 @@ describe('folder storage service', function() {
 
         var result = folderStorage.query({});
         $httpBackend.flush();
+
         expect(ctx.domain.Folder).to.have.been.called.withNew;
         expect(result).to.eventually.deep.equal(ctx.folders).and.notify(done);
 
         $rootScope.$digest();
-
       });
     });
 
@@ -47,7 +54,6 @@ describe('folder storage service', function() {
 
         $httpBackend.flush();
         $rootScope.$digest();
-
       });
     });
   });
@@ -111,7 +117,6 @@ describe('folder storage service', function() {
 
         expect(folders).to.contain(ctx.folder);
       });
-
     });
   });
 
@@ -144,8 +149,6 @@ describe('folder storage service', function() {
 
         expect(folders).not.to.contain(ctx.folder);
       });
-
     });
   });
-
 });
