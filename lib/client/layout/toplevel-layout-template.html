@@ -1,37 +1,40 @@
-<div class="toplevel-layout-sidebar">
-  <div class="toplevel-layout-scanbutton">
-    <scan-button></scan-button>
+<div class="toplevel-layout-notifications">
+  <div class="notification warning" ng-show="storageEvents.state === 'offline'">
+    <p><i class="fa fa-warning"></i> Offline Mode</p>
   </div>
-
-  <folder-organizer></folder-organizer>
-  <report-organizer></report-organizer>
 </div>
 
-<div class="toplevel-layout-content">
-  <div class="toplevel-layout-header">
-    <a class="navbar-brand">Receipt Pro</a>
+<div class="toplevel-layout-main">
+  <div class="toplevel-layout-sidebar">
+    <div class="toplevel-layout-scanbutton">
+      <scan-button></scan-button>
+    </div>
 
-    <p class="navbar-text" ng-show="storageEvents.state === 'offline'">
-      Offline!
-    </p>
-
-    <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">
-      <i class="fa fa-refresh fa-spin"></i>
-      Request In Progress
-    </p>
-
-    <user-toolbar-menu></user-toolbar-menu>
+    <folder-organizer></folder-organizer>
+    <report-organizer></report-organizer>
   </div>
 
-  <nav class="toplevel-layout-toolbar" ui-view="toolbar">
-  </nav>
+  <div class="toplevel-layout-content">
+    <div class="toplevel-layout-header">
+      <a class="navbar-brand">Receipt Pro</a>
 
-  <div class="toplevel-layout-body">
-    <notices></notices>
-    <ui-view></ui-view>
+      <p class="navbar-text" ng-show="busy" ng-controller="HttpBusyController">
+        <i class="fa fa-refresh fa-spin"></i>
+        Request In Progress
+      </p>
+
+      <user-toolbar-menu></user-toolbar-menu>
+    </div>
+
+    <nav class="toplevel-layout-toolbar" ui-view="toolbar">
+    </nav>
+
+    <div class="toplevel-layout-body">
+      <notices></notices>
+      <ui-view></ui-view>
+    </div>
+
+    <div class="toplevel-layout-footer" ui-view="footer">
+    </div>
   </div>
-
-  <div class="toplevel-layout-footer" ui-view="footer">
-  </div>
-
 </div>

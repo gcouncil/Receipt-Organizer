@@ -6,7 +6,27 @@ toplevel-layout {
   width: 100%;
   min-width: 900px;
   .noflex();
+  .flex-box(column);
+}
+
+.toplevel-layout-notifications {
+  text-align: center;
+  .notification {
+    padding: 10px;
+
+    &.warning {
+      background: @brand-warning;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.toplevel-layout-main {
   .flex-box(row);
+  .flex();
 }
 
 .toplevel-layout-sidebar {
