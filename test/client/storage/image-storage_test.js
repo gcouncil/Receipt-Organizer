@@ -15,6 +15,11 @@ describe('image storage service', function() {
       domain: ctx.domain,
       currentUser: {
         get: ctx.sinon.stub().returns({ token: 'TOKEN' })
+      },
+      offlineStorage: {
+        isOffline: function() {
+          return false;
+        }
       }
     });
   });

@@ -10,7 +10,9 @@ describe('signupForm directive', function() {
     };
 
     ctx.currentUser = {
-      set: ctx.sinon.stub()
+      set: ctx.sinon.stub(),
+      get: ctx.sinon.stub(),
+      isAuthenticated: ctx.sinon.stub()
     };
 
     ctx.notify = {

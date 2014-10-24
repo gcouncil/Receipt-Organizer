@@ -6,7 +6,8 @@ describe('session storage service', function() {
   beforeEach(function() {
     var ctx = this;
     ctx.currentUser = {
-      set: ctx.sinon.stub()
+      set: ctx.sinon.stub(),
+      get: ctx.sinon.stub()
     };
 
     ctx.domain = ctx.sinon.stub();
