@@ -43,8 +43,6 @@ describe('image storage service', function() {
         ctx.deferred.resolve(1);
 
         $httpBackend.flush();
-        $rootScope.$digest();
-        expect(ctx.domain.Image).to.have.been.calledWithNew;
       });
     });
 
