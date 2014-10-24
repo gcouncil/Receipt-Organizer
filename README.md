@@ -3,7 +3,7 @@
 ## Setup
 
 1. Install system dependencies
-  - PostgreSQL
+  - PostgreSQL (required 9.3 or above)
   - Node.js / NPM
 2. Install npm and bower by running `npm install`
 3. Install grunt-cli globally for convenience with `npm install --global grunt-cli`

@@ -1,51 +1,50 @@
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog report-export-dialog">
     <div class="modal-content">
-
       <div class="modal-header">
         <label for="report-name">{{ report.name }}</label>
         <button type="button" class="btn btn-plain pull-right" ng-click="cancel()" title="Close"><i class="fa fa-times-circle"></i></button>
       </div>
 
       <div ng-form name="form" class="modal-body">
-        <div ng-if="!reportUrl" class="file-extension-container"  ng-model="settings.fileExtension" bs-radio-group>
-            <div class="btn-group btn-group-lg">
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="pdf">
-                <i class="fa fa-file-pdf-o"></i>
-                PDF
-              </label>
+        <div ng-if="!reportUrl" class="file-extension-container" ng-model="settings.fileExtension" bs-radio-group>
+          <div class="btn-group btn-group-lg">
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('pdf')">
+              <input class="ng-hide" type="radio" value="pdf">
+              <i class="fa fa-file-pdf-o"></i>
+              PDF
+            </label>
 
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="xlsx">
-                <i class="fa fa-file-excel-o"></i>
-                Excel (XLSX)
-              </label>
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('xlsx')">
+              <input class="ng-hide" type="radio" value="xlsx">
+              <i class="fa fa-file-excel-o"></i>
+              Excel (XLSX)
+            </label>
 
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="csv">
-                <i class="fa fa-file-text-o"></i>
-                CSV
-              </label>
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('csv')">
+              <input class="ng-hide" type="radio" value="csv">
+              <i class="fa fa-file-text-o"></i>
+              CSV
+            </label>
 
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="qif">
-                <i class="fa fa-file-text-o"></i>
-                Quicken (QIF)
-              </label>
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('qif')">
+              <input class="ng-hide" type="radio" value="qif">
+              <i class="fa fa-file-text-o"></i>
+              Quicken (QIF)
+            </label>
 
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="txf">
-                <i class="fa fa-file-text-o"></i>
-                Turbo Tax (TXF)
-              </label>
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('txf')">
+              <input class="ng-hide" type="radio" value="txf">
+              <i class="fa fa-file-text-o"></i>
+              Turbo Tax (TXF)
+            </label>
 
-              <label class="btn btn-primary">
-                <input class="ng-hide" type="radio" value="iif">
-                <i class="fa fa-file-text-o"></i>
-                QuickBooks (IIF)
-              </label>
-            </div>
+            <label class="btn btn-primary" ng-disabled="isExporterDisabled('iif')">
+              <input class="ng-hide" type="radio" value="iif">
+              <i class="fa fa-file-text-o"></i>
+              QuickBooks (IIF)
+            </label>
+          </div>
         </div>
         <div ng-if="!reportUrl && settings.fileExtension === 'pdf'">
           <div class="export-details-container">
@@ -96,10 +95,9 @@
         </div>
 
         <div ng-if="reportUrl" ng-switch="reportType" class="report-export-results">
-
           <h2 ng-switch-default>
             Export Ready:
-            <a download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}" ng-if="!roundtrip">
+            <a download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}" ng-if="downloadSupported">
               Download
             </a>
           </h2>
@@ -107,11 +105,9 @@
           <iframe id="report-iframe" ng-src="{{ reportUrl }}" ng-switch-when="pdf">
           </iframe>
         </div>
-
       </div>
 
       <div class="modal-footer">
-
         <button type="button" class="btn btn-default pull-left"
           ng-click="$emit('reports:editReport', report); cancel()">
           Back
@@ -134,12 +130,12 @@
               Reset
             </a>
 
-            <a class="btn btn-primary" download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}" ng-if="!roundtrip">
+            <a class="btn btn-primary" download="{{ reportName }}" target="_blank" ng-href="{{ reportUrl }}" ng-if="downloadSupported">
               <i class="fa fa-download"></i>
               Download
             </a>
 
-            <form action="/api/roundtrip" method="POST" ng-if="roundtrip" style="display: inline-block;">
+            <form action="/api/roundtrip" method="POST" ng-if="!isOffline() && !downloadSupported" style="display: inline-block;">
               <input type="hidden" name="filename" value="{{ reportName }}">
               <input type="hidden" name="data" value="{{ reportData }}">
               <button class="btn btn-primary" type="submit">

@@ -42,9 +42,9 @@ describe('report editor service', function() {
   it('should return a promise', function() {
     var ctx = this;
     angular.mock.inject(function(reportEditor) {
-      expect(reportEditor(ctx.report, ctx.items).hasOwnProperty('then')).to.be.true;
-      expect(reportEditor(ctx.report, ctx.items).hasOwnProperty('catch')).to.be.true;
-      expect(reportEditor(ctx.report, ctx.items).hasOwnProperty('finally')).to.be.true;
+      expect(reportEditor(ctx.report, ctx.items).then).to.be.defined;
+      expect(reportEditor(ctx.report, ctx.items)['catch']).to.be.defined;
+      expect(reportEditor(ctx.report, ctx.items)['finally']).to.be.defined;
     });
   });
 
@@ -55,5 +55,4 @@ describe('report editor service', function() {
       expect(ctx.modal).to.have.been.calledOnce;
     });
   });
-
 });

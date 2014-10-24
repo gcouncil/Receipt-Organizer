@@ -34,7 +34,8 @@ module.exports = function(grunt) {
     html: {
       files: [
         { src: 'lib/client/index.html', dest: 'build/app/index.html' },
-        { src: 'lib/static/index.html', dest: 'build/index.html' }
+        { src: 'lib/static/index.html', dest: 'build/index.html' },
+        { src: 'lib/client/appcache.manifest', dest: 'build/appcache.manifest' }
       ],
       options: {
         process: function(content, path) {
@@ -211,7 +212,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.config('watch', {
     html: {
-      files: ['lib/client/index.html', 'lib/static/index.html'],
+      files: ['lib/client/index.html', 'lib/static/index.html', 'lib/client/appcache.manifest'],
       tasks: ['copy:html']
     },
     less: {

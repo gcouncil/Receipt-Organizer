@@ -1,0 +1,22 @@
+CACHE MANIFEST
+# <%= (new Date).toISOString() %>
+
+CACHE:
+/index.html
+/app/index.html
+/assets/styles.css
+/assets/static-styles.css
+<% if (env.production) { %>/assets/index.min.js<% } else { %>/assets/index.js<% } %>
+/assets/fonts/FontAwesome.otf?v=4.1.0
+/assets/fonts/fontawesome-webfont.eot?v=4.1.0
+/assets/fonts/fontawesome-webfont.svg?v=4.1.0
+/assets/fonts/fontawesome-webfont.ttf?v=4.1.0
+/assets/fonts/fontawesome-webfont.woff?v=4.1.0
+/assets/fonts/glyphicons-halflings-regular.eot
+/assets/fonts/glyphicons-halflings-regular.svg
+/assets/fonts/glyphicons-halflings-regular.ttf
+/assets/fonts/glyphicons-halflings-regular.woff
+/assets/img/epsonreceipts-440x1000.png
+
+NETWORK:
+*
