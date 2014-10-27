@@ -9,9 +9,9 @@
         <div class="receipt-editor-image">
           <image-viewer image="{{ receipt | itemImageUrl:page }}" overlay="item.getAnswers(page)"></image-viewer>
           <div class="receipt-editor-image-pagination" ng-if="receipt.images.length > 1">
-            <a ng-click="prevPage()">&laquo; Previous</a>
+            <a ng-click="prevPage()" ng-disabled="page === 0">&laquo; Previous</a>
             <span>{{ page + 1 }} / {{ receipt.images.length }}</span>
-            <a ng-click="nextPage()">Next &raquo;</a>
+            <a ng-click="nextPage()" ng-disabled="(page + 1) === receipt.images.length">Next &raquo;</a>
           </div>
         </div>
 
