@@ -171,6 +171,7 @@ thumbnail {
   height: 22px;
   line-height: 22px;
   display: table;
+  cursor: pointer;
 
   padding: @padding-base-vertical / 2 @padding-base-horizontal / 2;
 
@@ -179,7 +180,9 @@ thumbnail {
   font-size: 16px;
   font-weight: bold;
 
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 
   background: fade(@brand-warning, 80%);
 }
@@ -189,7 +192,6 @@ thumbnail {
   display: table-cell;
   vertical-align: bottom;
   text-align: right;
-  text-decoration: underline;
 }
 
 .thumbnail-selected  {
