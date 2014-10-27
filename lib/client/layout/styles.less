@@ -59,7 +59,9 @@ toplevel-layout {
 
   li {
     &::after{
-      content: " | "
+      content: "|";
+      position: absolute;
+      top: 1em;
     }
     &:last-child::after{
       content: ""
