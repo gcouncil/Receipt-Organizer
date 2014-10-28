@@ -4,7 +4,7 @@
     <div class="col-xs-12">
       <h4>Personal Information</h4>
     </div>
-    <form>
+    <form name="form" ng-submit="save()">
       <div class="form-group col-xs-12">
         <label for="userEmail">Email Address</label>
         <input id="userEmail" type="email" ng-model="user.email" placeholder="jappleseed@angelfire.com" class="form-control" required>
@@ -18,7 +18,7 @@
         <input id="userPasswordConfirmation" type="password" ng-model="user.passwordConfirmation" placeholder="Leave blank to keep current password" class="form-control">
       </div>
       <div class="form-group col-xs-12 text-center">
-        <button class="btn btn-primary account-settings-save" ng-click="save()">Save Changes</button>
+        <button class="btn btn-primary account-settings-save" ng-disabled="form.$invalid || form.$pristine">Save Changes</button>
         <button type="button" class="btn btn-default" ng-click="cancel()">Discard Changes</button>
       </div>
     </form>
