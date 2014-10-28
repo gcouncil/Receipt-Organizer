@@ -18,7 +18,7 @@
         <input id="userPasswordConfirmation" type="password" ng-model="user.passwordConfirmation" placeholder="Leave blank to keep current password" class="form-control">
       </div>
       <div class="form-group col-xs-12 text-center">
-        <button class="btn btn-primary account-settings-save" ng-disabled="form.$invalid || form.$pristine">Save Changes</button>
+        <button class="btn btn-primary account-settings-save" ng-disabled="isFormDisabled()">Save Changes</button>
         <button type="button" class="btn btn-default" ng-click="cancel()">Discard Changes</button>
       </div>
     </form>
