@@ -1,0 +1,26 @@
+<h3>Account Settings</h3>
+<div class="row personal-information">
+  <div class="col-xs-8">
+    <div class="col-xs-12">
+      <h4>Personal Information</h4>
+    </div>
+    <form name="form" ng-submit="save()">
+      <div class="form-group col-xs-12">
+        <label for="userEmail">Email Address</label>
+        <input id="userEmail" type="email" ng-model="user.email" class="form-control" required>
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="userPassword">Password</label>
+        <input id="userPassword" type="password" ng-model="user.password" placeholder="Leave blank to keep current password" class="form-control">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="userPasswordConfirmation">Password Confirmation</label>
+        <input id="userPasswordConfirmation" type="password" ng-model="user.passwordConfirmation" placeholder="Leave blank to keep current password" class="form-control" confirmation-input="user.password">
+      </div>
+      <div class="form-group col-xs-12 text-center">
+        <button class="btn btn-primary account-settings-save" ng-disabled="isFormDisabled()">Save Changes</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Discard Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
