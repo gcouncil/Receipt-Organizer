@@ -4,10 +4,10 @@
   </li>
 </ul>
 <ul class="nav nav-stacked nav-sidebar nav-sidebar-scroll">
-  <li ng-repeat="report in reports" report="report" draggable="true" item-drop-zone>
-    <a ng-click="$emit('reports:editReport', report); $event.preventDefault()" href="#">
+  <li ng-repeat="report in reports" report="report" item-drop-zone>
+    <div ng-click="$emit('reports:editReport', report); $event.preventDefault()">
       <report-organizer-entry report="report"></report-organizer-entry>
-    </a>
+    </div>
   </li>
   <li class="spacer"></li>
 </ul>

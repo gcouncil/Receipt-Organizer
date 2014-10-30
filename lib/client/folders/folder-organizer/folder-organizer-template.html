@@ -13,9 +13,9 @@
     </a>
   </li>
   <li ng-repeat="folder in folders" folder="folder" item-drop-zone ui-sref-active="active">
-    <a ui-sref="items({ folder: folder.id })">
+    <div ui-sref="items({ folder: folder.id })">
       <folder-organizer-entry folder="folder"></folder-organizer-entry>
-    </a>
+    </div>
   </li>
   <li class="spacer"></li>
 </ul>
