@@ -24,19 +24,12 @@
         ng-disabled="!items.selection.hasSelection()">
         <i class="fa fa-check"></i>
       </button>
-      <button class="btn btn-default"
-        title="Delete"
-        ng-click="$emit('items:destroy', items.selection.selectedItems)"
-        ng-disabled="!items.selection.hasSelection()">
-        <i class="fa fa-trash-o"></i>
-      </button>
+      <delete-button selection="items.selection" folder="$state.params.folder"></delete-button>
     </div>
 
     <div class="navbar-btn btn-group">
-      <folder-button selection="items.selection">
-      </folder-button>
-      <update-report-button selection="items.selection">
-      </update-report-button>
+      <folder-button selection="items.selection"></folder-button>
+      <update-report-button selection="items.selection"></update-report-button>
     </div>
 
     <ul class="nav navbar-nav navbar-right">
