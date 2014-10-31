@@ -1,0 +1,7 @@
+<button class="btn btn-default"
+  title="Delete"
+  ng-click="clickDelete()"
+  ng-disabled="!selection.hasSelection()">
+  <i class="fa fa-trash-o"></i>
+  <span class="caret" ng-if="!isSystemFolder()"></span>
+</button>
