@@ -65,7 +65,7 @@ directory
   [3]: https://files.slack.com/files-pri/T024Z5CQB-F029ZFH8Y/download/epson15864.dmg
   [4]: https://files.slack.com/files-pri/T024Z5CQB-F027899A2/download/epson15994.dmg
 
-### Installing on Windows
+### Troubleshooting setup on Windows
 You may need to manually create the directory `C:\Users\<your user>\AppData\Roaming\npm`
 If prompted during `npm install`, choose the most recent Angular version.
-Install Python
+Install Python (> 2.5 and < 3.0)
