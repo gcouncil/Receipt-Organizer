@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bower install && [ -e node_modules/epson-receipts ] || ln -s ../lib node_modules/epson-receipts

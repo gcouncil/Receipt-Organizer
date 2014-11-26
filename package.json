@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node ./lib/server",
-    "prepublish": "bower install && [ -e node_modules/epson-receipts ] || ln -s ../lib node_modules/epson-receipts",
+    "prepublish": "prepublish",
     "update-webdriver": "webdriver-manager update",
     "clean": "rm -rf node_modules && rm -rf bower_components && npm cache clean && bower cache clean"
   },

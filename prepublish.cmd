@@ -1,0 +1,1 @@
+bower install && IF exist node_modules/epson-receipts (echo 'node_modules/epson-receipts exists OK') ELSE (mklink /d \node_modules\epson-receipts lib)
