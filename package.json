@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node ./lib/server",
-    "prepublish": "prepublish",
+    "prepublish": "./prepublish",
     "update-webdriver": "webdriver-manager update",
     "clean": "rm -rf node_modules && rm -rf bower_components && npm cache clean && bower cache clean"
   },
